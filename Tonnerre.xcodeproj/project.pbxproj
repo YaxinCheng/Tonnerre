@@ -19,6 +19,8 @@
 		1470518520B1DEDF00F6FBE8 /* FileSearchModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */; };
 		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1470518A20B1EF7000F6FBE8 /* FileIndexingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */; };
+		1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TonnerreSearch.framework; sourceTree = "<group>"; };
 		1470518220B1CA6800F6FBE8 /* FileSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchManager.swift; sourceTree = "<group>"; };
 		1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchModes.swift; sourceTree = "<group>"; };
+		1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIndexingManager.swift; sourceTree = "<group>"; };
+		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,7 @@
 			children = (
 				1470514320B1BEF900F6FBE8 /* AppDelegate.swift */,
 				1470518220B1CA6800F6FBE8 /* FileSearchManager.swift */,
+				1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */,
 				1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
@@ -133,6 +138,7 @@
 				1470514F20B1BEFB00F6FBE8 /* Info.plist */,
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
+				1470518B20B1FE8100F6FBE8 /* alias.plist */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -266,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1470514B20B1BEFB00F6FBE8 /* Assets.xcassets in Resources */,
+				1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +302,7 @@
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
+				1470518A20B1EF7000F6FBE8 /* FileIndexingManager.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* FileSearchModes.swift in Sources */,
 				1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */,
 			);

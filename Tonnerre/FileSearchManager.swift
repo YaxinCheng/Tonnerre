@@ -13,9 +13,11 @@ class FileSearchManager {
   private static var instance: FileSearchManager! = nil
   private let fileManager = FileManager.default
   var availableModes: [SearchMode]
+  private let indexingManager: FileIndexingManager
   
   init() {
     let context = getContext()
+    indexingManager = FileIndexingManager()
     do {
       let fetchRequest = NSFetchRequest<AvailableMode>(entityName: CoreDataEntities.AvailableMode.rawValue)
       let modes = try context.fetch(fetchRequest)
@@ -69,13 +71,13 @@ class FileSearchManager {
    Initial full indexing from the beginning. Index every possible file
   */
   private func fullIndexing() {
-    
+    //TODO
   }
   
   /**
    Add-on indexing. Only modify the changes in the index files
   */
   private func complementaryIndexing() {
-    
+    //TODO
   }
 }

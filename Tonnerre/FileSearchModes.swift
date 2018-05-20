@@ -21,6 +21,13 @@ enum SearchMode: String {
     }
   }
   
+  var index: TonnerreIndex {
+    let appSupportPath = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
+    let indexDirPath = appSupportPath.appendingPathComponent("indices", isDirectory: true)
+    let indexPath = indexDirPath.appendingPathComponent(self.rawValue)
+    return TonnerreIndex(filePath: indexPath.path, indexType: indexType)
+  }
+  
   var indexTargets: [URL] {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     switch self {
@@ -29,7 +36,7 @@ enum SearchMode: String {
     default:
       let exclusions = Set<String>(["Public", "Library", "Applications"])
       do {
-        let userDirs = try FileManager.default.contentsOfDirectory(at: homeDir, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        let userDirs = try FileManager.default.contentsOfDirectory(at: homeDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants, .skipsPackageDescendants])
         return userDirs.filter({ !exclusions.contains($0.lastPathComponent) })
       } catch {
         return []
