@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AvailableMode" representedClassName="AvailableMode" syncable="YES" codeGenerationType="class">
+        <attribute name="enabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="FailedPath" representedClassName="FailedPath" syncable="YES" codeGenerationType="class">
+        <attribute name="path" attributeType="String" syncable="YES"/>
+        <attribute name="reason" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="IndexedDir" representedClassName="IndexedDir" syncable="YES" codeGenerationType="class">
+        <attribute name="category" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="path" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="IndexedDir" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="FailedPath" positionX="-45" positionY="0" width="128" height="75"/>
+        <element name="AvailableMode" positionX="-27" positionY="36" width="128" height="75"/>
+    </elements>
+</model>
