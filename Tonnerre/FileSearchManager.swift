@@ -52,10 +52,12 @@ class FileSearchManager {
   }
   
   private func createIndexFiles() {
-    _ = availableModes.map({ createIndexFile(name: $0.rawValue, type: $0.indexType) })
+    let indexes = availableModes.map({ createIndexFile(name: $0.rawValue, type: $0.indexType) })
+    let correspondingData = Dictionary(uniqueKeysWithValues: zip(availableModes, indexes))
+    SearchMode.setIndexStorage(data: correspondingData)
   }
   
-  func createIndexFile(name: String, type: TonnerreIndexType) -> TonnerreIndex {
+  private func createIndexFile(name: String, type: TonnerreIndexType) -> TonnerreIndex {
     let appSupportDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
     let indecesFolder = appSupportDir.appendingPathComponent("Indeces")
     do {
@@ -70,14 +72,17 @@ class FileSearchManager {
   /**
    Initial full indexing from the beginning. Index every possible file
   */
+  //TODO: - Detailed info
   private func fullIndexing() {
-    //TODO
+    debugPrint("Full indexing now")
+    indexingManager.indexDefault()
+    indexingManager.indexDocuments()
   }
   
   /**
    Add-on indexing. Only modify the changes in the index files
   */
+  //TODO: - Detailed info
   private func complementaryIndexing() {
-    //TODO
   }
 }

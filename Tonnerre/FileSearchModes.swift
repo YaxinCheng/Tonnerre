@@ -22,25 +22,39 @@ enum SearchMode: String {
   }
   
   var index: TonnerreIndex {
-    let appSupportPath = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
-    let indexDirPath = appSupportPath.appendingPathComponent("indices", isDirectory: true)
-    let indexPath = indexDirPath.appendingPathComponent(self.rawValue)
-    return TonnerreIndex(filePath: indexPath.path, indexType: indexType)
+    return indexStorage[self]!
+  }
+  
+  var includeDir: Bool {
+    return self == .name
+  }
+  
+  /**
+   Value used to identify the type in CoreData
+  */
+  var storedInt: Int {
+    switch self {
+    case .defaultMode: return 0
+    case .name: return 1
+    case .content: return 2
+    }
   }
   
   var indexTargets: [URL] {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     switch self {
     case .defaultMode:
-      return [URL(fileURLWithPath: "/Applications"), URL(fileURLWithPath: "/System/Library/PreferencePanes"), homeDir.appendingPathComponent("Application", isDirectory: true)]
+      return [URL(fileURLWithPath: "/Applications"), URL(fileURLWithPath: "/System/Library/PreferencePanes"), homeDir.appendingPathComponent("Applications", isDirectory: true)]
     default:
-      let exclusions = Set<String>(["Public", "Library", "Applications"])
-      do {
-        let userDirs = try FileManager.default.contentsOfDirectory(at: homeDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants, .skipsPackageDescendants])
-        return userDirs.filter({ !exclusions.contains($0.lastPathComponent) })
-      } catch {
-        return []
-      }
+      return ["Downloads", "Desktop", "Documents", "Library/Mobile Documents/com~apple~CloudDocs"].map(homeDir.appendingPathComponent)
+    }
+  }
+  
+  static func setIndexStorage(data: [SearchMode: TonnerreIndex]) {
+    if indexStorage.isEmpty {
+      indexStorage = data
     }
   }
 }
+
+fileprivate var indexStorage: [SearchMode: TonnerreIndex] = [:]

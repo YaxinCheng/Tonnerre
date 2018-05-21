@@ -15,6 +15,11 @@ class ViewController: NSViewController {
 
     // Do any additional setup after loading the view.
   }
+  
+  override func viewDidAppear() {
+    let searchManager = FileSearchManager.shared
+    searchManager.check()
+  }
 
   override var representedObject: Any? {
     didSet {

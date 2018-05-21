@@ -10,7 +10,7 @@ import Foundation
 import TonnerreSearch
 
 class FileIndexingManager {
-  lazy var aliasDict: Dictionary<String, String> = {
+  private lazy var aliasDict: Dictionary<String, String> = {
     guard let aliasFile = Bundle.main.path(forResource: "alias", ofType: "plist") else {
       return [:]
     }
@@ -20,11 +20,14 @@ class FileIndexingManager {
   func indexDefault() {
     let mode: SearchMode = .defaultMode
     let targetPaths = mode.indexTargets
-    let queue = DispatchQueue.global(qos: .userInitiated)
+    let queue = DispatchQueue.global(qos: .utility)
     queue.async {
+      let begin = Date()
       for beginURL in targetPaths {
-        self.addContent(in: beginURL, to: mode.index)
+        self.addContent(in: beginURL, to: mode)
       }
+      let end = Date()
+      debugPrint("Default index: \(end.timeIntervalSince(begin)) seconds")
     }
   }
   
@@ -33,9 +36,12 @@ class FileIndexingManager {
     let targetPaths = modes[0].indexTargets
     let queue = DispatchQueue.global(qos: .utility)
     queue.async {
+      let begin = Date()
       for beginURL in targetPaths {
-        self.addContent(in: beginURL, to: modes.map({$0.index}))
+        self.addContent(in: beginURL, to: modes)
       }
+      let end = Date()
+      debugPrint("Document index: \(end.timeIntervalSince(begin)) seconds")
     }
   }
   
@@ -48,38 +54,37 @@ class FileIndexingManager {
     return alias
   }
   
-  private func addContent(in path: URL, to indexes: TonnerreIndex...) {
+  private func addContent(in path: URL, to indexes: SearchMode...) {
     addContent(in: path, to: indexes)
   }
   
-  private func addContent(in path: URL, to indexes: [TonnerreIndex]) {
+  private func addContent(in path: URL, to searchModes: [SearchMode]) {
     if path.isSymlink { return }
     var content: [URL] = []
     do {
-      for index in indexes where index.type == .nameOnly {
-        _ = try index.addDocument(atPath: path)
+      for mode in searchModes where mode.includeDir == true {
+        _ = try mode.index.addDocument(atPath: path)
       }
       if !path.isDirectory {
-        for index in indexes {
-          _ = try index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))
+        for mode in searchModes {
+          _ = try mode.index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))
         }
       } else {
         content = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
       }
     } catch {
-      let context = getContext()
-      let failedRecord = FailedPath(context: context)
-      failedRecord.path = path.path
-      failedRecord.reason = "\(error)"
-      try? context.save()
+      let _: FailedPath? = safeInsertRecord(data: ["path": path.path, "reason": "\(error)"])
     }
     if path.isDirectory {
       let orderedContent = separate(paths: content)
       for filePath in orderedContent[0] {
-        addContent(in: filePath, to: indexes)
+        addContent(in: filePath, to: searchModes)
+      }
+      for mode in searchModes {
+        let _: IndexedDir? = safeInsertRecord(data: ["path": path.path, "category": mode.storedInt])
       }
       for dirPath in orderedContent[1] {
-        addContent(in: dirPath, to: indexes)
+        addContent(in: dirPath, to: searchModes)
       }
     }
   }
@@ -95,16 +100,34 @@ class FileIndexingManager {
     }
     return result
   }
+  
+  private func safeInsertRecord<T: NSManagedObject>(data: [String: Any]) -> T? {
+    let context = getContext()
+    let fetchRequest = NSFetchRequest<T>(entityName: "\(T.self)")
+    let query = data.reduce([], {$0 + [$1.key, $1.value]})
+    fetchRequest.predicate = NSPredicate(format: "%@=%@ AND %@=%@", argumentArray: query)
+    if let fetchedCount = try? context.count(for: fetchRequest) {
+      if fetchedCount > 0 { return nil }
+    }
+    let newRecord = T(context: context)
+    for (key, value) in data {
+      newRecord.setValue(value, forKey: key)
+    }
+    try? context.save()
+    return newRecord
+  }
 }
 
 extension URL {
   var isDirectory: Bool {
-    let value = try? resourceValues(forKeys: [.isDirectoryKey])
-    return value?.isDirectory ?? false
+    let value = try? resourceValues(forKeys: [.isDirectoryKey, .isPackageKey])
+    guard let isDir = value?.isDirectory, let isPack = value?.isPackage else { return false }
+    return isDir && !isPack
   }
   
   var isSymlink: Bool {
-    let value = try? resourceValues(forKeys: [.isSymbolicLinkKey])
-    return value?.isSymbolicLink ?? false
+    let value = try? resourceValues(forKeys: [.isSymbolicLinkKey, .isAliasFileKey])
+    guard let isSymlink = value?.isSymbolicLink, let isAlias = value?.isAliasFile else { return false }
+    return isSymlink || isAlias
   }
 }

@@ -43,8 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     } catch {
       print(error)
     }
-    
-    SearchMode.name.indexTargets
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
