@@ -61,6 +61,8 @@ class FileIndexingManager {
       }
       if !path.isDirectory {
         for mode in searchModes {
+          let fileExtension = path.pathExtension.lowercased()
+          if mode.exclusionNames.contains(fileExtension) { continue }// Exclude the unwanted files
           _ = try mode.index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))
         }
       } else {
@@ -78,6 +80,8 @@ class FileIndexingManager {
         let _: IndexedDir? = safeInsertRecord(data: ["path": path.path, "category": mode.storedInt])
       }
       for dirPath in orderedContent[1] {
+        let pathName = dirPath.lastPathComponent.lowercased()
+        if SearchMode.name.exclusionNames.contains(pathName) { continue }// Exclude the unwanted folders
         addContent(in: dirPath, to: searchModes)
       }
     }

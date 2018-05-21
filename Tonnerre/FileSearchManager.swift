@@ -46,9 +46,8 @@ class FileSearchManager {
       if indexedCount == 0 {
         createIndexFiles()
         fullIndexing()
-      } else {
-        complementaryIndexing()
       }
+      complementaryIndexing()
     } catch {
       NSApplication.shared.presentError(error)
     }
@@ -91,7 +90,9 @@ class FileSearchManager {
   private func fileChangeHandler(events: [TonnerreFSDetector.event]) {
     for event in events {
       let (path, changes) = event
-      
+      if changes.contains(.created) {
+        
+      }
     }
   }
 }
