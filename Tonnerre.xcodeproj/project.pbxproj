@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140F8C6F20B3668C00C69C25 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
 		1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
@@ -55,6 +56,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1470514520B1BEF900F6FBE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
 				1470518B20B1FE8100F6FBE8 /* alias.plist */,
+				140F8C6E20B3668C00C69C25 /* exclusionList.plist */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				1470514B20B1BEFB00F6FBE8 /* Assets.xcassets in Resources */,
 				1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
+				140F8C6F20B3668C00C69C25 /* exclusionList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

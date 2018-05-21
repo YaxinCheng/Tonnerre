@@ -14,6 +14,7 @@ class FileSearchManager {
   private let fileManager = FileManager.default
   var availableModes: [SearchMode]
   private let indexingManager: FileIndexingManager
+  var detector: TonnerreFSDetector!
   
   init() {
     let context = getContext()
@@ -26,6 +27,8 @@ class FileSearchManager {
       NSApplication.shared.presentError(error)
       availableModes = []
     }
+    let detectingPath = Set(availableModes.map({ $0.indexTargets }).reduce([], +)).map({ $0.path })
+    detector = TonnerreFSDetector(pathes: detectingPath, callback: fileChangeHandler)
   }
   
   static var shared: FileSearchManager {
@@ -72,9 +75,7 @@ class FileSearchManager {
   /**
    Initial full indexing from the beginning. Index every possible file
   */
-  //TODO: - Detailed info
   private func fullIndexing() {
-    debugPrint("Full indexing now")
     indexingManager.indexDefault()
     indexingManager.indexDocuments()
   }
@@ -84,5 +85,13 @@ class FileSearchManager {
   */
   //TODO: - Detailed info
   private func complementaryIndexing() {
+    detector.start()
+  }
+  
+  private func fileChangeHandler(events: [TonnerreFSDetector.event]) {
+    for event in events {
+      let (path, changes) = event
+      
+    }
   }
 }

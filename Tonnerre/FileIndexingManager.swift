@@ -22,12 +22,9 @@ class FileIndexingManager {
     let targetPaths = mode.indexTargets
     let queue = DispatchQueue.global(qos: .utility)
     queue.async {
-      let begin = Date()
       for beginURL in targetPaths {
         self.addContent(in: beginURL, to: mode)
       }
-      let end = Date()
-      debugPrint("Default index: \(end.timeIntervalSince(begin)) seconds")
     }
   }
   
@@ -36,12 +33,9 @@ class FileIndexingManager {
     let targetPaths = modes[0].indexTargets
     let queue = DispatchQueue.global(qos: .utility)
     queue.async {
-      let begin = Date()
       for beginURL in targetPaths {
         self.addContent(in: beginURL, to: modes)
       }
-      let end = Date()
-      debugPrint("Document index: \(end.timeIntervalSince(begin)) seconds")
     }
   }
   

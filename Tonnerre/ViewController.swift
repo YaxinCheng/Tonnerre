@@ -9,6 +9,7 @@
 import Cocoa
 
 class ViewController: NSViewController {
+  let searchManager = FileSearchManager.shared
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -17,8 +18,11 @@ class ViewController: NSViewController {
   }
   
   override func viewDidAppear() {
-    let searchManager = FileSearchManager.shared
     searchManager.check()
+  }
+  
+  override func viewDidDisappear() {
+    
   }
 
   override var representedObject: Any? {

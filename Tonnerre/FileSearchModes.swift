@@ -44,9 +44,29 @@ enum SearchMode: String {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     switch self {
     case .defaultMode:
-      return [URL(fileURLWithPath: "/Applications"), URL(fileURLWithPath: "/System/Library/PreferencePanes"), homeDir.appendingPathComponent("Applications", isDirectory: true)]
+      return ["/Applications", "/System/Library/PreferencePanes", "/Applications/Xcode.app/Contents/Applications/", "/System/Library/CoreServices/Applications/"].map({ URL(fileURLWithPath: $0) }) + [homeDir.appendingPathComponent("Applications", isDirectory: true)]
     default:
-      return ["Downloads", "Desktop", "Documents", "Library/Mobile Documents/com~apple~CloudDocs"].map(homeDir.appendingPathComponent)
+      let exclusions = Set<String>(["Public", "Library", "Applications"])
+      do {
+        let userDirs = try FileManager.default.contentsOfDirectory(at: homeDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants, .skipsPackageDescendants])
+        return userDirs.filter({ !exclusions.contains($0.lastPathComponent) })
+      } catch {
+        return []
+      }
+    }
+  }
+  
+  var exclusionNames: Set<String> {
+    switch self {
+    case .defaultMode:
+      return Set<String>()
+    case .name, .content:
+      guard
+        let exclusionListPath = Bundle.main.path(forResource: "exclusionList", ofType: "plist"),
+      let exclusionList = NSDictionary(contentsOfFile: exclusionListPath) as? [String: [String]]
+      else { return Set<String>() }
+      if self == .name { return Set(exclusionList["coding"] ?? []) }
+      else { return Set((exclusionList["coding"] ?? []) + (exclusionList["media"] ?? []) )}
     }
   }
   
