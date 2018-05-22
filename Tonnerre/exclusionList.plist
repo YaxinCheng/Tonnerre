@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>path</key>
+	<array>
+		<string>/Music/iTunes/Album Artwork</string>
+	</array>
+	<key>directory</key>
+	<array>
+		<string>env</string>
+		<string>venv</string>
+		<string>cache</string>
+	</array>
 	<key>media</key>
 	<array>
 		<string>bmp</string>
@@ -103,8 +113,6 @@
 	</array>
 	<key>coding</key>
 	<array>
-		<string>env</string>
-		<string>venv</string>
 		<string>pyc</string>
 		<string>class</string>
 	</array>

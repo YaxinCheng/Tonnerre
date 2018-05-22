@@ -56,20 +56,6 @@ enum SearchMode: String {
     }
   }
   
-  var exclusionNames: Set<String> {
-    switch self {
-    case .defaultMode:
-      return Set<String>()
-    case .name, .content:
-      guard
-        let exclusionListPath = Bundle.main.path(forResource: "exclusionList", ofType: "plist"),
-      let exclusionList = NSDictionary(contentsOfFile: exclusionListPath) as? [String: [String]]
-      else { return Set<String>() }
-      if self == .name { return Set(exclusionList["coding"] ?? []) }
-      else { return Set((exclusionList["coding"] ?? []) + (exclusionList["media"] ?? []) )}
-    }
-  }
-  
   static func setIndexStorage(data: [SearchMode: TonnerreIndex]) {
     if indexStorage.isEmpty {
       indexStorage = data

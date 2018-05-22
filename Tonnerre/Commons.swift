@@ -11,10 +11,11 @@ import Cocoa
 
 enum StoredKeys: String {// Keys used in UserDefault
   case appSupportDir
+  case finishedIndexing
 }
 
 enum CoreDataEntities: String {
-  case IndexedDir
+  case IndexingDir
   case FailedPath
   case AvailableMode
 }

@@ -16,10 +16,16 @@ class FileIndexingManager {
     }
     return NSDictionary(contentsOfFile: aliasFile) as! [String : String]
   }()
+  private var controls: [SearchMode: ExclusionControl] = [:]
   
   func indexDefault() {
     let mode: SearchMode = .defaultMode
     let targetPaths = mode.indexTargets
+    
+    for path in targetPaths {
+      let _: IndexingDir? = safeInsertRecord(data: ["path": path.path, "category": mode.storedInt])
+    }
+    
     let queue = DispatchQueue.global(qos: .utility)
     queue.async {
       for beginURL in targetPaths {
@@ -31,10 +37,21 @@ class FileIndexingManager {
   func indexDocuments() {
     let modes: [SearchMode] = [.name, .content]
     let targetPaths = modes[0].indexTargets
+    controls[.name] = ExclusionControl(types: .directory, .coding)
+    controls[.content] = ExclusionControl(types: .directory, .coding, .media)
+    for mode in modes {// Keep records of the documents we are about to index
+      for path in targetPaths {
+        let _: IndexingDir? = safeInsertRecord(data: ["path": path.path, "category": mode.storedInt])
+      }
+    }
     let queue = DispatchQueue.global(qos: .utility)
     queue.async {
       for beginURL in targetPaths {
         self.addContent(in: beginURL, to: modes)
+      }
+      let userDefault = UserDefaults.standard
+      if !userDefault.bool(forKey: StoredKeys.finishedIndexing.rawValue) {
+        userDefault.set(true, forKey: StoredKeys.finishedIndexing.rawValue)
       }
     }
   }
@@ -62,7 +79,7 @@ class FileIndexingManager {
       if !path.isDirectory {
         for mode in searchModes {
           let fileExtension = path.pathExtension.lowercased()
-          if mode.exclusionNames.contains(fileExtension) { continue }// Exclude the unwanted files
+          if (controls[mode]?.contains(fileExtension) ?? false) { continue }// Exclude the unwanted files
           _ = try mode.index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))
         }
       } else {
@@ -77,11 +94,18 @@ class FileIndexingManager {
         addContent(in: filePath, to: searchModes)
       }
       for mode in searchModes {
-        let _: IndexedDir? = safeInsertRecord(data: ["path": path.path, "category": mode.storedInt])
+        // When each single file is indexed, we remove the path from CoreData
+        safeDeleteRecord(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
+        // Then we add each sub-directory in this path to the CoreData
+        for dirPath in orderedContent[1] {
+          let _: IndexingDir? = safeInsertRecord(data: ["path": dirPath.path, "category": mode.storedInt])
+        }
+        // So finally, there will be no data left in the IndexingDir
       }
       for dirPath in orderedContent[1] {
         let pathName = dirPath.lastPathComponent.lowercased()
-        if SearchMode.name.exclusionNames.contains(pathName) { continue }// Exclude the unwanted folders
+        if (controls[.name]?.contains(pathName) ?? false) { continue }// Exclude the cache folders
+        if ExclusionControl.isExcludedURL(url: path) { continue }// Exclude specific URLs not needed for all indexing
         addContent(in: dirPath, to: searchModes)
       }
     }
@@ -114,18 +138,16 @@ class FileIndexingManager {
     try? context.save()
     return newRecord
   }
-}
-
-extension URL {
-  var isDirectory: Bool {
-    let value = try? resourceValues(forKeys: [.isDirectoryKey, .isPackageKey])
-    guard let isDir = value?.isDirectory, let isPack = value?.isPackage else { return false }
-    return isDir && !isPack
-  }
   
-  var isSymlink: Bool {
-    let value = try? resourceValues(forKeys: [.isSymbolicLinkKey, .isAliasFileKey])
-    guard let isSymlink = value?.isSymbolicLink, let isAlias = value?.isAliasFile else { return false }
-    return isSymlink || isAlias
+  private func safeDeleteRecord<T: NSManagedObject>(data: [String: Any], dataType: T.Type) {
+    let context = getContext()
+    let fetchRequest = NSFetchRequest<T>(entityName: "\(T.self)")
+    let query = data.reduce([], { $0 + [$1.key, $1.value]})
+    fetchRequest.predicate = NSPredicate(format: "%@=%@ AND %@=%@", argumentArray: query)
+    guard let fetchedResult = try? context.fetch(fetchRequest) else { return }
+    for result in fetchedResult {
+      context.delete(result)
+    }
+    try? context.save()
   }
 }

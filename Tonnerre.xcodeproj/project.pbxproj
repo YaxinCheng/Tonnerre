@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		140F8C6F20B3668C00C69C25 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
+		1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251D20B49FD5001E0D52 /* ExclusionControl.swift */; };
+		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
 		1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
@@ -57,6 +59,8 @@
 
 /* Begin PBXFileReference section */
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
+		1452251D20B49FD5001E0D52 /* ExclusionControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionControl.swift; sourceTree = "<group>"; };
+		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1470514520B1BEF900F6FBE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 				1470518220B1CA6800F6FBE8 /* FileSearchManager.swift */,
 				1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */,
 				1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */,
+				1452251D20B49FD5001E0D52 /* ExclusionControl.swift */,
+				1452251F20B4A794001E0D52 /* URL+Extension.swift */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
@@ -306,6 +312,8 @@
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
+				1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */,
+				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				1470518A20B1EF7000F6FBE8 /* FileIndexingManager.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* FileSearchModes.swift in Sources */,
 				1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */,

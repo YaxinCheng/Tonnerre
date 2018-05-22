@@ -39,18 +39,19 @@ class FileSearchManager {
   }
   
   func check() {
-    let context = getContext()
-    do {
-      let fetchRequest = NSFetchRequest<IndexedDir>(entityName: CoreDataEntities.IndexedDir.rawValue)
-      let indexedCount = try context.count(for: fetchRequest)
-      if indexedCount == 0 {
+    let finished = UserDefaults.standard.bool(forKey: StoredKeys.finishedIndexing.rawValue)
+    if finished == false {
+      let context = getContext()
+      let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
+      let count = (try? context.count(for: fetchRequest)) ?? 0
+      if count == 0 {
         createIndexFiles()
         fullIndexing()
+      } else {
+        complementaryIndexing()
       }
-      complementaryIndexing()
-    } catch {
-      NSApplication.shared.presentError(error)
     }
+    listeningToChanges()
   }
   
   private func createIndexFiles() {
@@ -75,15 +76,22 @@ class FileSearchManager {
    Initial full indexing from the beginning. Index every possible file
   */
   private func fullIndexing() {
+//    Add target paths here for both
     indexingManager.indexDefault()
     indexingManager.indexDocuments()
+  }
+  /**
+   When error happend in the indexing process, we re-index what we left based on the CoreData.IndexingDir 
+  */
+  private func complementaryIndexing() {
+    
   }
   
   /**
    Add-on indexing. Only modify the changes in the index files
   */
   //TODO: - Detailed info
-  private func complementaryIndexing() {
+  private func listeningToChanges() {
     detector.start()
   }
   
