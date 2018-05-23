@@ -17,6 +17,8 @@ class FileIndexingManager {
     return NSDictionary(contentsOfFile: aliasFile) as! [String : String]
   }()
   private var controls: [SearchMode: ExclusionControl] = [:]
+  private let backgroundQ: DispatchQueue = .global(qos: .background)
+  private let semaphore = DispatchSemaphore(value: 1)
   
   func indexDefault() {
     let mode: SearchMode = .defaultMode
@@ -86,7 +88,9 @@ class FileIndexingManager {
         content = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
       }
     } catch {
-      let _: FailedPath? = safeInsertRecord(data: ["path": path.path, "reason": "\(error)"])
+      backgroundQ.async {
+        let _: FailedPath? = self.safeInsertRecord(data: ["path": path.path, "reason": "\(error)"])
+      }
     }
     if path.isDirectory {
       let orderedContent = separate(paths: content)
@@ -95,13 +99,18 @@ class FileIndexingManager {
       }
       for mode in searchModes {
         // When each single file is indexed, we remove the path from CoreData
-        safeDeleteRecord(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
+        backgroundQ.async {
+          self.safeDeleteRecord(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
+        }
         // Then we add each sub-directory in this path to the CoreData
         for dirPath in orderedContent[1] {
-          let _: IndexingDir? = safeInsertRecord(data: ["path": dirPath.path, "category": mode.storedInt])
+          backgroundQ.async {
+            let _: IndexingDir? = self.safeInsertRecord(data: ["path": dirPath.path, "category": mode.storedInt])
+          }
         }
         // So finally, there will be no data left in the IndexingDir
       }
+      print(path)
       for dirPath in orderedContent[1] {
         let pathName = dirPath.lastPathComponent.lowercased()
         if (controls[.name]?.contains(pathName) ?? false) { continue }// Exclude the cache folders
@@ -126,8 +135,11 @@ class FileIndexingManager {
   private func safeInsertRecord<T: NSManagedObject>(data: [String: Any]) -> T? {
     let context = getContext()
     let fetchRequest = NSFetchRequest<T>(entityName: "\(T.self)")
-    let query = data.reduce([], {$0 + [$1.key, $1.value]})
-    fetchRequest.predicate = NSPredicate(format: "%@=%@ AND %@=%@", argumentArray: query)
+    let queryStr = data.keys.map({ $0 + "=%@" }).joined(separator: " AND ")
+    let query = data.reduce([], {$0 + [$1.value]})
+    fetchRequest.predicate = NSPredicate(format: queryStr, argumentArray: query)
+    defer { semaphore.signal() }
+    semaphore.wait()
     if let fetchedCount = try? context.count(for: fetchRequest) {
       if fetchedCount > 0 { return nil }
     }
@@ -141,13 +153,14 @@ class FileIndexingManager {
   
   private func safeDeleteRecord<T: NSManagedObject>(data: [String: Any], dataType: T.Type) {
     let context = getContext()
-    let fetchRequest = NSFetchRequest<T>(entityName: "\(T.self)")
-    let query = data.reduce([], { $0 + [$1.key, $1.value]})
-    fetchRequest.predicate = NSPredicate(format: "%@=%@ AND %@=%@", argumentArray: query)
-    guard let fetchedResult = try? context.fetch(fetchRequest) else { return }
-    for result in fetchedResult {
-      context.delete(result)
-    }
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
+    let queryStr = data.keys.map({ $0 + "=%@" }).joined(separator: " AND ")
+    let query = data.reduce([], {$0 + [$1.value]})
+    fetchRequest.predicate = NSPredicate(format: queryStr, argumentArray: query)
+    let batchDelete = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+    semaphore.wait()
+    _ = try? context.execute(batchDelete)
     try? context.save()
+    semaphore.signal()
   }
 }

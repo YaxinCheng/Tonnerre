@@ -4,10 +4,13 @@
 <dict>
 	<key>path</key>
 	<array>
-		<string>/Music/iTunes/Album Artwork</string>
+		<string>Music/iTunes/Album Artwork</string>
 	</array>
 	<key>directory</key>
 	<array>
+		<string>logs</string>
+		<string>plugin</string>
+		<string>__pycache__</string>
 		<string>env</string>
 		<string>venv</string>
 		<string>cache</string>
