@@ -10,7 +10,6 @@ import Foundation
 import TonnerreSearch
 
 class FileSearchManager {
-  private static var instance: FileSearchManager! = nil
   private let fileManager = FileManager.default
   var availableModes: [SearchMode]
   private let indexingManager: FileIndexingManager
@@ -25,22 +24,17 @@ class FileSearchManager {
       availableModes = modes.filter({ $0.enabled }).compactMap({ SearchMode(rawValue: $0.name!) })
     } catch {
       NSApplication.shared.presentError(error)
-      availableModes = []
+      availableModes = [.defaultMode, .content, .name]
     }
     let detectingPath = Set(availableModes.map({ $0.indexTargets }).reduce([], +)).map({ $0.path })
     detector = TonnerreFSDetector(pathes: detectingPath, callback: fileChangeHandler)
   }
-  
-  static var shared: FileSearchManager {
-    if instance == nil {
-      instance = FileSearchManager()
-    }
-    return instance
-  }
+
   
   func check() {
-    let finished = UserDefaults.standard.bool(forKey: StoredKeys.finishedIndexing.rawValue)
-    if finished == false {
+    let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
+    let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
+    if defaultFinished == false && documentFinished == false {
       let context = getContext()
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0

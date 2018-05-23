@@ -11,7 +11,8 @@ import Cocoa
 
 enum StoredKeys: String {// Keys used in UserDefault
   case appSupportDir
-  case finishedIndexing
+  case documentInxFinished
+  case defaultInxFinished
 }
 
 enum CoreDataEntities: String {

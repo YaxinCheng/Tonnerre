@@ -10,6 +10,7 @@
 	<array>
 		<string>locale</string>
 		<string>locales</string>
+		<string>log</string>
 		<string>logs</string>
 		<string>plugin</string>
 		<string>__pycache__</string>
