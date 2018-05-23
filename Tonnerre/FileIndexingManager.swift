@@ -97,13 +97,18 @@ class FileIndexingManager {
       for filePath in orderedContent[0] {
         addContent(in: filePath, to: searchModes)
       }
+      let filteredDir = orderedContent[1].filter({
+        let folderName = $0.lastPathComponent.lowercased()
+        return !ExclusionControl.isExcludedDir(name: folderName)
+          && !ExclusionControl.isExcludedURL(url: $0)
+      })
       for mode in searchModes {
         // When each single file is indexed, we remove the path from CoreData
         backgroundQ.async {
           self.safeDeleteRecord(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
         }
         // Then we add each sub-directory in this path to the CoreData
-        for dirPath in orderedContent[1] {
+        for dirPath in filteredDir {
           backgroundQ.async {
             let _: IndexingDir? = self.safeInsertRecord(data: ["path": dirPath.path, "category": mode.storedInt])
           }
@@ -111,10 +116,7 @@ class FileIndexingManager {
         // So finally, there will be no data left in the IndexingDir
       }
       debugPrint(path)
-      for dirPath in orderedContent[1] {
-        let pathName = dirPath.lastPathComponent.lowercased()
-        if ExclusionControl.isExcludedDir(name: pathName) { continue }// Exclude the cache folders
-        if ExclusionControl.isExcludedURL(url: dirPath) { continue }// Exclude specific URLs not needed for all indexing
+      for dirPath in filteredDir {
         addContent(in: dirPath, to: searchModes)
       }
     }
