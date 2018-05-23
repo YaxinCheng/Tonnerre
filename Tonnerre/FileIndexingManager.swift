@@ -39,8 +39,8 @@ class FileIndexingManager {
   func indexDocuments() {
     let modes: [SearchMode] = [.name, .content]
     let targetPaths = modes[0].indexTargets
-    controls[.name] = ExclusionControl(types: .directory, .coding)
-    controls[.content] = ExclusionControl(types: .directory, .coding, .media)
+    controls[.name] = ExclusionControl(type: .coding)
+    controls[.content] = ExclusionControl(types: .coding, .media)
     for mode in modes {// Keep records of the documents we are about to index
       for path in targetPaths {
         let _: IndexingDir? = safeInsertRecord(data: ["path": path.path, "category": mode.storedInt])
@@ -110,11 +110,11 @@ class FileIndexingManager {
         }
         // So finally, there will be no data left in the IndexingDir
       }
-      print(path)
+      debugPrint(path)
       for dirPath in orderedContent[1] {
         let pathName = dirPath.lastPathComponent.lowercased()
-        if (controls[.name]?.contains(pathName) ?? false) { continue }// Exclude the cache folders
-        if ExclusionControl.isExcludedURL(url: path) { continue }// Exclude specific URLs not needed for all indexing
+        if ExclusionControl.isExcludedDir(name: pathName) { continue }// Exclude the cache folders
+        if ExclusionControl.isExcludedURL(url: dirPath) { continue }// Exclude specific URLs not needed for all indexing
         addContent(in: dirPath, to: searchModes)
       }
     }

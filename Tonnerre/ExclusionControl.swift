@@ -41,15 +41,20 @@ struct ExclusionControl {
   }
   
   static func isExcludedURL(url: URL) -> Bool {
-    if ExclusionControl.rawList.isEmpty {
-      let exclusionPath = Bundle.main.path(forResource: "exclusionList", ofType: "plist")!
-      ExclusionControl.rawList = NSDictionary(contentsOfFile: exclusionPath) as! [String: [String]]
-    }
-    let currentUserDir = FileManager.default.homeDirectoryForCurrentUser
-    let excludedURL = Set(ExclusionControl.rawList["path"]!.map({ currentUserDir.appendingPathComponent($0) }))
-    if excludedURL.contains(url) { return true }
-    for each in excludedURL {
+    let control = ExclusionControl(type: .path)
+    let exclusionURL = Set(control.exclusionSet.map({ URL(fileURLWithPath: $0) }))
+    if exclusionURL.contains(url) { return true }
+    for each in exclusionURL {
       if url.isChildOf(url: each) { return true }
+    }
+    return false
+  }
+  
+  static func isExcludedDir(name: String) -> Bool {
+    let control = ExclusionControl(type: .directory)
+    if control.exclusionSet.contains(name) { return true }
+    for each in control.exclusionSet {
+      if name.hasPrefix(each) { return true }
     }
     return false
   }
