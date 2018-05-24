@@ -1,5 +1,5 @@
 //
-//  FileIndexingManager.swift
+//  CoreIndexing.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-05-20.
@@ -9,7 +9,7 @@
 import Foundation
 import TonnerreSearch
 
-class FileIndexingManager {
+class CoreIndexing {
   /**
    A dictionary using file names as keys, and related aliases (if exist) as values
   */
@@ -34,61 +34,78 @@ class FileIndexingManager {
    Semaphore. Used to prevent destructive interference for adding to and deleting from CoreData
    */
   private let semaphore = DispatchSemaphore(value: 1)
-  
+
   /**
-    Index the required data to the default index file
+    Index the required data to the certain index files
    */
-  func indexDefault() {
-    let mode: SearchMode = .defaultMode
-    let targetPaths = mode.indexTargets
-    
-    for path in targetPaths {
-      let _: IndexingDir? = safeInsert(data: ["path": path.path, "category": mode.storedInt])
-    }
-    let queue = DispatchQueue.global(qos: .utility)
-    let notificationCentre = NotificationCenter.default
-    queue.async {
-      
-      let beginNotif = Notification(name: .defaultIndexingDidBegin)
-      notificationCentre.post(beginNotif)
-      
-      for beginURL in targetPaths {
-        self.addContent(in: beginURL, to: mode)
-      }
-      
-      UserDefaults.standard.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
-      let endNotif = Notification(name: .defaultIndexingDidFinish)
-      notificationCentre.post(endNotif)
-    }
-  }
-  
-  /**
-   Index the required files and directories to the name and content index files
-   */
-  func indexDocuments() {
-    let modes: [SearchMode] = [.name, .content]
-    let targetPaths = modes[0].indexTargets
-    controls[.name] = ExclusionControl(type: .coding)
-    controls[.content] = ExclusionControl(types: .coding, .media)
-    for mode in modes {// Keep records of the documents we are about to index
+  func fullIndex(modes: SearchMode...) {
+    guard let targetPaths: [URL] = modes.first?.indexTargets else { return }
+    for mode in modes {
       for path in targetPaths {
         let _: IndexingDir? = safeInsert(data: ["path": path.path, "category": mode.storedInt])
       }
     }
     let queue = DispatchQueue.global(qos: .utility)
     let notificationCentre = NotificationCenter.default
+    let beginNotification = modes.count == 2 ? Notification(name: .documentIndexingDidBegin) : Notification(name: .defaultIndexingDidBegin)
+    let endNotification = modes.count == 2 ? Notification(name: .documentIndexingDidFinish) : Notification(name: .defaultIndexingDidFinish)
     queue.async {
-      let beginNotif = Notification(name: .documentIndexingDidBegin)
-      notificationCentre.post(beginNotif)
-      
-      for beginURL in targetPaths {
-        self.addContent(in: beginURL, to: modes)
-      }
-      
-      UserDefaults.standard.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
-      let endNotif = Notification(name: .documentIndexingDidFinish)
-      notificationCentre.post(endNotif)
+      notificationCentre.post(beginNotification)
+      for beginURL in targetPaths { self.addContent(in: beginURL, to: modes) }
+      notificationCentre.post(endNotification)
     }
+  }
+  
+  /**
+   Recover the unfinished indexing and failed indexing
+  */
+  func recoverFromErrors() {
+    let context = getContext()
+    let queryErrors: (String)->[NSManagedObject] = {// Function to query from CoreData
+      let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: $0)
+      return (try? context.fetch(fetchRequest)) ?? []
+    }
+    guard
+      let failedPathes = queryErrors(CoreDataEntities.FailedPath.rawValue) as? [FailedPath],
+      let ongoingPathes = queryErrors(CoreDataEntities.IndexingDir.rawValue) as? [IndexingDir]
+    else { return }// Get failedPath and unfinished IndexingDir
+    let (failedDefault, failedDocuments) = failedPathes.bipartite { $0.category == 0 }// Separate default & docs
+    let (ongoingDefault, ongoingDocuments) = ongoingPathes.bipartite { $0.category == 0 }
+    let queue = DispatchQueue.global(qos: .utility)
+    let dealFailure: (FailedPath) -> Void = {// FailedPath dealing
+      // Re-try adding the FailedPath into the index files, but do not recursively go to its content
+      do {
+        let pathURL = URL(fileURLWithPath: $0.path!)
+        _ = try SearchMode.defaultMode.index.addDocument(atPath: pathURL, additionalNote: self.getAlias(name: pathURL.lastPathComponent))
+      } catch { debugPrint(error) }
+      self.semaphore.wait()
+      context.delete($0)// delete anyway even if it fails
+      try? context.save()
+      self.semaphore.signal()
+    }
+    let notificationCentre = NotificationCenter.default
+    let userDefaults = UserDefaults.standard
+    queue.async {// Restore for defaults
+      notificationCentre.post(Notification(name: .defaultIndexingDidBegin))
+      for fd in failedDefault { dealFailure(fd) }
+      let ongoingDefaultURL = ongoingDefault.map({ URL(fileURLWithPath: $0.path!) })
+      for od in ongoingDefaultURL { self.addContent(in: od, to: .defaultMode) }
+      userDefaults.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
+      notificationCentre.post(Notification(name: .defaultIndexingDidFinish))
+    }
+    queue.async {// Restore for documents
+      notificationCentre.post(Notification(name: .documentIndexingDidBegin))
+      for fd in failedDocuments { dealFailure(fd) }
+      let (ongoingNameDoc, ongoingContentDoc) = ongoingDocuments.bipartite { $0.category == 1 }
+      let nameURLs = ongoingNameDoc.map({ URL(fileURLWithPath: $0.path!) })
+      let contentURLs = ongoingContentDoc.map({ URL(fileURLWithPath: $0.path! )})
+      for nu in nameURLs { self.addContent(in: nu, to: .name) }// addContent handles the CoreData content
+      for cu in contentURLs { self.addContent(in: cu, to: .content) }
+      userDefaults.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
+      notificationCentre.post(Notification(name: .documentIndexingDidFinish))
+    }
+    
+    
   }
   
   /**
@@ -138,8 +155,10 @@ class FileIndexingManager {
         content = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
       }
     } catch {// If any error happened
-      backgroundQ.async {// Insert a failed path to CoreData
-        let _: FailedPath? = self.safeInsert(data: ["path": path.path, "reason": "\(error)"])
+      for mode in searchModes {
+        backgroundQ.async {// Insert a failed path to CoreData
+          let _: FailedPath? = self.safeInsert(data: ["path": path.path, "reason": "\(error)", "category": mode.storedInt])
+        }
       }
     }
     if path.isDirectory {// This is simply for the tail recursion to separate from above

@@ -9,7 +9,7 @@
 import Cocoa
 
 class ViewController: NSViewController {
-  let searchManager = FileSearchManager.shared
+  let searchManager = SearchService()
 
   override func viewDidLoad() {
     super.viewDidLoad()

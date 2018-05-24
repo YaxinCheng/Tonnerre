@@ -19,11 +19,11 @@
 		1470515A20B1BEFB00F6FBE8 /* TonnerreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470515920B1BEFB00F6FBE8 /* TonnerreTests.swift */; };
 		1470516520B1BEFB00F6FBE8 /* TonnerreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */; };
 		1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470517220B1C29A00F6FBE8 /* Commons.swift */; };
-		1470518320B1CA6800F6FBE8 /* FileSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518220B1CA6800F6FBE8 /* FileSearchManager.swift */; };
-		1470518520B1DEDF00F6FBE8 /* FileSearchModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */; };
+		1470518320B1CA6800F6FBE8 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518220B1CA6800F6FBE8 /* SearchService.swift */; };
+		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
 		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1470518A20B1EF7000F6FBE8 /* FileIndexingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */; };
+		1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */; };
 		1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 /* End PBXBuildFile section */
 
@@ -79,9 +79,9 @@
 		1470516620B1BEFB00F6FBE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1470517220B1C29A00F6FBE8 /* Commons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commons.swift; sourceTree = "<group>"; };
 		1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TonnerreSearch.framework; sourceTree = "<group>"; };
-		1470518220B1CA6800F6FBE8 /* FileSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchManager.swift; sourceTree = "<group>"; };
-		1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchModes.swift; sourceTree = "<group>"; };
-		1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIndexingManager.swift; sourceTree = "<group>"; };
+		1470518220B1CA6800F6FBE8 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		1470518420B1DEDF00F6FBE8 /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
+		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,9 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				1470514320B1BEF900F6FBE8 /* AppDelegate.swift */,
-				1470518220B1CA6800F6FBE8 /* FileSearchManager.swift */,
-				1470518920B1EF7000F6FBE8 /* FileIndexingManager.swift */,
-				1470518420B1DEDF00F6FBE8 /* FileSearchModes.swift */,
+				1470518220B1CA6800F6FBE8 /* SearchService.swift */,
+				1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */,
+				1470518420B1DEDF00F6FBE8 /* SearchMode.swift */,
 				1452251D20B49FD5001E0D52 /* ExclusionControl.swift */,
 				144F80C420B5FF75006A16BC /* Notification+Extension.swift */,
 				1452251F20B4A794001E0D52 /* URL+Extension.swift */,
@@ -311,14 +311,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1470518320B1CA6800F6FBE8 /* FileSearchManager.swift in Sources */,
+				1470518320B1CA6800F6FBE8 /* SearchService.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
-				1470518A20B1EF7000F6FBE8 /* FileIndexingManager.swift in Sources */,
-				1470518520B1DEDF00F6FBE8 /* FileSearchModes.swift in Sources */,
+				1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */,
+				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
 				1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */,
 			);

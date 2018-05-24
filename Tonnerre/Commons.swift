@@ -25,3 +25,15 @@ func getContext() -> NSManagedObjectContext {
   let appDelegate = NSApplication.shared.delegate as! AppDelegate
   return appDelegate.persistentContainer.viewContext
 }
+
+extension Array {
+  func bipartite(standard: (Element)->Bool) -> ([Element], [Element]) {
+    var first: [Element] = []
+    var second: [Element] = []
+    for element in self {
+      if standard(element) { first.append(element) }
+      else { second.append(element) }
+    }
+    return (first, second)
+  }
+}

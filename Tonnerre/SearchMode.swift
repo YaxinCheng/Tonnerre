@@ -57,9 +57,7 @@ enum SearchMode: String {
   }
   
   static func setIndexStorage(data: [SearchMode: TonnerreIndex]) {
-    if indexStorage.isEmpty {
-      indexStorage = data
-    }
+    indexStorage = data
   }
 }
 

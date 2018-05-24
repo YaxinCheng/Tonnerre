@@ -1,5 +1,5 @@
 //
-//  FileSearchManager.swift
+//  SearchService.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-05-20.
@@ -9,15 +9,15 @@
 import Foundation
 import TonnerreSearch
 
-class FileSearchManager {
+class SearchService {
   private let fileManager = FileManager.default
   var availableModes: [SearchMode]
-  private let indexingManager: FileIndexingManager
+  private let indexingManager: CoreIndexing
   var detector: TonnerreFSDetector!
   
   init() {
     let context = getContext()
-    indexingManager = FileIndexingManager()
+    indexingManager = CoreIndexing()
     do {
       let fetchRequest = NSFetchRequest<AvailableMode>(entityName: CoreDataEntities.AvailableMode.rawValue)
       let modes = try context.fetch(fetchRequest)
@@ -71,8 +71,8 @@ class FileSearchManager {
   */
   private func fullIndexing() {
 //    Add target paths here for both
-    indexingManager.indexDefault()
-    indexingManager.indexDocuments()
+    indexingManager.fullIndex(modes: .defaultMode)
+    indexingManager.fullIndex(modes: .name, .content)
   }
   /**
    When error happend in the indexing process, we re-index what we left based on the CoreData.IndexingDir 
