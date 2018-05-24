@@ -88,18 +88,17 @@ class CoreIndexing {
     let userDefaults = UserDefaults.standard
     queue.async { [unowned self] in // Restore for defaults
       notificationCentre.post(Notification(name: .defaultIndexingDidBegin))
-      let defaultIndex = TonnerreIndex(filePath: SearchMode.defaultMode.indexPath.path, indexType: .nameOnly)
+      let defaultIndex = self.indexes[.defaultMode]
       for fd in failedDefault { dealFailure(fd, defaultIndex) }
       let ongoingDefaultURL = ongoingDefault.map({ URL(fileURLWithPath: $0.path!) })
       for od in ongoingDefaultURL { self.addContent(in: od, modes: [.defaultMode], indexes: [defaultIndex]) }
       userDefaults.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
-      defaultIndex.close()
       notificationCentre.post(Notification(name: .defaultIndexingDidFinish))
     }
     queue.async { [unowned self] in // Restore for documents
       notificationCentre.post(Notification(name: .documentIndexingDidBegin))
-      let nameIndex = TonnerreIndex(filePath: SearchMode.name.indexPath.path, indexType: .nameOnly)
-      let contentIndex = TonnerreIndex(filePath: SearchMode.content.indexPath.path, indexType: .metadata)
+      let nameIndex = self.indexes[.name]
+      let contentIndex = self.indexes[.content]
       for fd in failedDocuments {
         let index = fd.category == 1 ? nameIndex : contentIndex
         dealFailure(fd, index)
@@ -110,8 +109,6 @@ class CoreIndexing {
         let url = URL(fileURLWithPath: od.path!)
         self.addContent(in: url, modes: [mode], indexes: [index])
       }
-      nameIndex.close()
-      contentIndex.close()
       userDefaults.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
       notificationCentre.post(Notification(name: .documentIndexingDidFinish))
     }

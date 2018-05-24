@@ -70,10 +70,73 @@ class SearchService {
     detector.start()
   }
   
+  private func identity(path: URL) -> [SearchMode] {
+    if ExclusionControl.isExcludedURL(url: path) { return [] }
+    if ExclusionControl.isExcludedDir(name: path.lastPathComponent) { return [] }
+    let defaultDir = Set(SearchMode.defaultMode.indexTargets)
+    if defaultDir.contains(path) { return [.defaultMode] }
+    let documentDir = Set(SearchMode.name.indexTargets)
+    let codingExclusion = ExclusionControl(type: .coding)
+    let mediaExclusion = ExclusionControl(type: .media)
+    let extensionAnalyze: (URL) -> [SearchMode] = { path in
+      let extensionName = path.pathExtension
+      if codingExclusion.contains(extensionName) || codingExclusion.contains(extensionName) { return [] }
+      if path.isDirectory || mediaExclusion.contains(extensionName) { return [.name] }
+      return [.name, .content]
+    }
+    if documentDir.contains(path) {
+      return extensionAnalyze(path)
+    }
+    for defaultPath in defaultDir {
+      if path.isChildOf(url: defaultPath) { return [.defaultMode] }
+    }
+    for documentPath in documentDir {
+      if path.isChildOf(url: documentPath) { return extensionAnalyze(path) }
+    }
+    return []
+  }
+  
   private func fileChangeHandler(events: [TonnerreFSDetector.event]) {
+    let created = TonnerreFSEvent.created.rawValue
+    let renamed = TonnerreFSEvent.renamed.rawValue
+    let removed = TonnerreFSEvent.removed.rawValue
+    let context = getContext()
+    
     for event in events {
       let (path, changes) = event
       let totalEvents = changes.reduce(0, {$0 | $1.rawValue})
+      let pathURL = URL(fileURLWithPath: path)
+      let relatedModes = identity(path: pathURL)
+      let indexManage = IndexManage()
+      let relatedIndexes = relatedModes.map({ indexManage[$0] })
+      do {
+        if totalEvents & created == created {
+          for index in relatedIndexes {
+            _ = try index.addDocument(atPath: pathURL)
+          }
+        } else if totalEvents & renamed == renamed {
+          for index in relatedIndexes {
+            let result = index.search(query: pathURL.lastPathComponent, limit: 5, options: .defaultOption)
+            if result.contains(pathURL) {
+              _ = index.removeDocument(atPath: pathURL)
+            } else {
+              _ = try index.addDocument(atPath: pathURL)
+            }
+          }
+        } else if totalEvents & removed == removed {
+          for index in relatedIndexes {
+            _ = index.removeDocument(atPath: pathURL)
+          }
+        }
+      } catch {
+        for mode in relatedModes {
+          let failedPath = FailedPath(context: context)
+          failedPath.category = Int16(mode.storedInt)
+          failedPath.path = path
+          failedPath.reason = "\(error)"
+          try? context.save()
+        }
+      }
     }
   }
 }
