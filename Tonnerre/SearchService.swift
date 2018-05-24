@@ -39,31 +39,12 @@ class SearchService {
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
       if count == 0 {
-        createIndexFiles()
         fullIndexing()
       } else {
         complementaryIndexing()
       }
     }
     listeningToChanges()
-  }
-  
-  private func createIndexFiles() {
-    let indexes = availableModes.map({ createIndexFile(name: $0.rawValue, type: $0.indexType) })
-    let correspondingData = Dictionary(uniqueKeysWithValues: zip(availableModes, indexes))
-    SearchMode.setIndexStorage(data: correspondingData)
-  }
-  
-  private func createIndexFile(name: String, type: TonnerreIndexType) -> TonnerreIndex {
-    let appSupportDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
-    let indecesFolder = appSupportDir.appendingPathComponent("Indeces")
-    do {
-      if !fileManager.fileExists(atPath: indecesFolder.path) {
-        try fileManager.createDirectory(at: indecesFolder, withIntermediateDirectories: true, attributes: nil)
-      }
-    } catch { NSApplication.shared.presentError(error) }
-    let filePath = indecesFolder.appendingPathComponent(name)
-    return TonnerreIndex(filePath: filePath.path, indexType: type)
   }
   
   /**
@@ -78,7 +59,7 @@ class SearchService {
    When error happend in the indexing process, we re-index what we left based on the CoreData.IndexingDir 
   */
   private func complementaryIndexing() {
-    
+    indexingManager.recoverFromErrors()
   }
   
   /**
@@ -92,9 +73,7 @@ class SearchService {
   private func fileChangeHandler(events: [TonnerreFSDetector.event]) {
     for event in events {
       let (path, changes) = event
-      if changes.contains(.created) {
-        
-      }
+      let totalEvents = changes.reduce(0, {$0 | $1.rawValue})
     }
   }
 }

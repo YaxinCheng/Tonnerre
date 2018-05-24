@@ -33,8 +33,9 @@ class CoreIndexing {
   /**
    Semaphore. Used to prevent destructive interference for adding to and deleting from CoreData
    */
-  private let semaphore = DispatchSemaphore(value: 1)
-
+  private let coreDataSemaphore = DispatchSemaphore(value: 1)
+  
+  private let indexes = IndexManage()
   /**
     Index the required data to the certain index files
    */
@@ -49,9 +50,11 @@ class CoreIndexing {
     let notificationCentre = NotificationCenter.default
     let beginNotification = modes.count == 2 ? Notification(name: .documentIndexingDidBegin) : Notification(name: .defaultIndexingDidBegin)
     let endNotification = modes.count == 2 ? Notification(name: .documentIndexingDidFinish) : Notification(name: .defaultIndexingDidFinish)
-    queue.async {
+    for mode in modes { indexes[mode] = TonnerreIndex(filePath: mode.indexPath.path, indexType: mode.indexType) }
+    queue.async { [unowned self] in
       notificationCentre.post(beginNotification)
-      for beginURL in targetPaths { self.addContent(in: beginURL, to: modes) }
+      let indeces = modes.compactMap({ self.indexes[$0] })
+      for beginURL in targetPaths { self.addContent(in: beginURL, modes: modes, indexes: indeces) }
       notificationCentre.post(endNotification)
     }
   }
@@ -72,35 +75,43 @@ class CoreIndexing {
     let (failedDefault, failedDocuments) = failedPathes.bipartite { $0.category == 0 }// Separate default & docs
     let (ongoingDefault, ongoingDocuments) = ongoingPathes.bipartite { $0.category == 0 }
     let queue = DispatchQueue.global(qos: .utility)
-    let dealFailure: (FailedPath) -> Void = {// FailedPath dealing
+    let dealFailure: (FailedPath, TonnerreIndex) -> Void = { [unowned self] in// FailedPath dealing
       // Re-try adding the FailedPath into the index files, but do not recursively go to its content
       do {
         let pathURL = URL(fileURLWithPath: $0.path!)
-        _ = try SearchMode.defaultMode.index.addDocument(atPath: pathURL, additionalNote: self.getAlias(name: pathURL.lastPathComponent))
+        _ = try $1.addDocument(atPath: pathURL, additionalNote: self.getAlias(name: pathURL.lastPathComponent))
       } catch { debugPrint(error) }
-      self.semaphore.wait()
       context.delete($0)// delete anyway even if it fails
       try? context.save()
-      self.semaphore.signal()
     }
     let notificationCentre = NotificationCenter.default
     let userDefaults = UserDefaults.standard
-    queue.async {// Restore for defaults
+    queue.async { [unowned self] in // Restore for defaults
       notificationCentre.post(Notification(name: .defaultIndexingDidBegin))
-      for fd in failedDefault { dealFailure(fd) }
+      let defaultIndex = TonnerreIndex(filePath: SearchMode.defaultMode.indexPath.path, indexType: .nameOnly)
+      for fd in failedDefault { dealFailure(fd, defaultIndex) }
       let ongoingDefaultURL = ongoingDefault.map({ URL(fileURLWithPath: $0.path!) })
-      for od in ongoingDefaultURL { self.addContent(in: od, to: .defaultMode) }
+      for od in ongoingDefaultURL { self.addContent(in: od, modes: [.defaultMode], indexes: [defaultIndex]) }
       userDefaults.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
+      defaultIndex.close()
       notificationCentre.post(Notification(name: .defaultIndexingDidFinish))
     }
-    queue.async {// Restore for documents
+    queue.async { [unowned self] in // Restore for documents
       notificationCentre.post(Notification(name: .documentIndexingDidBegin))
-      for fd in failedDocuments { dealFailure(fd) }
-      let (ongoingNameDoc, ongoingContentDoc) = ongoingDocuments.bipartite { $0.category == 1 }
-      let nameURLs = ongoingNameDoc.map({ URL(fileURLWithPath: $0.path!) })
-      let contentURLs = ongoingContentDoc.map({ URL(fileURLWithPath: $0.path! )})
-      for nu in nameURLs { self.addContent(in: nu, to: .name) }// addContent handles the CoreData content
-      for cu in contentURLs { self.addContent(in: cu, to: .content) }
+      let nameIndex = TonnerreIndex(filePath: SearchMode.name.indexPath.path, indexType: .nameOnly)
+      let contentIndex = TonnerreIndex(filePath: SearchMode.content.indexPath.path, indexType: .metadata)
+      for fd in failedDocuments {
+        let index = fd.category == 1 ? nameIndex : contentIndex
+        dealFailure(fd, index)
+      }
+      for od in ongoingDocuments {
+        let index = od.category == 1 ? nameIndex : contentIndex
+        let mode: SearchMode = od.category == 1 ? .name : .content
+        let url = URL(fileURLWithPath: od.path!)
+        self.addContent(in: url, modes: [mode], indexes: [index])
+      }
+      nameIndex.close()
+      contentIndex.close()
       userDefaults.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
       notificationCentre.post(Notification(name: .documentIndexingDidFinish))
     }
@@ -128,8 +139,8 @@ class CoreIndexing {
    - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
    */
-  private func addContent(in path: URL, to searchModes: SearchMode...) {
-    addContent(in: path, to: searchModes)
+  private func addContent(in path: URL, modes searchModes: SearchMode..., indexes: [TonnerreIndex]) {
+    addContent(in: path, modes: searchModes, indexes: indexes)
   }
   
   /**
@@ -137,47 +148,46 @@ class CoreIndexing {
    - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
   */
-  private func addContent(in path: URL, to searchModes: [SearchMode]) {
+  private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
     if path.isSymlink { return }// Do not add symlink to the index file
     var content: [URL] = []// The content of the path (if the path is a directory)
     do {
       if !path.isDirectory {// If it is not a directory
-        for mode in searchModes {// Add file to related index files
+        for (mode, index) in zip(searchModes, indexes) {// Add file to related index files
           let fileExtension = path.pathExtension.lowercased()// get the extension
           if (controls[mode]?.contains(fileExtension) ?? false) { continue }// Exclude the unwanted types
-          _ = try mode.index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))// add to the index file
+          _ = try index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))// add to the index file
         }
       } else {// If it is a directory
-        for mode in searchModes where mode.includeDir == true {// Add to the index file if the index file accepts directory
-          _ = try mode.index.addDocument(atPath: path)
+        for (mode, index) in zip(searchModes, indexes) where mode.includeDir == true {// Add to the index file if the index file accepts directory
+          _ = try index.addDocument(atPath: path)
         }
         // Find all content files of this path
         content = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
       }
     } catch {// If any error happened
-      for mode in searchModes {
-        backgroundQ.async {// Insert a failed path to CoreData
+      backgroundQ.async { [unowned self] in // Insert a failed path to CoreData
+        for mode in searchModes {
           let _: FailedPath? = self.safeInsert(data: ["path": path.path, "reason": "\(error)", "category": mode.storedInt])
         }
       }
     }
     if path.isDirectory {// This is simply for the tail recursion to separate from above
       let orderedContent = separate(paths: content)// Separate file URLs and directory URLs
-      for filePath in orderedContent[0] { addContent(in: filePath, to: searchModes) }// Add files to index files
+      for filePath in orderedContent[0] { addContent(in: filePath, modes: searchModes, indexes: indexes) }// Add files to index files
       // Filter out certain directory with specific names: cache, logs, locales
       let filteredDir = orderedContent[1].filter { !ExclusionControl.isExcludedDir(name: $0.lastPathComponent.lowercased()) && !ExclusionControl.isExcludedURL(url: $0) }
-      for mode in searchModes { // When each single file is indexed, we remove the path from CoreData
-        backgroundQ.async {
+      backgroundQ.async { [unowned self] in
+        for mode in searchModes { // When each single file is indexed, we remove the path from CoreData
           self.safeDelete(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
-        } // Then we add each sub-directory in this path to the CoreData
-        for dirPath in filteredDir {
-          backgroundQ.async {
-            let _: IndexingDir? = self.safeInsert(data: ["path": dirPath.path, "category": mode.storedInt])
+        // Then we add each sub-directory in this path to the CoreData
+          for dirPath in filteredDir {
+              let _: IndexingDir? = self.safeInsert(data: ["path": dirPath.path, "category": mode.storedInt])
           }
-        } // So finally, there will be no data left in the IndexingDir
+      }// So finally, there will be no data left in the IndexingDir
       }
       debugPrint(path)
-      for dirPath in filteredDir { addContent(in: dirPath, to: searchModes) }// Recursion to add each of them
+      for dirPath in filteredDir { addContent(in: dirPath, modes: searchModes, indexes: indexes) }// Recursion to add each of them
     }
   }
   
@@ -209,8 +219,8 @@ class CoreIndexing {
     let queryStr = data.keys.map({ $0 + "=%@" }).joined(separator: " AND ")
     let query = data.reduce([], {$0 + [$1.value]})
     fetchRequest.predicate = NSPredicate(format: queryStr, argumentArray: query)
-    defer { semaphore.signal() }
-    semaphore.wait()
+    defer { coreDataSemaphore.signal() }
+    coreDataSemaphore.wait()
     if let fetchedCount = try? context.count(for: fetchRequest) {
       if fetchedCount > 0 { return nil }
     }
@@ -234,9 +244,9 @@ class CoreIndexing {
     let query = data.reduce([], {$0 + [$1.value]})
     fetchRequest.predicate = NSPredicate(format: queryStr, argumentArray: query)
     let batchDelete = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-    semaphore.wait()
+    coreDataSemaphore.wait()
     _ = try? context.execute(batchDelete)
     try? context.save()
-    semaphore.signal()
+    coreDataSemaphore.signal()
   }
 }

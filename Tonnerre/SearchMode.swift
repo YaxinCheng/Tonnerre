@@ -21,8 +21,10 @@ enum SearchMode: String {
     }
   }
   
-  var index: TonnerreIndex {
-    return indexStorage[self]!
+  var indexPath: URL {
+    let appSupportDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
+    let indecesFolder = appSupportDir.appendingPathComponent("Indices")
+    return indecesFolder.appendingPathComponent(self.rawValue + ".tnidx")
   }
   
   var includeDir: Bool {
@@ -55,10 +57,5 @@ enum SearchMode: String {
       }
     }
   }
-  
-  static func setIndexStorage(data: [SearchMode: TonnerreIndex]) {
-    indexStorage = data
-  }
 }
 
-fileprivate var indexStorage: [SearchMode: TonnerreIndex] = [:]

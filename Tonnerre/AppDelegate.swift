@@ -12,37 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
-    let fileManager = FileManager.default
-    guard
-      let appSupportPath = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first,
-      let bundleID = Bundle.main.bundleIdentifier
-    else { return }
-    let dataFolderPath = appSupportPath.appendingPathComponent(bundleID)
     
-    if !fileManager.fileExists(atPath: dataFolderPath.path) {
-      let userDefault = UserDefaults.standard
-      userDefault.set(dataFolderPath, forKey: StoredKeys.appSupportDir.rawValue)
-      do {
-        try fileManager.createDirectory(at: dataFolderPath, withIntermediateDirectories: false, attributes: nil)
-      } catch {
-        print("Cannot create the app support folder")
-      }
-    }
-    let fetchRequest = NSFetchRequest<AvailableMode>(entityName: CoreDataEntities.AvailableMode.rawValue)
-    do {
-      let count = try persistentContainer.viewContext.count(for: fetchRequest)
-      if count == 0 {
-        let modes = (0..<3).map({_ in
-          AvailableMode(context: persistentContainer.viewContext)
-        })
-        zip(modes, ["defaultMode", "name", "content"]).forEach { (mode, name) in
-          mode.name = name
-        }
-        try persistentContainer.viewContext.save()
-      }
-    } catch {
-      print(error)
-    }
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
