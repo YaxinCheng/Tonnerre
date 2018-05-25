@@ -26,9 +26,10 @@ class SearchService {
     }
     let detectingPath = Set(availableModes.map({ $0.indexTargets }).reduce([], +)).map({ $0.path })
     indexingManager = CoreIndexing(listen: Array(detectingPath))
+    let centre = NotificationCenter.default
+    centre.addObserver(self, selector: #selector(listeningToChanges), name: .documentIndexingDidFinish, object: nil)
   }
 
-  
   func check() {
     let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
     let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
@@ -42,7 +43,9 @@ class SearchService {
         complementaryIndexing()
       }
     }
-    listeningToChanges()
+    if defaultFinished == true && documentFinished == true {
+      listeningToChanges()
+    }
   }
   
   /**
@@ -63,7 +66,7 @@ class SearchService {
   /**
    Add-on indexing. Only modify the changes in the index files
   */
-  private func listeningToChanges() {
+  @objc private func listeningToChanges() {
     indexingManager.listenToChanges()
   }
 }

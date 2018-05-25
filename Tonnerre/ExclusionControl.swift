@@ -45,18 +45,12 @@ struct ExclusionControl {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     let exclusionURL = Set(control.exclusionSet.map( homeDir.appendingPathComponent ))
     if exclusionURL.contains(url) { return true }
-    for each in exclusionURL {
-      if url.isChildOf(url: each) { return true }
-    }
     return false
   }
   
   static func isExcludedDir(name: String) -> Bool {
     let control = ExclusionControl(type: .directory)
     if control.exclusionSet.contains(name) { return true }
-    for each in control.exclusionSet {
-      if name.hasSuffix(each) { return true }
-    }
     return false
   }
 }

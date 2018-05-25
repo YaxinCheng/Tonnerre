@@ -9,19 +9,19 @@
 import Foundation
 import TonnerreSearch
 
-class IndexManage {
+class IndexStorage {
   private static var storedIndexes = [TonnerreIndex?](repeating: nil, count: 3)
   
   subscript(index: SearchMode) -> TonnerreIndex {
     get {
-      if let indexFile = IndexManage.storedIndexes[index.storedInt] {
-        IndexManage.storedIndexes[index.storedInt] = indexFile
+      if let indexFile = IndexStorage.storedIndexes[index.storedInt] {
+        IndexStorage.storedIndexes[index.storedInt] = indexFile
         return indexFile
       } else {
         return TonnerreIndex(filePath: index.indexPath, indexType: index.indexType)
       }
     } set {
-      IndexManage.storedIndexes[index.storedInt] = newValue
+      IndexStorage.storedIndexes[index.storedInt] = newValue
     }
   }
 }

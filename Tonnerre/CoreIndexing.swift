@@ -36,12 +36,12 @@ class CoreIndexing {
    */
   private let coreDataSemaphore = DispatchSemaphore(value: 1)
   
-  private let indexes = IndexManage()
+  private let indexes = IndexStorage()
   private var detector: TonnerreFSDetector! = nil
   
   init(listen pathes: [String]) {
     if !pathes.isEmpty {
-      self.detector = TonnerreFSDetector(pathes: Array(pathes), callback: self.detectedChanges)
+      self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
     }
   }
  
@@ -225,7 +225,6 @@ class CoreIndexing {
     let created = TonnerreFSEvent.created.rawValue
     let renamed = TonnerreFSEvent.renamed.rawValue
     let removed = TonnerreFSEvent.removed.rawValue
-    let context = getContext()
     
     for event in events {
       let (path, changes) = event
@@ -255,11 +254,7 @@ class CoreIndexing {
         }
       } catch {
         for mode in relatedModes {
-          let failedPath = FailedPath(context: context)
-          failedPath.category = Int16(mode.storedInt)
-          failedPath.path = path
-          failedPath.reason = "\(error)"
-          try? context.save()
+          let _: FailedPath? = safeInsert(data: ["category": mode.storedInt, "path": path, "reason": "\(error)"])
         }
       }
     }
