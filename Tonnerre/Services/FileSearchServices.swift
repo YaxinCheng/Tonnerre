@@ -9,20 +9,30 @@
 import Foundation
 import Cocoa
 
-struct FileNameSearchService: FileSearchService {
-  let keywords = ["file", "f"]
-  let arguments = ["Name"]
-  
+protocol FileSearchService: TonnerreService where resultType == URL {
+  var associatedMode: SearchMode { get }
+}
+
+extension FileSearchService {
+  var icon: NSImage { return NSImage(named: .advanced)! }
+  var hasPreview: Bool { return false }
+  func preview(loc: URL) { }
   func process(input: [String]) -> [URL] {
-    return FileNameSearchService.core.search(keyword: input.joined(separator: " "), in: .name)
+    let query = input.joined(separator: " ")
+    let indexStorage = IndexStorage()
+    let index = indexStorage[associatedMode]
+    return index.search(query: query, limit: 9 * 9, options: .defaultOption)
   }
 }
 
+struct FileNameSearchService: FileSearchService {
+  let associatedMode: SearchMode = .name
+  let keywords = ["file", "f"]
+  let arguments = ["Name"]
+}
+
 struct FileContentSearchService: FileSearchService {
+  let associatedMode: SearchMode = .content
   let keywords = ["content", "in"]
   let arguments = ["Keywords"]
-  
-  func process(input: [String]) -> [URL] {
-    return FileNameSearchService.core.search(keyword: input.joined(separator: " "), in: .content)
-  }
 }

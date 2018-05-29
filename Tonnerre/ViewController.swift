@@ -50,22 +50,6 @@ class ViewController: NSViewController {
         print("Cannot create the app support folder")
       }
     }
-    let fetchRequest = NSFetchRequest<AvailableMode>(entityName: CoreDataEntities.AvailableMode.rawValue)
-    let context = getContext()
-    do {
-      let count = try context.count(for: fetchRequest)
-      if count == 0 {
-        let modes = (0..<3).map({_ in
-          AvailableMode(context: context)
-        })
-        zip(modes, ["defaultMode", "name", "content"]).forEach { (mode, name) in
-          mode.name = name
-        }
-        try context.save()
-      }
-    } catch {
-      print(error)
-    }
   }
 
 

@@ -40,14 +40,7 @@ class CoreIndexing {
   private var detector: TonnerreFSDetector! = nil
   
   init() {
-    let availableModes = CoreSearch.availableModes
-    var pathes = [String]()
-    var skip = false
-    for mode in availableModes {
-      guard skip == false || mode == .defaultMode else { continue }
-      pathes.append(contentsOf: mode.indexTargets.map({ $0.path }))
-      if mode == .content || mode == .name { skip = true }
-    }
+    let pathes: [String] = [SearchMode.defaultMode.indexTargets, SearchMode.name.indexTargets].reduce([], +).map({$0.path})
     if !pathes.isEmpty {
       self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
     }

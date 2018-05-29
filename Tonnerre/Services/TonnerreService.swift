@@ -15,6 +15,7 @@ protocol TonnerreService {
   var arguments: [String] { get }
   var icon: NSImage { get }
   var hasPreview: Bool { get }
+//  var enabled: Bool { get set }
   func preview(loc: resultType)
   func process(input: [String]) -> [resultType]
 }
@@ -23,18 +24,4 @@ extension TonnerreService {
   var serviceName: String {
     return "\(Self.self)"
   }
-}
-
-protocol FileSearchService: TonnerreService where resultType == URL {
-  static var core: CoreSearch { get }
-}
-
-extension FileSearchService {
-  
-  static var core: CoreSearch {
-    return CoreSearch()
-  }
-  var icon: NSImage { return NSImage(named: .advanced)! }
-  var hasPreview: Bool { return false }
-  func preview(loc: URL) { }
 }
