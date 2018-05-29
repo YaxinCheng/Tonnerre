@@ -39,9 +39,38 @@ class CoreIndexing {
   private let indexes = IndexStorage()
   private var detector: TonnerreFSDetector! = nil
   
-  init(listen pathes: [String]) {
+  init() {
+    let availableModes = CoreSearch.availableModes
+    var pathes = [String]()
+    var skip = false
+    for mode in availableModes {
+      guard skip == false || mode == .defaultMode else { continue }
+      pathes.append(contentsOf: mode.indexTargets.map({ $0.path }))
+      if mode == .content || mode == .name { skip = true }
+    }
     if !pathes.isEmpty {
       self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
+    }
+    let centre = NotificationCenter.default
+    centre.addObserver(self, selector: #selector(listenToChanges), name: .documentIndexingDidFinish, object: nil)
+  }
+  
+  func check() {
+    let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
+    let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
+    if defaultFinished == false && documentFinished == false {
+      let context = getContext()
+      let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
+      let count = (try? context.count(for: fetchRequest)) ?? 0
+      if count == 0 {
+        fullIndex(modes: .defaultMode)
+        fullIndex(modes: .name, .content)
+      } else {
+        recoverFromErrors()
+      }
+    }
+    if defaultFinished == true && documentFinished == true {
+      listenToChanges()
     }
   }
  
@@ -114,10 +143,8 @@ class CoreIndexing {
         dealFailure(fd, index)
       }
       for od in ongoingDocuments {
-        let index = od.category == 1 ? nameIndex : contentIndex
-        let mode: SearchMode = od.category == 1 ? .name : .content
         let url = URL(fileURLWithPath: od.path!)
-        self.addContent(in: url, modes: [mode], indexes: [index])
+        self.addContent(in: url, modes: [.name, .content], indexes: [nameIndex, contentIndex])
       }
       userDefaults.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
       notificationCentre.post(Notification(name: .documentIndexingDidFinish))
@@ -182,7 +209,7 @@ class CoreIndexing {
   }
   
   // MARK: - File System Change detection
-  func listenToChanges() {
+  @objc func listenToChanges() {
     detector.start()
   }
   

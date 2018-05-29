@@ -9,17 +9,17 @@
 import Cocoa
 
 class ViewController: NSViewController {
-  let searchManager = SearchService()
+  let indexManager = CoreIndexing()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    folderChecks()
   }
   
   override func viewDidAppear() {
-    folderChecks()
-    searchManager.check()
+    indexManager.check()
   }
   
   override func viewDidDisappear() {
