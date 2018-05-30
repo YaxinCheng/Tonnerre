@@ -30,6 +30,9 @@
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */; };
 		1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
+		14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
+		14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
+		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,9 @@
 		1470518420B1DEDF00F6FBE8 /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
 		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
+		14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
+		14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTheme.swift; sourceTree = "<group>"; };
+		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,9 +178,7 @@
 				144F80C420B5FF75006A16BC /* Notification+Extension.swift */,
 				1452251F20B4A794001E0D52 /* URL+Extension.swift */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
-				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
-				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
-				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
+				14AEB2D820BEF4A800D10D44 /* GUI */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
 				1470514C20B1BEFB00F6FBE8 /* Main.storyboard */,
 				1470514F20B1BEFB00F6FBE8 /* Info.plist */,
@@ -202,6 +206,19 @@
 				1470516620B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreUITests;
+			sourceTree = "<group>";
+		};
+		14AEB2D820BEF4A800D10D44 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
+				14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */,
+				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
+				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
+				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
+				14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */,
+			);
+			path = GUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,9 +359,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
 				146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */,
+				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
@@ -352,6 +371,7 @@
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */,
+				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,

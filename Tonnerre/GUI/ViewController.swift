@@ -12,20 +12,23 @@ class ViewController: NSViewController {
   let indexManager = CoreIndexing()
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!
-  @IBOutlet weak var iconView: NSImageView!
+  @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    if let _ = UserDefaults.standard.value(forKey: StoredKeys.AppleInterfaceStyle.rawValue) as? String {
-      iconView.image = #imageLiteral(resourceName: "tonnerre-light")
-      textField.placeholderColour = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0.4)
+  }
+  
+  override func viewWillAppear() {
+    if TonnerreTheme.currentTheme == .dark {
+      iconView.theme = .dark
+      textField.theme = .dark
       backgroundView.material = .dark
     } else {
-      iconView.image = #imageLiteral(resourceName: "tonnerre")
-      textField.placeholderColour = NSColor(calibratedRed: 61/255, green: 61/255, blue: 61/255, alpha: 0.4)
+      iconView.theme = .dark
+      textField.theme = .dark
       backgroundView.material = .light
     }
   }

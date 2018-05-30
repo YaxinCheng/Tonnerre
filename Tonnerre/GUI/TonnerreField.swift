@@ -8,11 +8,19 @@
 
 import Cocoa
 
-class TonnerreField: NSTextField {
+class TonnerreField: NSTextField, ThemeProtocol {
   
   var placeholderColour: NSColor! {
     didSet {
       placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 40)])
+    }
+  }
+  
+  var theme: TonnerreTheme {
+    set {
+      placeholderColour = newValue.placeholderColour
+    } get {
+      return TonnerreTheme.currentTheme
     }
   }
   
