@@ -9,6 +9,7 @@
 import Cocoa
 
 class TonnerreField: NSTextField, ThemeProtocol {
+  weak var tonnerreDelegate: TonnerreFieldDelegate?
   
   var placeholderColour: NSColor! {
     didSet {
@@ -28,9 +29,22 @@ class TonnerreField: NSTextField, ThemeProtocol {
     super.draw(dirtyRect)
     
     // Drawing code here.
+    delegate = self
   }
   
   override var mouseDownCanMoveWindow: Bool {
     return true
+  }
+}
+
+protocol TonnerreFieldDelegate: class {
+  func textDidChange(value: String)
+}
+
+extension TonnerreField: NSTextFieldDelegate {
+  override func controlTextDidChange(_ obj: Notification) {
+    guard let textField = obj.object as? TonnerreField, textField === self else { return }
+    let text = textField.stringValue
+    tonnerreDelegate?.textDidChange(value: text)
   }
 }

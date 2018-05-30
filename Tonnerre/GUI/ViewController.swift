@@ -14,27 +14,14 @@ class ViewController: NSViewController {
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
-  @IBOutlet weak var collectionView: NSCollectionView!
-  @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
-  let cellHeight = 64
-  
-  var datasource: [Displayable] = [] {
-    didSet {
-      collectionViewHeight.constant = CGFloat(cellHeight * min(datasource.count, 9))
-      collectionView.reloadData()
-      if datasource.isEmpty { return }
-      DispatchQueue.main.async { [weak self] in
-        self?.collectionView.selectItem(at: IndexPath(item: 0, section: 0), scrollPosition: .top)
-      }
-    }
-  }
+  @IBOutlet weak var collectionView: TonnerreCollectionView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    let height = CGFloat(cellHeight * min(datasource.count, 9))
-    collectionViewHeight.constant = height
+    textField.tonnerreDelegate = self
+    collectionView.delegate = self
   }
   
   override func viewWillAppear() {
@@ -61,6 +48,23 @@ class ViewController: NSViewController {
     didSet {
     // Update the view, if already loaded.
     }
+  }
+}
+
+extension ViewController: TonnerreFieldDelegate {
+  func textDidChange(value: String) {
+    let test: Set<String> = ["f", "fi", "fil", "file"]
+    collectionView.datasource.removeAll(keepingCapacity: true)
+    if test.contains(value) {
+      let service = FileNameSearchService()
+      collectionView.datasource.append(service)
+    }
+  }
+}
+
+extension ViewController: TonnerreCollectionViewDelegate {
+  func serviceDidSelect(service: TonnerreService) {
+    // Leave for future implementation
   }
 }
 

@@ -706,14 +706,14 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="760" height="464"/>
+                        <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
-                                <rect key="frame" x="0.0" y="0.0" width="760" height="464"/>
+                                <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
                             </visualEffectView>
                             <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5FM-BE-sWa">
-                                <rect key="frame" x="0.0" y="400" width="760" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
                                         <rect key="frame" x="64" y="8" width="688" height="48"/>
@@ -722,9 +722,6 @@
                                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="0.073751100352112672" colorSpace="deviceWhite"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <outlet property="delegate" destination="XfG-lQ-9wD" id="uaM-OD-KMK"/>
-                                        </connections>
                                     </textField>
                                     <imageView horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="INu-6D-MeR" customClass="TonnerreIconView" customModule="Tonnerre" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="48" height="48"/>
@@ -746,10 +743,10 @@
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="8" symbolic="YES" id="zvl-ID-CFr"/>
                                 </constraints>
                             </customView>
-                            <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vM-ry-4Bc">
-                                <rect key="frame" x="0.0" y="0.0" width="760" height="400"/>
+                            <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vM-ry-4Bc" customClass="TonnerreCollectionView" customModule="Tonnerre" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="760" height="0.0"/>
                                 <clipView key="contentView" drawsBackground="NO" id="Q88-Ie-UpR">
-                                    <rect key="frame" x="0.0" y="0.0" width="760" height="400"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="760" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <collectionView selectable="YES" allowsEmptySelection="NO" id="9Se-tn-h1j">
@@ -760,24 +757,27 @@
                                             </collectionViewFlowLayout>
                                             <color key="primaryBackgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                             <connections>
-                                                <outlet property="dataSource" destination="XfG-lQ-9wD" id="1lu-Xg-7hd"/>
-                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="b9K-8A-EYv"/>
+                                                <outlet property="dataSource" destination="2vM-ry-4Bc" id="mfX-oR-ScK"/>
+                                                <outlet property="delegate" destination="2vM-ry-4Bc" id="Ofw-cS-ZWY"/>
                                             </connections>
                                         </collectionView>
                                     </subviews>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="3So-zL-tkw"/>
+                                    <constraint firstAttribute="height" identifier="collectionViewHeightConstraint" id="3So-zL-tkw"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="TYx-mj-r3R">
                                     <rect key="frame" x="1" y="144" width="233" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
-                                    <rect key="frame" x="744" y="0.0" width="16" height="64"/>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
+                                    <rect key="frame" x="744" y="0.0" width="16" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
+                                <connections>
+                                    <outlet property="collectionView" destination="9Se-tn-h1j" id="Eer-xX-xQo"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <constraints>
@@ -796,8 +796,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="hZT-aK-YhT" id="mCU-K0-Zcd"/>
-                        <outlet property="collectionView" destination="9Se-tn-h1j" id="hFJ-aE-si7"/>
-                        <outlet property="collectionViewHeight" destination="3So-zL-tkw" id="pB2-wC-ixR"/>
+                        <outlet property="collectionView" destination="2vM-ry-4Bc" id="Zcm-Nf-KK6"/>
                         <outlet property="iconView" destination="INu-6D-MeR" id="RKf-CR-kGB"/>
                         <outlet property="textField" destination="aLE-uw-uC8" id="sFU-wH-JcM"/>
                     </connections>
