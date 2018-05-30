@@ -14,11 +14,27 @@ class ViewController: NSViewController {
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
-
+  @IBOutlet weak var collectionView: NSCollectionView!
+  @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+  let cellHeight = 64
+  
+  var datasource: [Displayable] = [] {
+    didSet {
+      collectionViewHeight.constant = CGFloat(cellHeight * min(datasource.count, 9))
+      collectionView.reloadData()
+      if datasource.isEmpty { return }
+      DispatchQueue.main.async { [weak self] in
+        self?.collectionView.selectItem(at: IndexPath(item: 0, section: 0), scrollPosition: .top)
+      }
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    let height = CGFloat(cellHeight * min(datasource.count, 9))
+    collectionViewHeight.constant = height
   }
   
   override func viewWillAppear() {
@@ -30,7 +46,7 @@ class ViewController: NSViewController {
       iconView.theme = .dark
       textField.theme = .dark
       backgroundView.material = .light
-    }
+    } 
   }
   
   override func viewDidAppear() {

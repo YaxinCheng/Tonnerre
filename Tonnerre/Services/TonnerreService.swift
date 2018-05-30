@@ -9,18 +9,10 @@
 import Foundation
 import Cocoa
 
-protocol TonnerreService {
-  associatedtype resultType
+protocol TonnerreService: Displayable {
   var keywords: [String] { get }
   var arguments: [String] { get }
-  var icon: NSImage { get }
   var hasPreview: Bool { get }
 //  var enabled: Bool { get set }
-  func process(input: [String]) -> [resultType]
-}
-
-extension TonnerreService {
-  var serviceName: String {
-    return "\(Self.self)"
-  }
+  func process(input: [String]) -> [Displayable]
 }
