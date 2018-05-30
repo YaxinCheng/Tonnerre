@@ -14,9 +14,8 @@ protocol FileSearchService: TonnerreService where resultType == URL {
 }
 
 extension FileSearchService {
-  var icon: NSImage { return NSImage(named: .advanced)! }
+  var iconName: String { return "fileSearch" }
   var hasPreview: Bool { return false }
-  func preview(loc: URL) { }
   func process(input: [String]) -> [URL] {
     let query = input.joined(separator: " ")
     let indexStorage = IndexStorage()

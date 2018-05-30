@@ -13,10 +13,9 @@ protocol TonnerreService {
   associatedtype resultType
   var keywords: [String] { get }
   var arguments: [String] { get }
-  var icon: NSImage { get }
+  var iconName: String { get }
   var hasPreview: Bool { get }
 //  var enabled: Bool { get set }
-  func preview(loc: resultType)
   func process(input: [String]) -> [resultType]
 }
 

@@ -726,7 +726,7 @@
                                     <constraint firstAttribute="width" constant="48" id="43G-gy-h5m"/>
                                     <constraint firstAttribute="height" constant="48" id="Tv3-Ud-GaE"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Ocs-GP-EaD"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="Ocs-GP-EaD"/>
                             </imageView>
                         </subviews>
                         <constraints>
@@ -743,10 +743,18 @@
                             <constraint firstAttribute="trailing" secondItem="hZT-aK-YhT" secondAttribute="trailing" id="pQP-Y9-Nbx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="hZT-aK-YhT" id="mCU-K0-Zcd"/>
+                        <outlet property="iconView" destination="INu-6D-MeR" id="RKf-CR-kGB"/>
+                        <outlet property="textField" destination="aLE-uw-uC8" id="sFU-wH-JcM"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tonnerre" width="144" height="144"/>
+    </resources>
 </document>

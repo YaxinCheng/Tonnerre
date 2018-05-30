@@ -20,11 +20,6 @@ class TonnerreField: NSTextField {
     super.draw(dirtyRect)
     
     // Drawing code here.
-    guard let _ = UserDefaults.standard.value(forKey: StoredKeys.AppleInterfaceStyle.rawValue) as? String else {
-      placeholderColour = NSColor(calibratedRed: 61/255, green: 61/255, blue: 61/255, alpha: 0.4)
-      return
-    }
-    placeholderColour = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0.4)
   }
   
   override var mouseDownCanMoveWindow: Bool {

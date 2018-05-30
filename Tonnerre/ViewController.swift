@@ -10,12 +10,24 @@ import Cocoa
 
 class ViewController: NSViewController {
   let indexManager = CoreIndexing()
+  
+  @IBOutlet weak var backgroundView: NSVisualEffectView!
+  @IBOutlet weak var iconView: NSImageView!
+  @IBOutlet weak var textField: TonnerreField!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    folderChecks()
+    if let _ = UserDefaults.standard.value(forKey: StoredKeys.AppleInterfaceStyle.rawValue) as? String {
+      iconView.image = #imageLiteral(resourceName: "tonnerre-light")
+      textField.placeholderColour = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0.4)
+      backgroundView.material = .dark
+    } else {
+      iconView.image = #imageLiteral(resourceName: "tonnerre")
+      textField.placeholderColour = NSColor(calibratedRed: 61/255, green: 61/255, blue: 61/255, alpha: 0.4)
+      backgroundView.material = .light
+    }
   }
   
   override func viewDidAppear() {
@@ -31,27 +43,5 @@ class ViewController: NSViewController {
     // Update the view, if already loaded.
     }
   }
-  
-  private func folderChecks() {
-    let fileManager = FileManager.default
-    guard
-      let appSupportPath = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first,
-      let bundleID = Bundle.main.bundleIdentifier
-      else { return }
-    let dataFolderPath = appSupportPath.appendingPathComponent(bundleID)
-    let indexFolder = dataFolderPath.appendingPathComponent("Indices")
-    
-    if !fileManager.fileExists(atPath: indexFolder.path) {
-      let userDefault = UserDefaults.standard
-      userDefault.set(dataFolderPath, forKey: StoredKeys.appSupportDir.rawValue)
-      do {
-        try fileManager.createDirectory(at: indexFolder, withIntermediateDirectories: true, attributes: nil)
-      } catch {
-        print("Cannot create the app support folder")
-      }
-    }
-  }
-
-
 }
 
