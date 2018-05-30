@@ -14,7 +14,7 @@ protocol FileSearchService: TonnerreService where resultType == URL {
 }
 
 extension FileSearchService {
-  var iconName: String { return "fileSearch" }
+  var icon: NSImage { return #imageLiteral(resourceName: "tonnerre") }// Temporary, will be replaced
   var hasPreview: Bool { return false }
   func process(input: [String]) -> [URL] {
     let query = input.joined(separator: " ")
