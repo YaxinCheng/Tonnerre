@@ -40,32 +40,4 @@ class BaseWindow: NSWindow {
       }
     }
   }
-  
-  private func deleteData() {
-    let deleteRequest = NSFetchRequest<IndexingDir>(entityName: "IndexingDir")
-    deleteRequest.includesPropertyValues = false
-    var counter = 0
-    let context = getContext()
-    for each in ((try? context.fetch(deleteRequest)) ?? []) {
-      print(each.path)
-      context.delete(each)
-      counter += 1
-    }
-    print("Delete IndexingDir: \(counter)")
-    let failedRequest = NSFetchRequest<FailedPath>(entityName: "FailedPath")
-    failedRequest.includesPropertyValues = false
-    counter = 0
-    for each in ((try? context.fetch(failedRequest)) ?? []) {
-      print(each.path)
-      context.delete(each)
-      counter += 1
-    }
-    print("Delete FailedPath: \(counter)")
-    
-    try? context.save()
-    UserDefaults.standard.set(false, forKey: StoredKeys.documentInxFinished.rawValue)
-    UserDefaults.standard.set(false, forKey: StoredKeys.defaultInxFinished.rawValue)
-    //    exit(0)
-  }
-
 }
