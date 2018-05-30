@@ -13,6 +13,7 @@ enum StoredKeys: String {// Keys used in UserDefault
   case appSupportDir
   case documentInxFinished
   case defaultInxFinished
+  case AppleInterfaceStyle
 }
 
 enum CoreDataEntities: String {

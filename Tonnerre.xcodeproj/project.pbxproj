@@ -15,6 +15,8 @@
 		146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */; };
 		146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */; };
 		146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */; };
+		146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */; };
+		146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
 		1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
@@ -70,6 +72,8 @@
 		146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreService.swift; sourceTree = "<group>"; };
 		146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchServices.swift; sourceTree = "<group>"; };
 		146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreInterpreter.swift; sourceTree = "<group>"; };
+		146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreField.swift; sourceTree = "<group>"; };
+		146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1470514520B1BEF900F6FBE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 				1452251F20B4A794001E0D52 /* URL+Extension.swift */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
+				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
+				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
 				1470514C20B1BEFB00F6FBE8 /* Main.storyboard */,
 				1470514F20B1BEFB00F6FBE8 /* Info.plist */,
@@ -343,8 +349,10 @@
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */,
+				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */,
+				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
 				1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */,

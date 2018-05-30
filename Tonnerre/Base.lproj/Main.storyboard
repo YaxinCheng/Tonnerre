@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -673,7 +674,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Tonnerre" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -683,12 +684,12 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA" customClass="BaseWindow" customModule="Tonnerre" customModuleProvider="target">
+                        <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="760" height="70"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-			<connections>
+                        <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
@@ -703,10 +704,44 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
+                                <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
+                            </visualEffectView>
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
+                                <rect key="frame" x="64" y="8" width="688" height="48"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" drawsBackground="YES" id="VxW-E4-dLH">
+                                    <font key="font" metaFont="system" size="40"/>
+                                    <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" white="1" alpha="0.073751100352112672" colorSpace="deviceWhite"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INu-6D-MeR">
+                                <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="43G-gy-h5m"/>
+                                    <constraint firstAttribute="height" constant="48" id="Tv3-Ud-GaE"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Ocs-GP-EaD"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="8" id="8xB-qw-jv7"/>
+                            <constraint firstItem="INu-6D-MeR" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="8" id="BpY-gG-2wB"/>
+                            <constraint firstAttribute="bottom" secondItem="hZT-aK-YhT" secondAttribute="bottom" id="RZs-nE-e38"/>
+                            <constraint firstItem="INu-6D-MeR" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="WNG-ge-LFE"/>
+                            <constraint firstItem="aLE-uw-uC8" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="cAN-kJ-aLg"/>
+                            <constraint firstAttribute="bottom" secondItem="aLE-uw-uC8" secondAttribute="bottom" constant="8" id="cBB-ZZ-UQf"/>
+                            <constraint firstItem="hZT-aK-YhT" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cZW-YW-0rz"/>
+                            <constraint firstAttribute="bottom" secondItem="INu-6D-MeR" secondAttribute="bottom" constant="8" id="ep0-Ev-bD7"/>
+                            <constraint firstItem="hZT-aK-YhT" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="fmw-fQ-0ie"/>
+                            <constraint firstAttribute="trailing" secondItem="aLE-uw-uC8" secondAttribute="trailing" constant="8" id="gWy-H5-SZr"/>
+                            <constraint firstAttribute="trailing" secondItem="hZT-aK-YhT" secondAttribute="trailing" id="pQP-Y9-Nbx"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

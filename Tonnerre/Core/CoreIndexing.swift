@@ -45,7 +45,8 @@ class CoreIndexing {
       self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
     }
     let centre = NotificationCenter.default
-    centre.addObserver(self, selector: #selector(listenToChanges), name: .documentIndexingDidFinish, object: nil)
+    centre.addObserver(self, selector: #selector(defaultIndexingDidFinish), name: .defaultIndexingDidFinish, object: nil)
+    centre.addObserver(self, selector: #selector(documentIndexingDidFinish), name: .documentIndexingDidFinish, object: nil)
   }
   
   func check() {
@@ -71,7 +72,7 @@ class CoreIndexing {
   /**
     Index the required data to the certain index files
    */
-  func fullIndex(modes: SearchMode...) {
+  private func fullIndex(modes: SearchMode...) {
     guard let targetPaths: [URL] = modes.first?.indexTargets else { return }
     for mode in modes {
       for path in targetPaths {
@@ -94,7 +95,7 @@ class CoreIndexing {
   /**
    Recover the unfinished indexing and failed indexing
   */
-  func recoverFromErrors() {
+  private func recoverFromErrors() {
     let context = getContext()
     let queryErrors: (String)->[NSManagedObject] = {// Function to query from CoreData
       let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: $0)
@@ -117,14 +118,12 @@ class CoreIndexing {
       try? context.save()
     }
     let notificationCentre = NotificationCenter.default
-    let userDefaults = UserDefaults.standard
     queue.async { [unowned self] in // Restore for defaults
       notificationCentre.post(Notification(name: .defaultIndexingDidBegin))
       let defaultIndex = self.indexes[.defaultMode]
       for fd in failedDefault { dealFailure(fd, defaultIndex) }
       let ongoingDefaultURL = ongoingDefault.map({ URL(fileURLWithPath: $0.path!) })
       for od in ongoingDefaultURL { self.addContent(in: od, modes: [.defaultMode], indexes: [defaultIndex]) }
-      userDefaults.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
       notificationCentre.post(Notification(name: .defaultIndexingDidFinish))
     }
     queue.async { [unowned self] in // Restore for documents
@@ -139,7 +138,6 @@ class CoreIndexing {
         let url = URL(fileURLWithPath: od.path!)
         self.addContent(in: url, modes: [.name, .content], indexes: [nameIndex, contentIndex])
       }
-      userDefaults.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
       notificationCentre.post(Notification(name: .documentIndexingDidFinish))
     }
   }
@@ -201,12 +199,24 @@ class CoreIndexing {
     }
   }
   
-  // MARK: - File System Change detection
-  @objc func listenToChanges() {
+  @objc private func defaultIndexingDidFinish() {
+    UserDefaults.standard.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
+  }
+  
+  @objc private func documentIndexingDidFinish() {
+    UserDefaults.standard.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
+    backgroundQ.async { [unowned self] in
+      self.safeDelete(data: [:], dataType: IndexingDir.self)
+    }
     detector.start()
   }
   
-  func stopListening() {
+  // MARK: - File System Change detection
+  private func listenToChanges() {
+    detector.start()
+  }
+  
+  private func stopListening() {
     detector.stop()
   }
   /**
@@ -328,9 +338,11 @@ class CoreIndexing {
   private func safeDelete<T: NSManagedObject>(data: [String: Any], dataType: T.Type) {
     let context = getContext()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
-    let queryStr = data.keys.map({ $0 + "=%@" }).joined(separator: " AND ")
-    let query = data.reduce([], {$0 + [$1.value]})
-    fetchRequest.predicate = NSPredicate(format: queryStr, argumentArray: query)
+    if !data.isEmpty {
+      let queryStr = data.keys.map({ $0 + "=%@" }).joined(separator: " AND ")
+      let query = data.reduce([], {$0 + [$1.value]})
+      fetchRequest.predicate = NSPredicate(format: queryStr, argumentArray: query)
+    }
     let batchDelete = NSBatchDeleteRequest(fetchRequest: fetchRequest)
     coreDataSemaphore.wait()
     _ = try? context.execute(batchDelete)
