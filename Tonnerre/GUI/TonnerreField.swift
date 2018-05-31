@@ -10,6 +10,10 @@ import Cocoa
 
 class TonnerreField: NSTextField, ThemeProtocol {
   weak var tonnerreDelegate: TonnerreFieldDelegate?
+  private var eventMonitor: Any?
+  var canBeSwitched: Bool = false
+  
+  override var acceptsFirstResponder: Bool { return true }
   
   var placeholderColour: NSColor! {
     didSet {

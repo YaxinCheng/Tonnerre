@@ -10,10 +10,19 @@ import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
   func serviceDidSelect(service: TonnerreService)
+  func keyDidPress(keyEvent: NSEvent)
 }
 
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
+  private var keyboardMonitor: Any?
+  private var highlightedItem: ServiceCell?
+  
+  var highlightedItemIndex = 0 {
+    didSet {
+      highlightedItem = collectionView.highlightItem(at: IndexPath(item: highlightedItemIndex, section: 0))
+    }
+  }
   
   @IBOutlet weak var collectionView: NSCollectionView!
   var collectionViewHeight: NSLayoutConstraint!
@@ -30,8 +39,22 @@ class TonnerreCollectionView: NSScrollView {
       collectionView.reloadData()
       if datasource.isEmpty { return }
       DispatchQueue.main.async { [weak self] in
-        self?.collectionView.highlightItem(at: IndexPath(item: 0, section: 0))
+        self?.highlightedItem = self?.collectionView.highlightItem(at: IndexPath(item: self?.highlightedItemIndex ?? 0, section: 0))
       }
+    }
+  }
+  
+  override func keyDown(with event: NSEvent) {
+    delegate?.keyDidPress(keyEvent: event)
+    switch (event.keyCode, event.modifierFlags) {
+    case (125, _):
+      highlightedItem?.highlighted = false
+      highlightedItemIndex = (highlightedItemIndex + 1 + datasource.count) % datasource.count // Down key, move down
+    case (126, _):
+      highlightedItem?.highlighted = false
+      highlightedItemIndex = (highlightedItemIndex - 1 + datasource.count) % datasource.count // Up key, move up
+    default:
+      break
     }
   }
   
@@ -39,6 +62,12 @@ class TonnerreCollectionView: NSScrollView {
     super.draw(dirtyRect)
     
     // Drawing code here.
+    if keyboardMonitor == nil {
+      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
+        self?.keyDown(with: $0)
+        return $0
+      }
+    }
   }
   
 }
@@ -61,7 +90,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
-    cell.view.layer?.backgroundColor = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0).cgColor
+    cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
     return cell
   }
@@ -75,16 +104,18 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
 }
 
-extension NSCollectionView {
+private extension NSCollectionView {
   func selectItem(at indexPath: IndexPath, scrollPosition: NSCollectionView.ScrollPosition) {
     selectItems(at: [indexPath], scrollPosition: scrollPosition)
     delegate?.collectionView?(self, didSelectItemsAt: [indexPath])
   }
   
-  func highlightItem(at indexPath: IndexPath) {
+  func highlightItem(at indexPath: IndexPath) -> ServiceCell? {
     guard
       let item = item(at: indexPath) as? ServiceCell
-    else { return }
-    item.view.layer?.backgroundColor = NSColor(calibratedRed: 99/255, green: 147/255, blue: 1, alpha: 1).cgColor
+    else { return nil }
+    item.highlighted = true
+    scrollToItems(at: [indexPath], scrollPosition: .top)
+    return item
   }
 }

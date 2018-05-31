@@ -19,7 +19,7 @@ extension FileSearchService {
   var content: String { return "Search file on your mac and open" }
   
   func process(input: [String]) -> [Displayable] {
-    let query = input.joined(separator: " ")
+    let query = input.joined(separator: " ") + "*"
     let indexStorage = IndexStorage()
     let index = indexStorage[associatedMode]
     return index.search(query: query, limit: 9 * 9, options: .defaultOption)
@@ -27,7 +27,7 @@ extension FileSearchService {
 }
 
 struct FileNameSearchService: FileSearchService {
-  let name = "Search file"
+  let name = "Search files by names"
   
   let associatedMode: SearchMode = .name
   let keyword = "file"
@@ -35,7 +35,7 @@ struct FileNameSearchService: FileSearchService {
 }
 
 struct FileContentSearchService: FileSearchService {
-  let name = "Search file contents"
+  let name = "Search files by content"
   
   let associatedMode: SearchMode = .content
   let keyword = "content"

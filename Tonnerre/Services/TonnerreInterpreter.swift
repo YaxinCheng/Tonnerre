@@ -29,8 +29,9 @@ struct TonnerreInterpreter {
     let services = parse(tokens: tokens)
     return services.map ({
       let keywordCount = ($0.keyword != "").hashValue
-      if tokens.count >= keywordCount + $0.arguments.count {
-        return $0.process(input: Array(tokens[keywordCount...]))
+      let filteredTokens = tokens.filter({ !$0.isEmpty })
+      if filteredTokens.count >= keywordCount + $0.arguments.count {
+        return $0.process(input: Array(filteredTokens[keywordCount...]))
       } else {
         return [$0]
       }

@@ -34,8 +34,16 @@ extension URL: Displayable {
   }
   
   var icon: NSImage {
-    let icon = NSWorkspace.shared.icon(forFile: path)
+    let workspace = NSWorkspace.shared
+    let path: String
+    if isFileURL || isDirectory || isSymlink {
+      path = self.path
+    } else {
+      guard let browser = workspace.urlForApplication(toOpen: self) else { return #imageLiteral(resourceName: "safari") }
+      path = browser.path
+    }
+    let icon = workspace.icon(forFile: path)
     icon.size = NSSize(width: 96, height: 96)
-    return isFileURL || isDirectory || isSymlink ? icon : #imageLiteral(resourceName: "safari")
+    return icon
   }
 }

@@ -39,6 +39,7 @@ class ViewController: NSViewController {
   
   override func viewDidAppear() {
     indexManager.check()
+    _ = textField.becomeFirstResponder()
   }
   
   override func viewDidDisappear() {
@@ -61,6 +62,20 @@ extension ViewController: TonnerreFieldDelegate {
 extension ViewController: TonnerreCollectionViewDelegate {
   func serviceDidSelect(service: TonnerreService) {
     // Leave for future implementation
+  }
+  
+  func keyDidPress(keyEvent: NSEvent) {
+    switch (keyEvent.keyCode, keyEvent.modifierFlags) {
+    case (125...126, _):
+      collectionView.becomeFirstResponder()
+      textField.canBeSwitched = false
+    default:
+      if !textField.canBeSwitched {
+        textField.canBeSwitched = true
+        _ = textField.becomeFirstResponder()
+        textField.currentEditor()?.moveToEndOfDocument(nil)
+      }
+    }
   }
 }
 
