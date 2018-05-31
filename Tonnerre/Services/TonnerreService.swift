@@ -10,9 +10,10 @@ import Foundation
 import Cocoa
 
 protocol TonnerreService: Displayable {
-  var keywords: [String] { get }
+  var keyword: String { get }
   var arguments: [String] { get }
   var hasPreview: Bool { get }
 //  var enabled: Bool { get set }
   func process(input: [String]) -> [Displayable]
+  init()
 }

@@ -26,7 +26,7 @@ extension Displayable {
 
 extension URL: Displayable {
   var name: String {
-    return self.lastPathComponent
+    return self.deletingPathExtension().lastPathComponent
   }
   
   var content: String {
@@ -34,6 +34,8 @@ extension URL: Displayable {
   }
   
   var icon: NSImage {
-    return isFileURL || isDirectory || isSymlink ? #imageLiteral(resourceName: "Finder") : #imageLiteral(resourceName: "safari")
+    let icon = NSWorkspace.shared.icon(forFile: path)
+    icon.size = NSSize(width: 96, height: 96)
+    return isFileURL || isDirectory || isSymlink ? icon : #imageLiteral(resourceName: "safari")
   }
 }

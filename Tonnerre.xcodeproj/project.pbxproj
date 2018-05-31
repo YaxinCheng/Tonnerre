@@ -37,6 +37,9 @@
 		14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */; };
 		14AEB2E220BF0F3400D10D44 /* Displayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2E120BF0F3400D10D44 /* Displayable.swift */; };
 		14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */; };
+		14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */; };
+		14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FC20BF824E00D10D44 /* LaunchService.swift */; };
+		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +110,9 @@
 		14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceCell.xib; sourceTree = "<group>"; };
 		14AEB2E120BF0F3400D10D44 /* Displayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Displayable.swift; sourceTree = "<group>"; };
 		14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreCollectionView.swift; sourceTree = "<group>"; };
+		14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreServiceLoader.swift; sourceTree = "<group>"; };
+		14AEB2FC20BF824E00D10D44 /* LaunchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchService.swift; sourceTree = "<group>"; };
+		14AEB2FE20BF84D100D10D44 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,8 +155,12 @@
 		146AAE6A20BDE0A4009AC9C6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */,
+				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */,
+				14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */,
 				146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */,
+				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -180,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				1470514320B1BEF900F6FBE8 /* AppDelegate.swift */,
-				146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */,
 				146AAE6A20BDE0A4009AC9C6 /* Services */,
 				146AAE6420BDD7C2009AC9C6 /* Core */,
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
@@ -383,11 +392,14 @@
 				14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
+				14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
 				146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
+				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
+				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */,

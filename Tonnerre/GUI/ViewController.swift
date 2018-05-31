@@ -10,6 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
   let indexManager = CoreIndexing()
+  let interpreter = TonnerreInterpreter()
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
@@ -53,12 +54,7 @@ class ViewController: NSViewController {
 
 extension ViewController: TonnerreFieldDelegate {
   func textDidChange(value: String) {
-    let test: Set<String> = ["f", "fi", "fil", "file"]
-    collectionView.datasource.removeAll(keepingCapacity: true)
-    if test.contains(value) {
-      let service = FileNameSearchService()
-      collectionView.datasource.append(service)
-    }
+    collectionView.datasource = interpreter.interpret(rawCmd: value)
   }
 }
 

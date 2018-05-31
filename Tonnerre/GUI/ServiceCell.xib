@@ -38,14 +38,14 @@
                 </textField>
                 <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eSm-bB-rbb">
                     <rect key="frame" x="670" y="14" width="72" height="36"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⌘+#" id="MhO-Va-LEs">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="⌘+#" id="MhO-Va-LEs">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZtS-Uw-pI0">
-                    <rect key="frame" x="62" y="6" width="612" height="17"/>
+                <textField horizontalHuggingPriority="253" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZtS-Uw-pI0">
+                    <rect key="frame" x="62" y="6" width="160" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Service Intro" id="4P3-SY-5si">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -61,7 +61,7 @@
                 <constraint firstItem="ZtS-Uw-pI0" firstAttribute="top" secondItem="otR-5I-Obv" secondAttribute="bottom" id="OkQ-Um-JBj"/>
                 <constraint firstItem="ZtS-Uw-pI0" firstAttribute="trailing" secondItem="otR-5I-Obv" secondAttribute="trailing" id="duB-0W-Vsm"/>
                 <constraint firstItem="zIt-L7-Ohv" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="jWN-6b-VSs"/>
-                <constraint firstItem="otR-5I-Obv" firstAttribute="leading" secondItem="zIt-L7-Ohv" secondAttribute="trailing" constant="8" symbolic="YES" id="kxK-Qq-oMg"/>
+                <constraint firstItem="otR-5I-Obv" firstAttribute="leading" secondItem="zIt-L7-Ohv" secondAttribute="trailing" constant="8" id="kxK-Qq-oMg"/>
                 <constraint firstItem="zIt-L7-Ohv" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="nEQ-N7-Tin"/>
                 <constraint firstAttribute="trailing" secondItem="eSm-bB-rbb" secondAttribute="trailing" constant="20" symbolic="YES" id="p6Z-11-hgj"/>
                 <constraint firstItem="otR-5I-Obv" firstAttribute="top" secondItem="zIt-L7-Ohv" secondAttribute="top" id="utB-dG-rw7"/>

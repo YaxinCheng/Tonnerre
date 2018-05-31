@@ -30,7 +30,7 @@ struct FileNameSearchService: FileSearchService {
   let name = "Search file"
   
   let associatedMode: SearchMode = .name
-  let keywords = ["file", "f"]
+  let keyword = "file"
   let arguments = ["Name"]
 }
 
@@ -38,6 +38,6 @@ struct FileContentSearchService: FileSearchService {
   let name = "Search file contents"
   
   let associatedMode: SearchMode = .content
-  let keywords = ["content", "in"]
+  let keyword = "content"
   let arguments = ["Keywords"]
 }

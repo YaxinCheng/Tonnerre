@@ -57,5 +57,13 @@ enum SearchMode: String {
       }
     }
   }
+  
+  func exclude(fileExtension: String) -> Bool {
+    switch self {
+    case .defaultMode: return !Set<String>(["app", "prefpane"]).contains(fileExtension)
+    case .name: return ExclusionControl(types: .coding).contains(fileExtension)
+    case .content: return ExclusionControl(types: .coding, .media).contains(fileExtension)
+    }
+  }
 }
 

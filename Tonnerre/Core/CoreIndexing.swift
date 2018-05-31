@@ -21,13 +21,6 @@ class CoreIndexing {
     return NSDictionary(contentsOfFile: aliasFile) as! [String : String]
   }()
   /**
-   SearchModel to related exclusion controls
-   - defaultMode: []
-   - name: extra coding files (e.g.: .pyc or .class) + caches
-   - content: extra coding files + caches + media (user cannot search medias with the media content, generally by name only)
-  */
-  private var controls: [SearchMode: ExclusionControl] = [:]
-  /**
    Background queue. When inserting to or deleting from CoreData, they are running in the background
   */
   private let backgroundQ: DispatchQueue = .global(qos: .background)
@@ -163,7 +156,7 @@ class CoreIndexing {
       if !path.isDirectory {// If it is not a directory
         for (mode, index) in zip(searchModes, indexes) {// Add file to related index files
           let fileExtension = path.pathExtension.lowercased()// get the extension
-          if (controls[mode]?.contains(fileExtension) ?? false) { continue }// Exclude the unwanted types
+          if (mode.exclude(fileExtension: fileExtension)) { continue }// Exclude the unwanted types
           _ = try index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))// add to the index file
         }
       } else {// If it is a directory
