@@ -9,13 +9,11 @@
 import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
-  func serviceDidSelect(service: TonnerreService)
-  func keyDidPress(keyEvent: NSEvent)
+  func openService(service: URL)
 }
 
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
-  private var keyboardMonitor: Any?
   private var highlightedItem: ServiceCell?
   
   var highlightedItemIndex = 0 {
@@ -45,14 +43,27 @@ class TonnerreCollectionView: NSScrollView {
   }
   
   override func keyDown(with event: NSEvent) {
-    delegate?.keyDidPress(keyEvent: event)
     switch (event.keyCode, event.modifierFlags) {
-    case (125, _):
+    case let (code, modifier) where 18 <= code && code <= 25 && modifier.contains(.command):// ⌘ + number
+      let selectedIndex = Int(event.keyCode) - 18
+      guard selectedIndex <= collectionView.visibleItems().count else { return }
+      let selectedItem = collectionView.visibleItems()[Int(event.keyCode) - 18]
+      guard
+        let indexPath = collectionView.indexPath(for: selectedItem),
+        let selectedService = datasource[indexPath.item] as? URL
+      else { return }
+      datasource = []
+      delegate?.openService(service: selectedService)
+    case (125...126, _):// Up/down arrow
+      becomeFirstResponder()
       highlightedItem?.highlighted = false
-      highlightedItemIndex = (highlightedItemIndex + 1 + datasource.count) % datasource.count // Down key, move down
-    case (126, _):
-      highlightedItem?.highlighted = false
-      highlightedItemIndex = (highlightedItemIndex - 1 + datasource.count) % datasource.count // Up key, move up
+      if event.keyCode == 125 { highlightedItemIndex += 1 }
+      else { highlightedItemIndex -= 1 }
+      highlightedItemIndex = (highlightedItemIndex + datasource.count) % datasource.count // Down key, move down
+    case (36, _):// Enter
+      guard !datasource.isEmpty, let info = datasource[highlightedItemIndex] as? URL else { return }
+      datasource = []
+      delegate?.openService(service: info)
     default:
       break
     }
@@ -62,12 +73,6 @@ class TonnerreCollectionView: NSScrollView {
     super.draw(dirtyRect)
     
     // Drawing code here.
-    if keyboardMonitor == nil {
-      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
-        self?.keyDown(with: $0)
-        return $0
-      }
-    }
   }
   
 }
@@ -93,14 +98,6 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
     return cell
-  }
-  
-  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    guard
-      let indexPath = indexPaths.first,
-      let service = datasource[indexPath.item] as? TonnerreService
-    else { return }
-    delegate?.serviceDidSelect(service: service)
   }
 }
 

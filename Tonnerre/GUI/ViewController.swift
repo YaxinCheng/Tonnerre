@@ -11,6 +11,7 @@ import Cocoa
 class ViewController: NSViewController {
   let indexManager = CoreIndexing()
   let interpreter = TonnerreInterpreter()
+  private var keyboardMonitor: Any?
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
@@ -26,6 +27,13 @@ class ViewController: NSViewController {
   }
   
   override func viewWillAppear() {
+    if keyboardMonitor == nil {
+      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
+        self?.textField.keyDown(with: $0)
+        self?.collectionView.keyDown(with: $0)
+        return $0
+      }
+    }
     if TonnerreTheme.currentTheme == .dark {
       iconView.theme = .dark
       textField.theme = .dark
@@ -40,6 +48,11 @@ class ViewController: NSViewController {
   override func viewDidAppear() {
     indexManager.check()
     _ = textField.becomeFirstResponder()
+  }
+  
+  override func viewWillDisappear() {
+    NSEvent.removeMonitor(keyboardMonitor!)
+    keyboardMonitor = nil
   }
   
   override func viewDidDisappear() {
@@ -60,22 +73,9 @@ extension ViewController: TonnerreFieldDelegate {
 }
 
 extension ViewController: TonnerreCollectionViewDelegate {
-  func serviceDidSelect(service: TonnerreService) {
-    // Leave for future implementation
-  }
-  
-  func keyDidPress(keyEvent: NSEvent) {
-    switch (keyEvent.keyCode, keyEvent.modifierFlags) {
-    case (125...126, _):
-      collectionView.becomeFirstResponder()
-      textField.canBeSwitched = false
-    default:
-      if !textField.canBeSwitched {
-        textField.canBeSwitched = true
-        _ = textField.becomeFirstResponder()
-        textField.currentEditor()?.moveToEndOfDocument(nil)
-      }
-    }
+  func openService(service: URL) {
+    textField.stringValue = ""
+    NSWorkspace.shared.open(service)
   }
 }
 

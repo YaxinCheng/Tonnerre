@@ -10,10 +10,7 @@ import Cocoa
 
 class TonnerreField: NSTextField, ThemeProtocol {
   weak var tonnerreDelegate: TonnerreFieldDelegate?
-  private var eventMonitor: Any?
-  var canBeSwitched: Bool = false
-  
-  override var acceptsFirstResponder: Bool { return true }
+  var responding: Bool = false
   
   var placeholderColour: NSColor! {
     didSet {
@@ -26,6 +23,19 @@ class TonnerreField: NSTextField, ThemeProtocol {
       placeholderColour = newValue.placeholderColour
     } get {
       return TonnerreTheme.currentTheme
+    }
+  }
+  
+  override func keyDown(with event: NSEvent) {
+    switch (event.keyCode, event.modifierFlags) {
+    case (125...126, _):// Up/down arrow
+      responding = false
+    default:
+      if !responding {// Used to prevent up arrow key brings the cursor to the beginning
+        responding = true
+        becomeFirstResponder()
+        currentEditor()?.moveToEndOfDocument(nil)
+      }
     }
   }
   
