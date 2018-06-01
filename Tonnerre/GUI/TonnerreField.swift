@@ -27,8 +27,8 @@ class TonnerreField: NSTextField, ThemeProtocol {
   }
   
   override func keyDown(with event: NSEvent) {
-    switch (event.keyCode, event.modifierFlags) {
-    case (125...126, _):// Up/down arrow
+    switch event.keyCode {
+    case 125, 126:// Up/down arrow
       responding = false
     default:
       if !responding {// Used to prevent up arrow key brings the cursor to the beginning

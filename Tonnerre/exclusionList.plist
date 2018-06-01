@@ -8,6 +8,11 @@
 	</array>
 	<key>directory</key>
 	<array>
+		<string>contrib</string>
+		<string>framework</string>
+		<string>bin</string>
+		<string>lib</string>
+		<string>api_def</string>
 		<string>locale</string>
 		<string>locales</string>
 		<string>log</string>
@@ -119,6 +124,10 @@
 	</array>
 	<key>coding</key>
 	<array>
+		<string>bzl</string>
+		<string>lds</string>
+		<string>build</string>
+		<string>pbtxt</string>
 		<string>pyc</string>
 		<string>class</string>
 	</array>

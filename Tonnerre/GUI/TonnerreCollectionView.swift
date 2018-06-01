@@ -15,10 +15,21 @@ protocol TonnerreCollectionViewDelegate: class {
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
   private var highlightedItem: ServiceCell?
+  private var visibleIndex: Int = 0
   
   var highlightedItemIndex = 0 {
     didSet {
-      highlightedItem = collectionView.highlightItem(at: IndexPath(item: highlightedItemIndex, section: 0))
+      let moveDown = (highlightedItemIndex - oldValue >= 1 && highlightedItemIndex - oldValue < 8) || (oldValue - highlightedItemIndex == datasource.count - 1)
+      let maxRows = 8
+      let oldVisibleIndex = visibleIndex
+      if oldValue == 0 && !moveDown { visibleIndex = maxRows }
+      else if oldValue == datasource.count - 1 && moveDown { visibleIndex = 0 }
+      else { visibleIndex = moveDown ? min(visibleIndex + 1, maxRows) : max(visibleIndex - 1, 0) }
+      let scrollPosition: NSCollectionView.ScrollPosition
+      if oldVisibleIndex == 0 && !moveDown { scrollPosition = .top }
+      else if oldVisibleIndex == 8 && moveDown { scrollPosition = .bottom }
+      else { scrollPosition = .init(rawValue: 0) }
+      collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
     }
   }
   
@@ -43,9 +54,11 @@ class TonnerreCollectionView: NSScrollView {
   }
   
   override func keyDown(with event: NSEvent) {
-    switch (event.keyCode, event.modifierFlags) {
-    case let (code, modifier) where 18 <= code && code <= 25 && modifier.contains(.command):// ⌘ + number
+    switch event.keyCode {
+    case 18...25:// ⌘ + number
+      guard event.modifierFlags.contains(.command) else { return }
       let selectedIndex = Int(event.keyCode) - 18
+      // TODO: - Issues with visibleItems
       guard selectedIndex <= collectionView.visibleItems().count else { return }
       let selectedItem = collectionView.visibleItems()[Int(event.keyCode) - 18]
       guard
@@ -54,13 +67,10 @@ class TonnerreCollectionView: NSScrollView {
       else { return }
       datasource = []
       delegate?.openService(service: selectedService)
-    case (125...126, _):// Up/down arrow
-      becomeFirstResponder()
-      highlightedItem?.highlighted = false
-      if event.keyCode == 125 { highlightedItemIndex += 1 }
-      else { highlightedItemIndex -= 1 }
-      highlightedItemIndex = (highlightedItemIndex + datasource.count) % datasource.count // Down key, move down
-    case (36, _):// Enter
+    case 125, 126:// Up/down arrow
+      if event.keyCode == 125 { highlightedItemIndex = (highlightedItemIndex + 1 + datasource.count) % datasource.count }
+      else { highlightedItemIndex = (highlightedItemIndex - 1 + datasource.count) % datasource.count }
+    case 36, 76:// Enter
       guard !datasource.isEmpty, let info = datasource[highlightedItemIndex] as? URL else { return }
       datasource = []
       delegate?.openService(service: info)
@@ -99,6 +109,16 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
     return cell
   }
+  
+  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    guard
+      let indexPath = indexPaths.first,
+      let cell = collectionView.item(at: indexPath) as? ServiceCell
+    else { return }
+    highlightedItem?.highlighted = false
+    highlightedItem = cell
+    highlightedItem?.highlighted = true
+  }
 }
 
 private extension NSCollectionView {
@@ -112,7 +132,6 @@ private extension NSCollectionView {
       let item = item(at: indexPath) as? ServiceCell
     else { return nil }
     item.highlighted = true
-    scrollToItems(at: [indexPath], scrollPosition: .top)
     return item
   }
 }
