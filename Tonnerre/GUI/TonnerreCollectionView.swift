@@ -58,13 +58,9 @@ class TonnerreCollectionView: NSScrollView {
     case 18...25:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
       let selectedIndex = Int(event.keyCode) - 18
-      // TODO: - Issues with visibleItems
-      guard selectedIndex <= collectionView.visibleItems().count else { return }
-      let selectedItem = collectionView.visibleItems()[Int(event.keyCode) - 18]
-      guard
-        let indexPath = collectionView.indexPath(for: selectedItem),
-        let selectedService = datasource[indexPath.item] as? URL
-      else { return }
+      let currentIndex = visibleIndex
+      let actualIndex = selectedIndex - currentIndex + highlightedItemIndex
+      guard let selectedService = datasource[actualIndex] as? URL else { return }
       datasource = []
       delegate?.openService(service: selectedService)
     case 125, 126:// Up/down arrow
