@@ -40,6 +40,7 @@ class TonnerreCollectionView: NSScrollView {
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     collectionViewHeight = constraints.filter({ $0.identifier == "collectionViewHeightConstraint"}).first!
+    NotificationCenter.default.addObserver(self, selector: #selector(collectionViewDidScroll(notification:)), name: NSView.boundsDidChangeNotification, object: collectionView)
   }
   
   var datasource: [Displayable] = [] {
@@ -79,8 +80,17 @@ class TonnerreCollectionView: NSScrollView {
     super.draw(dirtyRect)
     
     // Drawing code here.
+    collectionView.postsBoundsChangedNotifications = true
   }
   
+  @objc private func collectionViewDidScroll(notification: Notification) {
+    let changingIndexes = (0...8).map({ $0 - visibleIndex + highlightedItemIndex }).filter({ $0 >= 0 && $0 < datasource.count })
+    let indexPaths = changingIndexes.map({ IndexPath(item: $0, section: 0) })
+    for (index, cell) in indexPaths.compactMap({ collectionView.item(at: $0) as? ServiceCell }).enumerated() {
+      cell.cmdLabel.stringValue = "⌘\(index + 1)"
+    }
+//    collectionView.reloadItems(at: Set(indexPaths))
+  }
 }
 
 extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewDataSource {

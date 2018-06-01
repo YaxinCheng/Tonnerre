@@ -8,18 +8,14 @@
 	</array>
 	<key>directory</key>
 	<array>
-		<string>contrib</string>
-		<string>framework</string>
 		<string>bin</string>
 		<string>lib</string>
-		<string>api_def</string>
 		<string>locale</string>
 		<string>locales</string>
 		<string>log</string>
 		<string>logs</string>
 		<string>plugin</string>
 		<string>__pycache__</string>
-		<string>env</string>
 		<string>venv</string>
 		<string>cache</string>
 	</array>
