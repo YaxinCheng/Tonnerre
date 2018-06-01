@@ -150,7 +150,7 @@ class CoreIndexing {
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
   */
   private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
-    if path.isSymlink { return }// Do not add symlink to the index file
+    if path.isSymlink || path.typeIdentifier.starts(with: "dyn") { return }// Do not add symlink or dynamic file to the index file
     var content: [URL] = []// The content of the path (if the path is a directory)
     do {
       if !path.isDirectory {// If it is not a directory

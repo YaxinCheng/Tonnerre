@@ -120,6 +120,7 @@
 	</array>
 	<key>coding</key>
 	<array>
+		<string>bin</string>
 		<string>bzl</string>
 		<string>lds</string>
 		<string>build</string>

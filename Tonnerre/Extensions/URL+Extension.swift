@@ -30,4 +30,10 @@ extension URL {
     guard let isSymlink = value?.isSymbolicLink, let isAlias = value?.isAliasFile else { return false }
     return isSymlink || isAlias
   }
+  
+  var typeIdentifier: String {
+    let value = try? resourceValues(forKeys: [.typeIdentifierKey])
+    guard let typeID = value?.typeIdentifier else { return "" }
+    return typeID
+  }
 }
