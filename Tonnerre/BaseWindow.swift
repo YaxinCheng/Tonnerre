@@ -19,6 +19,14 @@ class BaseWindow: NSWindow {
     isMovableByWindowBackground = true
     isMovable = true
     folderChecks()
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
+  }
+  
+  @objc private func windowDidMove(notification: Notification) {
+    let userDefault = UserDefaults.standard
+    let (x, y) = (frame.origin.x, frame.origin.y)
+    userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
+    userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
   }
   
   private func folderChecks() {
