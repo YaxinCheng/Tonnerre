@@ -11,12 +11,12 @@ import Cocoa
 class ViewController: NSViewController {
   let indexManager = CoreIndexing()
   let interpreter = TonnerreInterpreter()
-  private var keyboardMonitor: Any?
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
   @IBOutlet weak var collectionView: TonnerreCollectionView!
+  private var keyboardMonitor: Any? = nil
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,16 +24,15 @@ class ViewController: NSViewController {
     // Do any additional setup after loading the view.
     textField.tonnerreDelegate = self
     collectionView.delegate = self
-  }
-  
-  override func viewWillAppear() {
     if keyboardMonitor == nil {
       keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
-        self?.textField.keyDown(with: $0)
         self?.collectionView.keyDown(with: $0)
         return $0
       }
     }
+  }
+  
+  override func viewWillAppear() {
     if TonnerreTheme.currentTheme == .dark {
       iconView.theme = .dark
       textField.theme = .dark
@@ -73,6 +72,14 @@ extension ViewController: TonnerreFieldDelegate {
 }
 
 extension ViewController: TonnerreCollectionViewDelegate {
+  func tabPressed(service: Displayable) {
+    if let serviceType = service as? TonnerreService {
+      textField.autoComplete(cmd: serviceType.keyword)
+    } else {
+      textField.autoComplete(cmd: service.name)
+    }
+  }
+  
   func openService(service: URL) {
     textField.stringValue = ""
     NSWorkspace.shared.open(service)

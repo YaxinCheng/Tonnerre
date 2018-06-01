@@ -10,7 +10,6 @@ import Cocoa
 
 class TonnerreField: NSTextField, ThemeProtocol {
   weak var tonnerreDelegate: TonnerreFieldDelegate?
-  var responding: Bool = false
   
   var placeholderColour: NSColor! {
     didSet {
@@ -26,19 +25,6 @@ class TonnerreField: NSTextField, ThemeProtocol {
     }
   }
   
-  override func keyDown(with event: NSEvent) {
-    switch event.keyCode {
-    case 125, 126:// Up/down arrow
-      responding = false
-    default:
-      if !responding {// Used to prevent up arrow key brings the cursor to the beginning
-        responding = true
-        becomeFirstResponder()
-        currentEditor()?.moveToEndOfDocument(nil)
-      }
-    }
-  }
-  
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     
@@ -46,8 +32,31 @@ class TonnerreField: NSTextField, ThemeProtocol {
     delegate = self
   }
   
+  override func performKeyEquivalent(with event: NSEvent) -> Bool {
+    switch event.keyCode {
+    case 18...25, 125, 126: return true
+    default:
+      return super.performKeyEquivalent(with: event)
+    }
+  }
+  
   override var mouseDownCanMoveWindow: Bool {
     return true
+  }
+  
+  func autoComplete(cmd: String) {
+    let tokens = stringValue.components(separatedBy: .whitespaces).filter({ !$0.isEmpty })
+    guard !tokens.isEmpty else { return }
+    if tokens.count > 1 {
+      stringValue = tokens[0 ..< tokens.count - 1].joined(separator: " ") + " \(cmd) "
+    } else {
+      stringValue = "\(cmd) "
+    }
+    window?.makeFirstResponder(nil)
+    DispatchQueue.main.async { [unowned self] in
+      self.currentEditor()?.selectedRange = NSMakeRange(0, 0)
+      self.currentEditor()?.moveToEndOfDocument(nil)
+    }
   }
 }
 

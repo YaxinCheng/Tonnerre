@@ -10,6 +10,7 @@ import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
   func openService(service: URL)
+  func tabPressed(service: Displayable)
 }
 
 class TonnerreCollectionView: NSScrollView {
@@ -53,7 +54,7 @@ class TonnerreCollectionView: NSScrollView {
       }
     }
   }
-  
+
   override func keyDown(with event: NSEvent) {
     switch event.keyCode {
     case 18...25:// ⌘ + number
@@ -64,6 +65,8 @@ class TonnerreCollectionView: NSScrollView {
       guard let selectedService = datasource[actualIndex] as? URL else { return }
       datasource = []
       delegate?.openService(service: selectedService)
+    case 48:// Tab
+      delegate?.tabPressed(service: datasource[highlightedItemIndex])
     case 125, 126:// Up/down arrow
       if event.keyCode == 125 { highlightedItemIndex = (highlightedItemIndex + 1 + datasource.count) % datasource.count }
       else { highlightedItemIndex = (highlightedItemIndex - 1 + datasource.count) % datasource.count }
