@@ -154,9 +154,7 @@ class CoreIndexing {
     var content: [URL] = []// The content of the path (if the path is a directory)
     do {
       if !path.isDirectory {// If it is not a directory
-        for (mode, index) in zip(searchModes, indexes) {// Add file to related index files
-          let fileExtension = path.pathExtension.lowercased()// get the extension
-          if (mode.exclude(fileExtension: fileExtension)) { continue }// Exclude the unwanted types
+        for (mode, index) in zip(searchModes, indexes) where mode.include(fileURL: path) {// Add file to related index files
           _ = try index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))// add to the index file
         }
       } else {// If it is a directory
@@ -177,7 +175,7 @@ class CoreIndexing {
       let (directories, files) = content.bipartite { $0.isDirectory }// Separate file URLs and directory URLs
       for filePath in files { addContent(in: filePath, modes: searchModes, indexes: indexes) }// Add files to index files
       // Filter out certain directory with specific names: cache, logs, locales
-      let filteredDir = directories.filter { !ExclusionControl.isExcludedDir(name: $0.lastPathComponent.lowercased()) && !ExclusionControl.isExcludedURL(url: $0) }
+      let filteredDir = directories.filter { !FileTypeControl.isExcludedDir(url: $0) && !FileTypeControl.isExcludedURL(url: $0) }
       backgroundQ.async { [unowned self] in
         for mode in searchModes { // When each single file is indexed, we remove the path from CoreData
           self.safeDelete(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
@@ -185,7 +183,7 @@ class CoreIndexing {
           for dirPath in filteredDir {
               let _: IndexingDir? = self.safeInsert(data: ["path": dirPath.path, "category": mode.storedInt])
           }
-      }// So finally, there will be no data left in the IndexingDir
+        }// So finally, there will be no data left in the IndexingDir
       }
       debugPrint(path)
       for dirPath in filteredDir { addContent(in: dirPath, modes: searchModes, indexes: indexes) }// Recursion to add each of them
@@ -216,17 +214,16 @@ class CoreIndexing {
    Based on the path url, identify which search mode it belongs to
   */
   private func identify(path: URL) -> [SearchMode] {
-    if ExclusionControl.isExcludedURL(url: path) { return [] }
-    if ExclusionControl.isExcludedDir(name: path.lastPathComponent) { return [] }
+    if FileTypeControl.isExcludedURL(url: path) { return [] }
+    if FileTypeControl.isExcludedDir(url: path) { return [] }
+    if path.typeIdentifier.starts(with: "dyn") { return [] }
     let defaultDir = Set(SearchMode.defaultMode.indexTargets)
     if defaultDir.contains(path) { return [.defaultMode] }
     let documentDir = Set(SearchMode.name.indexTargets)
-    let codingExclusion = ExclusionControl(type: .coding)
-    let mediaExclusion = ExclusionControl(type: .media)
+    let mediaExclusion = FileTypeControl(type: .media)
+    let imageExclusion = FileTypeControl(type: .image)
     let extensionAnalyze: (URL) -> [SearchMode] = { path in
-      let extensionName = path.pathExtension
-      if codingExclusion.contains(extensionName) || codingExclusion.contains(extensionName) { return [] }
-      if path.isDirectory || mediaExclusion.contains(extensionName) { return [.name] }
+      if path.isDirectory || mediaExclusion.isInControl(file: path) || imageExclusion.isInControl(file: path) { return [.name] }
       return [.name, .content]
     }
     if documentDir.contains(path) {

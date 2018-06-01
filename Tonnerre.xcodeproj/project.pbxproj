@@ -10,7 +10,6 @@
 		140F8C6F20B3668C00C69C25 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
-		1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251D20B49FD5001E0D52 /* ExclusionControl.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
 		146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */; };
 		146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */; };
@@ -40,6 +39,8 @@
 		14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */; };
 		14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FC20BF824E00D10D44 /* LaunchService.swift */; };
 		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
+		14AEB30520C1F74E00D10D44 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
+		14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30620C210EB00D10D44 /* BaseWindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +78,6 @@
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
-		1452251D20B49FD5001E0D52 /* ExclusionControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionControl.swift; sourceTree = "<group>"; };
 		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreService.swift; sourceTree = "<group>"; };
 		146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchServices.swift; sourceTree = "<group>"; };
@@ -113,6 +113,8 @@
 		14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreServiceLoader.swift; sourceTree = "<group>"; };
 		14AEB2FC20BF824E00D10D44 /* LaunchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchService.swift; sourceTree = "<group>"; };
 		14AEB2FE20BF84D100D10D44 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
+		14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypeControl.swift; sourceTree = "<group>"; };
+		14AEB30620C210EB00D10D44 /* BaseWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +149,7 @@
 				1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */,
 				144F80C820B712F2006A16BC /* IndexStorage.swift */,
 				1470518420B1DEDF00F6FBE8 /* SearchMode.swift */,
-				1452251D20B49FD5001E0D52 /* ExclusionControl.swift */,
+				14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -195,6 +197,7 @@
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
 				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
+				14AEB30620C210EB00D10D44 /* BaseWindowController.swift */,
 				14AEB2D820BEF4A800D10D44 /* GUI */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
 				1470514C20B1BEFB00F6FBE8 /* Main.storyboard */,
@@ -393,6 +396,7 @@
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
 				14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */,
+				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
 				146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
@@ -401,8 +405,8 @@
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
+				14AEB30520C1F74E00D10D44 /* FileTypeControl.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
-				1452251E20B49FD5001E0D52 /* ExclusionControl.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */,

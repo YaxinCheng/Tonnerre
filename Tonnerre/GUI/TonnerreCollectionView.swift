@@ -20,6 +20,11 @@ class TonnerreCollectionView: NSScrollView {
   
   var highlightedItemIndex = 0 {
     didSet {
+      if oldValue == highlightedItemIndex {
+        visibleIndex = 0
+        collectionView.selectItem(at: IndexPath(item: 0, section: 0), scrollPosition: .top)
+        return
+      }
       let moveDown = (highlightedItemIndex - oldValue >= 1 && highlightedItemIndex - oldValue < 8) || (oldValue - highlightedItemIndex == datasource.count - 1)
       let maxRows = 8
       let oldVisibleIndex = visibleIndex
@@ -49,9 +54,7 @@ class TonnerreCollectionView: NSScrollView {
       collectionViewHeight.constant = CGFloat(cellHeight * min(datasource.count, 9))
       collectionView.reloadData()
       if datasource.isEmpty { return }
-      DispatchQueue.main.async { [weak self] in
-        self?.highlightedItem = self?.collectionView.highlightItem(at: IndexPath(item: self?.highlightedItemIndex ?? 0, section: 0))
-      }
+      highlightedItemIndex = 0
     }
   }
 

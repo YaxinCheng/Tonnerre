@@ -14,6 +14,8 @@ enum StoredKeys: String {// Keys used in UserDefault
   case documentInxFinished
   case defaultInxFinished
   case AppleInterfaceStyle
+  case designatedX
+  case designatedY
 }
 
 enum CoreDataEntities: String {
