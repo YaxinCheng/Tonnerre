@@ -203,11 +203,11 @@ class CoreIndexing {
   }
   
   // MARK: - File System Change detection
-  private func listenToChanges() {
+  func listenToChanges() {
     detector.start()
   }
   
-  private func stopListening() {
+  func stopListening() {
     detector.stop()
   }
   /**

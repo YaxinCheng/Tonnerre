@@ -54,7 +54,9 @@ class TonnerreCollectionView: NSScrollView {
       collectionViewHeight.constant = CGFloat(cellHeight * min(datasource.count, 9))
       collectionView.reloadData()
       if datasource.isEmpty { return }
-      highlightedItemIndex = 0
+      DispatchQueue.main.async { [unowned self] in
+        self.highlightedItemIndex = 0
+      }
     }
   }
 
@@ -95,7 +97,6 @@ class TonnerreCollectionView: NSScrollView {
     for (index, cell) in indexPaths.compactMap({ collectionView.item(at: $0) as? ServiceCell }).enumerated() {
       cell.cmdLabel.stringValue = "⌘\(index + 1)"
     }
-//    collectionView.reloadItems(at: Set(indexPaths))
   }
 }
 

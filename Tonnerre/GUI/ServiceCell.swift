@@ -23,10 +23,12 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol {
   
   var highlighted: Bool = false {
     didSet {
-      if highlighted {
-        view.layer?.backgroundColor = NSColor(calibratedRed: 99/255, green: 147/255, blue: 1, alpha: 1).cgColor
-      } else {
-        view.layer?.backgroundColor = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0).cgColor
+      DispatchQueue.main.async { [weak self] in
+        if self?.highlighted ?? false {
+          self?.view.layer?.backgroundColor = NSColor(calibratedRed: 99/255, green: 147/255, blue: 1, alpha: 0.6).cgColor
+        } else {
+          self?.view.layer?.backgroundColor = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0).cgColor
+        }
       }
     }
   }

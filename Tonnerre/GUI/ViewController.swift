@@ -24,12 +24,6 @@ class ViewController: NSViewController {
     // Do any additional setup after loading the view.
     textField.tonnerreDelegate = self
     collectionView.delegate = self
-    if keyboardMonitor == nil {
-      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
-        self?.collectionView.keyDown(with: $0)
-        return $0
-      }
-    }
   }
   
   override func viewWillAppear() {
@@ -41,7 +35,14 @@ class ViewController: NSViewController {
       iconView.theme = .dark
       textField.theme = .dark
       backgroundView.material = .light
-    } 
+    }
+    if keyboardMonitor == nil {
+      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
+        self?.textField.keyDown(with: $0)
+        self?.collectionView.keyDown(with: $0)
+        return $0
+      }
+    }
   }
   
   override func viewDidAppear() {
@@ -50,12 +51,13 @@ class ViewController: NSViewController {
   }
   
   override func viewWillDisappear() {
-    NSEvent.removeMonitor(keyboardMonitor!)
+    guard let monitor = keyboardMonitor else { return }
+    NSEvent.removeMonitor(monitor)
     keyboardMonitor = nil
   }
   
   override func viewDidDisappear() {
-    
+    indexManager.stopListening()
   }
 
   override var representedObject: Any? {

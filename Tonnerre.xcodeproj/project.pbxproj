@@ -11,6 +11,8 @@
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
+		14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14561B8820C35F2C0057B4C1 /* HotKey.framework */; };
+		14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14561B8820C35F2C0057B4C1 /* HotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */; };
 		146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */; };
 		146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */; };
@@ -67,6 +69,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */,
 				1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -79,6 +82,7 @@
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
 		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		14561B8820C35F2C0057B4C1 /* HotKey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HotKey.framework; path = Carthage/Build/Mac/HotKey.framework; sourceTree = "<group>"; };
 		146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreService.swift; sourceTree = "<group>"; };
 		146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchServices.swift; sourceTree = "<group>"; };
 		146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreInterpreter.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
 				1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +175,7 @@
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
+				14561B8820C35F2C0057B4C1 /* HotKey.framework */,
 				1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */,
 				1470514220B1BEF900F6FBE8 /* Tonnerre */,
 				1470515820B1BEFB00F6FBE8 /* TonnerreTests */,
@@ -232,13 +238,13 @@
 			isa = PBXGroup;
 			children = (
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
+				14AEB2E120BF0F3400D10D44 /* Displayable.swift */,
 				14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */,
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
-				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
 				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
-				14AEB2E120BF0F3400D10D44 /* Displayable.swift */,
+				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -585,6 +591,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = Tonnerre/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -606,6 +613,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = Tonnerre/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

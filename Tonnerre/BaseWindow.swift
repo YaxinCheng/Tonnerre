@@ -7,15 +7,32 @@
 //
 
 import Cocoa
+import HotKey
 
 class BaseWindow: NSWindow {
   override var canBecomeKey: Bool {
     return true
   }
   
+  var isHidden: Bool = false {
+    didSet {
+      if isHidden {
+        orderOut(self)
+      } else {
+        makeKeyAndOrderFront(self)
+        NSApp.activate(ignoringOtherApps: true)
+      }
+    }
+  }
+  
+  let hotkey: HotKey
+  
   override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
+    hotkey = HotKey(key: .space, modifiers: [.option, .command])
     super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
-    
+    hotkey.keyDownHandler = { [weak self] in
+      self?.isHidden = !(self?.isHidden ?? true)
+    }
     isMovableByWindowBackground = true
     isMovable = true
     folderChecks()
