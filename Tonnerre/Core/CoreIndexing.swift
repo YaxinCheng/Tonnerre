@@ -220,10 +220,9 @@ class CoreIndexing {
     let defaultDir = Set(SearchMode.defaultMode.indexTargets)
     if defaultDir.contains(path) { return [.defaultMode] }
     let documentDir = Set(SearchMode.name.indexTargets)
-    let mediaExclusion = FileTypeControl(type: .media)
-    let imageExclusion = FileTypeControl(type: .image)
+    let exclusions = FileTypeControl(types: .media, .image)
     let extensionAnalyze: (URL) -> [SearchMode] = { path in
-      if path.isDirectory || mediaExclusion.isInControl(file: path) || imageExclusion.isInControl(file: path) { return [.name] }
+      if path.isDirectory || exclusions.isInControl(file: path) { return [.name] }
       return [.name, .content]
     }
     if documentDir.contains(path) {

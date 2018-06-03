@@ -14,6 +14,7 @@ protocol TonnerreService: Displayable {
   var arguments: [String] { get }
   var hasPreview: Bool { get }
 //  var enabled: Bool { get set }
-  func process(input: [String]) -> [Displayable]
+  func prepare(input: [String]) -> [Displayable]
+  func serve(source: Displayable, withCmd: Bool)
   init()
 }

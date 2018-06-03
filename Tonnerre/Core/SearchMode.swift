@@ -61,15 +61,11 @@ enum SearchMode: String {
   func include(fileURL: URL) -> Bool {
     switch self {
     case .defaultMode:
-      return FileTypeControl(type: .app).isInControl(file: fileURL) || FileTypeControl(type: .systemPref).isInControl(file: fileURL)
+      return FileTypeControl(types: .app, .systemPref).isInControl(file: fileURL)
     case .content:
-      return FileTypeControl(type: .document).isInControl(file: fileURL) || FileTypeControl(type: .message).isInControl(file: fileURL)
+      return FileTypeControl(types: .document, .message).isInControl(file: fileURL)
     case .name:
-      let types: [FileTypeControl.ControlType] = [.app, .document, .image, .media, .message]
-      for each in types.map(FileTypeControl.init) {
-        if each.isInControl(file: fileURL) { return true }
-      }
-      return false
+      return FileTypeControl(types: .app, .document, .image, .media, .message).isInControl(file: fileURL)
     }
   }
 }

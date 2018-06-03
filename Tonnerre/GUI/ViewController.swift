@@ -87,40 +87,31 @@ extension ViewController: TonnerreFieldDelegate {
 }
 
 extension ViewController: TonnerreCollectionViewDelegate {
-  func serviceHighlighted(service: Displayable) {
-    if let actualService = service as? TonnerreService {
-      iconView.image = actualService.icon
-    } else if let urlResult = service as? URL {
-      let workspace = NSWorkspace.shared
-      if let actualService = workspace.urlForApplication(toOpen: urlResult) {
-        let icon = workspace.icon(forFile: actualService.path)
-        icon.size = NSSize(width: 96, height: 96)
-        iconView.image = icon
-      }
-    } else {
-      refreshIcon()
-    }
-  }
-  
-  func tabPressed(service: Displayable) {
-    if let serviceType = service as? TonnerreService {
-      textField.autoComplete(cmd: serviceType.keyword)
-    } else {
-      textField.autoComplete(cmd: service.name)
-    }
-  }
-  
-  func openService(service: URL, inFinder: Bool) {
-    let workspace = NSWorkspace.shared
+  func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {
+    service.serve(source: target, withCmd: withCmd)
     textField.stringValue = ""
-    if inFinder {
-      workspace.activateFileViewerSelecting([service])
-    } else {
-      workspace.open(service)
-    }
     refreshIcon()
     guard let window = view.window as? BaseWindow else { return }
     window.isHidden = true
+  }
+  
+  func tabPressed(service: ServiceResult) {
+    switch service {
+    case .service(origin: let service):
+      textField.autoComplete(cmd: service.keyword)
+    case .result(service: _, value: let value):
+      textField.autoComplete(cmd: value.name)
+    }
+  }
+  
+  func serviceHighlighted(service: ServiceResult) {
+    switch service {
+    case .service(origin: let service):
+      iconView.image = service.icon
+    case .result(service: let service, value: _):
+      iconView.image = service.icon
+    }
+    refreshIcon()
   }
 }
 

@@ -23,17 +23,19 @@ struct TonnerreInterpreter {
     }
   }
   
-  func interpret(rawCmd: String) -> [Displayable] {
+  func interpret(rawCmd: String) -> [ServiceResult] {
     guard !rawCmd.isEmpty else { return [] }
     let tokens = tokenize(rawCmd: rawCmd)
     let services = parse(tokens: tokens)
-    return services.map ({
-      let keywordCount = ($0.keyword != "").hashValue
+    return services.map ({ service in
+      let keywordCount = (service.keyword != "").hashValue
       let filteredTokens = tokens.filter({ !$0.isEmpty })
-      if filteredTokens.count >= keywordCount + $0.arguments.count {
-        return $0.process(input: Array(filteredTokens[keywordCount...]))
+      if filteredTokens.count >= keywordCount + service.arguments.count {
+        return service.prepare(input: Array(filteredTokens[keywordCount...])).map { queryResult in
+          ServiceResult(service: service, value: queryResult)
+        }
       } else {
-        return [$0]
+        return [ServiceResult(service: service)]
       }
     }).reduce([], +)
   }

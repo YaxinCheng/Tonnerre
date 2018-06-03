@@ -32,16 +32,25 @@ struct FileTypeControl {
     }
   }
   
-  private let controlType: FileTypeControl.ControlType
+  private let controlTypes: [FileTypeControl.ControlType]
   private static var rawList: [String: [String]] = [:]
   
   init(type: FileTypeControl.ControlType) {
-    controlType = type
+    controlTypes = [type]
+  }
+  
+  init(types: FileTypeControl.ControlType...) {
+    controlTypes = types
   }
   
   func isInControl(file: URL) -> Bool {
     let identifier = file.typeIdentifier as CFString
-    return controlType.UTIs.map({ UTTypeConformsTo(identifier, $0) }).reduce(false, { $0 || $1 })
+    for type in controlTypes {
+      for uti in type.UTIs {
+        if UTTypeConformsTo(identifier, uti) { return true }
+      }
+    }
+    return false
   }
   
   private static func loadRawList() {

@@ -9,9 +9,9 @@
 import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
-  func openService(service: URL, inFinder: Bool)
-  func tabPressed(service: Displayable)
-  func serviceHighlighted(service: Displayable)
+  func serve(with service: TonnerreService, target: Displayable, withCmd: Bool)
+  func tabPressed(service: ServiceResult)
+  func serviceHighlighted(service: ServiceResult)
 }
 
 class TonnerreCollectionView: NSScrollView {
@@ -50,7 +50,7 @@ class TonnerreCollectionView: NSScrollView {
     NotificationCenter.default.addObserver(self, selector: #selector(collectionViewDidScroll(notification:)), name: NSView.boundsDidChangeNotification, object: collectionView)
   }
   
-  var datasource: [Displayable] = [] {
+  var datasource: [ServiceResult] = [] {
     didSet {
       collectionViewHeight.constant = CGFloat(cellHeight * min(datasource.count, 9))
       collectionView.reloadData()
@@ -68,27 +68,35 @@ class TonnerreCollectionView: NSScrollView {
       let selectedIndex = Int(event.keyCode) - 18
       let currentIndex = visibleIndex
       let actualIndex = selectedIndex - currentIndex + highlightedItemIndex
-      guard let selectedService = datasource[actualIndex] as? URL else { return }
+      guard case .result(let service, let value) = datasource[actualIndex] else { return }
       datasource = []
-      delegate?.openService(service: selectedService, inFinder: false)
+      delegate?.serve(with: service, target: value, withCmd: false)
     case 48:// Tab
       delegate?.tabPressed(service: datasource[highlightedItemIndex])
     case 125, 126:// Up/down arrow
       let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
       highlightedItemIndex = (highlightedItemIndex + movement + datasource.count) % datasource.count
     case 36, 76:// Enter
-      guard !datasource.isEmpty, let info = datasource[highlightedItemIndex] as? URL else { return }
+      guard
+        !datasource.isEmpty,
+        case .result(let service, let value) = datasource[highlightedItemIndex]
+      else { return }
       datasource = []
-      delegate?.openService(service: info, inFinder: event.modifierFlags.contains(.command))
+      delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
     default:
       break
     }
   }
   
   func modifierChanged(with event: NSEvent) {
-    guard highlightedItemIndex < datasource.count, datasource[highlightedItemIndex] is URL, let item = highlightedItem else { return }
+    guard
+      highlightedItemIndex < datasource.count,
+      case .result(_, let value) = datasource[highlightedItemIndex],
+      let item = highlightedItem,
+      let alterContent = value.alterContent
+    else { return }
     if event.modifierFlags.contains(.command) {
-      item.introLabel.stringValue = "Open in Finder"
+      item.introLabel.stringValue = alterContent
     } else if event.modifierFlags.contains(.init(rawValue: 256)) {
       item.introLabel.stringValue = datasource[highlightedItemIndex].content
     }
