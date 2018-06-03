@@ -13,4 +13,5 @@ extension Notification.Name {
   static let documentIndexingDidFinish = Notification.Name("documentIndexingDidFinish")
   static let defaultIndexingDidBegin = Notification.Name("defaultIndexingDidBegin")
   static let defaultIndexingDidFinish = Notification.Name("defaultIndexingDidFinish")
+  static let suggestionDidFinish = Notification.Name("suggestionDidFinish")
 }

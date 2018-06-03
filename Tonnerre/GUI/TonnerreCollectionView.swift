@@ -97,7 +97,7 @@ class TonnerreCollectionView: NSScrollView {
     else { return }
     if event.modifierFlags.contains(.command) {
       item.introLabel.stringValue = alterContent
-    } else if event.modifierFlags.contains(.init(rawValue: 256)) {
+    } else if event.modifierFlags.contains(.init(rawValue: 256)) {// Released key
       item.introLabel.stringValue = datasource[highlightedItemIndex].content
     }
   }

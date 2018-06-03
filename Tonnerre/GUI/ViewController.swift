@@ -25,6 +25,7 @@ class ViewController: NSViewController {
     // Do any additional setup after loading the view.
     textField.tonnerreDelegate = self
     collectionView.delegate = self
+    NotificationCenter.default.addObserver(self, selector: #selector(suggestionNotificationDidArrive(notification:)), name: .suggestionDidFinish, object: nil)
   }
   
   override func viewWillAppear() {
@@ -84,6 +85,22 @@ class ViewController: NSViewController {
     iconView.image = #imageLiteral(resourceName: "tonnerre")
     iconView.theme = TonnerreTheme.currentTheme
   }
+  
+  @objc private func suggestionNotificationDidArrive(notification: Notification) {
+    DispatchQueue.main.async { [unowned self] in
+      let tokens = self.textField.stringValue.components(separatedBy: .whitespaces)
+      guard
+        let suggestionPack = notification.userInfo as? [String: Any],
+        let suggestions = suggestionPack["suggestions"] as? [String],
+        let queriedWord = suggestionPack["queriedWord"] as? String,
+        tokens.count > 1,
+        tokens[1...].joined(separator: " ").lowercased() == queriedWord,
+        case .result(let service, _)? = self.collectionView.datasource.first,
+        let webService = service as? WebService
+      else { return }
+      self.collectionView.datasource += webService.suggest(queries: suggestions)
+    }
+  }
 }
 
 extension ViewController: TonnerreFieldDelegate {
@@ -103,7 +120,6 @@ extension ViewController: TonnerreCollectionViewDelegate {
       (self?.view.window as? BaseWindow)?.isHidden = true
     }
   }
-  
   func tabPressed(service: ServiceResult) {
     switch service {
     case .service(origin: let service):
@@ -111,6 +127,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .result(service: _, value: let value):
       textField.autoComplete(cmd: value.name)
     }
+    textDidChange(value: textField.stringValue)
   }
   
   func serviceHighlighted(service: ServiceResult) {
@@ -120,7 +137,6 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .result(service: let service, value: _):
       iconView.image = service.icon
     }
-    refreshIcon()
   }
 }
 
