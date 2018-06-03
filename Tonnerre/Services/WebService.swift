@@ -12,6 +12,7 @@ protocol WebService: TonnerreService {
   var template: String { get }
   var suggestionTemplate: String { get }
   func suggest(queries: [String]) -> [ServiceResult]
+  func processJSON(data: Data?) -> [String: Any]
 }
 
 extension WebService {
@@ -20,32 +21,6 @@ extension WebService {
     guard urlEncoded.count >= input.count else { return "" }
     let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) + [urlEncoded[(arguments.count - 1)...].joined(separator: "+")]
     return String(format: template, arguments: parameters)
-  }
-  
-  func prepare(input: [String]) -> [Displayable] {
-    let queryURL = fillInTemplate(input: input)
-    guard !queryURL.isEmpty else { return [] }
-    let originalSearch = WebRequest(name: input.joined(separator: " "), content: queryURL, icon: icon)
-    guard !suggestionTemplate.isEmpty else { return [originalSearch] }
-    let session = URLSession(configuration: .default)
-    guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-      return [originalSearch]
-    }
-    let suggestionPath = String(format: suggestionTemplate, arguments: [query])
-    guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
-    session.dataTask(with: suggestionURL) { (data, response, error) in
-      guard
-        let jsonData = data,
-        let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
-        json.count > 2,
-        let queriedWord = json[0] as? String,
-        let availableOptions = json[1] as? [NSArray]
-      else { return }
-      let suggestions = availableOptions.compactMap { $0[0] as? String }
-      let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: ["suggestions": suggestions, "queriedWord": queriedWord])
-      NotificationCenter.default.post(notification)
-    }.resume()
-    return [originalSearch]
   }
   
   func suggest(queries: [String]) -> [ServiceResult] {
@@ -60,5 +35,24 @@ extension WebService {
     guard let url = URL(string: source.content) else { return }
     let workspace = NSWorkspace.shared
     workspace.open(url)
+  }
+  
+  func prepare(input: [String]) -> [Displayable] {
+    let queryURL = fillInTemplate(input: input)
+    guard !queryURL.isEmpty else { return [] }
+    let originalSearch = WebRequest(name: input.joined(separator: " "), content: queryURL, icon: icon)
+    guard !suggestionTemplate.isEmpty else { return [originalSearch] }
+    let session = URLSession(configuration: .default)
+    guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+      return [originalSearch]
+    }
+    let suggestionPath = String(format: suggestionTemplate, arguments: [query])
+    guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
+    session.dataTask(with: suggestionURL) { (data, response, error) in
+      let processedData = self.processJSON(data: data)
+      let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: processedData)
+      NotificationCenter.default.post(notification)
+      }.resume()
+    return [originalSearch]
   }
 }

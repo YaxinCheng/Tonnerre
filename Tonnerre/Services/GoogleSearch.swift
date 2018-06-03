@@ -9,6 +9,7 @@
 import Cocoa
 
 struct GoogleSearch: WebService {
+  
   let icon: NSImage = #imageLiteral(resourceName: "google")
   let name: String = "Google"
   let content: String = "Search on google for what you want"
@@ -17,4 +18,16 @@ struct GoogleSearch: WebService {
   let keyword: String = "google"
   let arguments: [String] = ["query"]
   let hasPreview: Bool = false
+  
+  func processJSON(data: Data?) -> [String: Any] {
+    guard
+      let jsonData = data,
+      let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
+      json.count > 2,
+      let queriedWord = json[0] as? String,
+      let availableOptions = json[1] as? [NSArray]
+      else { return [:] }
+    let suggestions = availableOptions.compactMap { $0[0] as? String }
+    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": keyword]
+  }
 }

@@ -18,7 +18,7 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
-    theme = TonnerreTheme.currentTheme
+    theme = .currentTheme
   }
   
   var highlighted: Bool = false {
@@ -35,7 +35,7 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol {
   
   var theme: TonnerreTheme {
     get {
-      return TonnerreTheme.currentTheme
+      return .currentTheme
     } set {
       iconView.theme = newValue
       serviceLabel.textColor = newValue.imgColour

@@ -17,11 +17,19 @@ class TonnerreField: NSTextField, ThemeProtocol {
     }
   }
   
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    
+    NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
+      self?.stringValue = ""
+    }
+  }
+  
   var theme: TonnerreTheme {
     set {
       placeholderColour = newValue.placeholderColour
     } get {
-      return TonnerreTheme.currentTheme
+      return .currentTheme
     }
   }
   

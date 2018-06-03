@@ -83,7 +83,7 @@ class ViewController: NSViewController {
   
   private func refreshIcon() {
     iconView.image = #imageLiteral(resourceName: "tonnerre")
-    iconView.theme = TonnerreTheme.currentTheme
+    iconView.theme = .currentTheme
   }
   
   @objc private func suggestionNotificationDidArrive(notification: Notification) {
@@ -136,6 +136,9 @@ extension ViewController: TonnerreCollectionViewDelegate {
       iconView.image = service.icon
     case .result(service: let service, value: _):
       iconView.image = service.icon
+      if iconView.image === #imageLiteral(resourceName: "tonnerre") {
+        refreshIcon()
+      }
     }
   }
 }

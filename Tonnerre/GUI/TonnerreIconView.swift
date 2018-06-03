@@ -20,6 +20,15 @@ class TonnerreIconView: NSImageView , ThemeProtocol {
     }
   }
   
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    
+    NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
+      self?.image = #imageLiteral(resourceName: "tonnerre")
+      self?.theme = .currentTheme
+    }
+  }
+  
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     

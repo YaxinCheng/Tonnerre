@@ -47,7 +47,11 @@ class TonnerreCollectionView: NSScrollView {
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     collectionViewHeight = constraints.filter({ $0.identifier == "collectionViewHeightConstraint"}).first!
-    NotificationCenter.default.addObserver(self, selector: #selector(collectionViewDidScroll(notification:)), name: NSView.boundsDidChangeNotification, object: collectionView)
+    let centre = NotificationCenter.default
+    centre.addObserver(self, selector: #selector(collectionViewDidScroll(notification:)), name: NSView.boundsDidChangeNotification, object: collectionView)
+    centre.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
+      self?.datasource = []
+    }
   }
   
   var datasource: [ServiceResult] = [] {

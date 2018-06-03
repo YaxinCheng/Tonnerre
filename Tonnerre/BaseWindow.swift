@@ -17,6 +17,8 @@ class BaseWindow: NSWindow {
   var isHidden: Bool = false {
     didSet {
       if isHidden {
+        let notification = Notification(name: .windowIsHiding)
+        NotificationCenter.default.post(notification)
         orderOut(self)
       } else {
         makeKeyAndOrderFront(self)
