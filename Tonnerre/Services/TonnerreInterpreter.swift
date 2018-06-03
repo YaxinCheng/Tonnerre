@@ -27,7 +27,7 @@ struct TonnerreInterpreter {
     guard !rawCmd.isEmpty else { return [] }
     let tokens = tokenize(rawCmd: rawCmd)
     let services = parse(tokens: tokens)
-    return services.map ({ service in
+    let possibleServices: [ServiceResult] = services.map { service in
       let keywordCount = (service.keyword != "").hashValue
       let filteredTokens = tokens.filter({ !$0.isEmpty })
       if filteredTokens.count >= keywordCount + service.arguments.count {
@@ -37,6 +37,13 @@ struct TonnerreInterpreter {
       } else {
         return [ServiceResult(service: service)]
       }
-    }).reduce([], +)
+    }.reduce([], +)
+    if possibleServices.isEmpty {
+      let services: [WebService] = [GoogleSearch(suggestion: false), AmazonSearch(suggestion: false), WikipediaSearch(suggestion: false)]
+      let values = services.map { $0.prepare(input: tokens) }
+      return zip(services, values).map { ServiceResult(service: $0.0, value: $0.1.first!) }
+    } else {
+      return possibleServices
+    }
   }
 }

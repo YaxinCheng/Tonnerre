@@ -18,6 +18,15 @@ struct GoogleSearch: WebService {
   let keyword: String = "google"
   let arguments: [String] = ["query"]
   let hasPreview: Bool = false
+  let loadSuggestion: Bool
+  
+  init() {
+    loadSuggestion = true
+  }
+  
+  init(suggestion: Bool) {
+    loadSuggestion = suggestion
+  }
   
   func processJSON(data: Data?) -> [String: Any] {
     guard

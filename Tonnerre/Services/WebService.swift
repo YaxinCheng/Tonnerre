@@ -11,6 +11,7 @@ import Cocoa
 protocol WebService: TonnerreService {
   var template: String { get }
   var suggestionTemplate: String { get }
+  var loadSuggestion: Bool { get }
   func suggest(queries: [String]) -> [ServiceResult]
   func processJSON(data: Data?) -> [String: Any]
 }
@@ -19,7 +20,8 @@ extension WebService {
   func fillInTemplate(input: [String]) -> String {
     let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
     guard urlEncoded.count >= input.count else { return "" }
-    let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) + [urlEncoded[(arguments.count - 1)...].joined(separator: "+")]
+    let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) +
+      [urlEncoded[(arguments.count - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
     return String(format: template, arguments: parameters)
   }
   
@@ -41,7 +43,7 @@ extension WebService {
     let queryURL = fillInTemplate(input: input)
     guard !queryURL.isEmpty else { return [] }
     let originalSearch = WebRequest(name: input.joined(separator: " "), content: queryURL, icon: icon)
-    guard !suggestionTemplate.isEmpty else { return [originalSearch] }
+    guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
     let session = URLSession(configuration: .default)
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
       return [originalSearch]

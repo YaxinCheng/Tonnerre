@@ -13,9 +13,9 @@ struct TonnerreServiceLoader {
     return Trie(values: keywords)
   }()
   
-  private let serviceTypes: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self]
+  private let serviceTypes: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self]
   
-  lazy var services: [String: TonnerreService] = {
+  lazy var services: [String: TonnerreService] = {// keyword : instance
     return Dictionary(uniqueKeysWithValues: serviceTypes.map ({ (type) -> (String, TonnerreService) in
       let instance = type.init()
       return (instance.keyword, instance)
