@@ -11,6 +11,7 @@ import Cocoa
 protocol TonnerreCollectionViewDelegate: class {
   func openService(service: URL)
   func tabPressed(service: Displayable)
+  func serviceHighlighted(service: Displayable)
 }
 
 class TonnerreCollectionView: NSScrollView {
@@ -73,8 +74,8 @@ class TonnerreCollectionView: NSScrollView {
     case 48:// Tab
       delegate?.tabPressed(service: datasource[highlightedItemIndex])
     case 125, 126:// Up/down arrow
-      if event.keyCode == 125 { highlightedItemIndex = (highlightedItemIndex + 1 + datasource.count) % datasource.count }
-      else { highlightedItemIndex = (highlightedItemIndex - 1 + datasource.count) % datasource.count }
+      let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
+      highlightedItemIndex = (highlightedItemIndex + movement + datasource.count) % datasource.count
     case 36, 76:// Enter
       guard !datasource.isEmpty, let info = datasource[highlightedItemIndex] as? URL else { return }
       datasource = []
@@ -131,6 +132,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     highlightedItem?.highlighted = false
     highlightedItem = cell
     highlightedItem?.highlighted = true
+    delegate?.serviceHighlighted(service: datasource[indexPath.item])
   }
 }
 

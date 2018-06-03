@@ -38,7 +38,6 @@ class ViewController: NSViewController {
     }
     if keyboardMonitor == nil {
       keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
-        self?.textField.keyDown(with: $0)
         self?.collectionView.keyDown(with: $0)
         return $0
       }
@@ -70,10 +69,28 @@ class ViewController: NSViewController {
 extension ViewController: TonnerreFieldDelegate {
   func textDidChange(value: String) {
     collectionView.datasource = interpreter.interpret(rawCmd: value)
+    guard value.isEmpty else { return }
+    iconView.image = #imageLiteral(resourceName: "tonnerre")
+    iconView.theme = TonnerreTheme.currentTheme
   }
 }
 
 extension ViewController: TonnerreCollectionViewDelegate {
+  func serviceHighlighted(service: Displayable) {
+    if let actualService = service as? TonnerreService {
+      iconView.image = actualService.icon
+    } else if let urlResult = service as? URL {
+      let workspace = NSWorkspace.shared
+      if let actualService = workspace.urlForApplication(toOpen: urlResult) {
+        let icon = workspace.icon(forFile: actualService.path)
+        icon.size = NSSize(width: 96, height: 96)
+        iconView.image = icon
+      }
+    } else {
+      iconView.image = #imageLiteral(resourceName: "tonnerre")
+    }
+  }
+  
   func tabPressed(service: Displayable) {
     if let serviceType = service as? TonnerreService {
       textField.autoComplete(cmd: serviceType.keyword)
