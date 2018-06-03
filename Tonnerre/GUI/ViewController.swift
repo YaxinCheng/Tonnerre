@@ -49,6 +49,14 @@ class ViewController: NSViewController {
     }
   }
   
+  
+  override func performKeyEquivalent(with event: NSEvent) -> Bool {
+    switch event.keyCode {
+    case 18...25, 125, 126: return true
+    default: return super.performKeyEquivalent(with: event)
+    }
+  }
+  
   override func viewDidAppear() {
     indexManager.check()
     _ = textField.becomeFirstResponder()
@@ -91,8 +99,9 @@ extension ViewController: TonnerreCollectionViewDelegate {
     service.serve(source: target, withCmd: withCmd)
     textField.stringValue = ""
     refreshIcon()
-    guard let window = view.window as? BaseWindow else { return }
-    window.isHidden = true
+    DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
+      (self?.view.window as? BaseWindow)?.isHidden = true
+    }
   }
   
   func tabPressed(service: ServiceResult) {

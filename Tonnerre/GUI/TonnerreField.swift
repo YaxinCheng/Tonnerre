@@ -32,14 +32,6 @@ class TonnerreField: NSTextField, ThemeProtocol {
     delegate = self
   }
   
-  override func performKeyEquivalent(with event: NSEvent) -> Bool {
-    switch event.keyCode {
-    case 18...25, 125, 126: return true
-    default:
-      return super.performKeyEquivalent(with: event)
-    }
-  }
-  
   override var mouseDownCanMoveWindow: Bool {
     return true
   }
