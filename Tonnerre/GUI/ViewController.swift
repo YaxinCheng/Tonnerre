@@ -17,6 +17,7 @@ class ViewController: NSViewController {
   @IBOutlet weak var textField: TonnerreField!
   @IBOutlet weak var collectionView: TonnerreCollectionView!
   private var keyboardMonitor: Any? = nil
+  private var flagsMonitor: Any? = nil
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,6 +42,10 @@ class ViewController: NSViewController {
         self?.collectionView.keyDown(with: $0)
         return $0
       }
+      flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] in
+        self?.collectionView.modifierChanged(with: $0)
+        return $0
+      }
     }
   }
   
@@ -50,9 +55,11 @@ class ViewController: NSViewController {
   }
   
   override func viewWillDisappear() {
-    guard let monitor = keyboardMonitor else { return }
-    NSEvent.removeMonitor(monitor)
+    guard let kmonitor = keyboardMonitor, let fmonitor = flagsMonitor else { return }
+    NSEvent.removeMonitor(kmonitor)
     keyboardMonitor = nil
+    NSEvent.removeMonitor(fmonitor)
+    flagsMonitor = nil
   }
   
   override func viewDidDisappear() {
@@ -64,14 +71,18 @@ class ViewController: NSViewController {
     // Update the view, if already loaded.
     }
   }
+  
+  private func refreshIcon() {
+    iconView.image = #imageLiteral(resourceName: "tonnerre")
+    iconView.theme = TonnerreTheme.currentTheme
+  }
 }
 
 extension ViewController: TonnerreFieldDelegate {
   func textDidChange(value: String) {
     collectionView.datasource = interpreter.interpret(rawCmd: value)
     guard value.isEmpty else { return }
-    iconView.image = #imageLiteral(resourceName: "tonnerre")
-    iconView.theme = TonnerreTheme.currentTheme
+    refreshIcon()
   }
 }
 
@@ -87,7 +98,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
         iconView.image = icon
       }
     } else {
-      iconView.image = #imageLiteral(resourceName: "tonnerre")
+      refreshIcon()
     }
   }
   
@@ -99,9 +110,17 @@ extension ViewController: TonnerreCollectionViewDelegate {
     }
   }
   
-  func openService(service: URL) {
+  func openService(service: URL, inFinder: Bool) {
+    let workspace = NSWorkspace.shared
     textField.stringValue = ""
-    NSWorkspace.shared.open(service)
+    if inFinder {
+      workspace.activateFileViewerSelecting([service])
+    } else {
+      workspace.open(service)
+    }
+    refreshIcon()
+    guard let window = view.window as? BaseWindow else { return }
+    window.isHidden = true
   }
 }
 

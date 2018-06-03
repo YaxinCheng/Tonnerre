@@ -9,15 +9,15 @@
 import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
-  func openService(service: URL)
+  func openService(service: URL, inFinder: Bool)
   func tabPressed(service: Displayable)
   func serviceHighlighted(service: Displayable)
 }
 
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
-  private var highlightedItem: ServiceCell?
-  private var visibleIndex: Int = 0
+  private var highlightedItem: ServiceCell? // Actual index in the datasource array
+  private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   
   var highlightedItemIndex = 0 {
     didSet {
@@ -70,7 +70,7 @@ class TonnerreCollectionView: NSScrollView {
       let actualIndex = selectedIndex - currentIndex + highlightedItemIndex
       guard let selectedService = datasource[actualIndex] as? URL else { return }
       datasource = []
-      delegate?.openService(service: selectedService)
+      delegate?.openService(service: selectedService, inFinder: false)
     case 48:// Tab
       delegate?.tabPressed(service: datasource[highlightedItemIndex])
     case 125, 126:// Up/down arrow
@@ -79,9 +79,18 @@ class TonnerreCollectionView: NSScrollView {
     case 36, 76:// Enter
       guard !datasource.isEmpty, let info = datasource[highlightedItemIndex] as? URL else { return }
       datasource = []
-      delegate?.openService(service: info)
+      delegate?.openService(service: info, inFinder: event.modifierFlags.contains(.command))
     default:
       break
+    }
+  }
+  
+  func modifierChanged(with event: NSEvent) {
+    guard highlightedItemIndex < datasource.count, datasource[highlightedItemIndex] is URL, let item = highlightedItem else { return }
+    if event.modifierFlags.contains(.command) {
+      item.introLabel.stringValue = "Open in Finder"
+    } else if event.modifierFlags.contains(.init(rawValue: 256)) {
+      item.introLabel.stringValue = datasource[highlightedItemIndex].content
     }
   }
   
@@ -93,11 +102,21 @@ class TonnerreCollectionView: NSScrollView {
   }
   
   @objc private func collectionViewDidScroll(notification: Notification) {
-    let changingIndexes = (0...8).map({ $0 - visibleIndex + highlightedItemIndex }).filter({ $0 >= 0 && $0 < datasource.count })
-    let indexPaths = changingIndexes.map({ IndexPath(item: $0, section: 0) })
-    for (index, cell) in indexPaths.compactMap({ collectionView.item(at: $0) as? ServiceCell }).enumerated() {
+    let visibleCells = getVisibleCells()
+    for (index, cell) in visibleCells.enumerated() {
       cell.cmdLabel.stringValue = "⌘\(index + 1)"
     }
+  }
+  
+  func getVisibleIndexes() -> [Int] {
+    let topIndex = highlightedItemIndex - visibleIndex
+    return (0...8).map({ topIndex + $0 }).filter { $0 >= 0 && $0 < datasource.count }
+  }
+  
+  func getVisibleCells() -> [ServiceCell] {
+    let visibleIndexes = getVisibleIndexes()
+    let indexPaths = visibleIndexes.map { IndexPath(item: $0, section: 0) }
+    return indexPaths.compactMap { collectionView.item(at: $0) as? ServiceCell }
   }
 }
 
