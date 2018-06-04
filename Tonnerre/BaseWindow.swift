@@ -38,6 +38,7 @@ class BaseWindow: NSWindow {
     isMovableByWindowBackground = true
     isMovable = true
     folderChecks()
+    setupCache()
     NotificationCenter.default.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
   }
   
@@ -55,16 +56,27 @@ class BaseWindow: NSWindow {
       let bundleID = Bundle.main.bundleIdentifier
       else { return }
     let dataFolderPath = appSupportPath.appendingPathComponent(bundleID)
+    let userDefault = UserDefaults.standard
+    userDefault.set(dataFolderPath, forKey: StoredKeys.appSupportDir.rawValue)
     let indexFolder = dataFolderPath.appendingPathComponent("Indices")
+    let servicesFolder = dataFolderPath.appendingPathComponent("Services")
+    let cacheFolder = dataFolderPath.appendingPathComponent("Cache")
     
-    if !fileManager.fileExists(atPath: indexFolder.path) {
-      let userDefault = UserDefaults.standard
-      userDefault.set(dataFolderPath, forKey: StoredKeys.appSupportDir.rawValue)
-      do {
-        try fileManager.createDirectory(at: indexFolder, withIntermediateDirectories: true, attributes: nil)
-      } catch {
-        print("Cannot create the app support folder")
+    for path in [indexFolder, servicesFolder, cacheFolder] {
+      if !fileManager.fileExists(atPath: path.path) {
+        do {
+          try fileManager.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+        } catch { print(error) }
       }
     }
+  }
+  
+  private func setupCache() {
+    let cache = URLCache(memoryCapacity: 1024 * 1024, diskCapacity: 1024 * 1024 * 10, diskPath: {
+      let userDefault = UserDefaults.standard
+      let appSupFolder = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
+      return appSupFolder.appendingPathComponent("Cache").path
+    }())
+    URLCache.shared = cache
   }
 }

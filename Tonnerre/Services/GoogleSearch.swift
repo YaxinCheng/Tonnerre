@@ -8,25 +8,17 @@
 
 import Cocoa
 
-struct GoogleSearch: WebService {
-  
-  let icon: NSImage = #imageLiteral(resourceName: "google")
-  let name: String = "Google"
-  let content: String = "Search on google for what you want"
-  let template: String = "https://google.com/search?q=%@"
-  let suggestionTemplate: String = "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
-  let keyword: String = "google"
-  let arguments: [String] = ["query"]
-  let hasPreview: Bool = false
-  let loadSuggestion: Bool
-  
-  init() {
-    loadSuggestion = true
+protocol Google: WebService {
+}
+
+extension Google {
+  var icon: NSImage { return #imageLiteral(resourceName: "google") }
+  var suggestionTemplate: String {
+    return "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   }
-  
-  init(suggestion: Bool) {
-    loadSuggestion = suggestion
-  }
+  var arguments: [String] { return ["query"] }
+  var hasPreview: Bool { return false }
+  var loadSuggestion: Bool { return true }
   
   func processJSON(data: Data?) -> [String: Any] {
     guard
@@ -39,4 +31,34 @@ struct GoogleSearch: WebService {
     let suggestions = availableOptions.compactMap { $0[0] as? String }
     return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": keyword]
   }
+}
+
+struct GoogleSearch: Google {
+  let name: String = "Google"
+  let content: String = "Search on google for what you want"
+  let template: String = "https://google.com/search?q=%@"
+  let keyword: String = "google"
+  let loadSuggestion: Bool
+  init() {
+    loadSuggestion = true
+  }
+  init(suggestion: Bool) {
+    loadSuggestion = suggestion
+  }
+}
+
+struct GoogleImageSearch: Google {
+  let name: String = "Google Images"
+  let content: String = "Search on google for the image you want"
+  let template: String = "https://google.com/search?q=%@&tbm=isch"
+  let keyword: String = "image"
+}
+
+struct YoutubeSearch: Google {
+  let suggestionTemplate: String = "https://clients1.google.com/complete/search?client=safari&q=%@"
+  let name: String = "Youtube"
+  let content: String = "Find your favourite videos on Youtube"
+  let template: String = "https://www.youtube.com/results?search_query=%@"
+  let keyword: String = "youtube"
+  let icon: NSImage = #imageLiteral(resourceName: "youtube")
 }

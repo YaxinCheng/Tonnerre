@@ -19,13 +19,13 @@ struct TonnerreInterpreter {
     if tokens.count == 1 {
       return TonnerreInterpreter.loader.autoComplete(key: tokens.first!) + [LaunchService()]
     } else {
-      return TonnerreInterpreter.loader.exactMatch(key: tokens.first!)
+      return TonnerreInterpreter.loader.exactMatch(key: tokens.first!) + [LaunchService()]
     }
   }
   
   func interpret(rawCmd: String) -> [ServiceResult] {
     guard !rawCmd.isEmpty else { return [] }
-    let tokens = tokenize(rawCmd: rawCmd)
+    let tokens = tokenize(rawCmd: rawCmd).filter { !$0.isEmpty }
     let services = parse(tokens: tokens)
     let possibleServices: [ServiceResult] = services.map { service in
       let keywordCount = (service.keyword != "").hashValue

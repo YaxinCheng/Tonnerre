@@ -2,55 +2,53 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Accounts.prefPane</key>
-  <string>Users &amp; Groups</string>
-  <key>AppStore.prefPane</key>
-  <string>App Store</string>
-  <key>Appearance.prefPane</key>
-  <string>General</string>
-  <key>DateAndTime.prefPane</key>
-  <string>Date &amp; Time</string>
-  <key>DesktopScreenEffectsPref.prefPane</key>
-  <string>Desktop &amp; Screen Saver</string>
-  <key>DigiHubDiscs.prefPane</key>
-  <string>CDs &amp; DVDs</string>
-  <key>EnergySaver.prefPane</key>
-  <string>Energy Saver</string>
-  <key>Expose.prefPane</key>
-  <string>Mission Control</string>
-  <key>FibreChannel.prefPane</key>
-  <string>Fibre Channel</string>
-  <key>InternetAccounts.prefPane</key>
-  <string>Internet Accounts</string>
-  <key>Localization.prefPane</key>
-  <string>Language &amp; Region</string>
-  
-  <key>ParentalControls.prefPane</key>
-  <string>Parental Controls</string>
-  <key>PrintAndFax.prefPane</key>
-  <string>Printers &amp; Fax</string>
-  <key>PrintAndScan.prefPane</key>
-  <string>Printers &amp; Scanners</string>
-  <key>Security.prefPane</key>
-  <string>Security &amp; Privacy</string>
-  <key>SharingPref.prefPane</key>
-  <string>Sharing</string>
-  <key>Speech.prefPane</key>
-  <string>Siri</string>
-  
-  <key>StartupDisk.prefPane</key>
-  <string>Startup Disk</string>
-  <key>TimeMachine.prefPane</key>
-  <string>Time Machine</string>
-  <key>TouchID.prefPane</key>
-  <string>Touch ID</string>
-  <key>UniversalAccessPref.prefPane</key>
-  <string>Accessibility</string>
-  <key>Wallet.prefPane</key>
-  <string>Wallet &amp; Apple Pay</string>
-  <key>iCloudPref.prefPane</key>
-  <string>iCloud</string>
-  <key>System Preferences.app</key>
-  <string>Settings</string>
+	<key>iCloudPref.prefPane</key>
+	<string>iCloud</string>
+	<key>Accounts.prefPane</key>
+	<string>Users &amp; Groups</string>
+	<key>AppStore.prefPane</key>
+	<string>App Store</string>
+	<key>Appearance.prefPane</key>
+	<string>General</string>
+	<key>DateAndTime.prefPane</key>
+	<string>Date &amp; Time</string>
+	<key>DesktopScreenEffectsPref.prefPane</key>
+	<string>Desktop &amp; Screen Saver</string>
+	<key>DigiHubDiscs.prefPane</key>
+	<string>CDs &amp; DVDs</string>
+	<key>EnergySaver.prefPane</key>
+	<string>Energy Saver</string>
+	<key>Expose.prefPane</key>
+	<string>Mission Control</string>
+	<key>FibreChannel.prefPane</key>
+	<string>Fibre Channel</string>
+	<key>InternetAccounts.prefPane</key>
+	<string>Internet Accounts</string>
+	<key>Localization.prefPane</key>
+	<string>Language &amp; Region</string>
+	<key>ParentalControls.prefPane</key>
+	<string>Parental Controls</string>
+	<key>PrintAndFax.prefPane</key>
+	<string>Printers &amp; Fax</string>
+	<key>PrintAndScan.prefPane</key>
+	<string>Printers &amp; Scanners</string>
+	<key>Security.prefPane</key>
+	<string>Security &amp; Privacy</string>
+	<key>SharingPref.prefPane</key>
+	<string>Sharing</string>
+	<key>Speech.prefPane</key>
+	<string>Siri</string>
+	<key>StartupDisk.prefPane</key>
+	<string>Startup Disk</string>
+	<key>TimeMachine.prefPane</key>
+	<string>Time Machine</string>
+	<key>TouchID.prefPane</key>
+	<string>Touch ID</string>
+	<key>UniversalAccessPref.prefPane</key>
+	<string>Accessibility</string>
+	<key>Wallet.prefPane</key>
+	<string>Wallet &amp; Apple Pay</string>
+	<key>System Preferences.app</key>
+	<string>Settings</string>
 </dict>
 </plist>

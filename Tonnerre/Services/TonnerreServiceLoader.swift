@@ -13,17 +13,17 @@ struct TonnerreServiceLoader {
     return Trie(values: keywords)
   }()
   
-  private let serviceTypes: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self]
+  private let serviceTypes: [TonnerreService.Type]
   
   lazy var services: [String: TonnerreService] = {// keyword : instance
-    return Dictionary(uniqueKeysWithValues: serviceTypes.map ({ (type) -> (String, TonnerreService) in
+    return Dictionary(uniqueKeysWithValues: serviceTypes.map { (type) -> (String, TonnerreService) in
       let instance = type.init()
       return (instance.keyword, instance)
-    }))
+    } + GeneralWebService.load().map { ($0.keyword, $0) } )
   }()
   
   lazy var keywords: Set<String> = {
-    return Set(serviceTypes.map({ $0.init().keyword }))
+    return Set(serviceTypes.map { $0.init().keyword } + GeneralWebService.load().map { $0.keyword } )
   }()
   
   mutating func autoComplete(key: String) -> [TonnerreService] {
@@ -33,5 +33,9 @@ struct TonnerreServiceLoader {
   mutating func exactMatch(key: String) -> [TonnerreService] {
     let matchedKeys = keywords.filter { $0 == key }
     return matchedKeys.compactMap { services[$0] }
+  }
+  
+  init() {
+    serviceTypes = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self]
   }
 }
