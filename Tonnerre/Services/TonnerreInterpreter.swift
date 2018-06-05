@@ -19,7 +19,8 @@ struct TonnerreInterpreter {
     if tokens.count == 1 {
       return TonnerreInterpreter.loader.autoComplete(key: tokens.first!) + [LaunchService()]
     } else {
-      return TonnerreInterpreter.loader.exactMatch(key: tokens.first!) + [LaunchService()]
+      let matchedServices = TonnerreInterpreter.loader.exactMatch(key: tokens.first!)
+      return matchedServices.isEmpty ? [LaunchService()] : matchedServices
     }
   }
   

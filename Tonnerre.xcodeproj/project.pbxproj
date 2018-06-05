@@ -38,6 +38,7 @@
 		1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */; };
 		1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484147E20C5D056008FD68E /* GeneralWebServices.swift */; };
+		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
 		14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
@@ -121,6 +122,7 @@
 		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
 		1484147E20C5D056008FD68E /* GeneralWebServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralWebServices.swift; sourceTree = "<group>"; };
+		1484148220C63A1A008FD68E /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
 		14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTheme.swift; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
@@ -177,10 +179,10 @@
 			isa = PBXGroup;
 			children = (
 				146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */,
+				14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */,
 				14561B8B20C444470057B4C1 /* ServiceResult.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */,
-				14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */,
 				146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */,
 				14561B8D20C45A650057B4C1 /* WebService.swift */,
 				1484147E20C5D056008FD68E /* GeneralWebServices.swift */,
@@ -189,6 +191,7 @@
 				14561B9620C4892D0057B4C1 /* WikipediaSearch.swift */,
 				14561B9020C45EC20057B4C1 /* WebRequest.swift */,
 				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
+				1484148220C63A1A008FD68E /* MapService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				14561B9120C45EC20057B4C1 /* WebRequest.swift in Sources */,
 				14561B8C20C444470057B4C1 /* ServiceResult.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
+				1484148320C63A1A008FD68E /* MapService.swift in Sources */,
 				14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */,
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
