@@ -14,7 +14,7 @@ class GeneralWebService: WebService, Codable {
   let arguments: [String]
   let iconURL: String
   let name: String
-  let content: String
+  let contentTemplate: String
   let suggestionTemplate: String = ""
   let loadSuggestion: Bool = false
   let hasPreview: Bool = false
@@ -35,12 +35,12 @@ class GeneralWebService: WebService, Codable {
     template = try container.decode(String.self, forKey: .template)
     arguments = try container.decode([String].self, forKey: .arguments)
     iconURL = try container.decode(String.self, forKey: .iconURL)
-    content = (try? container.decode(String.self, forKey: .content)) ?? ""
+    contentTemplate = (try? container.decode(String.self, forKey: .contentTemplate)) ?? ""
   }
   
   enum CodingKeys: String, CodingKey {
     case name
-    case content//optional
+    case contentTemplate = "content"//optional
     case keyword
     case template
     case arguments

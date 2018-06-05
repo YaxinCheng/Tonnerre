@@ -33,6 +33,13 @@ class TonnerreField: NSTextField, ThemeProtocol {
     }
   }
   
+  override func performKeyEquivalent(with event: NSEvent) -> Bool {
+    switch event.keyCode {
+    case 18...25, 125, 126: return true
+    default: return super.performKeyEquivalent(with: event)
+    }
+  }
+  
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
     

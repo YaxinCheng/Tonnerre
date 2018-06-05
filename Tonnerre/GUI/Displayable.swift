@@ -12,7 +12,6 @@ protocol Displayable {
   var icon: NSImage { get }
   var name: String { get }
   var content: String { get }
-  var alterContent: String? { get }
 }
 
 extension Displayable {
@@ -23,10 +22,6 @@ extension Displayable {
   var content: String {
     return ""
   }
-  
-  var alterContent: String? {
-    return nil
-  }
 }
 
 extension URL: Displayable {
@@ -36,12 +31,6 @@ extension URL: Displayable {
   
   var content: String {
     return self.path
-  }
-  
-  var alterContent: String? {
-    let controls = FileTypeControl(types: .app, .systemPref)
-    if controls.isInControl(file: self) { return nil }
-    return isFileURL || isDirectory ? "Show in Finder" : nil
   }
   
   var icon: NSImage {

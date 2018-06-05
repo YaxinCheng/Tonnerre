@@ -50,14 +50,6 @@ class ViewController: NSViewController {
     }
   }
   
-  
-  override func performKeyEquivalent(with event: NSEvent) -> Bool {
-    switch event.keyCode {
-    case 18...25, 125, 126: return true
-    default: return super.performKeyEquivalent(with: event)
-    }
-  }
-  
   override func viewDidAppear() {
     indexManager.check()
     _ = textField.becomeFirstResponder()

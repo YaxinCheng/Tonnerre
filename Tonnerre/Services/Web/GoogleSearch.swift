@@ -35,7 +35,7 @@ extension Google {
 
 struct GoogleSearch: Google {
   let name: String = "Google"
-  let content: String = "Search on google for what you want"
+  let contentTemplate: String = "Search %@ on google"
   let template: String = "https://google.com/search?q=%@"
   let keyword: String = "google"
   let loadSuggestion: Bool
@@ -49,7 +49,7 @@ struct GoogleSearch: Google {
 
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
-  let content: String = "Search on google for the image you want"
+  let contentTemplate: String = "Search %@ on google image"
   let template: String = "https://google.com/search?q=%@&tbm=isch"
   let keyword: String = "image"
 }
@@ -57,7 +57,7 @@ struct GoogleImageSearch: Google {
 struct YoutubeSearch: Google {
   let suggestionTemplate: String = "https://clients1.google.com/complete/search?client=safari&q=%@"
   let name: String = "Youtube"
-  let content: String = "Find your favourite videos on Youtube"
+  let contentTemplate: String = "Find %@ on Youtube"
   let template: String = "https://www.youtube.com/results?search_query=%@"
   let keyword: String = "youtube"
   let icon: NSImage = #imageLiteral(resourceName: "youtube")

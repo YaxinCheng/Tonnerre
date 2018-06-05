@@ -11,38 +11,48 @@ import Cocoa
 protocol WebService: TonnerreService {
   var template: String { get }
   var suggestionTemplate: String { get }
+  var contentTemplate: String { get }
   var loadSuggestion: Bool { get }
   func suggest(queries: [String]) -> [ServiceResult]
   func processJSON(data: Data?) -> [String: Any]
 }
 
 extension WebService {
-  func fillInTemplate(input: [String]) -> String {
+  var content: String {
+    guard contentTemplate.contains("%@") else { return contentTemplate }
+    return String(format: contentTemplate, "")
+  }
+  
+  func fillInTemplate(input: [String]) -> URL? {
     let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
-    guard urlEncoded.count >= input.count else { return "" }
+    guard urlEncoded.count >= input.count else { return nil }
     let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) +
       [urlEncoded[(arguments.count - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
-    return String(format: template, arguments: parameters)
+    return URL(string: String(format: template, arguments: parameters))
   }
   
   func suggest(queries: [String]) -> [ServiceResult] {
-    return queries.map {
-      WebRequest(name: $0, content: fillInTemplate(input: [$0]), icon: icon)
+    return queries.compactMap {
+      guard let url = fillInTemplate(input: [$0]) else { return nil }
+      let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\($0)'") : contentTemplate
+      return WebRequest(name: $0, content: content.capitalized, url: url, icon: icon)
       }.map {
       ServiceResult(service: self, value: $0)
      }
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let url = URL(string: source.content) else { return }
+    guard let request = source as? WebRequest else { return }
     let workspace = NSWorkspace.shared
-    workspace.open(url)
+    workspace.open(request.innerURL)
   }
   
   func prepare(input: [String]) -> [Displayable] {
     let queryURL = fillInTemplate(input: input)
-    guard !queryURL.isEmpty else { return [] }
-    let originalSearch = WebRequest(name: input.joined(separator: " "), content: queryURL, icon: icon)
+    guard let url = queryURL else { return [] }
+    let queryContent = input.joined(separator: " ").capitalized
+    let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
+    let originalSearch = WebRequest(name: queryContent, content: content, url: url, icon: icon)
     guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
     let session = URLSession(configuration: .default)
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {

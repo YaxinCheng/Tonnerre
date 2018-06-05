@@ -19,7 +19,7 @@ struct AppleMapService: WebService {
   let arguments: [String] = ["location"]
   let hasPreview: Bool = false
   let name: String = "Apple Maps"
-  let content: String = "Search a location on Apple Maps"
+  let contentTemplate: String = "Search %@ on Apple Maps"
   var icon: NSImage {
     let workspace = NSWorkspace.shared
     let icon = workspace.icon(forFile: "/Applications/Maps.app")

@@ -13,7 +13,7 @@ struct AmazonSearch: WebService {
   let name: String = "Amazon"
   let template: String = "https://www.amazon.com/s/?field-keywords=%@"
   let suggestionTemplate: String = "https://completion.amazon.com/search/complete?search-alias=aps&client=amazon-search-ui&mkt=1&q=%@"
-  let content: String = "Shopping on amazon for what you like"
+  let contentTemplate: String = "Shopping %@ on amazon"
   let keyword: String = "amazon"
   let arguments: [String] = ["item name"]
   let hasPreview: Bool = false

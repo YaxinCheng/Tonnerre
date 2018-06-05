@@ -8,15 +8,16 @@
 
 import Cocoa
 
-struct WebRequest: Displayable {
+class WebRequest: Displayable {
   let name: String
   let content: String
   let icon: NSImage
-  private let workspace = NSWorkspace.shared
+  let innerURL: URL
   
-  init(name: String, content: String, icon: NSImage = #imageLiteral(resourceName: "safari")) {
+  init(name: String, content: String, url: URL, icon: NSImage = #imageLiteral(resourceName: "safari")) {
     self.name = name.capitalized
     self.content = content
+    self.innerURL = url
     self.icon = icon
   }
   

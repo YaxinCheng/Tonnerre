@@ -13,7 +13,7 @@ struct WikipediaSearch: WebService {
   let name: String = "Wikipedia"
   let template: String = "https://en.wikipedia.org/wiki/%@"
   let suggestionTemplate: String = "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&formatversion=2&search=%@&namespace=0&limit=10&suggest=true"
-  let content: String = "Search on Wikipedia for your knowledge"
+  let contentTemplate: String = "Search %@ on Wikipedia"
   let keyword: String = "wiki"
   let arguments: [String] = ["query"]
   let hasPreview: Bool = false

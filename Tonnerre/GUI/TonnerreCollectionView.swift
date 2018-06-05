@@ -95,9 +95,9 @@ class TonnerreCollectionView: NSScrollView {
   func modifierChanged(with event: NSEvent) {
     guard
       highlightedItemIndex < datasource.count,
-      case .result(_, let value) = datasource[highlightedItemIndex],
+      case .result(let service, _) = datasource[highlightedItemIndex],
       let item = highlightedItem,
-      let alterContent = value.alterContent
+      let alterContent = service.alterContent
     else { return }
     if event.modifierFlags.contains(.command) {
       item.introLabel.stringValue = alterContent
