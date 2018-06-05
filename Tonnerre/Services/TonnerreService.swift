@@ -14,6 +14,7 @@ protocol TonnerreService: Displayable {
   var arguments: [String] { get }
   var hasPreview: Bool { get }
   var alterContent: String? { get }
+  var alterIcon: NSImage? { get }
 //  var enabled: Bool { get set }
   func prepare(input: [String]) -> [Displayable]
   func serve(source: Displayable, withCmd: Bool)
@@ -21,4 +22,5 @@ protocol TonnerreService: Displayable {
 }
 extension TonnerreService {
   var alterContent: String? { return nil }
+  var alterIcon: NSImage? { return nil }
 }

@@ -55,9 +55,9 @@ class TonnerreField: NSTextField, ThemeProtocol {
     let tokens = stringValue.components(separatedBy: .whitespaces).filter({ !$0.isEmpty })
     guard !tokens.isEmpty else { return }
     if tokens.count > 1 {
-      stringValue = tokens[0 ..< tokens.count - 1].joined(separator: " ") + " \(cmd) "
+      stringValue = tokens[0 ..< tokens.count - 1].joined(separator: " ") + " \(cmd) ".lowercased()
     } else {
-      stringValue = "\(cmd) "
+      stringValue = "\(cmd) ".lowercased()
     }
     window?.makeFirstResponder(nil)
     DispatchQueue.main.async { [unowned self] in

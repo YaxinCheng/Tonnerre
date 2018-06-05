@@ -24,6 +24,7 @@ extension WebService {
   }
   
   func fillInTemplate(input: [String]) -> URL? {
+    guard template.contains("%@") else { return URL(string: template) }
     let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
     guard urlEncoded.count >= input.count else { return nil }
     let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) +
@@ -52,6 +53,7 @@ extension WebService {
     guard let url = queryURL else { return [] }
     let queryContent = input.joined(separator: " ").capitalized
     let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
+    guard arguments.count != 0 else { return [WebRequest(name: name, content: content, url: url, icon: icon)] }
     let originalSearch = WebRequest(name: queryContent, content: content, url: url, icon: icon)
     guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
     let session = URLSession(configuration: .default)
