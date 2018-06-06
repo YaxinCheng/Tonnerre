@@ -9,17 +9,17 @@
 import Cocoa
 
 struct LaunchService: TonnerreService {
-
-  let name: String = ""
   let keyword: String = ""
-  let arguments: [String] = []
+  let arguments: [String] = ["query"]
   let hasPreview: Bool = false
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   
   func prepare(input: [String]) -> [Displayable] {
     let indexStorage = IndexStorage()
     let index = indexStorage[.defaultMode]
-    return index.search(query: input.joined(separator: " ") + "*", limit: 9 * 9, options: .defaultOption)
+    let query = input.joined(separator: " ")
+    guard !query.starts(with: "http") else { return [] }
+    return index.search(query: query + "*", limit: 9 * 9, options: .defaultOption)
   }
   
   func serve(source: Displayable, withCmd: Bool) {

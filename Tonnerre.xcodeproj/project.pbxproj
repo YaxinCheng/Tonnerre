@@ -41,6 +41,12 @@
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* SystemServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* SystemServices.swift */; };
 		1484148C20C703B2008FD68E /* SystemRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148B20C703B2008FD68E /* SystemRequest.swift */; };
+		1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148D20C78542008FD68E /* TrashEmptyService.swift */; };
+		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
+		148414A220C85A29008FD68E /* Expression.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148414A120C85A29008FD68E /* Expression.framework */; };
+		148414A320C85A29008FD68E /* Expression.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 148414A120C85A29008FD68E /* Expression.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		148414A520C85AC3008FD68E /* BaseDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A420C85AC3008FD68E /* BaseDisplayItem.swift */; };
+		148414A720C8675F008FD68E /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A620C8675F008FD68E /* URLService.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
 		14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
@@ -79,6 +85,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				148414A320C85A29008FD68E /* Expression.framework in Embed Frameworks */,
 				14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */,
 				1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */,
 			);
@@ -127,6 +134,11 @@
 		1484148220C63A1A008FD68E /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		1484148420C70263008FD68E /* SystemServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServices.swift; sourceTree = "<group>"; };
 		1484148B20C703B2008FD68E /* SystemRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRequest.swift; sourceTree = "<group>"; };
+		1484148D20C78542008FD68E /* TrashEmptyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashEmptyService.swift; sourceTree = "<group>"; };
+		1484148F20C84589008FD68E /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
+		148414A120C85A29008FD68E /* Expression.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Expression.framework; path = Carthage/Build/Mac/Expression.framework; sourceTree = "<group>"; };
+		148414A420C85AC3008FD68E /* BaseDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDisplayItem.swift; sourceTree = "<group>"; };
+		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
 		14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTheme.swift; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
@@ -146,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				148414A220C85A29008FD68E /* Expression.framework in Frameworks */,
 				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
 				1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */,
 			);
@@ -189,9 +202,8 @@
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,
-				1484148420C70263008FD68E /* SystemServices.swift */,
-				1484148B20C703B2008FD68E /* SystemRequest.swift */,
-				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
+				1484149220C845A7008FD68E /* System */,
+				148414A820C86BAF008FD68E /* Prioritized */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -199,6 +211,7 @@
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
+				148414A120C85A29008FD68E /* Expression.framework */,
 				14561B8820C35F2C0057B4C1 /* HotKey.framework */,
 				1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */,
 				1470514220B1BEF900F6FBE8 /* Tonnerre */,
@@ -262,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */,
+				1484148D20C78542008FD68E /* TrashEmptyService.swift */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -278,6 +292,26 @@
 				14561B9020C45EC20057B4C1 /* WebRequest.swift */,
 			);
 			path = Web;
+			sourceTree = "<group>";
+		};
+		1484149220C845A7008FD68E /* System */ = {
+			isa = PBXGroup;
+			children = (
+				1484148420C70263008FD68E /* SystemServices.swift */,
+				1484148B20C703B2008FD68E /* SystemRequest.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		148414A820C86BAF008FD68E /* Prioritized */ = {
+			isa = PBXGroup;
+			children = (
+				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
+				148414A620C8675F008FD68E /* URLService.swift */,
+				1484148F20C84589008FD68E /* CalculationService.swift */,
+				148414A420C85AC3008FD68E /* BaseDisplayItem.swift */,
+			);
+			path = Prioritized;
 			sourceTree = "<group>";
 		};
 		14AEB2D820BEF4A800D10D44 /* GUI */ = {
@@ -374,6 +408,7 @@
 				TargetAttributes = {
 					1470513F20B1BEF900F6FBE8 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 0940;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -460,10 +495,13 @@
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
+				148414A520C85AC3008FD68E /* BaseDisplayItem.swift in Sources */,
+				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				14AEB30520C1F74E00D10D44 /* FileTypeControl.swift in Sources */,
+				1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */,
@@ -472,6 +510,7 @@
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */,
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
+				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* Displayable.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
@@ -642,6 +681,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -656,6 +696,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -664,6 +706,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -678,6 +721,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

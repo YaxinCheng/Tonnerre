@@ -32,12 +32,13 @@ struct TonnerreServiceLoader {
   }()
   
   mutating func autoComplete(key: String) -> [TonnerreService] {
-    return trie.find(value: key).compactMap({ services[$0] }).reduce([], +)
+    let fetchedServices = trie.find(value: key).compactMap({ services[$0] }).reduce([], +)
+    return fetchedServices +  (services[""] ?? [])
   }
   
   mutating func exactMatch(key: String) -> [TonnerreService] {
-    guard keywords.contains(key) else { return [] }
-    return services[key] ?? []
+    guard keywords.contains(key) else { return services[""] ?? [] }
+    return services[key] ?? services[""] ?? []
   }
   
   func loadSystemService(baseOn keyword: String) -> [SystemService] {
@@ -46,7 +47,7 @@ struct TonnerreServiceLoader {
   }
   
   init() {
-    normalServices = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self]
+    normalServices = [LaunchService.self, CalculationService.self, URLService.self, FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self]
     systemServices = [ApplicationService.self, VolumeService.self]
     sysSeviceTrie = Trie(values: Set(systemServices.map { $0.init().keyword }))
     keywordToSysServices = Dictionary(uniqueKeysWithValues: systemServices.map { ($0.init().keyword, $0) })

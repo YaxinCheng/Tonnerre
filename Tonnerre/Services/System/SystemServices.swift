@@ -35,7 +35,7 @@ struct ApplicationService: SystemService {
     if input.isEmpty {
       return runningApps.map { SystemRequest(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     } else {
-      let filteredApps = runningApps.filter { $0.localizedName!.contains(input.joined(separator: " "))}
+      let filteredApps = runningApps.filter { $0.localizedName!.lowercased().starts(with: input.joined(separator: " "))}
       return filteredApps.map { SystemRequest(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     }
   }
@@ -89,6 +89,7 @@ struct VolumeService: SystemService {
     guard !volumeURLs.isEmpty else { return [] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? true) }
+    guard !externalVolumes.isEmpty else { return [] }
     let volumeRequest = externalVolumes.map {
       SystemRequest<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
     }

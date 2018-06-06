@@ -1,1 +1,2 @@
 github "soffes/HotKey"
+github "nicklockwood/Expression" ~> 0.12
