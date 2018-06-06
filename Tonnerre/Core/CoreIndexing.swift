@@ -42,10 +42,18 @@ class CoreIndexing {
     centre.addObserver(self, selector: #selector(documentIndexingDidFinish), name: .documentIndexingDidFinish, object: nil)
   }
   
+  private func indexesExist() -> Bool {
+    let modes: [SearchMode] = [.defaultMode, .name, .content]
+    let indexPath = modes.map { $0.indexPath }
+    let fileManager = FileManager.default
+    let existence = indexPath.map { fileManager.fileExists(atPath: $0.path) }
+    return existence.reduce(true) { $0 && $1 }
+  }
+  
   func check() {
     let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
     let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
-    if defaultFinished == false && documentFinished == false {
+    if (defaultFinished == false && documentFinished == false) || !indexesExist() {
       let context = getContext()
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
@@ -148,45 +156,43 @@ class CoreIndexing {
    The key function to recursively iterate through the file system structure and add files to index files
    - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
-  */
+   */
   private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
-    if path.isSymlink || path.typeIdentifier.starts(with: "dyn") { return }// Do not add symlink or dynamic file to the index file
-    var content: [URL] = []// The content of the path (if the path is a directory)
-    do {
-      if !path.isDirectory {// If it is not a directory
-        for (mode, index) in zip(searchModes, indexes) where mode.include(fileURL: path) {// Add file to related index files
-          _ = try index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))// add to the index file
-        }
-      } else {// If it is a directory
-        for (mode, index) in zip(searchModes, indexes) where mode.includeDir == true {// Add to the index file if the index file accepts directory
-          _ = try index.addDocument(atPath: path)
-        }
-        // Find all content files of this path
-        content = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
-      }
-    } catch {// If any error happened
-      backgroundQ.async { [unowned self] in // Insert a failed path to CoreData
-        for mode in searchModes {
-          let _: FailedPath? = self.safeInsert(data: ["path": path.path, "reason": "\(error)", "category": mode.storedInt])
-        }
-      }
-    }
-    if path.isDirectory {// This is simply for the tail recursion to separate from above
-      let (directories, files) = content.bipartite { $0.isDirectory }// Separate file URLs and directory URLs
-      for filePath in files { addContent(in: filePath, modes: searchModes, indexes: indexes) }// Add files to index files
-      // Filter out certain directory with specific names: cache, logs, locales
-      let filteredDir = directories.filter { !FileTypeControl.isExcludedDir(url: $0) && !FileTypeControl.isExcludedURL(url: $0) }
-      backgroundQ.async { [unowned self] in
-        for mode in searchModes { // When each single file is indexed, we remove the path from CoreData
-          self.safeDelete(data: ["path": path.path, "category": mode.storedInt], dataType: IndexingDir.self)
-        // Then we add each sub-directory in this path to the CoreData
-          for dirPath in filteredDir {
-              let _: IndexingDir? = self.safeInsert(data: ["path": dirPath.path, "category": mode.storedInt])
+    var queue = [path]
+    while !queue.isEmpty {
+      let processingURL = queue.removeFirst()// Get the first in the queue
+      if processingURL.isSymlink || processingURL.typeIdentifier.starts(with: "dyn") { continue }// skip dynamic or sym files
+      do {
+        if processingURL.isDirectory {// Directory
+          for (mode, index) in zip(searchModes, indexes) where mode.includeDir == true {
+            _ = try index.addDocument(atPath: processingURL) // Add to indexes accept directory
           }
-        }// So finally, there will be no data left in the IndexingDir
+          let content = try FileManager.default.contentsOfDirectory(at: processingURL, includingPropertiesForKeys: [.isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
+          let (dirURL, fileURL) = content.bipartite { $0.isDirectory }// Seperate the content into two parts
+          queue.append(contentsOf: fileURL)// Add file urls in the queue
+          let filteredDir = dirURL.filter { !FileTypeControl.isExcludedDir(url: $0) && !FileTypeControl.isExcludedURL(url: processingURL) }
+          queue.append(contentsOf: filteredDir)// Add filtered directory urls in the queue
+          backgroundQ.async { [unowned self] in
+            for mode in searchModes {// For each mode remove current dir, and add the up coming dir
+              self.safeDelete(data: ["path": processingURL.path, "category": mode.storedInt], dataType: IndexingDir.self)
+              for dir in filteredDir {
+                let _:IndexingDir? = self.safeInsert(data: ["path": dir.path, "category": mode.storedInt])
+              }
+            }
+          }
+        } else {// File
+          for (mode, index) in zip(searchModes, indexes) where mode.include(fileURL: processingURL) {// Add file to related index
+            _ = try index.addDocument(atPath: processingURL, additionalNote: getAlias(name: processingURL.lastPathComponent))
+          }
+        }
+      } catch {// If error
+        backgroundQ.async { [unowned self] in // Insert a failed path to CoreData
+          for mode in searchModes {// Add failedPath
+            let _: FailedPath? = self.safeInsert(data: ["path": processingURL.path, "reason": "\(error)", "category": mode.storedInt])
+          }
+        }
       }
-      debugPrint(path)
-      for dirPath in filteredDir { addContent(in: dirPath, modes: searchModes, indexes: indexes) }// Recursion to add each of them
+      debugPrint(processingURL.path)
     }
   }
   
