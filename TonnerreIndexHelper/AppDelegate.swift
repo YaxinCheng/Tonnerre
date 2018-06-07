@@ -11,7 +11,6 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-  @IBOutlet weak var window: NSWindow!
   private let indexingManager = CoreIndexing()
   
   func applicationWillFinishLaunching(_ notification: Notification) {

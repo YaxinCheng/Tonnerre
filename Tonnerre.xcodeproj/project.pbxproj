@@ -41,6 +41,7 @@
 		146AD8E620C9C83700D9E591 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
+		146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
 		1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1470514C20B1BEFB00F6FBE8 /* Main.storyboard */; };
@@ -551,6 +552,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,

@@ -39,6 +39,7 @@ class BaseWindow: NSWindow {
     isMovable = true
     folderChecks()
     setupCache()
+    launchHelper()
     NotificationCenter.default.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
   }
   
@@ -78,5 +79,11 @@ class BaseWindow: NSWindow {
       return appSupFolder.appendingPathComponent("Cache").path
     }())
     URLCache.shared = cache
+  }
+  
+  private func launchHelper() {
+    let helperLocation = Bundle.main.bundlePath.appending("/Contents/Resources/TonnerreIndexHelper.app")
+    let workspace = NSWorkspace.shared
+    _ = try? workspace.launchApplication(at: URL(fileURLWithPath: helperLocation), options: .andHide, configuration: [:])
   }
 }

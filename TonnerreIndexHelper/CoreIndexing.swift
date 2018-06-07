@@ -265,7 +265,7 @@ class CoreIndexing {
       let totalEvents = changes.reduce(0, {$0 | $1.rawValue})
       let pathURL = URL(fileURLWithPath: path)
       let relatedModes = identify(path: pathURL)
-      let relatedIndexes = relatedModes.map({ indexes[$0] })
+      let relatedIndexes = relatedModes.map({ indexes[$0, true] })
       do {
         if totalEvents & created == created {
           for index in relatedIndexes {
