@@ -101,10 +101,14 @@ class TonnerreCollectionView: NSScrollView {
     else { return }
     if event.modifierFlags.contains(.command) {
       item.introLabel.stringValue = alterContent
-      item.iconView.image = service.alterIcon ?? service.icon
+      if service.alterIcon != nil {
+        item.iconView.image = service.alterIcon
+      }
     } else if event.modifierFlags.contains(.init(rawValue: 256)) {// Released key
       item.introLabel.stringValue = datasource[highlightedItemIndex].content
-      item.iconView.image = service.icon
+      if service.alterIcon != nil {
+        item.iconView.image = service.icon
+      }
     }
   }
   

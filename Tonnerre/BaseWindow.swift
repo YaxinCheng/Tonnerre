@@ -41,6 +41,7 @@ class BaseWindow: NSWindow {
     setupCache()
     launchHelper()
     NotificationCenter.default.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
+    DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
   }
   
   @objc private func windowDidMove(notification: Notification) {
@@ -81,7 +82,7 @@ class BaseWindow: NSWindow {
     URLCache.shared = cache
   }
   
-  private func launchHelper() {
+  @objc private func launchHelper() {
     let helperLocation = Bundle.main.bundlePath.appending("/Contents/Resources/TonnerreIndexHelper.app")
     let workspace = NSWorkspace.shared
     _ = try? workspace.launchApplication(at: URL(fileURLWithPath: helperLocation), options: .andHide, configuration: [:])

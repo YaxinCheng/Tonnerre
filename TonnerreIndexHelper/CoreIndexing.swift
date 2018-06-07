@@ -58,7 +58,7 @@ class CoreIndexing {
       let context = getContext()
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
-      if count == 0 {
+      if count == 0 && missedIndex.count == 3 {
         fullIndex(modes: .defaultMode)
         fullIndex(modes: .name, .content)
       } else if !missedIndex.isEmpty {
@@ -303,10 +303,12 @@ class CoreIndexing {
    */
   private func getAlias(name: String) -> String {
     var alias = aliasDict[name, default: ""]
-    if alias.contains(" ") {// Get initial of words, such as Activity Manager -> AM
-      let elements = alias.components(separatedBy: " ").compactMap({ $0.first }).map({ String($0) })
-      alias += " \(elements.joined(separator: ""))"
+    let extraAlias: (String) -> String = { origin in // Get initial of words, such as Activity Manager -> AM
+      let elements = origin.components(separatedBy: " ").compactMap({ $0.first }).map({ String($0) })
+      return " \(elements.joined())"
     }
+    if alias.contains(" ") { alias += extraAlias(alias) }
+    if name.contains(" ") { alias += extraAlias(name) }
     return alias
   }
   
