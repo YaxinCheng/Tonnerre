@@ -22,7 +22,8 @@ enum SearchMode: String {
   }
   
   var indexPath: URL {
-    let appSupportDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let appSupportDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
     let indecesFolder = appSupportDir.appendingPathComponent("Indices")
     return indecesFolder.appendingPathComponent(self.rawValue + ".tnidx")
   }
@@ -65,7 +66,7 @@ enum SearchMode: String {
     case .content:
       return FileTypeControl(types: .document, .message).isInControl(file: fileURL)
     case .name:
-      return FileTypeControl(types: .app, .document, .image, .media, .message).isInControl(file: fileURL)
+      return true
     }
   }
 }

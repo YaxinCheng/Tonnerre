@@ -1,21 +1,17 @@
 //
-//  StoredKeys.swift
-//  Tonnerre
+//  Common.swift
+//  TonnerreIndexHelper
 //
-//  Created by Yaxin Cheng on 2018-05-20.
+//  Created by Yaxin Cheng on 2018-06-07.
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 
-enum StoredKeys: String {// Keys used in UserDefault
-  case appSupportDir
-  case documentInxFinished
-  case defaultInxFinished
-  case AppleInterfaceStyle
-  case designatedX
-  case designatedY
+enum CoreDataEntities: String {
+  case IndexingDir
+  case FailedPath
+  case AvailableMode
 }
 
 func getContext() -> NSManagedObjectContext {
@@ -33,4 +29,13 @@ extension Array {
     }
     return (first, second)
   }
+}
+
+enum StoredKeys: String {// Keys used in UserDefault
+  case appSupportDir
+  case documentInxFinished
+  case defaultInxFinished
+  case AppleInterfaceStyle
+  case designatedX
+  case designatedY
 }

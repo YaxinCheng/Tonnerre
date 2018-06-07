@@ -42,24 +42,30 @@ class CoreIndexing {
     centre.addObserver(self, selector: #selector(documentIndexingDidFinish), name: .documentIndexingDidFinish, object: nil)
   }
   
-  private func indexesExist() -> Bool {
+  private func lostIndexes() -> [SearchMode] {
     let modes: [SearchMode] = [.defaultMode, .name, .content]
     let indexPath = modes.map { $0.indexPath }
     let fileManager = FileManager.default
     let existence = indexPath.map { fileManager.fileExists(atPath: $0.path) }
-    return existence.reduce(true) { $0 && $1 }
+    return zip(existence, modes).filter { $0.0 == false }.map { $0.1 }
   }
   
   func check() {
     let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
     let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
-    if (defaultFinished == false && documentFinished == false) || !indexesExist() {
+    let missedIndex = lostIndexes()
+    if (defaultFinished == false && documentFinished == false) || !missedIndex.isEmpty {
       let context = getContext()
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
       if count == 0 {
         fullIndex(modes: .defaultMode)
         fullIndex(modes: .name, .content)
+      } else if !missedIndex.isEmpty {
+        if missedIndex.contains(.defaultMode) {
+          fullIndex(modes: .defaultMode)
+        }
+        fullIndex(modes: missedIndex.filter { $0 != .defaultMode })
       } else {
         recoverFromErrors()
       }
@@ -74,6 +80,10 @@ class CoreIndexing {
     Index the required data to the certain index files
    */
   private func fullIndex(modes: SearchMode...) {
+    fullIndex(modes: modes)
+  }
+  
+  private func fullIndex(modes: [SearchMode]) {
     guard let targetPaths: [URL] = modes.first?.indexTargets else { return }
     for mode in modes {
       for path in targetPaths {
@@ -84,10 +94,9 @@ class CoreIndexing {
     let notificationCentre = NotificationCenter.default
     let beginNotification = modes.count == 2 ? Notification(name: .documentIndexingDidBegin) : Notification(name: .defaultIndexingDidBegin)
     let endNotification = modes.count == 2 ? Notification(name: .documentIndexingDidFinish) : Notification(name: .defaultIndexingDidFinish)
-    for mode in modes { indexes[mode] = TonnerreIndex(filePath: mode.indexPath.path, indexType: mode.indexType) }
     queue.async { [unowned self] in
       notificationCentre.post(beginNotification)
-      let indeces = modes.compactMap({ self.indexes[$0] })
+      let indeces = modes.compactMap({ self.indexes[$0, true] })
       for beginURL in targetPaths { self.addContent(in: beginURL, modes: modes, indexes: indeces) }
       notificationCentre.post(endNotification)
     }

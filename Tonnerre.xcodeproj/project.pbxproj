@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		140F8C6F20B3668C00C69C25 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
@@ -25,9 +24,25 @@
 		146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */; };
 		146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */; };
 		146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */; };
+		146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8C620C9C09300D9E591 /* AppDelegate.swift */; };
+		146AD8CC20C9C09400D9E591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8CB20C9C09400D9E591 /* Assets.xcassets */; };
+		146AD8CF20C9C09400D9E591 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8CD20C9C09400D9E591 /* MainMenu.xib */; };
+		146AD8D520C9C0B200D9E591 /* CoreIndexing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */; };
+		146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
+		146AD8D820C9C0C400D9E591 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
+		146AD8D920C9C0C600D9E591 /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
+		146AD8DA20C9C0D300D9E591 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
+		146AD8DC20C9C10200D9E591 /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8DB20C9C10200D9E591 /* Notification+Names.swift */; };
+		146AD8DE20C9C12A00D9E591 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8DD20C9C12A00D9E591 /* Common.swift */; };
+		146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
+		146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
+		146AD8E320C9C29300D9E591 /* TonnerreIndexHelper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8C820C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodeld */; };
+		146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
+		146AD8E620C9C83700D9E591 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
+		146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
-		1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
 		1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1470514C20B1BEFB00F6FBE8 /* Main.storyboard */; };
 		1470515A20B1BEFB00F6FBE8 /* TonnerreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470515920B1BEFB00F6FBE8 /* TonnerreTests.swift */; };
 		1470516520B1BEFB00F6FBE8 /* TonnerreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */; };
@@ -35,8 +50,6 @@
 		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
 		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */; };
-		1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484147E20C5D056008FD68E /* GeneralWebServices.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* SystemServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* SystemServices.swift */; };
@@ -57,7 +70,6 @@
 		14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */; };
 		14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FC20BF824E00D10D44 /* LaunchService.swift */; };
 		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
-		14AEB30520C1F74E00D10D44 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
 		14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30620C210EB00D10D44 /* BaseWindowController.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +91,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		146AD8E720C9C83700D9E591 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				146AD8E620C9C83700D9E591 /* TonnerreSearch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1470518820B1EA6000F6FBE8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,6 +134,15 @@
 		146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreInterpreter.swift; sourceTree = "<group>"; };
 		146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreField.swift; sourceTree = "<group>"; };
 		146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
+		146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonnerreIndexHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		146AD8C620C9C09300D9E591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		146AD8C920C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TonnerreIndexHelper.xcdatamodel; sourceTree = "<group>"; };
+		146AD8CB20C9C09400D9E591 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		146AD8CE20C9C09400D9E591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		146AD8D020C9C09400D9E591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		146AD8D120C9C09400D9E591 /* TonnerreIndexHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonnerreIndexHelper.entitlements; sourceTree = "<group>"; };
+		146AD8DB20C9C10200D9E591 /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
+		146AD8DD20C9C12A00D9E591 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1470514520B1BEF900F6FBE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +186,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		146AD8C120C9C09300D9E591 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				146AD8DA20C9C0D300D9E591 /* TonnerreSearch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1470513D20B1BEF900F6FBE8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -184,10 +224,8 @@
 		146AAE6420BDD7C2009AC9C6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */,
 				144F80C820B712F2006A16BC /* IndexStorage.swift */,
 				1470518420B1DEDF00F6FBE8 /* SearchMode.swift */,
-				14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -208,6 +246,23 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		146AD8C520C9C09300D9E591 /* TonnerreIndexHelper */ = {
+			isa = PBXGroup;
+			children = (
+				146AD8C620C9C09300D9E591 /* AppDelegate.swift */,
+				1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */,
+				14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */,
+				146AD8DB20C9C10200D9E591 /* Notification+Names.swift */,
+				146AD8DD20C9C12A00D9E591 /* Common.swift */,
+				146AD8CB20C9C09400D9E591 /* Assets.xcassets */,
+				146AD8CD20C9C09400D9E591 /* MainMenu.xib */,
+				146AD8D020C9C09400D9E591 /* Info.plist */,
+				146AD8D120C9C09400D9E591 /* TonnerreIndexHelper.entitlements */,
+				146AD8C820C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodeld */,
+			);
+			path = TonnerreIndexHelper;
+			sourceTree = "<group>";
+		};
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +272,7 @@
 				1470514220B1BEF900F6FBE8 /* Tonnerre */,
 				1470515820B1BEFB00F6FBE8 /* TonnerreTests */,
 				1470516320B1BEFB00F6FBE8 /* TonnerreUITests */,
+				146AD8C520C9C09300D9E591 /* TonnerreIndexHelper */,
 				1470514120B1BEF900F6FBE8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -227,6 +283,7 @@
 				1470514020B1BEF900F6FBE8 /* Tonnerre.app */,
 				1470515520B1BEFB00F6FBE8 /* TonnerreTests.xctest */,
 				1470516020B1BEFB00F6FBE8 /* TonnerreUITests.xctest */,
+				146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -342,6 +399,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		146AD8C320C9C09300D9E591 /* TonnerreIndexHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 146AD8D220C9C09400D9E591 /* Build configuration list for PBXNativeTarget "TonnerreIndexHelper" */;
+			buildPhases = (
+				146AD8C020C9C09300D9E591 /* Sources */,
+				146AD8C120C9C09300D9E591 /* Frameworks */,
+				146AD8C220C9C09300D9E591 /* Resources */,
+				146AD8E720C9C83700D9E591 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TonnerreIndexHelper;
+			productName = TonnerreIndexHelper;
+			productReference = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
 		1470513F20B1BEF900F6FBE8 /* Tonnerre */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1470516920B1BEFB00F6FBE8 /* Build configuration list for PBXNativeTarget "Tonnerre" */;
@@ -402,14 +477,28 @@
 		1470513820B1BEF900F6FBE8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Yaxin Cheng";
 				TargetAttributes = {
+					146AD8C320C9C09300D9E591 = {
+						CreatedOnToolsVersion = 9.4;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
 					1470513F20B1BEF900F6FBE8 = {
 						CreatedOnToolsVersion = 9.3.1;
 						LastSwiftMigration = 0940;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 0;
 							};
@@ -441,20 +530,30 @@
 				1470513F20B1BEF900F6FBE8 /* Tonnerre */,
 				1470515420B1BEFB00F6FBE8 /* TonnerreTests */,
 				1470515F20B1BEFB00F6FBE8 /* TonnerreUITests */,
+				146AD8C320C9C09300D9E591 /* TonnerreIndexHelper */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		146AD8C220C9C09300D9E591 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				146AD8CC20C9C09400D9E591 /* Assets.xcassets in Resources */,
+				146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */,
+				146AD8CF20C9C09400D9E591 /* MainMenu.xib in Resources */,
+				146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1470513E20B1BEF900F6FBE8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1470518C20B1FE8100F6FBE8 /* alias.plist in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,
-				140F8C6F20B3668C00C69C25 /* exclusionList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,12 +574,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		146AD8C020C9C09300D9E591 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				146AD8D820C9C0C400D9E591 /* SearchMode.swift in Sources */,
+				146AD8DC20C9C10200D9E591 /* Notification+Names.swift in Sources */,
+				146AD8D520C9C0B200D9E591 /* CoreIndexing.swift in Sources */,
+				146AD8DE20C9C12A00D9E591 /* Common.swift in Sources */,
+				146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */,
+				146AD8D920C9C0C600D9E591 /* IndexStorage.swift in Sources */,
+				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,
+				146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */,
+				146AD8E320C9C29300D9E591 /* TonnerreIndexHelper.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1470513C20B1BEF900F6FBE8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
+				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
 				14561B9120C45EC20057B4C1 /* WebRequest.swift in Sources */,
 				14561B8C20C444470057B4C1 /* ServiceResult.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
@@ -500,7 +616,6 @@
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
-				14AEB30520C1F74E00D10D44 /* FileTypeControl.swift in Sources */,
 				1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
@@ -508,14 +623,13 @@
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
-				1470518A20B1EF7000F6FBE8 /* CoreIndexing.swift in Sources */,
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* Displayable.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
-				1470514920B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld in Sources */,
+				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
 			);
@@ -553,6 +667,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		146AD8CD20C9C09400D9E591 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				146AD8CE20C9C09400D9E591 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		1470514C20B1BEFB00F6FBE8 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -564,6 +686,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		146AD8D320C9C09400D9E591 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TonnerreIndexHelper/TonnerreIndexHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = TonnerreIndexHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreIndexHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		146AD8D420C9C09400D9E591 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TonnerreIndexHelper/TonnerreIndexHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = TonnerreIndexHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreIndexHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		1470516720B1BEFB00F6FBE8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -682,8 +848,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Tonnerre/Tonnerre.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -707,8 +875,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Tonnerre/Tonnerre.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -807,6 +977,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		146AD8D220C9C09400D9E591 /* Build configuration list for PBXNativeTarget "TonnerreIndexHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				146AD8D320C9C09400D9E591 /* Debug */,
+				146AD8D420C9C09400D9E591 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1470513B20B1BEF900F6FBE8 /* Build configuration list for PBXProject "Tonnerre" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -846,6 +1025,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		146AD8C820C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				146AD8C920C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodel */,
+			);
+			currentVersion = 146AD8C920C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodel */;
+			path = TonnerreIndexHelper.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

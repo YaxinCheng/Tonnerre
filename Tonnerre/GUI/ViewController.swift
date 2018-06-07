@@ -9,7 +9,6 @@
 import Cocoa
 
 class ViewController: NSViewController {
-  let indexManager = CoreIndexing()
   let interpreter = TonnerreInterpreter()
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!
@@ -51,7 +50,6 @@ class ViewController: NSViewController {
   }
   
   override func viewDidAppear() {
-    indexManager.check()
     _ = textField.becomeFirstResponder()
   }
   
@@ -61,10 +59,6 @@ class ViewController: NSViewController {
     keyboardMonitor = nil
     NSEvent.removeMonitor(fmonitor)
     flagsMonitor = nil
-  }
-  
-  override func viewDidDisappear() {
-    indexManager.stopListening()
   }
 
   override var representedObject: Any? {

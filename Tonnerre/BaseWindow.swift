@@ -56,7 +56,7 @@ class BaseWindow: NSWindow {
       let bundleID = Bundle.main.bundleIdentifier
       else { return }
     let dataFolderPath = appSupportPath.appendingPathComponent(bundleID)
-    let userDefault = UserDefaults.standard
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
     userDefault.set(dataFolderPath, forKey: StoredKeys.appSupportDir.rawValue)
     let indexFolder = dataFolderPath.appendingPathComponent("Indices")
     let servicesFolder = dataFolderPath.appendingPathComponent("Services")
