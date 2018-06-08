@@ -21,6 +21,7 @@ struct ApplicationService: SystemService {
   let alterContent: String? = "Force quit program"
   let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
+  let acceptsInfiniteArguments: Bool = true
   let arguments: [String] = []
   
   func serve(source: Displayable, withCmd: Bool) {
@@ -46,6 +47,7 @@ struct VolumeService: SystemService {
   let content: String = "Eject selected volumes"
   let keyword: String = "eject"
   let icon: NSImage = #imageLiteral(resourceName: "eject")
+  let acceptsInfiniteArguments: Bool = true
   let arguments: [String] = []
   
   private func send(notification: NSUserNotification) {

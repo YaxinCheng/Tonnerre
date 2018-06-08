@@ -19,11 +19,11 @@ struct LaunchService: TonnerreService {
     let index = indexStorage[.defaultMode]
     let query = input.joined(separator: " ")
     guard !query.starts(with: "http") else { return [] }
-    return index.search(query: query + "*", limit: 9 * 9, options: .defaultOption)
+    return index.search(query: query + "*", limit: 9 * 9, options: .defaultOption).map(LaunchRequest.init)
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let appURL = source as? URL else { return }
+    guard let appURL = (source as? LaunchRequest)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     workspace.open(appURL)
   }

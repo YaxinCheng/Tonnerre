@@ -42,30 +42,16 @@ class CoreIndexing {
     centre.addObserver(self, selector: #selector(documentIndexingDidFinish), name: .documentIndexingDidFinish, object: nil)
   }
   
-  private func lostIndexes() -> [SearchMode] {
-    let modes: [SearchMode] = [.defaultMode, .name, .content]
-    let indexPath = modes.map { $0.indexPath }
-    let fileManager = FileManager.default
-    let existence = indexPath.map { fileManager.fileExists(atPath: $0.path) }
-    return zip(existence, modes).filter { $0.0 == false }.map { $0.1 }
-  }
-  
   func check() {
     let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
     let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
-    let missedIndex = lostIndexes()
-    if (defaultFinished == false && documentFinished == false) || !missedIndex.isEmpty {
+    if (defaultFinished == false && documentFinished == false) {
       let context = getContext()
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
-      if count == 0 && missedIndex.count == 3 {
+      if count == 0 {
         fullIndex(modes: .defaultMode)
         fullIndex(modes: .name, .content)
-      } else if !missedIndex.isEmpty {
-        if missedIndex.contains(.defaultMode) {
-          fullIndex(modes: .defaultMode)
-        }
-        fullIndex(modes: missedIndex.filter { $0 != .defaultMode })
       } else {
         recoverFromErrors()
       }
@@ -171,6 +157,7 @@ class CoreIndexing {
     while !queue.isEmpty {
       let processingURL = queue.removeFirst()// Get the first in the queue
       if processingURL.isSymlink || processingURL.typeIdentifier.starts(with: "dyn") { continue }// skip dynamic or sym files
+      autoreleasepool {
       do {
         if processingURL.isDirectory {// Directory
           for (mode, index) in zip(searchModes, indexes) where mode.includeDir == true {
@@ -202,6 +189,7 @@ class CoreIndexing {
         }
       }
       debugPrint(processingURL.path)
+      }
     }
   }
   

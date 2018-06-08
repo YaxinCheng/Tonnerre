@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       let userDefault = UserDefaults.standard
       userDefault.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
     }
-    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main) { notification in
+    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main) { _ in
       UserDefaults.standard.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
       let distributedCentre = DistributedNotificationCenter.default()
       distributedCentre.post(name: .helperAppDidExit, object: nil)

@@ -42,6 +42,8 @@
 		146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
+		146AD8EE20CA12C200D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
+		146AD8F020CA13A900D9E591 /* LaunchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8EF20CA13A900D9E591 /* LaunchRequest.swift */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
 		1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1470514C20B1BEFB00F6FBE8 /* Main.storyboard */; };
@@ -144,6 +146,7 @@
 		146AD8D120C9C09400D9E591 /* TonnerreIndexHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonnerreIndexHelper.entitlements; sourceTree = "<group>"; };
 		146AD8DB20C9C10200D9E591 /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		146AD8DD20C9C12A00D9E591 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		146AD8EF20CA13A900D9E591 /* LaunchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRequest.swift; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1470514520B1BEF900F6FBE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -258,6 +261,8 @@
 				146AD8CB20C9C09400D9E591 /* Assets.xcassets */,
 				146AD8CD20C9C09400D9E591 /* MainMenu.xib */,
 				146AD8D020C9C09400D9E591 /* Info.plist */,
+				140F8C6E20B3668C00C69C25 /* exclusionList.plist */,
+				1470518B20B1FE8100F6FBE8 /* alias.plist */,
 				146AD8D120C9C09400D9E591 /* TonnerreIndexHelper.entitlements */,
 				146AD8C820C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodeld */,
 			);
@@ -305,8 +310,6 @@
 				1470514F20B1BEFB00F6FBE8 /* Info.plist */,
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
-				1470518B20B1FE8100F6FBE8 /* alias.plist */,
-				140F8C6E20B3668C00C69C25 /* exclusionList.plist */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
+				146AD8EF20CA13A900D9E591 /* LaunchRequest.swift */,
 				148414A620C8675F008FD68E /* URLService.swift */,
 				1484148F20C84589008FD68E /* CalculationService.swift */,
 				148414A420C85AC3008FD68E /* BaseDisplayItem.swift */,
@@ -555,6 +559,7 @@
 				146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
+				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +631,7 @@
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
+				146AD8F020CA13A900D9E591 /* LaunchRequest.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* Displayable.swift in Sources */,
