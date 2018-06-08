@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A62CB20CB078500B759A4 /* DictionaryService.swift */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
@@ -118,6 +119,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		140A62CB20CB078500B759A4 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
@@ -219,6 +221,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		140A62CD20CB0C7000B759A4 /* Dictionary */ = {
+			isa = PBXGroup;
+			children = (
+				140A62CB20CB078500B759A4 /* DictionaryService.swift */,
+			);
+			path = Dictionary;
+			sourceTree = "<group>";
+		};
 		146AAE6420BDD7C2009AC9C6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +247,7 @@
 				14561B8B20C444470057B4C1 /* ServiceResult.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* BaseDisplayItem.swift */,
+				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,
 				1484149220C845A7008FD68E /* System */,
@@ -619,6 +630,7 @@
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
+				140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */,
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,

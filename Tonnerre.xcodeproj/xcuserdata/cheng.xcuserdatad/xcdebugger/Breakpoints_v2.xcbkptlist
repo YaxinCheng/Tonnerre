@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tonnerre/GUI/ViewController.swift"
-            timestampString = "550176544.303936"
+            timestampString = "550178896.750267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
@@ -160,6 +160,22 @@
             startingLineNumber = "30"
             endingLineNumber = "30"
             landmarkName = "prepareService(service:input:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tonnerre/Services/Dictionary/DictionaryService.swift"
+            timestampString = "550180587.917009"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "serve(source:withCmd:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
