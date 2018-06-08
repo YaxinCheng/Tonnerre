@@ -84,7 +84,7 @@ class ViewController: NSViewController {
         case .result(let service, _)? = self.collectionView.datasource.first,
         let webService = service as? WebService
       else { return }
-      self.collectionView.datasource += webService.suggest(queries: suggestions)
+      self.collectionView.datasource += webService.encodedSuggestions(queries: suggestions)
     }
   }
 }

@@ -11,7 +11,7 @@ import Cocoa
 struct AmazonSearch: WebService {
   let icon: NSImage = #imageLiteral(resourceName: "amazon")
   let name: String = "Amazon"
-  let template: String = "https://www.amazon.com/s/?field-keywords=%@"
+  let template: String = "https://www.amazon.%@/s/?field-keywords=%@"
   let suggestionTemplate: String = "https://completion.amazon.com/search/complete?search-alias=aps&client=amazon-search-ui&mkt=1&q=%@"
   let contentTemplate: String = "Shopping %@ on amazon"
   let keyword: String = "amazon"

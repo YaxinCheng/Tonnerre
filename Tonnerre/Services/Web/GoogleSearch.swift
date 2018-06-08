@@ -37,7 +37,7 @@ extension Google {
 struct GoogleSearch: Google {
   let name: String = "Google"
   let contentTemplate: String = "Search %@ on google"
-  let template: String = "https://google.com/search?q=%@"
+  let template: String = "https://google.%@/search?q=%@"
   let keyword: String = "google"
   let loadSuggestion: Bool
   init() {
@@ -51,7 +51,7 @@ struct GoogleSearch: Google {
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
   let contentTemplate: String = "Search %@ on google image"
-  let template: String = "https://google.com/search?q=%@&tbm=isch"
+  let template: String = "https://google.%@/search?q=%@&tbm=isch"
   let keyword: String = "image"
 }
 

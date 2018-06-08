@@ -13,26 +13,45 @@ protocol WebService: TonnerreService {
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
   var loadSuggestion: Bool { get }
-  func suggest(queries: [String]) -> [ServiceResult]
+  func encodedSuggestions(queries: [String]) -> [ServiceResult]
   func processJSON(data: Data?) -> [String: Any]
 }
 
 extension WebService {
+  var localeInTemplate: Bool {
+    let numOfFomatters = template.components(separatedBy: "%@").count - 1
+    return numOfFomatters - arguments.count == 1
+  }
+  
   var content: String {
     guard contentTemplate.contains("%@") else { return contentTemplate }
     return String(format: contentTemplate, "")
   }
   
   func fillInTemplate(input: [String]) -> URL? {
-    guard template.contains("%@") else { return URL(string: template) }
+    let requestingTemplate: String
+    if localeInTemplate {
+      let locale = Locale.current
+      let parameters = [locale.regionCode ?? "com"] + [String](repeating: "%@", count: arguments.count)
+      requestingTemplate = String(format: template, arguments: parameters)
+    } else {
+      requestingTemplate = template
+    }
+    guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
     let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
     guard urlEncoded.count >= input.count else { return nil }
     let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) +
       [urlEncoded[(arguments.count - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
-    return URL(string: String(format: template, arguments: parameters))
+    return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
-  func suggest(queries: [String]) -> [ServiceResult] {
+  /**
+   When loaded suggestions arrive (by notification), use this function to encode them into Displayable items
+   
+   - parameter queries: loaded suggestion names (e.g. When input "D", suggestions may include ["donald trump", "diana"]
+   - returns: Encoded suggestions
+  */
+  func encodedSuggestions(queries: [String]) -> [ServiceResult] {
     return queries.compactMap {
       guard let url = fillInTemplate(input: [$0]) else { return nil }
       let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\($0)'") : contentTemplate
