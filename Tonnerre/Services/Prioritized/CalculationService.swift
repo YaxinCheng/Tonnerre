@@ -20,12 +20,12 @@ struct CalculationService: TonnerreService {
     let rawExpression = input.joined()
     let expression = Expression(rawExpression)
     guard let result = try? expression.evaluate() else { return [] }
-    return [BaseDisplayItem(name: "\(result)", content: rawExpression, icon: icon)]
+    return [BaseDisplayItem<Int>(name: "\(result)", content: rawExpression, icon: icon, innerItem: nil)]
   }
 
   func serve(source: Displayable, withCmd: Bool) {
     guard
-      let result = source as? BaseDisplayItem,
+      let result = source as? BaseDisplayItem<Int>,
       let _ = Double(result.name)
     else { return }
     if withCmd {

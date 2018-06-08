@@ -39,13 +39,13 @@ struct GoogleMapService: WebService {
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = source as? WebRequest else { return }
+    guard let request = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
-      let appleMapURL = request.innerURL.absoluteString.replacingOccurrences(of: "maps.google", with: "maps.apple")
+      let appleMapURL = request.absoluteString.replacingOccurrences(of: "maps.google", with: "maps.apple")
       workspace.open(URL(string: appleMapURL)!)
     } else {
-      workspace.open(request.innerURL)
+      workspace.open(request)
     }
   }
 }

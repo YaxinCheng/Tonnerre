@@ -23,12 +23,12 @@ struct URLService: TonnerreService {
     let query = input.joined()
     guard query.starts(with: "http"), let url = URL(string: query) else { return [] }
     let defaultBrowserName = NSWorkspace.shared.urlForApplication(toOpen: url)?.lastPathComponent ?? "your default browser"
-    let webRequest = WebRequest(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", url: url, icon: url.icon)
+    let webRequest = BaseDisplayItem(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", icon: url.icon, innerItem: url)
     return [webRequest]
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = source as? WebRequest else { return }
-    NSWorkspace.shared.open(request.innerURL)
+    guard let request = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
+    NSWorkspace.shared.open(request)
   }
 }

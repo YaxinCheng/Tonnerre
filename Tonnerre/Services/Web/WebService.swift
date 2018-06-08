@@ -55,16 +55,16 @@ extension WebService {
     return queries.compactMap {
       guard let url = fillInTemplate(input: [$0]) else { return nil }
       let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\($0)'") : contentTemplate
-      return WebRequest(name: $0, content: content.capitalized, url: url, icon: icon)
+      return BaseDisplayItem(name: $0, content: content.capitalized, icon: icon, innerItem: url)
       }.map {
       ServiceResult(service: self, value: $0)
      }
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = source as? WebRequest else { return }
+    guard let request = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
-    workspace.open(request.innerURL)
+    workspace.open(request)
   }
   
   func prepare(input: [String]) -> [Displayable] {
@@ -72,8 +72,8 @@ extension WebService {
     guard let url = queryURL else { return [] }
     let queryContent = input.joined(separator: " ").capitalized
     let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
-    guard arguments.count != 0 else { return [WebRequest(name: name, content: content, url: url, icon: icon)] }
-    let originalSearch = WebRequest(name: queryContent, content: content, url: url, icon: icon)
+    guard arguments.count != 0 else { return [BaseDisplayItem(name: name, content: content, icon: icon, innerItem: url)] }
+    let originalSearch = BaseDisplayItem(name: queryContent, content: content, icon: icon, innerItem: url)
     guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
     let session = URLSession(configuration: .default)
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
