@@ -19,6 +19,7 @@ extension Google {
   var arguments: [String] { return ["query"] }
   var hasPreview: Bool { return false }
   var loadSuggestion: Bool { return true }
+  var acceptsInfiniteArguments: Bool { return true }
   
   func processJSON(data: Data?) -> [String: Any] {
     guard

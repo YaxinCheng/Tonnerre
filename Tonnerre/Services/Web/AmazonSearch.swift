@@ -17,6 +17,7 @@ struct AmazonSearch: WebService {
   let keyword: String = "amazon"
   let arguments: [String] = ["item name"]
   let hasPreview: Bool = false
+  let acceptsInfiniteArguments: Bool = true
   let loadSuggestion: Bool
   
   init() {

@@ -18,6 +18,7 @@ class GeneralWebService: WebService, Codable {
   let suggestionTemplate: String = ""
   let loadSuggestion: Bool = false
   let hasPreview: Bool = false
+  let acceptsInfiniteArguments: Bool
   var icon: NSImage {
     return storedImage ?? #imageLiteral(resourceName: "safari")
   }
@@ -36,6 +37,7 @@ class GeneralWebService: WebService, Codable {
     arguments = try container.decode([String].self, forKey: .arguments)
     iconURL = try container.decode(String.self, forKey: .iconURL)
     contentTemplate = (try? container.decode(String.self, forKey: .contentTemplate)) ?? ""
+    acceptsInfiniteArguments = (try? container.decode(Bool.self, forKey: .acceptsInfiniteArguments)) ?? false
   }
   
   enum CodingKeys: String, CodingKey {
@@ -45,6 +47,7 @@ class GeneralWebService: WebService, Codable {
     case template
     case arguments
     case iconURL = "icon"
+    case acceptsInfiniteArguments = "infiniteArgs"
   }
   
   func processJSON(data: Data?) -> [String : Any] {

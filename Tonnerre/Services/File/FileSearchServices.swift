@@ -18,6 +18,7 @@ extension FileSearchService {
   var icon: NSImage { return #imageLiteral(resourceName: "Finder") }
   var content: String { return "Search file on your mac and open" }
   var alterContent: String? { return "Show in Finder" }
+  var acceptsInfiniteArguments: Bool { return true }
   
   func prepare(input: [String]) -> [Displayable] {
     let query = input.joined(separator: " ") + "*"

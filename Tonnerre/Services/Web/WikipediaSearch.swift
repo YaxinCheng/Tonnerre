@@ -15,8 +15,9 @@ struct WikipediaSearch: WebService {
   let suggestionTemplate: String = "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&formatversion=2&search=%@&namespace=0&limit=10&suggest=true"
   let contentTemplate: String = "Search %@ on Wikipedia"
   let keyword: String = "wiki"
-  let arguments: [String] = ["query"]
+  let arguments: [String] = []
   let hasPreview: Bool = false
+  let acceptsInfiniteArguments: Bool = true
   let loadSuggestion: Bool
   
   init() {
