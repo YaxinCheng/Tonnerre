@@ -26,6 +26,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       distributedCentre.post(name: .helperAppDidExit, object: nil)
       exit(0)
     }
+    DistributedNotificationCenter.default().addObserver(self, selector: #selector(mainAppWillExit), name: .mainAppWillExit, object: nil)
+  }
+  
+  @objc func mainAppWillExit() {
+    exit(0)
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {

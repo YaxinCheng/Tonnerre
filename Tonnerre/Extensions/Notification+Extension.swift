@@ -12,4 +12,5 @@ extension Notification.Name {
   static let suggestionDidFinish = Notification.Name("suggestionDidFinish")
   static let windowIsHiding = Notification.Name("windowIsHiding")
   static let helperAppDidExit = Notification.Name("helperAppDidExit")
+  static let mainAppWillExit = Notification.Name("mainAppWillExit")
 }

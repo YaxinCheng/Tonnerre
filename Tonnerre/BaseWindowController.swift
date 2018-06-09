@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class BaseWindowController: NSWindowController {
+class BaseWindowController: NSWindowController, NSWindowDelegate {
   
   override func windowDidLoad() {
     super.windowDidLoad()
@@ -29,4 +29,7 @@ class BaseWindowController: NSWindowController {
     }
   }
   
+  func windowDidResignKey(_ notification: Notification) {
+    (window as? BaseWindow)?.isHidden = true
+  }
 }

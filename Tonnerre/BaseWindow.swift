@@ -40,7 +40,10 @@ class BaseWindow: NSWindow {
     folderChecks()
     setupCache()
     launchHelper()
-    NotificationCenter.default.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
+    collectionBehavior.insert(.canJoinAllSpaces)
+    let defaultCentre = NotificationCenter.default
+    defaultCentre.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
+    defaultCentre.addObserver(self, selector: #selector(appIsTerminating(notification:)), name: NSApplication.willTerminateNotification, object: nil)
     DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
   }
   
@@ -49,6 +52,10 @@ class BaseWindow: NSWindow {
     let (x, y) = (frame.origin.x, frame.origin.y)
     userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
     userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
+  }
+  
+  @objc private func appIsTerminating(notification: Notification) {
+    DistributedNotificationCenter.default().post(name: .mainAppWillExit, object: nil)
   }
   
   private func folderChecks() {

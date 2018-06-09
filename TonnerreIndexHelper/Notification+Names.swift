@@ -14,4 +14,5 @@ extension Notification.Name {
   static let defaultIndexingDidBegin = Notification.Name("defaultIndexingDidBegin")
   static let defaultIndexingDidFinish = Notification.Name("defaultIndexingDidFinish")
   static let helperAppDidExit = Notification.Name("helperAppDidExit")
+  static let mainAppWillExit = Notification.Name("mainAppWillExit")
 }

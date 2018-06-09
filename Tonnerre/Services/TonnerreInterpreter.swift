@@ -10,17 +10,22 @@ import Foundation
 
 struct TonnerreInterpreter {
   private static var loader = TonnerreServiceLoader()
+  private var cachedServices = [TonnerreService]()
+  private var lastQuery: String = ""
   
   private func tokenize(rawCmd: String) -> [String] {
     return rawCmd.components(separatedBy: .whitespaces)
   }
   
-  private func parse(tokens: [String]) -> [TonnerreService] {
+  private mutating func parse(tokens: [String]) -> [TonnerreService] {
+    if tokens.first == lastQuery { return cachedServices }
+    lastQuery = tokens.first!
     if tokens.count == 1 {
-      return TonnerreInterpreter.loader.autoComplete(key: tokens.first!)
+      cachedServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!)
+      return cachedServices
     } else {
-      let matchedServices = TonnerreInterpreter.loader.exactMatch(key: tokens.first!)
-      return matchedServices.isEmpty ? [LaunchService()] : matchedServices
+      cachedServices = TonnerreInterpreter.loader.exactMatch(key: tokens.first!)
+      return cachedServices.isEmpty ? [LaunchService()] : cachedServices
     }
   }
   
@@ -37,7 +42,7 @@ struct TonnerreInterpreter {
     } else { return [] }
   }
   
-  func interpret(rawCmd: String) -> [ServiceResult] {
+  mutating func interpret(rawCmd: String) -> [ServiceResult] {
     guard !rawCmd.isEmpty else { return [] }
     let tokens = tokenize(rawCmd: rawCmd).filter { !$0.isEmpty }
     let services = parse(tokens: tokens)
