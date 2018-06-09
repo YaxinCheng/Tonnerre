@@ -2,6 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
+	<string>auto</string>
 	<string>zh</string>
 	<string>af</string>
 	<string>sq</string>
@@ -16,8 +17,8 @@
 	<string>bg</string>
 	<string>ca</string>
 	<string>ceb</string>
-	<string>zh-CN</string>
-	<string>zh-TW</string>
+	<string>zh-cn</string>
+	<string>zh-tw</string>
 	<string>co</string>
 	<string>hr</string>
 	<string>cs</string>
