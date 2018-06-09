@@ -19,6 +19,7 @@ extension FileSearchService {
   var content: String { return "Search file on your mac and open" }
   var alterContent: String? { return "Show in Finder" }
   var acceptsInfiniteArguments: Bool { return true }
+  var minTriggerNum: Int { return 1 }
   
   func prepare(input: [String]) -> [Displayable] {
     let query = input.joined(separator: " ") + "*"
@@ -43,7 +44,6 @@ struct FileNameSearchService: FileSearchService {
   
   let associatedMode: SearchMode = .name
   let keyword = "file"
-  let arguments = ["Name"]
 }
 
 struct FileContentSearchService: FileSearchService {
@@ -51,5 +51,4 @@ struct FileContentSearchService: FileSearchService {
   
   let associatedMode: SearchMode = .content
   let keyword = "content"
-  let arguments = ["Keywords"]
 }

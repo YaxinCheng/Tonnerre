@@ -11,7 +11,7 @@ import Cocoa
 class GeneralWebService: WebService, Codable {
   let keyword: String
   let template: String
-  let arguments: [String]
+  let minTriggerNum: Int
   let iconURL: String
   let name: String
   let contentTemplate: String
@@ -34,7 +34,7 @@ class GeneralWebService: WebService, Codable {
     name = try container.decode(String.self, forKey: .name)
     keyword = try container.decode(String.self, forKey: .keyword)
     template = try container.decode(String.self, forKey: .template)
-    arguments = try container.decode([String].self, forKey: .arguments)
+    minTriggerNum = try container.decode(Int.self, forKey: .minTriggerNum)
     iconURL = try container.decode(String.self, forKey: .iconURL)
     contentTemplate = (try? container.decode(String.self, forKey: .contentTemplate)) ?? ""
     acceptsInfiniteArguments = (try? container.decode(Bool.self, forKey: .acceptsInfiniteArguments)) ?? false
@@ -45,7 +45,7 @@ class GeneralWebService: WebService, Codable {
     case contentTemplate = "content"//optional
     case keyword
     case template
-    case arguments
+    case minTriggerNum
     case iconURL = "icon"
     case acceptsInfiniteArguments = "infiniteArgs"
   }

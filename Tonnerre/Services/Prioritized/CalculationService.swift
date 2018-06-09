@@ -11,7 +11,7 @@ import Expression
 
 struct CalculationService: TonnerreService {
   let keyword: String = ""
-  let arguments: [String] = ["expression"]
+  let minTriggerNum: Int = 1
   let hasPreview: Bool = false
   let alterContent: String? = "Copy to clipboard"
   let icon: NSImage = #imageLiteral(resourceName: "calculator")
@@ -20,12 +20,12 @@ struct CalculationService: TonnerreService {
     let rawExpression = input.joined()
     let expression = Expression(rawExpression)
     guard let result = try? expression.evaluate() else { return [] }
-    return [BaseDisplayItem<Int>(name: "\(result)", content: rawExpression, icon: icon, innerItem: nil)]
+    return [DisplayableContainer<Int>(name: "\(result)", content: rawExpression, icon: icon, innerItem: nil)]
   }
 
   func serve(source: Displayable, withCmd: Bool) {
     guard
-      let result = source as? BaseDisplayItem<Int>,
+      let result = source as? DisplayableContainer<Int>,
       let _ = Double(result.name)
     else { return }
     if withCmd {

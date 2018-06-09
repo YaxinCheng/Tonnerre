@@ -22,10 +22,10 @@ struct ApplicationService: SystemService {
   let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
   let acceptsInfiniteArguments: Bool = true
-  let arguments: [String] = []
+  let minTriggerNum: Int = 0
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let value = (source as? BaseDisplayItem<NSRunningApplication>)?.innerItem else { return }
+    guard let value = (source as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
     if withCmd { value.forceTerminate() }
     else { value.terminate() }
   }
@@ -34,10 +34,10 @@ struct ApplicationService: SystemService {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
     if input.isEmpty {
-      return runningApps.map { BaseDisplayItem(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
+      return runningApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     } else {
       let filteredApps = runningApps.filter { $0.localizedName!.lowercased().starts(with: input.joined(separator: " "))}
-      return filteredApps.map { BaseDisplayItem(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
+      return filteredApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     }
   }
 }
@@ -48,7 +48,7 @@ struct VolumeService: SystemService {
   let keyword: String = "eject"
   let icon: NSImage = #imageLiteral(resourceName: "eject")
   let acceptsInfiniteArguments: Bool = true
-  let arguments: [String] = []
+  let minTriggerNum: Int = 0
   
   private func send(notification: NSUserNotification) {
     let centre = NSUserNotificationCenter.default
@@ -57,7 +57,7 @@ struct VolumeService: SystemService {
   
   func serve(source: Displayable, withCmd: Bool) {
     let fileManager = FileManager.default
-    if let allVolumes = (source as? BaseDisplayItem<[URL]>)?.innerItem {
+    if let allVolumes = (source as? DisplayableContainer<[URL]>)?.innerItem {
       for volume in allVolumes {
         fileManager.unmountVolume(at: volume, options: .withoutUI) { (error) in
           let localNotification = NSUserNotification()
@@ -74,7 +74,7 @@ struct VolumeService: SystemService {
           }
         }
       }
-    } else if let specificVolume = (source as? BaseDisplayItem<URL>)?.innerItem {
+    } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
       fileManager.unmountVolume(at: specificVolume, options: .withoutUI) { (error) in
         let localNotification = NSUserNotification()
         localNotification.title = "Eject Successfully"
@@ -93,9 +93,9 @@ struct VolumeService: SystemService {
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? true) }
     guard !externalVolumes.isEmpty else { return [] }
     let volumeRequest = externalVolumes.map {
-      BaseDisplayItem<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
+      DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
     }
-    let ejectAllRequest = BaseDisplayItem<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: #imageLiteral(resourceName: "eject"), innerItem: externalVolumes)
+    let ejectAllRequest = DisplayableContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: #imageLiteral(resourceName: "eject"), innerItem: externalVolumes)
     return [ejectAllRequest] + volumeRequest
   }
 }

@@ -10,7 +10,7 @@ import Cocoa
 
 struct LaunchService: TonnerreService {
   let keyword: String = ""
-  let arguments: [String] = ["query"]
+  let minTriggerNum: Int = 1
   let hasPreview: Bool = false
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   
@@ -29,12 +29,12 @@ struct LaunchService: TonnerreService {
       if $0.pathExtension == "prefPane" {
         name = LaunchService.aliasDict[$0.lastPathComponent] ?? $0.name
       } else { name = $0.name }
-      return BaseDisplayItem(name: name, content: $0.content, icon: $0.icon, innerItem: $0)
+      return DisplayableContainer(name: name, content: $0.content, icon: $0.icon, innerItem: $0)
     }
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let appURL = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
+    guard let appURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     workspace.open(appURL)
   }

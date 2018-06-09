@@ -20,7 +20,7 @@ protocol WebService: TonnerreService {
 extension WebService {
   var localeInTemplate: Bool {
     let numOfFomatters = template.components(separatedBy: "%@").count - 1
-    return numOfFomatters - arguments.count == 1
+    return numOfFomatters - minTriggerNum == 1
   }
   
   var content: String {
@@ -32,7 +32,8 @@ extension WebService {
     let requestingTemplate: String
     if localeInTemplate {
       let locale = Locale.current
-      let parameters = [locale.regionCode ?? "com"] + [String](repeating: "%@", count: arguments.count)
+      let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
+      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: minTriggerNum)
       requestingTemplate = String(format: template, arguments: parameters)
     } else {
       requestingTemplate = template
@@ -40,8 +41,8 @@ extension WebService {
     guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
     let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
     guard urlEncoded.count >= input.count else { return nil }
-    let parameters = Array(urlEncoded[0 ..< arguments.count - 1]) +
-      [urlEncoded[(arguments.count - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
+    let parameters = Array(urlEncoded[0 ..< minTriggerNum - 1]) +
+      [urlEncoded[(minTriggerNum - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
@@ -55,14 +56,14 @@ extension WebService {
     return queries.compactMap {
       guard let url = fillInTemplate(input: [$0]) else { return nil }
       let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\($0)'") : contentTemplate
-      return BaseDisplayItem(name: $0, content: content.capitalized, icon: icon, innerItem: url)
+      return DisplayableContainer(name: $0, content: content.capitalized, icon: icon, innerItem: url)
       }.map {
       ServiceResult(service: self, value: $0)
      }
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
+    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     workspace.open(request)
   }
@@ -72,8 +73,8 @@ extension WebService {
     guard let url = queryURL else { return [] }
     let queryContent = input.joined(separator: " ").capitalized
     let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
-    guard arguments.count != 0 else { return [BaseDisplayItem(name: name, content: content, icon: icon, innerItem: url)] }
-    let originalSearch = BaseDisplayItem(name: queryContent, content: content, icon: icon, innerItem: url)
+    guard minTriggerNum != 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
+    let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
     let session = URLSession(configuration: .default)
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {

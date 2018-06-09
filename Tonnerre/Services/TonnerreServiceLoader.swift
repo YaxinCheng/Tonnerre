@@ -47,7 +47,7 @@ struct TonnerreServiceLoader {
   }
   
   init() {
-    normalServices = [LaunchService.self, CalculationService.self, URLService.self, FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self]
+    normalServices = [LaunchService.self, CalculationService.self, URLService.self, FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self]
     systemServices = [ApplicationService.self, VolumeService.self]
     sysSeviceTrie = Trie(values: Set(systemServices.map { $0.init().keyword }))
     keywordToSysServices = Dictionary(uniqueKeysWithValues: systemServices.map { ($0.init().keyword, $0) })

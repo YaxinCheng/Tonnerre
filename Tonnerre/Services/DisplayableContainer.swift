@@ -1,5 +1,5 @@
 //
-//  BaseDisplayItem.swift
+//  DisplayableContainer.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-06-06.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct BaseDisplayItem<T>: Displayable {
+struct DisplayableContainer<T>: Displayable {
   let name: String
   let content: String
   let icon: NSImage

@@ -10,7 +10,7 @@ import Cocoa
 
 struct URLService: TonnerreService {
   let keyword: String = ""
-  let arguments: [String] = ["link"]
+  let minTriggerNum: Int = 1
   let hasPreview: Bool = false
   var icon: NSImage {
     guard let defaultBrowser = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!) else { return #imageLiteral(resourceName: "safari") }
@@ -20,15 +20,20 @@ struct URLService: TonnerreService {
   }
   
   func prepare(input: [String]) -> [Displayable] {
-    let query = input.joined()
-    guard query.starts(with: "http"), let url = URL(string: query) else { return [] }
-    let defaultBrowserName = NSWorkspace.shared.urlForApplication(toOpen: url)?.lastPathComponent ?? "your default browser"
-    let webRequest = BaseDisplayItem(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", icon: url.icon, innerItem: url)
+    guard let query = input.first, input.count == 1 else { return [] }
+    let urlRegex = try! NSRegularExpression(pattern: "(https?:\\/\\/)?(\\w|\\d)+\\.\\w{2,5}(\\/(\\w|\\d|\\?|\\=|\\&)*)*", options: .caseInsensitive)
+    let isURL = urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
+    guard isURL else { return [] }
+    let url: URL
+    if query.starts(with: "http") { url = URL(string: query)! }
+    else { url = URL(string: "https://\(query)")! }
+    let defaultBrowserName = NSWorkspace.shared.urlForApplication(toOpen: url)?.deletingPathExtension().lastPathComponent ?? "your default browser"
+    let webRequest = DisplayableContainer(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", icon: url.icon, innerItem: url)
     return [webRequest]
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
+    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     NSWorkspace.shared.open(request)
   }
 }

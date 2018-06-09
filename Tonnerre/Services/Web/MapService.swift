@@ -26,7 +26,7 @@ struct GoogleMapService: WebService {
     return ["suggestions": matchedTerms, "queriedWord": "", "queriedKey": keyword]
   }
   let keyword: String = "map"
-  let arguments: [String] = ["location"]
+  let minTriggerNum: Int = 1
   let hasPreview: Bool = false
   let name: String = "Google Maps"
   let contentTemplate: String = "Search %@ on Google Maps"
@@ -39,7 +39,7 @@ struct GoogleMapService: WebService {
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = (source as? BaseDisplayItem<URL>)?.innerItem else { return }
+    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
       let appleMapURL = request.absoluteString.replacingOccurrences(of: "maps.google", with: "maps.apple")

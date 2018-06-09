@@ -59,8 +59,9 @@
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
 		148414A220C85A29008FD68E /* Expression.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148414A120C85A29008FD68E /* Expression.framework */; };
 		148414A320C85A29008FD68E /* Expression.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 148414A120C85A29008FD68E /* Expression.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		148414A520C85AC3008FD68E /* BaseDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A420C85AC3008FD68E /* BaseDisplayItem.swift */; };
+		148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A420C85AC3008FD68E /* DisplayableContainer.swift */; };
 		148414A720C8675F008FD68E /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A620C8675F008FD68E /* URLService.swift */; };
+		148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
 		14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
@@ -169,8 +170,9 @@
 		1484148D20C78542008FD68E /* TrashEmptyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashEmptyService.swift; sourceTree = "<group>"; };
 		1484148F20C84589008FD68E /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
 		148414A120C85A29008FD68E /* Expression.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Expression.framework; path = Carthage/Build/Mac/Expression.framework; sourceTree = "<group>"; };
-		148414A420C85AC3008FD68E /* BaseDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDisplayItem.swift; sourceTree = "<group>"; };
+		148414A420C85AC3008FD68E /* DisplayableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableContainer.swift; sourceTree = "<group>"; };
 		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
+		148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateService.swift; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
 		14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTheme.swift; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
@@ -246,7 +248,7 @@
 				14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */,
 				14561B8B20C444470057B4C1 /* ServiceResult.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
-				148414A420C85AC3008FD68E /* BaseDisplayItem.swift */,
+				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,
@@ -354,6 +356,7 @@
 				1484148220C63A1A008FD68E /* MapService.swift */,
 				1484147E20C5D056008FD68E /* GeneralWebServices.swift */,
 				14561B9220C4686C0057B4C1 /* GoogleSearch.swift */,
+				148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */,
 				14561B9420C4803A0057B4C1 /* AmazonSearch.swift */,
 				14561B9620C4892D0057B4C1 /* WikipediaSearch.swift */,
 			);
@@ -618,7 +621,7 @@
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
-				148414A520C85AC3008FD68E /* BaseDisplayItem.swift in Sources */,
+				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
@@ -639,6 +642,7 @@
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
 				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
+				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

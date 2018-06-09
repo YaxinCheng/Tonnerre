@@ -27,12 +27,12 @@ struct TonnerreInterpreter {
   private func prepareService(service: TonnerreService, input: [String]) -> [ServiceResult] {
     let keywordCount = (service.keyword != "").hashValue
     let filteredTokens = input.filter { !$0.isEmpty }
-    if filteredTokens.count == keywordCount + service.arguments.count
+    if filteredTokens.count == keywordCount + service.minTriggerNum
       || keywordCount == 0 || (filteredTokens.count > keywordCount && service.acceptsInfiniteArguments) {
       return service.prepare(input: Array(filteredTokens[keywordCount...])).map { queryResult in
         ServiceResult(service: service, value: queryResult)
       }
-    } else if service.arguments.count != 0 {
+    } else if service.minTriggerNum != 0 {
       return [ServiceResult(service: service)]
     } else { return [] }
   }

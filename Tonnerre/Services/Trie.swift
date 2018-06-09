@@ -54,7 +54,8 @@ struct Trie {
       }
     }
     if lastIndex != -1 {
-      for char in value {
+      let startIndex = value.index(value.startIndex, offsetBy: lastIndex)
+      for char in value[startIndex...] {
         node.children[char] = Node(children: [:], values: [value])
         node = node.children[char]!
       }

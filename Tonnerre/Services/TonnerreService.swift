@@ -11,7 +11,7 @@ import Cocoa
 
 protocol TonnerreService: Displayable {
   var keyword: String { get }
-  var arguments: [String] { get }
+  var minTriggerNum: Int { get }
   var hasPreview: Bool { get }
   var alterContent: String? { get }
   var alterIcon: NSImage? { get }

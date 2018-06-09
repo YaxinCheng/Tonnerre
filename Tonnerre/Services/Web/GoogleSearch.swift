@@ -16,7 +16,7 @@ extension Google {
   var suggestionTemplate: String {
     return "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   }
-  var arguments: [String] { return ["query"] }
+  var minTriggerNum: Int { return 1 }
   var hasPreview: Bool { return false }
   var loadSuggestion: Bool { return true }
   var acceptsInfiniteArguments: Bool { return true }
