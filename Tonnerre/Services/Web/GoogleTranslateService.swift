@@ -8,17 +8,26 @@
 
 import Cocoa
 
-struct GoogleTranslateService: TonnerreService {
-  let keyword: String = "translate"
-  let minTriggerNum: Int = 1
-  let hasPreview: Bool = false
-  let acceptsInfiniteArguments: Bool = true
-  let icon: NSImage = #imageLiteral(resourceName: "Google_Translate")
-  let template: String = "https://translate.google.%@/%@/%@/%@"
-  let name: String = "Google Translate"
-  let content: String = "Tranlsate your language"
-//  private let languageCodesTrie: Trie
+protocol GoogleTranslate: TonnerreService {
+}
+
+extension GoogleTranslate {
+  var keyword: String { return "translate" }
+  var minTriggerNum: Int { return 1 }
+  var hasPreview: Bool { return false }
+  var acceptsInfiniteArguments: Bool { return true }
+  var icon: NSImage { return #imageLiteral(resourceName: "Google_Translate") }
+  var template: String { return "https://translate.google.%@/%@/%@/%@" }
+  var name: String { return "Google Translate" }
+  var content: String { return "Tranlsate your language" }
   
+  func serve(source: Displayable, withCmd: Bool) {
+    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+    NSWorkspace.shared.open(request)
+  }
+}
+
+struct GoogleTranslateBasicService: GoogleTranslate {
   func prepare(input: [String]) -> [Displayable] {
     let queryContent = input.joined(separator: " ")
     guard let encodedContent = queryContent.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return [] }
@@ -29,16 +38,45 @@ struct GoogleTranslateService: TonnerreService {
       let translator = DisplayableContainer(name: queryContent, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)))
       autoToCurrent = [translator]
     } else { autoToCurrent = [] }
-    
     return autoToCurrent
   }
-  
-  func serve(source: Displayable, withCmd: Bool) {
-    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
-    NSWorkspace.shared.open(request)
+}
+
+struct GoogleTranslateAdvancedService: GoogleTranslate {
+  private let supportedLanguages: Set<String>
+  init() {
+    supportedLanguages = {
+      let codeFile = Bundle.main.path(forResource: "langueCodes", ofType: "plist")!
+      return Set<String>(NSArray(contentsOfFile: codeFile) as! [String])
+    }()
   }
   
-  init() {
-//    languageCodesTrie = Trie(values: Set(Locale.isoLanguageCodes))
+  func prepare(input: [String]) -> [Displayable] {
+    var firstArg = input.first!.lowercased()
+    let example = DisplayableContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
+    var fromLangue: String = "..."
+    var toLangue: String = "..."
+    if input.count >= 1 {
+      if firstArg == "zh" || firstArg == "zh-TW" { firstArg = "zh-CN" }
+      if supportedLanguages.contains(firstArg) {
+        fromLangue = NSLocale(localeIdentifier: firstArg).displayName(forKey: .identifier, value: firstArg) ?? "Error"
+      } else if input.count == 1 { return [example] }
+      else { return [] }
+    }
+    var secondArg: String = "..."
+    if input.count >= 2 {
+      secondArg = input[1].lowercased()
+      if secondArg == "zh" { secondArg = "zh-TW" }
+      if supportedLanguages.contains(secondArg) {
+        toLangue = NSLocale(localeIdentifier: secondArg).displayName(forKey: .identifier, value: secondArg) ?? "Error"
+      } else { return [] }
+    }
+    let query = input.count > 2 ? input[2...].joined(separator: " ") : "..."
+    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return [] }
+    let contentTemplate = "Translate \"\(query)\" from %@ to %@"
+    let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
+    let url = URL(string: String(format: template, regionCode ?? "com", "#" + firstArg, secondArg, encodedContent))
+    let translator = DisplayableContainer(name: query, content: String(format: contentTemplate, fromLangue, toLangue), icon: icon, innerItem: url)
+    return [translator]
   }
 }

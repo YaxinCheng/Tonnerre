@@ -108,10 +108,11 @@ extension ViewController: TonnerreCollectionViewDelegate {
   }
   func tabPressed(service: ServiceResult) {
     switch service {
-    case .service(origin: let service):
+    case .service(origin: let service) where !service.keyword.isEmpty:
       textField.autoComplete(cmd: service.keyword)
-    case .result(service: _, value: let value):
+    case .result(service: _, value: let value) where !value.name.isEmpty:
       textField.autoComplete(cmd: value.name)
+    default: return
     }
     textDidChange(value: textField.stringValue)
   }
