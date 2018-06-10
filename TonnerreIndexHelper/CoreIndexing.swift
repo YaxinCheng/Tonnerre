@@ -42,21 +42,32 @@ class CoreIndexing {
     centre.addObserver(self, selector: #selector(documentIndexingDidFinish), name: .documentIndexingDidFinish, object: nil)
   }
   
+  private func lostIndeces() -> [SearchMode] {
+    let fileManager = FileManager.default
+    let allModes: [SearchMode] = [.defaultMode, .name, .content]
+    let lostIndexes = allModes.filter { !fileManager.fileExists(atPath: $0.indexPath.path) }
+    return lostIndexes
+  }
+  
   func check() {
     let defaultFinished = UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
     let documentFinished = UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
-    if (defaultFinished == false && documentFinished == false) {
+    let indexingMode = lostIndeces()
+    if (defaultFinished == false && documentFinished == false) || indexingMode.count != 0 {
       let context = getContext()
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
       if count == 0 {
-        fullIndex(modes: .defaultMode)
-        fullIndex(modes: .name, .content)
+        if indexingMode.contains(.defaultMode) {
+          fullIndex(modes: .defaultMode)
+        }
+        let filteredModes = indexingMode.filter { $0 != .defaultMode }
+        fullIndex(modes: filteredModes)
       } else {
         recoverFromErrors()
       }
     }
-    if defaultFinished == true && documentFinished == true {
+    if defaultFinished == true && documentFinished == true && indexingMode.count == 0 {
       listenToChanges()
     }
   }

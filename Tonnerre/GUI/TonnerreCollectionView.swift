@@ -67,9 +67,11 @@ class TonnerreCollectionView: NSScrollView {
 
   override func keyDown(with event: NSEvent) {
     switch event.keyCode {
-    case 18...25:// ⌘ + number
+    case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
-      let selectedIndex = Int(event.keyCode) - 18
+      let keyCodeMap: [UInt16: Int] = [18: 1, 19: 1, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
+                        83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
+      let selectedIndex = keyCodeMap[event.keyCode]! - 1
       let currentIndex = visibleIndex
       let actualIndex = selectedIndex - currentIndex + highlightedItemIndex
       guard case .result(let service, let value) = datasource[actualIndex] else { return }
@@ -87,6 +89,8 @@ class TonnerreCollectionView: NSScrollView {
       else { return }
       datasource = []
       delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
+    case 53:
+      (window as? BaseWindow)?.isHidden = true
     default:
       break
     }

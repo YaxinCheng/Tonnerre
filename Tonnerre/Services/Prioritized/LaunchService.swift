@@ -13,6 +13,7 @@ struct LaunchService: TonnerreService {
   let minTriggerNum: Int = 1
   let hasPreview: Bool = false
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
+  let alterContent: String? = "Show selected app in Finder"
   
   private static let aliasDict: [String: String] = {
     let aliasFile = Bundle.main.path(forResource: "alias", ofType: "plist")!
@@ -36,6 +37,10 @@ struct LaunchService: TonnerreService {
   func serve(source: Displayable, withCmd: Bool) {
     guard let appURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
-    workspace.open(appURL)
+    if withCmd {
+      workspace.activateFileViewerSelecting([appURL])
+    } else {
+      workspace.open(appURL)
+    }
   }
 }
