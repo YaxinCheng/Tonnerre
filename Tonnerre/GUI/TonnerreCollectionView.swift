@@ -69,7 +69,7 @@ class TonnerreCollectionView: NSScrollView {
     switch event.keyCode {
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
-      let keyCodeMap: [UInt16: Int] = [18: 1, 19: 1, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
+      let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
                         83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
       let selectedIndex = keyCodeMap[event.keyCode]! - 1
       let currentIndex = visibleIndex
