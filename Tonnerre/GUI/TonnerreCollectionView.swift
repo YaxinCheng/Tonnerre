@@ -81,6 +81,7 @@ class TonnerreCollectionView: NSScrollView {
       delegate?.tabPressed(service: datasource[highlightedItemIndex])
     case 125, 126:// Up/down arrow
       let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
+      guard datasource.count != 0 else { return }
       highlightedItemIndex = (highlightedItemIndex + movement + datasource.count) % datasource.count
     case 36, 76:// Enter
       guard

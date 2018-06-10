@@ -52,8 +52,8 @@ struct CalculationService: TonnerreService {
   private func characterToKeycode(char: Character) -> Int? {
     guard let convertToInt = Int(String(char)) else { return char == "." ? 47 : nil }
     switch convertToInt {
-    case 1...9: return 17 + convertToInt
-    case 0: return 29
+    case 0...7: return 82 + convertToInt
+    case 8, 9: return 83 + convertToInt
     default: return nil
     }
   }

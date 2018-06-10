@@ -21,7 +21,7 @@ struct URLService: TonnerreService {
   
   func prepare(input: [String]) -> [Displayable] {
     guard let query = input.first, input.count == 1 else { return [] }
-    let urlRegex = try! NSRegularExpression(pattern: "(https?:\\/\\/)?(\\w|\\d)+\\.\\w{2,5}(\\/(\\w|\\d|\\?|\\=|\\&)*)*", options: .caseInsensitive)
+    let urlRegex = try! NSRegularExpression(pattern: "(https?:\\/\\/)?(\\w|\\d)+\\.[a-z]{2,5}(\\/(\\w|\\d|\\?|\\=|\\&)*)*", options: .caseInsensitive)
     let isURL = urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
     guard isURL else { return [] }
     let url: URL
