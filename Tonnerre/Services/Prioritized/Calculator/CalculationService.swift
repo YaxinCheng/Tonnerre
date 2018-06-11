@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import Expression
 
 struct CalculationService: TonnerreService {
   let keyword: String = ""
@@ -15,12 +14,17 @@ struct CalculationService: TonnerreService {
   let hasPreview: Bool = false
   let alterContent: String? = "Copy to clipboard"
   let icon: NSImage = #imageLiteral(resourceName: "calculator")
+  private let interpreter = MathInterpreter()
 
   func prepare(input: [String]) -> [Displayable] {
     let rawExpression = input.joined()
-    let expression = Expression(rawExpression)
-    guard let result = try? expression.evaluate() else { return [] }
-    return [DisplayableContainer<Int>(name: "\(result)", content: rawExpression, icon: icon, innerItem: nil)]
+    do {
+      let expression = try interpreter.tokenize(rawString: rawExpression)
+      guard let result = interpreter.parse(tokens: expression)?.eval() else { return [] }
+      return [DisplayableContainer<Int>(name: "\(result)", content: rawExpression, icon: icon)]
+    } catch {
+      return []
+    }
   }
 
   func serve(source: Displayable, withCmd: Bool) {
