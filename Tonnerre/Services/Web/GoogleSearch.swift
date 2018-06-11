@@ -16,10 +16,10 @@ extension Google {
   var suggestionTemplate: String {
     return "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   }
-  var minTriggerNum: Int { return 1 }
+  var argLowerBound: Int { return 1 }
   var hasPreview: Bool { return false }
   var loadSuggestion: Bool { return true }
-  var acceptsInfiniteArguments: Bool { return true }
+  var argUpperBound: Int { return Int.max }
   
   func processJSON(data: Data?) -> [String: Any] {
     guard

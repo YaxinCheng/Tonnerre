@@ -10,9 +10,9 @@ import Cocoa
 
 struct GoogleTranslateService: TonnerreService {
   let keyword: String = "translate"
-  let minTriggerNum: Int = 1
+  let argLowerBound: Int = 1
   let hasPreview: Bool = false
-  let acceptsInfiniteArguments: Bool = true
+  let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "Google_Translate")
   let template: String = "https://translate.google.%@/%@/%@/%@"
   let name: String = "Google Translate"
@@ -49,7 +49,7 @@ struct GoogleTranslateService: TonnerreService {
     var toLangue: String = "..."
     let autoTranslator = generateAuto(query: input.joined(separator: " "))
     if input.count >= 1 {
-      if firstArg == "zh" || firstArg == "zh-tw" { firstArg = "zh-cn" }
+      if firstArg.starts(with: "zh") { firstArg = "zh-CN" }
       if supportedLanguages.contains(firstArg) {
         fromLangue = NSLocale(localeIdentifier: firstArg).displayName(forKey: .identifier, value: firstArg) ?? "Error"
       } else if input.count == 1 { return autoTranslator + [example] }
@@ -58,7 +58,8 @@ struct GoogleTranslateService: TonnerreService {
     var secondArg: String = "..."
     if input.count >= 2 {
       secondArg = input[1].lowercased()
-      if secondArg == "zh" { secondArg = "zh-tw" }
+      if secondArg == "zh" || secondArg == "zh-tw" { secondArg = "zh-TW" }
+      else if secondArg == "zh-cn" { secondArg = "zh-CN" }
       if supportedLanguages.contains(secondArg) {
         toLangue = NSLocale(localeIdentifier: secondArg).displayName(forKey: .identifier, value: secondArg) ?? "Error"
       } else { return autoTranslator }

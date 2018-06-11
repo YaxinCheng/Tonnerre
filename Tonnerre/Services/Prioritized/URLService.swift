@@ -10,7 +10,7 @@ import Cocoa
 
 struct URLService: TonnerreService {
   let keyword: String = ""
-  let minTriggerNum: Int = 1
+  let argLowerBound: Int = 1
   let hasPreview: Bool = false
   var icon: NSImage {
     guard let defaultBrowser = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!) else { return #imageLiteral(resourceName: "safari") }
@@ -21,7 +21,7 @@ struct URLService: TonnerreService {
   
   func prepare(input: [String]) -> [Displayable] {
     guard let query = input.first, input.count == 1 else { return [] }
-    let urlRegex = try! NSRegularExpression(pattern: "(https?:\\/\\/)?(\\w|\\d)+\\.[a-z]{2,5}(\\/(\\w|\\d|\\?|\\=|\\&)*)*", options: .caseInsensitive)
+    let urlRegex = try! NSRegularExpression(pattern: "^(https?:\\/\\/)?(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&]*)*", options: .caseInsensitive)
     let isURL = urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
     guard isURL else { return [] }
     let url: URL

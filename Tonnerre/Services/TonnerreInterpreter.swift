@@ -32,12 +32,11 @@ struct TonnerreInterpreter {
   private func prepareService(service: TonnerreService, input: [String]) -> [ServiceResult] {
     let keywordCount = (service.keyword != "").hashValue
     let filteredTokens = input.filter { !$0.isEmpty }
-    if filteredTokens.count == keywordCount + service.minTriggerNum
-      || keywordCount == 0 || (filteredTokens.count > keywordCount && service.acceptsInfiniteArguments) {
+    if filteredTokens.count >= keywordCount + service.argLowerBound && filteredTokens.count - keywordCount <= service.argUpperBound {
       return service.prepare(input: Array(filteredTokens[keywordCount...])).map { queryResult in
         ServiceResult(service: service, value: queryResult)
       }
-    } else if service.minTriggerNum != 0 {
+    } else if keywordCount != 0 {
       return [ServiceResult(service: service)]
     } else { return [] }
   }
@@ -53,9 +52,12 @@ struct TonnerreInterpreter {
       let systemServices = TonnerreInterpreter.loader.loadSystemService(baseOn: tokens.first!)
       if systemServices.isEmpty {// Load default web search services
         let services: [WebService] = [GoogleSearch(suggestion: false), AmazonSearch(suggestion: false), WikipediaSearch(suggestion: false)]
+        cachedServices = []
+        lastQuery = ""
         let values = services.map { $0.prepare(input: tokens) }
         return zip(services, values).map { ServiceResult(service: $0.0, value: $0.1.first!) }
       } else {// load system services
+        cachedServices = systemServices
         return systemServices.map { prepareService(service: $0, input: tokens) }.reduce([], +)
       }
     } else {

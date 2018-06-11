@@ -21,8 +21,8 @@ struct ApplicationService: SystemService {
   let alterContent: String? = "Force quit program"
   let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
-  let acceptsInfiniteArguments: Bool = true
-  let minTriggerNum: Int = 0
+  let argUpperBound: Int = Int.max
+  let argLowerBound: Int = 0
   
   func serve(source: Displayable, withCmd: Bool) {
     guard let value = (source as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
@@ -36,7 +36,7 @@ struct ApplicationService: SystemService {
     if input.isEmpty {
       return runningApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     } else {
-      let filteredApps = runningApps.filter { $0.localizedName!.lowercased().starts(with: input.joined(separator: " "))}
+      let filteredApps = runningApps.filter { $0.localizedName!.lowercased().contains(input.joined(separator: " ")) }
       return filteredApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     }
   }
@@ -47,8 +47,8 @@ struct VolumeService: SystemService {
   let content: String = "Eject selected volumes"
   let keyword: String = "eject"
   let icon: NSImage = #imageLiteral(resourceName: "eject")
-  let acceptsInfiniteArguments: Bool = true
-  let minTriggerNum: Int = 0
+  let argUpperBound: Int = Int.max
+  let argLowerBound: Int = 0
   
   private func send(notification: NSUserNotification) {
     let centre = NSUserNotificationCenter.default

@@ -10,7 +10,8 @@ import Cocoa
 
 struct CalculationService: TonnerreService {
   let keyword: String = ""
-  let minTriggerNum: Int = 1
+  let argLowerBound: Int = 1
+  let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
   let alterContent: String? = "Copy to clipboard"
   let icon: NSImage = #imageLiteral(resourceName: "calculator")

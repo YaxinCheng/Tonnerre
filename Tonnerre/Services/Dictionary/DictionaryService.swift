@@ -14,8 +14,8 @@ struct DictionarySerivce: TonnerreService {
   let content: String = "Find definition for word in dictionary"
   let name: String = "Define words..."
   let keyword: String = "define"
-  let minTriggerNum: Int = 1
-  let acceptsInfiniteArguments: Bool = true
+  let argLowerBound: Int = 1
+  let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
   
   func prepare(input: [String]) -> [Displayable] {

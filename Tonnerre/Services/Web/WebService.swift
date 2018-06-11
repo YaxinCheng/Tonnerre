@@ -20,7 +20,7 @@ protocol WebService: TonnerreService {
 extension WebService {
   var localeInTemplate: Bool {
     let numOfFomatters = template.components(separatedBy: "%@").count - 1
-    return numOfFomatters - minTriggerNum == 1
+    return numOfFomatters - argLowerBound == 1
   }
   
   var content: String {
@@ -33,7 +33,7 @@ extension WebService {
     if localeInTemplate {
       let locale = Locale.current
       let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
-      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: minTriggerNum)
+      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: argLowerBound)
       requestingTemplate = String(format: template, arguments: parameters)
     } else {
       requestingTemplate = template
@@ -41,8 +41,8 @@ extension WebService {
     guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
     let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
     guard urlEncoded.count >= input.count else { return nil }
-    let parameters = Array(urlEncoded[0 ..< minTriggerNum - 1]) +
-      [urlEncoded[(minTriggerNum - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
+    let parameters = Array(urlEncoded[0 ..< argLowerBound - 1]) +
+      [urlEncoded[(argLowerBound - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
@@ -73,7 +73,7 @@ extension WebService {
     guard let url = queryURL else { return [] }
     let queryContent = input.joined(separator: " ").capitalized
     let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
-    guard minTriggerNum != 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
+    guard argLowerBound != 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
     let session = URLSession(configuration: .default)

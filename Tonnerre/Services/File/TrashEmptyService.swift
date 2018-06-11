@@ -12,7 +12,7 @@ struct TrashEmptyService: TonnerreService {
   let name: String = "Empty Trash"
   let keyword: String = "empty"
   let content: String = "Empty your trash instantly"
-  let minTriggerNum: Int = 0
+  let argLowerBound: Int = 0
   let hasPreview: Bool = false
   let icon: NSImage = #imageLiteral(resourceName: "trash")
   

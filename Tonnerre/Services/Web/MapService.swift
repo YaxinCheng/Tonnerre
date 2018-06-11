@@ -13,7 +13,7 @@ struct GoogleMapService: WebService {
   let suggestionTemplate: String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=AIzaSyBErLf0zbtiML5B_b1HdqAmLE2Um5xB6Aw"
   let loadSuggestion: Bool = true
   let alterContent: String? = "Open in Apple Maps"
-  let acceptsInfiniteArguments: Bool = true
+  let argUpperBound: Int = Int.max
   
   func processJSON(data: Data?) -> [String : Any] {
     guard
@@ -26,7 +26,7 @@ struct GoogleMapService: WebService {
     return ["suggestions": matchedTerms, "queriedWord": "", "queriedKey": keyword]
   }
   let keyword: String = "map"
-  let minTriggerNum: Int = 1
+  let argLowerBound: Int = 1
   let hasPreview: Bool = false
   let name: String = "Google Maps"
   let contentTemplate: String = "Search %@ on Google Maps"

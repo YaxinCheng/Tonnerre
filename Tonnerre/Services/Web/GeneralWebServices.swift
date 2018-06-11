@@ -11,14 +11,14 @@ import Cocoa
 class GeneralWebService: WebService, Codable {
   let keyword: String
   let template: String
-  let minTriggerNum: Int
+  let argLowerBound: Int
   let iconURL: String
   let name: String
   let contentTemplate: String
   let suggestionTemplate: String = ""
   let loadSuggestion: Bool = false
   let hasPreview: Bool = false
-  let acceptsInfiniteArguments: Bool
+  let argUpperBound: Int
   var icon: NSImage {
     return storedImage ?? #imageLiteral(resourceName: "safari")
   }
@@ -34,10 +34,11 @@ class GeneralWebService: WebService, Codable {
     name = try container.decode(String.self, forKey: .name)
     keyword = try container.decode(String.self, forKey: .keyword)
     template = try container.decode(String.self, forKey: .template)
-    minTriggerNum = try container.decode(Int.self, forKey: .minTriggerNum)
+    let lowerBound = try container.decode(Int.self, forKey: .argLowerBound)
+    argLowerBound = lowerBound
     iconURL = try container.decode(String.self, forKey: .iconURL)
     contentTemplate = (try? container.decode(String.self, forKey: .contentTemplate)) ?? ""
-    acceptsInfiniteArguments = (try? container.decode(Bool.self, forKey: .acceptsInfiniteArguments)) ?? false
+    argUpperBound = (try? container.decode(Int.self, forKey: .argUpperBound)) ?? lowerBound
   }
   
   enum CodingKeys: String, CodingKey {
@@ -45,9 +46,9 @@ class GeneralWebService: WebService, Codable {
     case contentTemplate = "content"//optional
     case keyword
     case template
-    case minTriggerNum
+    case argLowerBound
     case iconURL = "icon"
-    case acceptsInfiniteArguments = "infiniteArgs"
+    case argUpperBound
   }
   
   func processJSON(data: Data?) -> [String : Any] {

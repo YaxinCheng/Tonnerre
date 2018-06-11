@@ -15,9 +15,9 @@ struct AmazonSearch: WebService {
   let suggestionTemplate: String = "https://completion.amazon.com/search/complete?search-alias=aps&client=amazon-search-ui&mkt=1&q=%@"
   let contentTemplate: String = "Shopping %@ on amazon"
   let keyword: String = "amazon"
-  let minTriggerNum: Int = 1
+  let argLowerBound: Int = 1
+  let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
-  let acceptsInfiniteArguments: Bool = true
   let loadSuggestion: Bool
   
   init() {
