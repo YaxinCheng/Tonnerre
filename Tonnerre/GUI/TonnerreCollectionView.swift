@@ -163,6 +163,9 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
+    if case .result(_, let value) = data, let asyncedData = value as? AsyncedProtocol {
+      asyncedData.asyncedViewSetup?(cell)
+    }
     return cell
   }
   

@@ -120,7 +120,11 @@ class CoreIndexing {
       do {
         let pathURL = URL(fileURLWithPath: $0.path!)
         _ = try $1.addDocument(atPath: pathURL, additionalNote: self.getAlias(name: pathURL.lastPathComponent))
-      } catch { debugPrint(error) }
+      } catch {
+        #if DEBUG
+        debugPrint(error)
+        #endif
+      }
       context.delete($0)// delete anyway even if it fails
       try? context.save()
     }
@@ -199,7 +203,9 @@ class CoreIndexing {
           }
         }
       }
+      #if DEBUG
       debugPrint(processingURL.path)
+      #endif
       }
     }
   }

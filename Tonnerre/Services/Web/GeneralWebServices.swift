@@ -92,7 +92,9 @@ class GeneralWebService: WebService, Codable {
       for service in services { service.loadImage() }
       return services
     } catch {
+      #if DEBUG
       debugPrint(error)
+      #endif 
     }
     return []
   }
