@@ -17,6 +17,7 @@ class ViewController: NSViewController {
   @IBOutlet weak var collectionView: TonnerreCollectionView!
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
+  private var queryStack = QueryStack(size: 1)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -98,7 +99,13 @@ extension ViewController: TonnerreFieldDelegate {
 }
 
 extension ViewController: TonnerreCollectionViewDelegate {
+  func retrieveLastQuery() {
+    textField.stringValue = queryStack.pop() ?? ""
+    textDidChange(value: textField.stringValue)
+  }
+  
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {
+    queryStack.append(query: textField.stringValue)
     service.serve(source: target, withCmd: withCmd)
     textField.stringValue = ""
     refreshIcon()

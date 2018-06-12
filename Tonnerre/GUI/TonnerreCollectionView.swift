@@ -12,12 +12,14 @@ protocol TonnerreCollectionViewDelegate: class {
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool)
   func tabPressed(service: ServiceResult)
   func serviceHighlighted(service: ServiceResult)
+  func retrieveLastQuery()
 }
 
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
   private var highlightedItem: ServiceCell? // Actual index in the datasource array
   private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
+  var lastQuery: String = ""
   
   var highlightedItemIndex = 0 {
     didSet {
@@ -81,8 +83,11 @@ class TonnerreCollectionView: NSScrollView {
       delegate?.tabPressed(service: datasource[highlightedItemIndex])
     case 125, 126:// Up/down arrow
       let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
-      guard datasource.count != 0 else { return }
-      highlightedItemIndex = (highlightedItemIndex + movement + datasource.count) % datasource.count
+      if datasource.count != 0 {
+        highlightedItemIndex = (highlightedItemIndex + movement + datasource.count) % datasource.count
+      } else {
+        delegate?.retrieveLastQuery()
+      }
     case 36, 76:// Enter
       guard
         !datasource.isEmpty,
@@ -143,7 +148,7 @@ class TonnerreCollectionView: NSScrollView {
   }
 }
 
-extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewDataSource {
+extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout {
   
   func numberOfSections(in collectionView: NSCollectionView) -> Int {
     return 1
@@ -178,6 +183,11 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     highlightedItem = cell
     highlightedItem?.highlighted = true
     delegate?.serviceHighlighted(service: datasource[indexPath.item])
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    let width: CGFloat = 760
+    return NSSize(width: width, height: 64)
   }
 }
 

@@ -29,7 +29,7 @@ struct CurrencyService: TonnerreService {
     guard currencyCodes.contains(fromCurrency) else { return [] }
     let toCurrency: String
     if input.count == 2 && fromCurrency == input[0].uppercased() {
-      toCurrency = (input[1]).uppercased()
+      toCurrency = (Double(input[1]) == nil ? input[1] : "").uppercased()
     } else if input.count == 3 {
       toCurrency = currencyCodes.contains(input[2].uppercased()) ? input[2].uppercased() : ""
     } else if input.count > 3 {
@@ -58,6 +58,9 @@ struct CurrencyService: TonnerreService {
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    
+    guard let innerItem = (source as? AsyncedDisplayableContainer<[String]>)?.innerItem else { return }
+    let encoded = innerItem.joined(separator: "+")
+    let url = URL(string: "https://google.com/search?q=\(encoded)")!
+    NSWorkspace.shared.open(url)
   }
 }
