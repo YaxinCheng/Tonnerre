@@ -13,6 +13,7 @@ protocol WebService: TonnerreService {
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
   var loadSuggestion: Bool { get }
+  static var ongoinTask: URLSessionDataTask? { get set }
   func encodedSuggestions(queries: [String]) -> [ServiceResult]
   func processJSON(data: Data?) -> [String: Any]
 }
@@ -80,13 +81,23 @@ extension WebService {
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
       return [originalSearch]
     }
+    Self.ongoinTask?.cancel()
     let suggestionPath = String(format: suggestionTemplate, arguments: [query])
     guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
-    session.dataTask(with: suggestionURL) { (data, response, error) in
+    Self.ongoinTask = session.dataTask(with: suggestionURL) { (data, response, error) in
+      if error != nil {
+        #if DEBUG
+        debugPrint(error)
+        #endif
+        return
+      }
       let processedData = self.processJSON(data: data)
       let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: processedData)
       NotificationCenter.default.post(notification)
-      }.resume()
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+      Self.ongoinTask?.resume()
+    }
     return [originalSearch]
   }
 }

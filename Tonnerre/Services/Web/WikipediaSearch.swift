@@ -9,6 +9,7 @@
 import Cocoa
 
 struct WikipediaSearch: WebService {
+  static var ongoinTask: URLSessionDataTask?
   let icon: NSImage = #imageLiteral(resourceName: "wikipedia")
   let name: String = "Wikipedia"
   let template: String = "https://en.wikipedia.org/wiki/%@"

@@ -9,6 +9,7 @@
 import Cocoa
 
 struct AmazonSearch: WebService {
+  static var ongoinTask: URLSessionDataTask?
   let icon: NSImage = #imageLiteral(resourceName: "amazon")
   let name: String = "Amazon"
   let template: String = "https://www.amazon.%@/s/?field-keywords=%@"
