@@ -94,6 +94,7 @@ extension ViewController: TonnerreFieldDelegate {
   func textDidChange(value: String) {
     collectionView.datasource = interpreter.interpret(rawCmd: value)
     guard value.isEmpty else { return }
+    interpreter.clearCache()
     refreshIcon()
   }
 }
@@ -115,8 +116,8 @@ extension ViewController: TonnerreCollectionViewDelegate {
   }
   func tabPressed(service: ServiceResult) {
     switch service {
-    case .service(origin: let service) where !service.keyword.isEmpty:
-      textField.autoComplete(cmd: service.keyword)
+    case .service(origin: let service) where !type(of: service).keyword.isEmpty:
+      textField.autoComplete(cmd: type(of: service).keyword)
     case .result(service: _, value: let value) where !value.name.isEmpty:
       textField.autoComplete(cmd: value.name)
     default: return

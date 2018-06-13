@@ -8,26 +8,28 @@
 
 import Foundation
 
-struct Trie {
+struct Trie<T> {
   
   class Node {
     var children: [Character: Node]
-    var values: Set<String>
+    var values: [T]
     
-    init(children: [Character: Node], values: Set<String>) {
+    init(children: [Character: Node], values: [T]) {
       self.children = children
       self.values = values
     }
   }
   
   var rootNode: Node
+  let getKeyword: (T)->String
   
-  init(values: Set<String>) {
+  init(values: [T], getKeyword: @escaping (T)->String) {
+    self.getKeyword = getKeyword
     rootNode = Node(children: [:], values: [])
     values.forEach(insert)
   }
   
-  func find(value: String) -> Set<String> {
+  func find(value: String) -> [T] {
     if value.isEmpty { return [] }
     var node = rootNode
     for char in value {
@@ -40,27 +42,27 @@ struct Trie {
     return node.values
   }
   
-  func insert(value: String) {
-    if value.isEmpty { return }
+  func insert(value: T) {
+    if getKeyword(value).isEmpty { return }
     var node = rootNode
     var lastIndex = -1
-    for (index, char) in value.enumerated() {
+    let keyword = getKeyword(value)
+    for (index, char) in keyword.enumerated() {
       if let next = node.children[char] {
         node = next
-        node.values.insert(value)
+        node.values.append(value)
       } else {
         lastIndex = index
         break
       }
     }
     if lastIndex != -1 {
-      let startIndex = value.index(value.startIndex, offsetBy: lastIndex)
-      for char in value[startIndex...] {
+      let startIndex = keyword.index(keyword.startIndex, offsetBy: lastIndex)
+      for char in keyword[startIndex...] {
         node.children[char] = Node(children: [:], values: [value])
         node = node.children[char]!
       }
     }
-    node.values.insert(value)
   }
 }
 

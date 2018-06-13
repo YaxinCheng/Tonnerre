@@ -9,7 +9,7 @@
 import Cocoa
 
 struct CurrencyService: TonnerreService {
-  let keyword: String = ""
+  static let keyword: String = ""
   let icon: NSImage = #imageLiteral(resourceName: "calculator")
   let name: String = "Currency Exchange"
   let content: String = "Currency change from %@ to %@"

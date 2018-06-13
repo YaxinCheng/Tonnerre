@@ -9,7 +9,7 @@
 import Foundation
 
 struct TonnerreInterpreter {
-  private static var loader = TonnerreServiceLoader()
+  private static let loader = TonnerreServiceLoader()
   private var cachedServices = [TonnerreService]()
   private var lastQuery: String = ""
   
@@ -20,17 +20,12 @@ struct TonnerreInterpreter {
   private mutating func parse(tokens: [String]) -> [TonnerreService] {
     if tokens.first == lastQuery { return cachedServices }
     lastQuery = tokens.first!
-    if tokens.count == 1 {
-      cachedServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!)
-      return cachedServices
-    } else {
-      cachedServices = TonnerreInterpreter.loader.exactMatch(key: tokens.first!)
-      return cachedServices.isEmpty ? [LaunchService()] : cachedServices
-    }
+    cachedServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!)
+    return cachedServices
   }
   
   private func prepareService(service: TonnerreService, input: [String]) -> [ServiceResult] {
-    let keywordCount = (service.keyword != "").hashValue
+    let keywordCount = (type(of: service).keyword != "").hashValue
     let filteredTokens = input.filter { !$0.isEmpty }
     if filteredTokens.count >= keywordCount + service.argLowerBound && filteredTokens.count - keywordCount <= service.argUpperBound {
       return service.prepare(input: Array(filteredTokens[keywordCount...])).map { queryResult in
@@ -41,6 +36,11 @@ struct TonnerreInterpreter {
     } else { return [] }
   }
   
+  mutating func clearCache() {
+    lastQuery = ""
+    cachedServices = []
+  }
+  
   mutating func interpret(rawCmd: String) -> [ServiceResult] {
     guard !rawCmd.isEmpty else { return [] }
     let tokens = tokenize(rawCmd: rawCmd).filter { !$0.isEmpty }
@@ -49,7 +49,7 @@ struct TonnerreInterpreter {
       prepareService(service: service, input: tokens)
     }.reduce([], +)
     if possibleServices.isEmpty {
-      let systemServices = TonnerreInterpreter.loader.loadSystemService(baseOn: tokens.first!)
+      let systemServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!, type: .system)
       if systemServices.isEmpty {// Load default web search services
         let services: [WebService] = [GoogleSearch(suggestion: false), AmazonSearch(suggestion: false), WikipediaSearch(suggestion: false)]
         cachedServices = services

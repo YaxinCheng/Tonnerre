@@ -12,16 +12,15 @@ protocol Displayable {
   var icon: NSImage { get }
   var name: String { get }
   var content: String { get }
+  var alterContent: String? { get }
+  var alterIcon: NSImage? { get }
 }
 
 extension Displayable {
-  var name: String {
-    return "\(Self.self)"
-  }
-  
-  var content: String {
-    return ""
-  }
+  var name: String { return "\(Self.self)" }
+  var content: String { return "" }
+  var alterContent: String? { return nil }
+  var alterIcon: NSImage? { return nil }
 }
 
 extension URL: Displayable {

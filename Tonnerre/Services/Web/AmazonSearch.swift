@@ -14,7 +14,7 @@ struct AmazonSearch: WebService {
   let template: String = "https://www.amazon.%@/s/?field-keywords=%@"
   let suggestionTemplate: String = "https://completion.amazon.com/search/complete?search-alias=aps&client=amazon-search-ui&mkt=1&q=%@"
   let contentTemplate: String = "Shopping %@ on amazon"
-  let keyword: String = "amazon"
+  static let keyword: String = "amazon"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
@@ -35,6 +35,6 @@ struct AmazonSearch: WebService {
       let queriedWord = jsonObject[0] as? String,
       let suggestions = jsonObject[1] as? [String]
     else { return [:] }
-    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": keyword]
+    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": AmazonSearch.keyword]
   }
 }

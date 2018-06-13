@@ -9,7 +9,7 @@
 import Cocoa
 
 struct LaunchService: TonnerreService {
-  let keyword: String = ""
+  static let keyword: String = ""
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let hasPreview: Bool = false

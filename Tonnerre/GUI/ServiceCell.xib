@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="cmdLabel" destination="eSm-bB-rbb" id="y73-2p-ive"/>
                 <outlet property="iconView" destination="zIt-L7-Ohv" id="bqf-0n-Zz6"/>
-                <outlet property="introLabel" destination="G5i-kX-wN8" id="cPc-pl-zeT"/>
+                <outlet property="introLabel" destination="qiH-K4-ExG" id="7Be-wb-hiQ"/>
                 <outlet property="serviceLabel" destination="otR-5I-Obv" id="TsZ-WU-y4w"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -44,9 +44,9 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="G5i-kX-wN8">
-                    <rect key="frame" x="62" y="7" width="636" height="17"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Intro Label" id="aft-7u-jtz">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qiH-K4-ExG">
+                    <rect key="frame" x="62" y="7" width="710" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Intro label" id="U65-8N-A5z">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -54,15 +54,15 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="G5i-kX-wN8" firstAttribute="top" secondItem="otR-5I-Obv" secondAttribute="bottom" constant="1" id="BZB-gQ-A7I"/>
-                <constraint firstAttribute="trailing" secondItem="G5i-kX-wN8" secondAttribute="trailing" constant="64" id="Eh7-v4-GhU"/>
+                <constraint firstItem="qiH-K4-ExG" firstAttribute="trailing" secondItem="eSm-bB-rbb" secondAttribute="trailing" constant="30" id="7kw-kI-p4e"/>
                 <constraint firstItem="eSm-bB-rbb" firstAttribute="leading" secondItem="otR-5I-Obv" secondAttribute="trailing" id="G9P-64-Qnr"/>
                 <constraint firstItem="eSm-bB-rbb" firstAttribute="centerY" secondItem="zIt-L7-Ohv" secondAttribute="centerY" id="NNy-4x-8dB"/>
-                <constraint firstItem="G5i-kX-wN8" firstAttribute="leading" secondItem="otR-5I-Obv" secondAttribute="leading" id="htj-Gu-7gw"/>
+                <constraint firstItem="qiH-K4-ExG" firstAttribute="bottom" secondItem="zIt-L7-Ohv" secondAttribute="bottom" id="Zjx-te-pUW"/>
                 <constraint firstItem="zIt-L7-Ohv" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="jWN-6b-VSs"/>
                 <constraint firstItem="otR-5I-Obv" firstAttribute="leading" secondItem="zIt-L7-Ohv" secondAttribute="trailing" constant="8" id="kxK-Qq-oMg"/>
                 <constraint firstItem="zIt-L7-Ohv" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="nEQ-N7-Tin"/>
                 <constraint firstAttribute="trailing" secondItem="eSm-bB-rbb" secondAttribute="trailing" constant="20" symbolic="YES" id="p6Z-11-hgj"/>
+                <constraint firstItem="qiH-K4-ExG" firstAttribute="leading" secondItem="otR-5I-Obv" secondAttribute="leading" id="q2V-UL-GOb"/>
                 <constraint firstItem="otR-5I-Obv" firstAttribute="top" secondItem="zIt-L7-Ohv" secondAttribute="top" id="utB-dG-rw7"/>
             </constraints>
             <userDefinedRuntimeAttributes>

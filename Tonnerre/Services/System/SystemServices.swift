@@ -19,7 +19,7 @@ struct ApplicationService: SystemService {
   let name: String = "Quit program"
   let content: String = "Find and quite a running program"
   let alterContent: String? = "Force quit program"
-  let keyword: String = "quit"
+  static let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
   let argUpperBound: Int = Int.max
   let argLowerBound: Int = 0
@@ -45,7 +45,7 @@ struct ApplicationService: SystemService {
 struct VolumeService: SystemService {
   let name: String = "Eject Volumes"
   let content: String = "Eject selected volumes"
-  let keyword: String = "eject"
+  static let keyword: String = "eject"
   let icon: NSImage = #imageLiteral(resourceName: "eject")
   let argUpperBound: Int = Int.max
   let argLowerBound: Int = 0

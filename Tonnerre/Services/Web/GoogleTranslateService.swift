@@ -9,7 +9,7 @@
 import Cocoa
 
 struct GoogleTranslateService: TonnerreService {
-  let keyword: String = "translate"
+  static let keyword: String = "translate"
   let argLowerBound: Int = 1
   let hasPreview: Bool = false
   let argUpperBound: Int = Int.max

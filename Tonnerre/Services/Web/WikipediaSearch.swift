@@ -14,7 +14,7 @@ struct WikipediaSearch: WebService {
   let template: String = "https://en.wikipedia.org/wiki/%@"
   let suggestionTemplate: String = "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&formatversion=2&search=%@&namespace=0&limit=10&suggest=true"
   let contentTemplate: String = "Search %@ on Wikipedia"
-  let keyword: String = "wiki"
+  static let keyword: String = "wiki"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
@@ -35,6 +35,6 @@ struct WikipediaSearch: WebService {
       let queriedWord = jsonObject[0] as? String,
       let suggestions = jsonObject[1] as? [String]
       else { return [:] }
-    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": keyword]
+    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": WikipediaSearch.keyword]
   }
 }

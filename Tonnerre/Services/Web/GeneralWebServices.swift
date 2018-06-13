@@ -8,25 +8,57 @@
 
 import Cocoa
 
-class GeneralWebService: WebService, Codable {
+class GeneralWebService: TonnerreExtendService {
   let keyword: String
-  let template: String
   let argLowerBound: Int
-  let iconURL: String
-  let name: String
-  let contentTemplate: String
-  let suggestionTemplate: String = ""
-  let loadSuggestion: Bool = false
-  let hasPreview: Bool = false
   let argUpperBound: Int
+  let name: String
+  let content: String
+  let template: String
+  let iconURL: String
+  private var storedImage: NSImage? = nil
   var icon: NSImage {
     return storedImage ?? #imageLiteral(resourceName: "safari")
   }
-  private var storedImage: NSImage?
   
-  // Deprecate
-  required init() {// This should not be called
-    fatalError("This should never be called")
+  enum CodingKeys: String, CodingKey {
+    case name
+    case content//optional
+    case keyword
+    case template
+    case argLowerBound
+    case iconURL = "icon"
+    case argUpperBound
+  }
+  
+  func fillInTemplate(input: [String]) -> URL? {
+    let requestingTemplate: String
+    let localeInTemplate = (keyword.components(separatedBy: "@").count - 1 - argLowerBound) == 1
+    if localeInTemplate {
+      let locale = Locale.current
+      let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
+      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: argLowerBound)
+      requestingTemplate = String(format: template, arguments: parameters)
+    } else {
+      requestingTemplate = template
+    }
+    guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
+    let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
+    guard urlEncoded.count >= input.count else { return nil }
+    let parameters = Array(urlEncoded[0 ..< argLowerBound - 1]) +
+      [urlEncoded[(argLowerBound - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
+    return URL(string: String(format: requestingTemplate, arguments: parameters))
+  }
+  
+  func prepare(input: [String]) -> [Displayable] {
+    guard let url = fillInTemplate(input: input) else { return [] }
+    return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)]
+  }
+  
+  func serve(source: Displayable, withCmd: Bool) {
+    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+    let workspace = NSWorkspace.shared
+    workspace.open(request)
   }
   
   required init(from decoder: Decoder) throws {
@@ -36,30 +68,18 @@ class GeneralWebService: WebService, Codable {
     template = try container.decode(String.self, forKey: .template)
     let lowerBound = try container.decode(Int.self, forKey: .argLowerBound)
     argLowerBound = lowerBound
-    iconURL = try container.decode(String.self, forKey: .iconURL)
-    contentTemplate = (try? container.decode(String.self, forKey: .contentTemplate)) ?? ""
+    content = (try? container.decode(String.self, forKey: .content)) ?? ""
     argUpperBound = (try? container.decode(Int.self, forKey: .argUpperBound)) ?? lowerBound
+    iconURL = try container.decode(String.self, forKey: .iconURL)
+    loadImage()
   }
   
-  enum CodingKeys: String, CodingKey {
-    case name
-    case contentTemplate = "content"//optional
-    case keyword
-    case template
-    case argLowerBound
-    case iconURL = "icon"
-    case argUpperBound
-  }
-  
-  func processJSON(data: Data?) -> [String : Any] {
-    return [:]
-  }
-  
-  fileprivate func loadImage() {
-    let setupImage: (NSImage?)-> Void = {
+  private func loadImage() {
+    let setupImage: (NSImage?)-> Void = { [weak self] in
       $0?.size = NSSize(width: 64, height: 64)
-      self.storedImage = $0
+      self?.storedImage = $0
     }
+    guard !iconURL.isEmpty else { return }
     if iconURL.starts(with: "https") {//web image
       guard let url = URL(string: iconURL) else { return }
       let session = URLSession(configuration: .default)
@@ -72,7 +92,7 @@ class GeneralWebService: WebService, Codable {
         session.dataTask(with: request) { (data, response, error) in
           guard let imgData = data, let image = NSImage(data: imgData) else { return }
           setupImage(image)
-        }.resume()
+          }.resume()
       }
     } else {//local file image
       let userDefault = UserDefaults.standard
@@ -89,12 +109,11 @@ class GeneralWebService: WebService, Codable {
       let jsonData = try Data(contentsOf: serviceJSON, options: .mappedIfSafe)
       let jsonDecoder = JSONDecoder()
       let services = try jsonDecoder.decode([GeneralWebService].self, from: jsonData)
-      for service in services { service.loadImage() }
       return services
     } catch {
       #if DEBUG
       debugPrint(error)
-      #endif 
+      #endif
     }
     return []
   }

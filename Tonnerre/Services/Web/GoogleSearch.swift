@@ -30,7 +30,7 @@ extension Google {
       let availableOptions = json[1] as? [NSArray]
       else { return [:] }
     let suggestions = availableOptions.compactMap { $0[0] as? String }
-    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": keyword]
+    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": Self.keyword]
   }
 }
 
@@ -38,7 +38,7 @@ struct GoogleSearch: Google {
   let name: String = "Google"
   let contentTemplate: String = "Search %@ on google"
   let template: String = "https://google.%@/search?q=%@"
-  let keyword: String = "google"
+  static let keyword: String = "google"
   let loadSuggestion: Bool
   init() {
     loadSuggestion = true
@@ -52,7 +52,7 @@ struct GoogleImageSearch: Google {
   let name: String = "Google Images"
   let contentTemplate: String = "Search %@ on google image"
   let template: String = "https://google.%@/search?q=%@&tbm=isch"
-  let keyword: String = "image"
+  static let keyword: String = "image"
 }
 
 struct YoutubeSearch: Google {
@@ -60,6 +60,6 @@ struct YoutubeSearch: Google {
   let name: String = "Youtube"
   let contentTemplate: String = "Find %@ on Youtube"
   let template: String = "https://www.youtube.com/results?search_query=%@"
-  let keyword: String = "youtube"
+  static let keyword: String = "youtube"
   let icon: NSImage = #imageLiteral(resourceName: "youtube")
 }

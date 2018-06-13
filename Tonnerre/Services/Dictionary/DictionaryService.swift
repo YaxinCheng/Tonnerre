@@ -13,7 +13,7 @@ struct DictionarySerivce: TonnerreService {
   let icon: NSImage = #imageLiteral(resourceName: "dictionary")
   let content: String = "Find definition for word in dictionary"
   let name: String = "Define words..."
-  let keyword: String = "define"
+  static let keyword: String = "define"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
@@ -36,9 +36,5 @@ struct DictionarySerivce: TonnerreService {
   func serve(source: Displayable, withCmd: Bool) {
     guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     NSWorkspace.shared.open(request)
-  }
-  
-  func preview() {
-    
   }
 }

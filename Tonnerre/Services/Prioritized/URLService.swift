@@ -9,7 +9,7 @@
 import Cocoa
 
 struct URLService: TonnerreService {
-  let keyword: String = ""
+  static let keyword: String = ""
   let argLowerBound: Int = 1
   let hasPreview: Bool = false
   var icon: NSImage {

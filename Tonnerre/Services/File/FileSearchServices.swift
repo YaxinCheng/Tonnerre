@@ -43,12 +43,12 @@ struct FileNameSearchService: FileSearchService {
   let name = "Search files by names"
   
   let associatedMode: SearchMode = .name
-  let keyword = "file"
+  static let keyword = "file"
 }
 
 struct FileContentSearchService: FileSearchService {
   let name = "Search files by content"
   
   let associatedMode: SearchMode = .content
-  let keyword = "content"
+  static let keyword = "content"
 }
