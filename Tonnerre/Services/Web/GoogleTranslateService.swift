@@ -17,6 +17,7 @@ struct GoogleTranslateService: TonnerreService {
   let template: String = "https://translate.google.%@/%@/%@/%@"
   let name: String = "Google Translate"
   let content: String = "Tranlsate your language"
+  private static let historyStorage = QueryStack<URL>(size: 5)
   
   private let supportedLanguages: Set<String>
   private let langueToEmoji: [String: String]
@@ -44,38 +45,60 @@ struct GoogleTranslateService: TonnerreService {
   
   func prepare(input: [String]) -> [Displayable] {
     var firstArg = input.first!.lowercased()
-    let example = DisplayableContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
-    var fromLangue: String = "..."
-    var toLangue: String = "..."
+    let example = DisplayableContainer<Int>(name: "Advanced Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
     let autoTranslator = generateAuto(query: input.joined(separator: " "))
+    let histories = reuseHistory(forQuery: input.joined(separator: " "))
     if input.count >= 1 {
       if firstArg.starts(with: "zh") { firstArg = "zh-CN" }
-      if supportedLanguages.contains(firstArg) {
-        fromLangue = NSLocale(localeIdentifier: firstArg).displayName(forKey: .identifier, value: firstArg) ?? "Error"
-      } else if input.count == 1 { return autoTranslator + [example] }
-      else { return autoTranslator }
+      if !supportedLanguages.contains(firstArg) {
+        if histories.isEmpty { return autoTranslator + [example] }
+        else { return autoTranslator + histories }
+      }
     }
     var secondArg: String = "..."
     if input.count >= 2 {
       secondArg = input[1].lowercased()
       if secondArg == "zh" || secondArg == "zh-tw" { secondArg = "zh-TW" }
       else if secondArg == "zh-cn" { secondArg = "zh-CN" }
-      if supportedLanguages.contains(secondArg) {
-        toLangue = NSLocale(localeIdentifier: secondArg).displayName(forKey: .identifier, value: secondArg) ?? "Error"
-      } else { return autoTranslator }
+      if secondArg.count >= 2 && !supportedLanguages.contains(secondArg) { return autoTranslator + histories }
     }
     let query = input.count > 2 ? input[2...].joined(separator: " ") : "..."
-    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return autoTranslator }
-    let contentTemplate = "Translate \"\(query)\" from %@ to %@"
-    let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
-    let prefix = "\(langueToEmoji[firstArg] ?? "...") ➡️ \(langueToEmoji[secondArg] ?? "..."): "
-    let url = URL(string: String(format: template, regionCode ?? "com", "#" + firstArg, secondArg, encodedContent))
-    let translator = DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, fromLangue, toLangue), icon: icon, innerItem: url)
-    return autoTranslator + [translator]
+    guard let _ = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return autoTranslator + histories }
+    let translator = formContents(query: query, fromLangue: firstArg, toLangue: secondArg)!
+    return autoTranslator + [translator] + histories
   }
   
   func serve(source: Displayable, withCmd: Bool) {
     guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+    let urlComponents = request.absoluteString.components(separatedBy: "/")
+    let isAuto = urlComponents[3] == "#auto"
+    let existed = GoogleTranslateService.historyStorage.contains {
+      let components = $0.absoluteString.components(separatedBy: "/")
+      return components[3] == urlComponents[3] && components[4] == urlComponents[4]
+    }
+    if !isAuto && !existed {
+      GoogleTranslateService.historyStorage.append(value: request)
+    }
     NSWorkspace.shared.open(request)
+  }
+  
+  private func reuseHistory(forQuery: String) -> [DisplayableContainer<URL>] {
+    let urlExtractor: (URL)->(String, String) = {
+      let components = $0.absoluteString.components(separatedBy: "/")
+      return (components[3].trimmingCharacters(in: CharacterSet(charactersIn: "#")), components[4])
+    }
+    let components = GoogleTranslateService.historyStorage.values().map(urlExtractor)
+    return components.compactMap { formContents(query: forQuery, fromLangue: $0.0, toLangue: $0.1) }
+  }
+  
+  private func formContents(query: String, fromLangue: String, toLangue: String) -> DisplayableContainer<URL>? {
+    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return nil }
+    let contentTemplate = "Translate \"\(query)\" from %@ to %@"
+    let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
+    let prefix = "\(langueToEmoji[fromLangue] ?? "...") ➡️ \(langueToEmoji[toLangue] ?? "..."): "
+    let url = URL(string: String(format: template, regionCode ?? "com", "#" + fromLangue, toLangue, encodedContent))
+    let localizedFromLangue = NSLocale(localeIdentifier: fromLangue).displayName(forKey: .identifier, value: fromLangue) ?? "..."
+    let localizedToLangue = NSLocale(localeIdentifier: toLangue).displayName(forKey: .identifier, value: toLangue) ?? "..."
+    return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url)
   }
 }

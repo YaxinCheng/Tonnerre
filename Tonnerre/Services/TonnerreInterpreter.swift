@@ -26,12 +26,11 @@ struct TonnerreInterpreter {
   
   private func prepareService(service: TonnerreService, input: [String]) -> [ServiceResult] {
     let keywordCount = (type(of: service).keyword != "").hashValue
-    let filteredTokens = input.filter { !$0.isEmpty }
-    if filteredTokens.count >= keywordCount + service.argLowerBound && filteredTokens.count - keywordCount <= service.argUpperBound {
-      return service.prepare(input: Array(filteredTokens[keywordCount...])).map { queryResult in
+    if input.count >= keywordCount + service.argLowerBound && input.count - keywordCount <= service.argUpperBound {
+      return service.prepare(input: Array(input[keywordCount...])).map { queryResult in
         ServiceResult(service: service, value: queryResult)
       }
-    } else if keywordCount != 0 {
+    } else if keywordCount != 0 && service.argUpperBound != 0 {
       return [ServiceResult(service: service)]
     } else { return [] }
   }
@@ -43,7 +42,7 @@ struct TonnerreInterpreter {
   
   mutating func interpret(rawCmd: String) -> [ServiceResult] {
     guard !rawCmd.isEmpty else { return [] }
-    let tokens = tokenize(rawCmd: rawCmd).filter { !$0.isEmpty }
+    let tokens = tokenize(rawCmd: rawCmd)
     let services = parse(tokens: tokens)
     let possibleServices: [ServiceResult] = services.map { service in
       prepareService(service: service, input: tokens)

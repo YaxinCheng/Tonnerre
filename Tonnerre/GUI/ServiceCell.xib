@@ -44,8 +44,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qiH-K4-ExG">
-                    <rect key="frame" x="62" y="7" width="710" height="17"/>
+                <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qiH-K4-ExG">
+                    <rect key="frame" x="62" y="7" width="65" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Intro label" id="U65-8N-A5z">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -54,9 +54,9 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="qiH-K4-ExG" firstAttribute="trailing" secondItem="eSm-bB-rbb" secondAttribute="trailing" constant="30" id="7kw-kI-p4e"/>
                 <constraint firstItem="eSm-bB-rbb" firstAttribute="leading" secondItem="otR-5I-Obv" secondAttribute="trailing" id="G9P-64-Qnr"/>
                 <constraint firstItem="eSm-bB-rbb" firstAttribute="centerY" secondItem="zIt-L7-Ohv" secondAttribute="centerY" id="NNy-4x-8dB"/>
+                <constraint firstItem="eSm-bB-rbb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qiH-K4-ExG" secondAttribute="trailing" constant="8" id="V1X-j5-Mdp"/>
                 <constraint firstItem="qiH-K4-ExG" firstAttribute="bottom" secondItem="zIt-L7-Ohv" secondAttribute="bottom" id="Zjx-te-pUW"/>
                 <constraint firstItem="zIt-L7-Ohv" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="jWN-6b-VSs"/>
                 <constraint firstItem="otR-5I-Obv" firstAttribute="leading" secondItem="zIt-L7-Ohv" secondAttribute="trailing" constant="8" id="kxK-Qq-oMg"/>

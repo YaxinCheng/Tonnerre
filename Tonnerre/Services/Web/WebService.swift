@@ -70,7 +70,7 @@ extension WebService {
   
   func prepare(input: [String]) -> [Displayable] {
     let queryURL = fillInTemplate(input: input)
-    guard let url = queryURL else { return [] }
+    guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ").capitalized
     let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
     guard argLowerBound != 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }

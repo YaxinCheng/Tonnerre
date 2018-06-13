@@ -50,9 +50,14 @@ class GeneralWebService: TonnerreExtendService {
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
+  private func fill(content: String, input: [String]) -> String {
+    guard content.contains("%@") else { return content }
+    return String(format: content, arguments: input)
+  }
+  
   func prepare(input: [String]) -> [Displayable] {
     guard let url = fillInTemplate(input: input) else { return [] }
-    return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)]
+    return [DisplayableContainer(name: name, content: fill(content: content, input: input), icon: icon, innerItem: url)]
   }
   
   func serve(source: Displayable, withCmd: Bool) {

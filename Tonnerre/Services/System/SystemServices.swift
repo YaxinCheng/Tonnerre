@@ -33,7 +33,7 @@ struct ApplicationService: SystemService {
   func prepare(input: [String]) -> [Displayable] {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
-    if input.isEmpty {
+    if input.isEmpty || (input.first?.isEmpty ?? false) {
       return runningApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
     } else {
       let filteredApps = runningApps.filter { $0.localizedName!.lowercased().contains(input.joined(separator: " ")) }

@@ -255,6 +255,7 @@
 				14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */,
 				14561B8B20C444470057B4C1 /* ServiceResult.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
+				1481164120D058760013D5D2 /* QueryStack.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
@@ -400,7 +401,6 @@
 				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
 				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
-				1481164120D058760013D5D2 /* QueryStack.swift */,
 			);
 			path = GUI;
 			sourceTree = "<group>";

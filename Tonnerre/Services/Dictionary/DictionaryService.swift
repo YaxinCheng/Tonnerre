@@ -17,8 +17,10 @@ struct DictionarySerivce: TonnerreService {
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let hasPreview: Bool = false
+  private static let historyStorage = QueryStack<Displayable>(size: 8)
   
   func prepare(input: [String]) -> [Displayable] {
+    guard input.count > 0, !input[0].isEmpty else { return [self] + DictionarySerivce.historyStorage.values() }
     let query = input.joined(separator: " ")
     let termRange = DCSGetTermRangeInString(nil, query as CFString, 0)
     guard
@@ -35,6 +37,7 @@ struct DictionarySerivce: TonnerreService {
   
   func serve(source: Displayable, withCmd: Bool) {
     guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+    DictionarySerivce.historyStorage.append(value: source)
     NSWorkspace.shared.open(request)
   }
 }

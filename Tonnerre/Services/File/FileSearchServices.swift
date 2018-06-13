@@ -22,6 +22,7 @@ extension FileSearchService {
   var argLowerBound: Int { return 1 }
   
   func prepare(input: [String]) -> [Displayable] {
+    guard !(input.first?.isEmpty ?? false) else { return [self] }
     let query = input.joined(separator: " ") + "*"
     let indexStorage = IndexStorage()
     let index = indexStorage[associatedMode]
