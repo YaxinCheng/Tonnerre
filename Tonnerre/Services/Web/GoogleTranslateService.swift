@@ -14,7 +14,7 @@ struct GoogleTranslateService: TonnerreService {
   let hasPreview: Bool = false
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "Google_Translate")
-  let template: String = "https://translate.google.%@/%@/%@/%@"
+  let template: String = "https://translate.google.%@/m/translate%@/%@/%@"
   let name: String = "Google Translate"
   let content: String = "Tranlsate your language"
   private static let historyStorage = QueryStack<URL>(size: 5)
@@ -65,7 +65,7 @@ struct GoogleTranslateService: TonnerreService {
     let query = input.count > 2 ? input[2...].joined(separator: " ") : "..."
     guard let _ = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return autoTranslator + histories }
     let translator = formContents(query: query, fromLangue: firstArg, toLangue: secondArg)!
-    return autoTranslator + [translator] + histories
+    return [translator] + autoTranslator + histories
   }
   
   func serve(source: Displayable, withCmd: Bool) {

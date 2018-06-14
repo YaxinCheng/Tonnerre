@@ -54,6 +54,7 @@
 		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1481164220D058760013D5D2 /* QueryStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481164120D058760013D5D2 /* QueryStack.swift */; };
+		1481165520D2D2440013D5D2 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481165420D2D2430013D5D2 /* PreviewItem.swift */; };
 		1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484147E20C5D056008FD68E /* GeneralWebServices.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* SystemServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* SystemServices.swift */; };
@@ -169,6 +170,7 @@
 		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
 		1481164120D058760013D5D2 /* QueryStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryStack.swift; sourceTree = "<group>"; };
+		1481165420D2D2430013D5D2 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
 		1484147E20C5D056008FD68E /* GeneralWebServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralWebServices.swift; sourceTree = "<group>"; };
 		1484148220C63A1A008FD68E /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		1484148420C70263008FD68E /* SystemServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServices.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
 				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
+				1481165420D2D2430013D5D2 /* PreviewItem.swift */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
+				1481165520D2D2440013D5D2 /* PreviewItem.swift in Sources */,
 				1481164220D058760013D5D2 /* QueryStack.swift in Sources */,
 				1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,

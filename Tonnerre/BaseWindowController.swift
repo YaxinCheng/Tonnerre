@@ -14,6 +14,7 @@ class BaseWindowController: NSWindowController, NSWindowDelegate {
     super.windowDidLoad()
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    #if RELEASE
     let userDefault = UserDefaults.standard
     if
       let x = userDefault.value(forKey: StoredKeys.designatedX.rawValue) as? Int,
@@ -27,6 +28,7 @@ class BaseWindowController: NSWindowController, NSWindowDelegate {
       userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
       userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
     }
+    #endif 
   }
   
   func windowDidResignKey(_ notification: Notification) {

@@ -81,6 +81,8 @@ class TonnerreCollectionView: NSScrollView {
       delegate?.serve(with: service, target: value, withCmd: false)
     case 48:// Tab
       delegate?.tabPressed(service: datasource[highlightedItemIndex])
+    case 49:
+      highlightedItem?.preview()
     case 125, 126:// Up/down arrow
       let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
       if datasource.count != 0 {
@@ -168,8 +170,11 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
-    if case .result(_, let value) = data, let asyncedData = value as? AsyncedProtocol {
-      asyncedData.asyncedViewSetup?(cell)
+    if case .result(_, let value) = data {
+      cell.displayItem = value
+      if let asyncedData = value as? AsyncedProtocol {
+        asyncedData.asyncedViewSetup?(cell)
+      }
     }
     return cell
   }

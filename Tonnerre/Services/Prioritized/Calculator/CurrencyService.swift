@@ -36,6 +36,7 @@ struct CurrencyService: TonnerreService {
       toCurrency = (input[2].lowercased() == "to" ? input[3] : input[2]).uppercased()
     } else { toCurrency = "" }
     // The async function to setup the view
+    let label = "\(number) \(fromCurrency) ➡️ %@ \(toCurrency)"
     let viewSetup: ((ServiceCell) -> Void)? = {
       if !currencyCodes.contains(fromCurrency) || !currencyCodes.contains(toCurrency) { return nil }
       return { cell in
@@ -49,12 +50,12 @@ struct CurrencyService: TonnerreService {
               let rate = jsonObj[key]
             else { return }
             DispatchQueue.main.async {
-              cell.serviceLabel.stringValue = String(format: cell.serviceLabel.stringValue, "\(rate * number)")
+              cell.serviceLabel.stringValue = String(format: label, "\(rate * number)")
             }
           }.resume()
       }
     }()
-    return [AsyncedDisplayableContainer(name: "\(number) \(fromCurrency) ➡️ %@ \(toCurrency)", content: String(format: content, fromCurrency, toCurrency), icon: icon, innerItem: [fromCurrency, toCurrency], viewSetup: viewSetup)]
+    return [AsyncedDisplayableContainer(name: String(format: label, "..."), content: String(format: content, fromCurrency, toCurrency), icon: icon, innerItem: [fromCurrency, toCurrency], viewSetup: viewSetup)]
   }
   
   func serve(source: Displayable, withCmd: Bool) {
