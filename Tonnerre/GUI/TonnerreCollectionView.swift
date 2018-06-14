@@ -26,6 +26,7 @@ class TonnerreCollectionView: NSScrollView {
       if oldValue == highlightedItemIndex {
         visibleIndex = -1
         highlightedItem?.highlighted = false
+        iconChange()
         return
       }
       let moveDown = highlightedItemIndex - oldValue >= 1
@@ -39,9 +40,17 @@ class TonnerreCollectionView: NSScrollView {
       if highlightedItemIndex >= 0 {
         collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
       } else {
+        iconChange()
         highlightedItem?.highlighted = false
         highlightedItem = nil
       }
+    }
+  }
+  
+  private func iconChange() {
+    guard datasource.count > 0 else { return }
+    if case .result(_, _) = datasource[0] {
+      delegate?.serviceHighlighted(service: datasource[0])
     }
   }
   
