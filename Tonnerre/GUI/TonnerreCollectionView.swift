@@ -11,7 +11,7 @@ import Cocoa
 protocol TonnerreCollectionViewDelegate: class {
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool)
   func tabPressed(service: ServiceResult)
-  func serviceHighlighted(service: ServiceResult)
+  func serviceHighlighted(service: ServiceResult?)
   func retrieveLastQuery()
 }
 
@@ -51,6 +51,8 @@ class TonnerreCollectionView: NSScrollView {
     guard datasource.count > 0 else { return }
     if case .result(_, _) = datasource[0] {
       delegate?.serviceHighlighted(service: datasource[0])
+    } else {
+      delegate?.serviceHighlighted(service: nil)
     }
   }
   

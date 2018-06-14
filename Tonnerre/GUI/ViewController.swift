@@ -125,8 +125,9 @@ extension ViewController: TonnerreCollectionViewDelegate {
     textDidChange(value: textField.stringValue)
   }
   
-  func serviceHighlighted(service: ServiceResult) {
-    switch service {
+  func serviceHighlighted(service: ServiceResult?) {
+    guard service != nil else { refreshIcon(); return }
+    switch service! {
     case .service(origin: let service):
       iconView.image = service.icon
     case .result(service: let service, value: _):
