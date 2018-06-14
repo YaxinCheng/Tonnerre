@@ -19,7 +19,7 @@ class BaseWindowController: NSWindowController, NSWindowDelegate {
     if
       let x = userDefault.value(forKey: StoredKeys.designatedX.rawValue) as? Int,
       let y = userDefault.value(forKey: StoredKeys.designatedY.rawValue) as? Int {
-      window?.setFrameOrigin(NSPoint(x: x, y: y))
+      window?.setFrameOrigin(NSPoint(x: max(x, 0), y: max(y, 0)))
     } else {
       guard let screenSize = NSScreen.main?.frame.size, let myWindow = window else { return }
       let x = screenSize.width / 2 - myWindow.frame.width / 2

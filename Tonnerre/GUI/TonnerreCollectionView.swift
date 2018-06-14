@@ -79,11 +79,12 @@ class TonnerreCollectionView: NSScrollView {
       let selectedIndex = keyCodeMap[event.keyCode]! - 1
       let currentIndex = visibleIndex
       let actualIndex = selectedIndex - currentIndex + highlightedItemIndex
-      guard case .result(let service, let value) = datasource[actualIndex] else { return }
+      guard actualIndex < datasource.count, case .result(let service, let value) = datasource[actualIndex] else { return }
       datasource = []
       delegate?.serve(with: service, target: value, withCmd: false)
     case 48:// Tab
       let highlightIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
+      guard datasource.count > 0 else { return }
       delegate?.tabPressed(service: datasource[highlightIndex])
     case 49:
       highlightedItem?.preview()

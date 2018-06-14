@@ -71,10 +71,10 @@ struct GoogleTranslateService: TonnerreService {
   func serve(source: Displayable, withCmd: Bool) {
     guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let urlComponents = request.absoluteString.components(separatedBy: "/")
-    let isAuto = urlComponents[3] == "#auto"
+    let isAuto = urlComponents[4] == "translate#auto"
     let existed = GoogleTranslateService.historyStorage.contains {
       let components = $0.absoluteString.components(separatedBy: "/")
-      return components[3] == urlComponents[3] && components[4] == urlComponents[4]
+      return components[4] == urlComponents[4] && components[5] == urlComponents[5]
     }
     if !isAuto && !existed {
       GoogleTranslateService.historyStorage.append(value: request)
@@ -85,7 +85,7 @@ struct GoogleTranslateService: TonnerreService {
   private func reuseHistory(forQuery: String) -> [DisplayableContainer<URL>] {
     let urlExtractor: (URL)->(String, String) = {
       let components = $0.absoluteString.components(separatedBy: "/")
-      return (components[3].trimmingCharacters(in: CharacterSet(charactersIn: "#")), components[4])
+      return (components[4].replacingOccurrences(of: "translate#", with: ""), components[5])
     }
     let components = GoogleTranslateService.historyStorage.values().map(urlExtractor)
     return components.compactMap { formContents(query: forQuery, fromLangue: $0.0, toLangue: $0.1) }
