@@ -21,24 +21,27 @@ class TonnerreCollectionView: NSScrollView {
   private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   
-  var highlightedItemIndex = 0 {
+  var highlightedItemIndex = -1 {
     didSet {
       if oldValue == highlightedItemIndex {
-        visibleIndex = 0
-        collectionView.selectItem(at: IndexPath(item: 0, section: 0), scrollPosition: .top)
+        visibleIndex = -1
+        highlightedItem?.highlighted = false
         return
       }
-      let moveDown = (highlightedItemIndex - oldValue >= 1 && highlightedItemIndex - oldValue < 8) || (oldValue - highlightedItemIndex == datasource.count - 1)
+      let moveDown = highlightedItemIndex - oldValue >= 1
       let maxRows = 8
-      let oldVisibleIndex = visibleIndex
-      if oldValue == 0 && !moveDown { visibleIndex = maxRows }
-      else if oldValue == datasource.count - 1 && moveDown { visibleIndex = 0 }
-      else { visibleIndex = moveDown ? min(visibleIndex + 1, maxRows) : max(visibleIndex - 1, 0) }
       let scrollPosition: NSCollectionView.ScrollPosition
-      if oldVisibleIndex == 0 && !moveDown { scrollPosition = .top }
-      else if oldVisibleIndex == 8 && moveDown { scrollPosition = .bottom }
+      if visibleIndex == maxRows && moveDown { scrollPosition = .bottom }
+      else if visibleIndex == 0 && !moveDown { scrollPosition = .top }
       else { scrollPosition = .init(rawValue: 0) }
-      collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
+      visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
+      if highlightedItemIndex != 0 { visibleIndex = max(visibleIndex, 0) }
+      if highlightedItemIndex >= 0 {
+        collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
+      } else {
+        highlightedItem?.highlighted = false
+        highlightedItem = nil
+      }
     }
   }
   
@@ -62,7 +65,7 @@ class TonnerreCollectionView: NSScrollView {
       collectionView.reloadData()
       if datasource.isEmpty { return }
       DispatchQueue.main.async { [weak self] in
-        self?.highlightedItemIndex = 0
+        self?.highlightedItemIndex = -1
       }
     }
   }
@@ -80,25 +83,29 @@ class TonnerreCollectionView: NSScrollView {
       datasource = []
       delegate?.serve(with: service, target: value, withCmd: false)
     case 48:// Tab
-      delegate?.tabPressed(service: datasource[highlightedItemIndex])
+      let highlightIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
+      delegate?.tabPressed(service: datasource[highlightIndex])
     case 49:
       highlightedItem?.preview()
     case 125, 126:// Up/down arrow
-      let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
-      if datasource.count != 0 {
-        highlightedItemIndex = (highlightedItemIndex + movement + datasource.count) % datasource.count
+      if event.modifierFlags.contains(.command) {
+        highlightedItemIndex = event.keyCode == 125 ? datasource.count - 1 : 0
       } else {
-        delegate?.retrieveLastQuery()
+        let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
+        if datasource.count != 0 {
+          if !(highlightedItemIndex == -1 && movement == -1) { highlightedItemIndex = highlightedItemIndex + movement }
+        } else {
+          delegate?.retrieveLastQuery()
+        }
       }
     case 36, 76:// Enter
+      let selectIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
       guard
         !datasource.isEmpty,
-        case .result(let service, let value) = datasource[highlightedItemIndex]
+        case .result(let service, let value) = datasource[selectIndex]
       else { return }
       datasource = []
       delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
-    case 53:
-      (window as? BaseWindow)?.isHidden = true
     default:
       break
     }
@@ -107,6 +114,7 @@ class TonnerreCollectionView: NSScrollView {
   func modifierChanged(with event: NSEvent) {
     guard
       highlightedItemIndex < datasource.count,
+      highlightedItemIndex >= 0,
       case .result(let service, _) = datasource[highlightedItemIndex],
       let item = highlightedItem,
       let alterContent = service.alterContent
