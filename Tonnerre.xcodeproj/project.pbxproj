@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A62CB20CB078500B759A4 /* DictionaryService.swift */; };
+		1429AC7220D42B4000ABBCDE /* ServicesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7120D42B4000ABBCDE /* ServicesService.swift */; };
+		1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7320D435A300ABBCDE /* OnOffCell.swift */; };
+		1429AC7620D435A300ABBCDE /* OnOffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7420D435A300ABBCDE /* OnOffCell.xib */; };
+		1429AC7820D4375500ABBCDE /* DIsplayableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
@@ -126,6 +130,10 @@
 /* Begin PBXFileReference section */
 		140A62CB20CB078500B759A4 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
+		1429AC7120D42B4000ABBCDE /* ServicesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesService.swift; sourceTree = "<group>"; };
+		1429AC7320D435A300ABBCDE /* OnOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffCell.swift; sourceTree = "<group>"; };
+		1429AC7420D435A300ABBCDE /* OnOffCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnOffCell.xib; sourceTree = "<group>"; };
+		1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIsplayableCellProtocol.swift; sourceTree = "<group>"; };
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
 		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
@@ -259,6 +267,7 @@
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				1481164120D058760013D5D2 /* QueryStack.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
+				1429AC7120D42B4000ABBCDE /* ServicesService.swift */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,
@@ -401,8 +410,11 @@
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
 				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
+				1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
 				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
+				1429AC7320D435A300ABBCDE /* OnOffCell.swift */,
+				1429AC7420D435A300ABBCDE /* OnOffCell.xib */,
 				1481165420D2D2430013D5D2 /* PreviewItem.swift */,
 			);
 			path = GUI;
@@ -590,6 +602,7 @@
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
+				1429AC7620D435A300ABBCDE /* OnOffCell.xib in Resources */,
 				14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,12 +656,15 @@
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
 				146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */,
+				1429AC7820D4375500ABBCDE /* DIsplayableCellProtocol.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
+				1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
 				14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
+				1429AC7220D42B4000ABBCDE /* ServicesService.swift in Sources */,
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,

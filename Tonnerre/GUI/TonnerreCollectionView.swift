@@ -17,16 +17,13 @@ protocol TonnerreCollectionViewDelegate: class {
 
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
-  private var highlightedItem: ServiceCell? // Actual index in the datasource array
+  private var highlightedItem: DisplayableCellProtocol? // Actual index in the datasource array
   private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   
   var highlightedItemIndex = -1 {
     didSet {
       if oldValue == highlightedItemIndex {
-        visibleIndex = -1
-        highlightedItem?.highlighted = false
-        iconChange()
         return
       }
       let moveDown = highlightedItemIndex - oldValue >= 1
@@ -98,14 +95,15 @@ class TonnerreCollectionView: NSScrollView {
       guard datasource.count > 0 else { return }
       delegate?.tabPressed(service: datasource[highlightIndex])
     case 49:
-      highlightedItem?.preview()
+      (highlightedItem as? ServiceCell)?.preview()
     case 125, 126:// Up/down arrow
       if event.modifierFlags.contains(.command) {
         highlightedItemIndex = event.keyCode == 125 ? datasource.count - 1 : 0
       } else {
         let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
         if datasource.count != 0 {
-          if !(highlightedItemIndex == -1 && movement == -1) { highlightedItemIndex = highlightedItemIndex + movement }
+          highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
+//          if !(highlightedItemIndex == -1 && movement == -1) { highlightedItemIndex = highlightedItemIndex + movement }
         } else {
           delegate?.retrieveLastQuery()
         }
@@ -181,28 +179,36 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    guard let cell = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ServiceCell"), for: indexPath) as? ServiceCell else {
+    let data = datasource[indexPath.item]
+    let identifier: String
+    if case .result(let service, _) = data {
+       identifier = service is TonnerreInterpreterService ? "OnOffCell" : "ServiceCell"
+    } else { identifier = "ServiceCell" }
+    guard let cell = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), for: indexPath) as? DisplayableCellProtocol else {
       return ServiceCell(nibName: NSNib.Name("ServiceCell.xib"), bundle: Bundle.main)
     }
-    let data = datasource[indexPath.item]
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
-    cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
-    if case .result(_, let value) = data {
-      cell.displayItem = value
-      if let asyncedData = value as? AsyncedProtocol {
-        asyncedData.asyncedViewSetup?(cell)
+    if let servicecell = cell as? ServiceCell {
+      servicecell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
+      if case .result(_, let value) = data {
+        servicecell.displayItem = value
+        if let asyncedData = value as? AsyncedProtocol {
+          asyncedData.asyncedViewSetup?(servicecell)
+        }
       }
+    } else if let onOffCell = cell as? OnOffCell {
+      
     }
-    return cell
+    return cell as! NSCollectionViewItem
   }
   
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard
       let indexPath = indexPaths.first,
-      let cell = collectionView.item(at: indexPath) as? ServiceCell
+      let cell = collectionView.item(at: indexPath) as? DisplayableCellProtocol
     else { return }
     highlightedItem?.highlighted = false
     highlightedItem = cell

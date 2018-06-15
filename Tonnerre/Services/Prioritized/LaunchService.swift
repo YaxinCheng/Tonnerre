@@ -12,7 +12,6 @@ struct LaunchService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  let hasPreview: Bool = false
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   let alterContent: String? = "Show selected app in Finder"
   

@@ -9,7 +9,7 @@
 import Foundation
 
 struct TonnerreInterpreter {
-  private static let loader = TonnerreServiceLoader()
+  static var loader = TonnerreServiceLoader()
   private var cachedServices = [TonnerreService]()
   private var lastQuery: String = ""
   
@@ -20,7 +20,11 @@ struct TonnerreInterpreter {
   private mutating func parse(tokens: [String]) -> [TonnerreService] {
     if tokens.first == lastQuery { return cachedServices }
     lastQuery = tokens.first!
-    cachedServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!)
+    if tokens.first!.starts(with: "@") {
+      cachedServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!, type: .interpreter)
+    } else {
+      cachedServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!)
+    }
     return cachedServices
   }
   

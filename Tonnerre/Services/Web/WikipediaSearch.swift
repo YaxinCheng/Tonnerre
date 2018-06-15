@@ -18,7 +18,6 @@ struct WikipediaSearch: WebService {
   static let keyword: String = "wiki"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  let hasPreview: Bool = false
   let loadSuggestion: Bool
   
   init() {

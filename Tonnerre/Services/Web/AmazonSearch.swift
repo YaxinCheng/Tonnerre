@@ -18,7 +18,6 @@ struct AmazonSearch: WebService {
   static let keyword: String = "amazon"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  let hasPreview: Bool = false
   let loadSuggestion: Bool
   
   init() {

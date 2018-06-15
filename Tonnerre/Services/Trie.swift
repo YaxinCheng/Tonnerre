@@ -25,12 +25,12 @@ struct Trie<T> {
   
   init(values: [T], getKeyword: @escaping (T)->String) {
     self.getKeyword = getKeyword
-    rootNode = Node(children: [:], values: [])
+    rootNode = Node(children: [:], values: values)
     values.forEach(insert)
   }
   
   func find(value: String) -> [T] {
-    if value.isEmpty { return [] }
+    if value.isEmpty { return rootNode.values }
     var node = rootNode
     for char in value {
       if let next = node.children[char] {

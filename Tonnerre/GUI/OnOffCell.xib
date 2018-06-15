@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
+            <connections>
+                <outlet property="iconView" destination="Rg9-6s-fyc" id="K2C-uS-7sz"/>
+                <outlet property="introLabel" destination="iRs-aa-TZS" id="Bh5-px-gh7"/>
+                <outlet property="serviceLabel" destination="wMu-mJ-Pbz" id="9w7-2L-MFt"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="1p5-of-wVM">
+            <rect key="frame" x="0.0" y="0.0" width="760" height="63"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rg9-6s-fyc" customClass="TonnerreIconView" customModule="Tonnerre" customModuleProvider="target">
+                    <rect key="frame" x="8" y="7" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="3NG-Zr-vEb"/>
+                        <constraint firstAttribute="width" constant="48" id="fhF-Uz-a9p"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="fjE-td-PsB"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wMu-mJ-Pbz">
+                    <rect key="frame" x="62" y="25" width="692" height="30"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="ServiceName" usesSingleLineMode="YES" id="u0B-l7-hI8">
+                        <font key="font" metaFont="system" size="25"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iRs-aa-TZS">
+                    <rect key="frame" x="62" y="7" width="692" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Intro label" id="SbH-cp-A1N">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Rg9-6s-fyc" firstAttribute="leading" secondItem="1p5-of-wVM" secondAttribute="leading" constant="8" id="7Jn-zS-7RF"/>
+                <constraint firstItem="wMu-mJ-Pbz" firstAttribute="leading" secondItem="Rg9-6s-fyc" secondAttribute="trailing" constant="8" id="89u-td-16x"/>
+                <constraint firstItem="iRs-aa-TZS" firstAttribute="trailing" secondItem="wMu-mJ-Pbz" secondAttribute="trailing" id="IsT-Vq-WV6"/>
+                <constraint firstItem="Rg9-6s-fyc" firstAttribute="top" secondItem="1p5-of-wVM" secondAttribute="top" constant="8" id="NXz-uy-MLc"/>
+                <constraint firstItem="iRs-aa-TZS" firstAttribute="bottom" secondItem="Rg9-6s-fyc" secondAttribute="bottom" id="ZSb-pN-CkB"/>
+                <constraint firstItem="iRs-aa-TZS" firstAttribute="leading" secondItem="wMu-mJ-Pbz" secondAttribute="leading" id="awS-C0-jn8"/>
+                <constraint firstAttribute="trailing" secondItem="wMu-mJ-Pbz" secondAttribute="trailing" constant="8" id="gZx-3a-gBA"/>
+                <constraint firstItem="wMu-mJ-Pbz" firstAttribute="top" secondItem="Rg9-6s-fyc" secondAttribute="top" id="xxF-su-O9B"/>
+            </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.opacity">
+                    <real key="value" value="0.5"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+        </customView>
+        <collectionViewItem id="ghK-ik-Ar1" userLabel="OnOff Cell" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
+            <connections>
+                <outlet property="iconView" destination="Rg9-6s-fyc" id="Kbc-ot-Y6V"/>
+                <outlet property="introLabel" destination="iRs-aa-TZS" id="4q6-ee-IzB"/>
+                <outlet property="serviceLabel" destination="wMu-mJ-Pbz" id="svH-ID-3Bt"/>
+                <outlet property="view" destination="1p5-of-wVM" id="2lp-Pd-rDk"/>
+            </connections>
+        </collectionViewItem>
+    </objects>
+    <resources>
+        <image name="tonnerre" width="48" height="48"/>
+    </resources>
+</document>

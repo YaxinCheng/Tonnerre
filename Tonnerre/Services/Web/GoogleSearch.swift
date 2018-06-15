@@ -17,7 +17,6 @@ extension Google {
     return "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   }
   var argLowerBound: Int { return 1 }
-  var hasPreview: Bool { return false }
   var loadSuggestion: Bool { return true }
   var argUpperBound: Int { return Int.max }
   

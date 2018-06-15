@@ -12,7 +12,6 @@ struct CalculationService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  let hasPreview: Bool = false
   let alterContent: String? = "Copy to clipboard"
   let icon: NSImage = #imageLiteral(resourceName: "calculator")
   private let interpreter = MathInterpreter()

@@ -11,7 +11,6 @@ import Cocoa
 struct URLService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 1
-  let hasPreview: Bool = false
   var icon: NSImage {
     guard let defaultBrowser = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!) else { return #imageLiteral(resourceName: "safari") }
     let defaultIcon = NSWorkspace.shared.icon(forFile: defaultBrowser.path)

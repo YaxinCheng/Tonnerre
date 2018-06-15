@@ -14,7 +14,6 @@ protocol FileSearchService: TonnerreService {
 }
 
 extension FileSearchService {
-  var hasPreview: Bool { return false }
   var icon: NSImage { return #imageLiteral(resourceName: "Finder") }
   var content: String { return "Search file on your mac and open" }
   var alterContent: String? { return "Show in Finder" }

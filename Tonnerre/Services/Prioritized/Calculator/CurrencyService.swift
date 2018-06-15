@@ -15,9 +15,9 @@ struct CurrencyService: TonnerreService {
   let content: String = "Currency change from %@ to %@"
   let argLowerBound: Int = 2
   let argUpperBound: Int = 4
-  let hasPreview: Bool = false
   let template: String = "https://free.currencyconverterapi.com/api/v5/convert?q=%@&compact=ultra"//USD_CAD,USD_JPY
   private let currencyCodes: Set<String>
+  private let popularCurrencies = ["USD", "EUR", "GBP", "JPY", "CHF", "CNY"]
   
   init() {
     currencyCodes = Set(Locale.isoCurrencyCodes)
@@ -36,9 +36,9 @@ struct CurrencyService: TonnerreService {
       toCurrency = (input[2].lowercased() == "to" ? input[3] : input[2]).uppercased()
     } else { toCurrency = "" }
     // The async function to setup the view
-    let label = "\(number) \(fromCurrency) ➡️ %@ \(toCurrency)"
-    let viewSetup: ((ServiceCell) -> Void)? = {
-      if !currencyCodes.contains(fromCurrency) || !currencyCodes.contains(toCurrency) { return nil }
+    let label = "\(number) \(fromCurrency) = %@ "
+    let viewSetupGenerator: (String, String, String) -> ((ServiceCell) -> Void)? = { fromCurrency, toCurrency, label in
+      if !self.currencyCodes.contains(fromCurrency) || !self.currencyCodes.contains(toCurrency) { return nil }
       return { cell in
           let key = [fromCurrency, toCurrency].joined(separator: "_")
           let url = URL(string: String(format: self.template, key))!
@@ -54,8 +54,12 @@ struct CurrencyService: TonnerreService {
             }
           }.resume()
       }
-    }()
-    return [AsyncedDisplayableContainer(name: String(format: label, "..."), content: String(format: content, fromCurrency, toCurrency), icon: icon, innerItem: [fromCurrency, toCurrency], viewSetup: viewSetup)]
+    }
+    let populars = popularCurrencies.filter { $0 != fromCurrency && $0 != toCurrency }
+    return ([toCurrency] + populars).map {
+      let asyncViewSetup = viewSetupGenerator(fromCurrency, $0, label + $0)
+      return AsyncedDisplayableContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: [fromCurrency, $0], viewSetup: asyncViewSetup)
+    }
   }
   
   func serve(source: Displayable, withCmd: Bool) {

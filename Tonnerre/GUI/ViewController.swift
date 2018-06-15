@@ -110,6 +110,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     service.serve(source: target, withCmd: withCmd)
     textField.stringValue = ""
     refreshIcon()
+    guard !(service is TonnerreInterpreterService) else { return }
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
       (self?.view.window as? BaseWindow)?.isHidden = true
     }

@@ -13,14 +13,12 @@ protocol TonnerreService: Displayable {
   static var keyword: String { get }
   var argLowerBound: Int { get }
   var argUpperBound: Int { get }
-  var hasPreview: Bool { get }
   func prepare(input: [String]) -> [Displayable]
   func serve(source: Displayable, withCmd: Bool)
   
   init()
 }
 extension TonnerreService {
-  var key: String { return Self.keyword }
   var alterContent: String? { return nil }
   var alterIcon: NSImage? { return nil }
   var argUpperBound: Int { return argLowerBound }
@@ -31,7 +29,9 @@ protocol TonnerreExtendService: TonnerreService, Codable {
 }
 
 extension TonnerreExtendService {
-  var hasPreview: Bool { return false }
   static var keyword: String { return "ExtendedService" }
   init() { fatalError("Load from JSON instead") }
+}
+
+protocol TonnerreInterpreterService: TonnerreService {
 }

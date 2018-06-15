@@ -11,9 +11,6 @@ import Cocoa
 protocol SystemService: TonnerreService {
   
 }
-extension SystemService {
-  var hasPreview: Bool { return false }
-}
 
 struct ApplicationService: SystemService {
   let name: String = "Quit program"

@@ -28,7 +28,6 @@ struct GoogleMapService: WebService {
   }
   static let keyword: String = "map"
   let argLowerBound: Int = 1
-  let hasPreview: Bool = false
   let name: String = "Google Maps"
   let contentTemplate: String = "Search %@ on Google Maps"
   let icon: NSImage = #imageLiteral(resourceName: "googlemap")

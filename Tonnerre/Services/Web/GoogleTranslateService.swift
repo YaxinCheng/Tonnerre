@@ -11,7 +11,6 @@ import Cocoa
 struct GoogleTranslateService: TonnerreService {
   static let keyword: String = "translate"
   let argLowerBound: Int = 1
-  let hasPreview: Bool = false
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "Google_Translate")
   let template: String = "https://translate.google.%@/m/translate%@/%@/%@"
