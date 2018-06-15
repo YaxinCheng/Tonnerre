@@ -103,7 +103,6 @@ class TonnerreCollectionView: NSScrollView {
         let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
         if datasource.count != 0 {
           highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
-//          if !(highlightedItemIndex == -1 && movement == -1) { highlightedItemIndex = highlightedItemIndex + movement }
         } else {
           delegate?.retrieveLastQuery()
         }
@@ -114,7 +113,8 @@ class TonnerreCollectionView: NSScrollView {
         !datasource.isEmpty,
         case .result(let service, let value) = datasource[selectIndex]
       else { return }
-      datasource = []
+      if let onoffCell = highlightedItem as? OnOffCell { onoffCell.selected() }
+      else { datasource = [] }
       delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
     default:
       break
@@ -199,8 +199,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
           asyncedData.asyncedViewSetup?(servicecell)
         }
       }
-    } else if let onOffCell = cell as? OnOffCell {
-      
+    } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data {
+      onOffCell.displayItem = value
     }
     return cell as! NSCollectionViewItem
   }

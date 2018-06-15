@@ -22,6 +22,15 @@ extension TonnerreService {
   var alterContent: String? { return nil }
   var alterIcon: NSImage? { return nil }
   var argUpperBound: Int { return argLowerBound }
+  static var isDisabled: Bool {
+    get {
+      let userDeafult = UserDefaults.standard
+      return userDeafult.bool(forKey: "\(Self.self)+Disabled")
+    } set {
+      let userDeafult = UserDefaults.standard
+      userDeafult.set(newValue, forKey: "\(Self.self)+Disabled")
+    }
+  }
 }
 
 protocol TonnerreExtendService: TonnerreService, Codable {

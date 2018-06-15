@@ -12,6 +12,9 @@
 		1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7320D435A300ABBCDE /* OnOffCell.swift */; };
 		1429AC7620D435A300ABBCDE /* OnOffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7420D435A300ABBCDE /* OnOffCell.xib */; };
 		1429AC7820D4375500ABBCDE /* DIsplayableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */; };
+		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
+		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7C20D4466A00ABBCDE /* toggle_switch.json */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
@@ -121,6 +124,7 @@
 			files = (
 				14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */,
 				1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */,
+				1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +138,8 @@
 		1429AC7320D435A300ABBCDE /* OnOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffCell.swift; sourceTree = "<group>"; };
 		1429AC7420D435A300ABBCDE /* OnOffCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnOffCell.xib; sourceTree = "<group>"; };
 		1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIsplayableCellProtocol.swift; sourceTree = "<group>"; };
+		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
+		1429AC7C20D4466A00ABBCDE /* toggle_switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = toggle_switch.json; sourceTree = "<group>"; };
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
 		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 			files = (
 				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
 				1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */,
+				1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +306,7 @@
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
+				1429AC7920D4427B00ABBCDE /* Lottie.framework */,
 				14561B8820C35F2C0057B4C1 /* HotKey.framework */,
 				1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */,
 				1470514220B1BEF900F6FBE8 /* Tonnerre */,
@@ -338,6 +346,7 @@
 				1470514F20B1BEFB00F6FBE8 /* Info.plist */,
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
+				1429AC7C20D4466A00ABBCDE /* toggle_switch.json */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -597,6 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */,
+				1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,

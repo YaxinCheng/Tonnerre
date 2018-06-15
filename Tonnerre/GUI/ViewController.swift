@@ -108,10 +108,10 @@ extension ViewController: TonnerreCollectionViewDelegate {
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {
     queryStack.append(value: textField.stringValue)
     service.serve(source: target, withCmd: withCmd)
-    textField.stringValue = ""
-    refreshIcon()
     guard !(service is TonnerreInterpreterService) else { return }
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
+      self?.refreshIcon()
+      self?.textField.stringValue = ""
       (self?.view.window as? BaseWindow)?.isHidden = true
     }
   }

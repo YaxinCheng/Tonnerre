@@ -16,7 +16,7 @@ struct ServicesService: TonnerreInterpreterService {
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   
   func prepare(input: [String]) -> [Displayable] {
-    return TonnerreInterpreter.loader.autoComplete(key: input.joined(separator: " "), type: .normal, withPrioritized: false)
+    return TonnerreInterpreter.loader.autoComplete(key: input.joined(separator: " "), type: .normal, normalOnly: false)
   }
   
   func serve(source: Displayable, withCmd: Bool) {

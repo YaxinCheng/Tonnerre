@@ -7,17 +7,30 @@
 //
 
 import Cocoa
+import Lottie
 
 class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
-  
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
+  private let toggleAnimation = LOTAnimationView(name: "toggle_switch")
+  private let (onProgress, offProgress): (CGFloat, CGFloat) = (0.45, 0)
+  var displayItem: Displayable?
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
     theme = .currentTheme
+    let height = view.bounds.height
+    toggleAnimation.frame = CGRect(x: view.bounds.width - height * 2, y: -height/2, width: height * 2, height: height * 2)
+    toggleAnimation.animationSpeed = 1.5
+    view.addSubview(toggleAnimation)
+  }
+  
+  override func viewWillAppear() {
+    if let service = displayItem as? TonnerreService {
+      toggleAnimation.animationProgress = type(of: service).isDisabled ? offProgress : onProgress
+    }
   }
   
   var theme: TonnerreTheme {
@@ -30,4 +43,14 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
     }
   }
   
+  func selected() {
+    guard let service = displayItem as? TonnerreService else { return }
+    let disabled = type(of: service).isDisabled
+    if disabled {
+      toggleAnimation.play(fromProgress: offProgress, toProgress: onProgress, withCompletion: nil)
+    } else {
+      toggleAnimation.play(fromProgress: onProgress, toProgress: offProgress, withCompletion: nil)
+    }
+    type(of: service).isDisabled = !disabled
+  }
 }
