@@ -16,10 +16,11 @@ struct ServicesService: TonnerreInterpreterService {
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   
   func prepare(input: [String]) -> [Displayable] {
-    return TonnerreInterpreter.loader.autoComplete(key: input.joined(separator: " "), type: .normal, normalOnly: false)
+    return TonnerreInterpreter.loader.autoComplete(key: input.joined(separator: " "), type: .normal, includeExtra: false)
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    
+    guard let service = source as? TonnerreService else { return }
+    type(of: service).isDisabled = !(type(of: service).isDisabled)
   }
 }

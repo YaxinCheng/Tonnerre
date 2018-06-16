@@ -113,7 +113,7 @@ class TonnerreCollectionView: NSScrollView {
         !datasource.isEmpty,
         case .result(let service, let value) = datasource[selectIndex]
       else { return }
-      if let onoffCell = highlightedItem as? OnOffCell { onoffCell.selected() }
+      if let onoffCell = highlightedItem as? OnOffCell { onoffCell.disabled = !onoffCell.disabled }
       else { datasource = [] }
       delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
     default:
@@ -199,8 +199,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
           asyncedData.asyncedViewSetup?(servicecell)
         }
       }
-    } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data {
-      onOffCell.displayItem = value
+    } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data, let service = value as? TonnerreService {
+      onOffCell.disabled = type(of: service).isDisabled
     }
     return cell as! NSCollectionViewItem
   }

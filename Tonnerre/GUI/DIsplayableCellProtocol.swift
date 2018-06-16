@@ -14,7 +14,6 @@ protocol DisplayableCellProtocol: class {
   var serviceLabel: NSTextField! { get set }
   var introLabel: NSTextField! { get set }
   var highlighted: Bool { get set }
-  var displayItem: Displayable? { get set }
 }
 
 extension DisplayableCellProtocol {

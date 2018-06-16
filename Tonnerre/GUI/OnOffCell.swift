@@ -15,7 +15,15 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
   @IBOutlet weak var introLabel: NSTextField!
   private let toggleAnimation = LOTAnimationView(name: "toggle_switch")
   private let (onProgress, offProgress): (CGFloat, CGFloat) = (0.45, 0)
-  var displayItem: Displayable?
+  var disabled: Bool = true {
+    didSet {
+      if disabled {
+        toggleAnimation.play(fromProgress: onProgress, toProgress: offProgress, withCompletion: nil)
+      } else {
+        toggleAnimation.play(fromProgress: offProgress, toProgress: onProgress, withCompletion: nil)
+      }
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,9 +36,7 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
   }
   
   override func viewWillAppear() {
-    if let service = displayItem as? TonnerreService {
-      toggleAnimation.animationProgress = type(of: service).isDisabled ? offProgress : onProgress
-    }
+    toggleAnimation.animationProgress = disabled ? offProgress : onProgress
   }
   
   var theme: TonnerreTheme {
@@ -41,16 +47,5 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
       serviceLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour
     }
-  }
-  
-  func selected() {
-    guard let service = displayItem as? TonnerreService else { return }
-    let disabled = type(of: service).isDisabled
-    if disabled {
-      toggleAnimation.play(fromProgress: offProgress, toProgress: onProgress, withCompletion: nil)
-    } else {
-      toggleAnimation.play(fromProgress: onProgress, toProgress: offProgress, withCompletion: nil)
-    }
-    type(of: service).isDisabled = !disabled
   }
 }
