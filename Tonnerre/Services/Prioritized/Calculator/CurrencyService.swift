@@ -23,7 +23,29 @@ struct CurrencyService: TonnerreService {
     currencyCodes = Set(Locale.isoCurrencyCodes)
   }
   
+  private func formatCheck(input: [String]) -> Bool {
+    switch input.count {
+    case 2:
+      let numberCurrency = Double(input[0]) != nil && currencyCodes.contains(input[1].uppercased())
+      let currencyNumber = Double(input[1]) != nil && currencyCodes.contains(input[0].uppercased())
+      let currencyCurrency = currencyCodes.contains(input[0].uppercased()) && currencyCodes.contains(input[1].uppercased())
+      return numberCurrency || currencyNumber || currencyCurrency
+    case 3, 4:
+      let numberCurrency = (Double(input[0]) != nil && currencyCodes.contains(input[1].uppercased())) || (Double(input[1]) != nil && currencyCodes.contains(input[0].uppercased()))
+      guard numberCurrency else { return false }
+      let existTo = input[2].lowercased() == "to"
+      if input.count == 3 {
+        return existTo || currencyCodes.contains(input[2].uppercased())
+      } else {
+        return existTo && currencyCodes.contains(input[3].uppercased())
+      }
+    default:
+      return false
+    }
+  }
+  
   func prepare(input: [String]) -> [Displayable] {
+    guard formatCheck(input: input) else { return [] }
     let number = Double(input[0]) ?? Double(input[1]) ?? 1
     let fromCurrency = (currencyCodes.contains(input[0].uppercased()) ? input[0] : input[1]).uppercased()
     guard currencyCodes.contains(fromCurrency) else { return [] }

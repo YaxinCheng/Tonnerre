@@ -24,6 +24,7 @@ class TonnerreCollectionView: NSScrollView {
   var highlightedItemIndex = -1 {
     didSet {
       if oldValue == highlightedItemIndex {
+        if oldValue == -1 { iconChange() }
         return
       }
       let moveDown = highlightedItemIndex - oldValue >= 1
@@ -86,7 +87,7 @@ class TonnerreCollectionView: NSScrollView {
                         83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
       let selectedIndex = keyCodeMap[event.keyCode]! - 1
       let currentIndex = visibleIndex
-      let actualIndex = selectedIndex - currentIndex + highlightedItemIndex
+      let actualIndex = selectedIndex - currentIndex + max(highlightedItemIndex, 0)
       guard actualIndex < datasource.count, case .result(let service, let value) = datasource[actualIndex] else { return }
       datasource = []
       delegate?.serve(with: service, target: value, withCmd: false)
@@ -117,6 +118,7 @@ class TonnerreCollectionView: NSScrollView {
       else { datasource = [] }
       delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
     default:
+      highlightedItemIndex = -1
       break
     }
   }
