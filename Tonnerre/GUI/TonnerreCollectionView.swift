@@ -88,6 +88,7 @@ class TonnerreCollectionView: NSScrollView {
   
 
   override func keyDown(with event: NSEvent) {
+    (highlightedItem as? ServiceCell)?.popoverView.close()
     switch event.keyCode {
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }

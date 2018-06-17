@@ -16,7 +16,7 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol, DisplayableCellProtocol 
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
   var displayItem: Displayable?
-  private var popoverView = NSPopover()
+  var popoverView = NSPopover()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -45,8 +45,9 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol, DisplayableCellProtocol 
     else { return }
     guard let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: 450, height: 280), style: .normal) else { return }
     let viewController = NSViewController()
-    viewController.view = qlView
     qlView.previewItem = PreviewItem(title: name, url: url)
+    qlView.shouldCloseWithWindow = true
+    viewController.view = qlView
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)
     popoverView.contentViewController = viewController
     popoverView.show(relativeTo: cellRect, of: view, preferredEdge: .maxX)

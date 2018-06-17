@@ -23,42 +23,43 @@ struct CurrencyService: TonnerreService {
     currencyCodes = Set(Locale.isoCurrencyCodes)
   }
   
-  private func formatCheck(input: [String]) -> Bool {
+  /**
+   Extract the fromCurrency, toCurrency, and amount fromn the raw input
+   - parameter input: the raw input passed to this service
+   - returns: (fromCurrency, toCurrency, amount). This function may also return nil if it does not match the format
+  */
+  private func extractInfomation(from input: [String]) -> (String, String, Double)? {
+    let (fromCurrency, toCurrency, amount): (String, String, Double)
     switch input.count {
     case 2:
-      let numberCurrency = Double(input[0]) != nil && currencyCodes.contains(input[1].uppercased())
-      let currencyNumber = Double(input[1]) != nil && currencyCodes.contains(input[0].uppercased())
-      let currencyCurrency = currencyCodes.contains(input[0].uppercased()) && currencyCodes.contains(input[1].uppercased())
-      return numberCurrency || currencyNumber || currencyCurrency
+      let currentCode = Locale.current.currencyCode ?? "..."
+      if let convertedNumber = Double(input[0]), currencyCodes.contains(input[1].uppercased()) {
+        (amount, fromCurrency, toCurrency) = (convertedNumber, input[1].uppercased(), input[1].uppercased() == currentCode ? "USD" : currentCode)
+      } else if let convertedNumber = Double(input[1]), currencyCodes.contains(input[0].uppercased()) {
+        (amount, fromCurrency, toCurrency) = (convertedNumber, input[0].uppercased(), input[0].uppercased() == currentCode ? "USD" : currentCode)
+      } else if currencyCodes.contains(input[0].uppercased()) && currencyCodes.contains(input[1].uppercased()) {
+        (amount, fromCurrency, toCurrency) = (1, input[0].uppercased(), input[1].uppercased())
+      } else { return nil }
     case 3, 4:
-      let numberCurrency = (Double(input[0]) != nil && currencyCodes.contains(input[1].uppercased())) || (Double(input[1]) != nil && currencyCodes.contains(input[0].uppercased()))
-      guard numberCurrency else { return false }
+      if let convertedNumber = Double(input[0]) { (amount, fromCurrency) = (convertedNumber, input[1].uppercased()) }
+      else if let convertedNumber = Double(input[1]) { (amount, fromCurrency) = (convertedNumber, input[0].uppercased()) }
+      else { return nil }
+      guard currencyCodes.contains(fromCurrency) else { return nil }
       let existTo = input[2].lowercased() == "to"
-      if input.count == 3 {
-        return existTo || currencyCodes.contains(input[2].uppercased())
-      } else {
-        return existTo && currencyCodes.contains(input[3].uppercased())
-      }
-    default:
-      return false
+      if input.count == 3 && currencyCodes.contains(input[2].uppercased()) {
+        toCurrency = input[2].uppercased()
+      } else if input.count == 4 && existTo && currencyCodes.contains(input[3].uppercased()) {
+        toCurrency = input[3].uppercased()
+      } else { return nil }
+    default: return nil
     }
+    return (fromCurrency, toCurrency, amount)
   }
   
   func prepare(input: [String]) -> [Displayable] {
-    guard formatCheck(input: input) else { return [] }
-    let number = Double(input[0]) ?? Double(input[1]) ?? 1
-    let fromCurrency = (currencyCodes.contains(input[0].uppercased()) ? input[0] : input[1]).uppercased()
-    guard currencyCodes.contains(fromCurrency) else { return [] }
-    let toCurrency: String
-    if input.count == 2 && fromCurrency == input[0].uppercased() {
-      toCurrency = (Double(input[1]) == nil ? input[1] : "").uppercased()
-    } else if input.count == 3 {
-      toCurrency = currencyCodes.contains(input[2].uppercased()) ? input[2].uppercased() : ""
-    } else if input.count > 3 {
-      toCurrency = (input[2].lowercased() == "to" ? input[3] : input[2]).uppercased()
-    } else { toCurrency = "" }
+    guard let (fromCurrency, toCurrency, amount) = extractInfomation(from: input) else { return [] }
     // The async function to setup the view
-    let label = "\(number) \(fromCurrency) = %@ "
+    let label = "\(amount) \(fromCurrency) = %@ "
     let viewSetupGenerator: (String, String, String) -> ((ServiceCell) -> Void)? = { fromCurrency, toCurrency, label in
       if !self.currencyCodes.contains(fromCurrency) || !self.currencyCodes.contains(toCurrency) { return nil }
       return { cell in
@@ -72,7 +73,7 @@ struct CurrencyService: TonnerreService {
               let rate = jsonObj[key]
             else { return }
             DispatchQueue.main.async {
-              cell.serviceLabel.stringValue = String(format: label, "\(rate * number)")
+              cell.serviceLabel.stringValue = String(format: label, "\(rate * amount)")
             }
           }.resume()
       }
