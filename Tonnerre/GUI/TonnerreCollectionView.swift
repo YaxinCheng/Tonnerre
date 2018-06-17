@@ -32,8 +32,8 @@ class TonnerreCollectionView: NSScrollView {
       let moveDown = highlightedItemIndex - oldValue >= 1
       let maxRows = 8
       let scrollPosition: NSCollectionView.ScrollPosition
-      if visibleIndex == maxRows && moveDown { scrollPosition = .bottom }
-      else if visibleIndex == 0 && !moveDown { scrollPosition = .top }
+      if (visibleIndex == maxRows || highlightedItemIndex - oldValue > 8) && moveDown { scrollPosition = .bottom }
+      else if (visibleIndex == 0 || oldValue - highlightedItemIndex > 8) && !moveDown { scrollPosition = .top }
       else { scrollPosition = .init(rawValue: 0) }
       visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
       if highlightedItemIndex != 0 { visibleIndex = max(visibleIndex, 0) }
