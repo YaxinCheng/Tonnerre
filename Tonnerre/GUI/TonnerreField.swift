@@ -11,7 +11,7 @@ import Cocoa
 class TonnerreField: NSTextField, ThemeProtocol {
   weak var tonnerreDelegate: TonnerreFieldDelegate?
   
-  var placeholderColour: NSColor! {
+  private var placeholderColour: NSColor! {
     didSet {
       placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 40)])
     }
@@ -46,23 +46,22 @@ class TonnerreField: NSTextField, ThemeProtocol {
     // Drawing code here.
     delegate = self
   }
-  
+
   override var mouseDownCanMoveWindow: Bool {
     return true
   }
   
   func autoComplete(cmd: String) {
-    let tokens = stringValue.components(separatedBy: .whitespaces).filter({ !$0.isEmpty })
+    let tokens = stringValue.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
     guard !tokens.isEmpty else { return }
     if tokens.count > 1 {
-      stringValue = tokens[0 ..< tokens.count - 1].joined(separator: " ") + " \(cmd) ".lowercased()
+      stringValue = tokens[0...].joined(separator: " ") + " \(cmd) ".lowercased()
     } else {
       stringValue = "\(cmd) ".lowercased()
     }
     window?.makeFirstResponder(nil)
     DispatchQueue.main.async { [unowned self] in
-      self.currentEditor()?.selectedRange = NSMakeRange(0, 0)
-      self.currentEditor()?.moveToEndOfDocument(nil)
+      self.currentEditor()?.selectedRange = NSMakeRange(self.stringValue.count, 0)
     }
   }
 }

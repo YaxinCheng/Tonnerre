@@ -12,6 +12,7 @@ protocol TonnerreCollectionViewDelegate: class {
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool)
   func tabPressed(service: ServiceResult)
   func serviceHighlighted(service: ServiceResult?)
+  func viewIsClicked()
   func retrieveLastQuery()
 }
 
@@ -20,6 +21,7 @@ class TonnerreCollectionView: NSScrollView {
   private var highlightedItem: DisplayableCellProtocol? // Actual index in the datasource array
   private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
+  private var mouseMonitor: Any? = nil
   
   var highlightedItemIndex = -1 {
     didSet {
@@ -63,6 +65,10 @@ class TonnerreCollectionView: NSScrollView {
     collectionViewHeight = constraints.filter({ $0.identifier == "collectionViewHeightConstraint"}).first!
     let centre = NotificationCenter.default
     centre.addObserver(self, selector: #selector(collectionViewDidScroll(notification:)), name: NSView.boundsDidChangeNotification, object: collectionView)
+    mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) { [weak self] (event) -> NSEvent? in
+      self?.delegate?.viewIsClicked()
+      return event
+    }
     centre.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
       self?.datasource = []
     }
@@ -78,6 +84,8 @@ class TonnerreCollectionView: NSScrollView {
       }
     }
   }
+  
+  
 
   override func keyDown(with event: NSEvent) {
     switch event.keyCode {
@@ -119,7 +127,6 @@ class TonnerreCollectionView: NSScrollView {
       delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
     default:
       highlightedItemIndex = -1
-      break
     }
   }
   
@@ -212,6 +219,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
       let indexPath = indexPaths.first,
       let cell = collectionView.item(at: indexPath) as? DisplayableCellProtocol
     else { return }
+    if indexPath.item != highlightedItemIndex { highlightedItemIndex = indexPath.item }
     highlightedItem?.highlighted = false
     highlightedItem = cell
     highlightedItem?.highlighted = true

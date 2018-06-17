@@ -31,7 +31,7 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
     theme = .currentTheme
     let height = view.bounds.height
     toggleAnimation.frame = CGRect(x: view.bounds.width - height * 2, y: -height/2, width: height * 2, height: height * 2)
-    toggleAnimation.animationSpeed = 1.5
+    toggleAnimation.animationSpeed = 1.7
     view.addSubview(toggleAnimation)
   }
   

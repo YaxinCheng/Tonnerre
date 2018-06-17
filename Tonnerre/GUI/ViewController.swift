@@ -100,6 +100,11 @@ extension ViewController: TonnerreFieldDelegate {
 }
 
 extension ViewController: TonnerreCollectionViewDelegate {
+  func viewIsClicked() {
+    textField.becomeFirstResponder()
+    textField.currentEditor()?.selectedRange = NSRange(location: textField.stringValue.count, length: 0)
+  }
+  
   func retrieveLastQuery() {
     textField.stringValue = queryStack.pop() ?? ""
     textDidChange(value: textField.stringValue)
