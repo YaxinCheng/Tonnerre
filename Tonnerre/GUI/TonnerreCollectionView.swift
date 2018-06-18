@@ -64,7 +64,7 @@ class TonnerreCollectionView: NSScrollView {
     super.init(coder: coder)
     collectionViewHeight = constraints.filter({ $0.identifier == "collectionViewHeightConstraint"}).first!
     let centre = NotificationCenter.default
-    centre.addObserver(self, selector: #selector(collectionViewDidScroll(notification:)), name: NSView.boundsDidChangeNotification, object: collectionView)
+    centre.addObserver(self, selector: #selector(collectionViewDidScroll), name: NSView.boundsDidChangeNotification, object: collectionView)
     mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) { [weak self] (event) -> NSEvent? in
       self?.delegate?.viewIsClicked()
       return event
@@ -84,8 +84,6 @@ class TonnerreCollectionView: NSScrollView {
       }
     }
   }
-  
-  
 
   override func keyDown(with event: NSEvent) {
     (highlightedItem as? ServiceCell)?.popoverView.close()
@@ -108,6 +106,7 @@ class TonnerreCollectionView: NSScrollView {
       (highlightedItem as? ServiceCell)?.preview()
     case 125, 126:// Up/down arrow
       if event.modifierFlags.contains(.command) {
+        visibleIndex = event.keyCode == 125 ? 7 : 1
         highlightedItemIndex = event.keyCode == 125 ? datasource.count - 1 : 0
       } else {
         let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
@@ -159,7 +158,7 @@ class TonnerreCollectionView: NSScrollView {
     collectionView.postsBoundsChangedNotifications = true
   }
   
-  @objc private func collectionViewDidScroll(notification: Notification) {
+  @objc private func collectionViewDidScroll() {
     let visibleCells = getVisibleCells()
     for (index, cell) in visibleCells.enumerated() {
       cell.cmdLabel.stringValue = "⌘\(index + 1)"
@@ -192,7 +191,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     let data = datasource[indexPath.item]
     let identifier: String
     if case .result(let service, _) = data {
-       identifier = service is TonnerreInterpreterService ? "OnOffCell" : "ServiceCell"
+       identifier = service is ServicesService ? "OnOffCell" : "ServiceCell"
     } else { identifier = "ServiceCell" }
     guard let cell = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), for: indexPath) as? DisplayableCellProtocol else {
       return ServiceCell(nibName: NSNib.Name("ServiceCell.xib"), bundle: Bundle.main)

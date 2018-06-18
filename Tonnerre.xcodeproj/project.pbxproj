@@ -60,6 +60,7 @@
 		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
 		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1473A55620D848E100C2FC42 /* ReloadService.swift */; };
 		1481164220D058760013D5D2 /* QueryStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481164120D058760013D5D2 /* QueryStack.swift */; };
 		1481165520D2D2440013D5D2 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481165420D2D2430013D5D2 /* PreviewItem.swift */; };
 		1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484147E20C5D056008FD68E /* GeneralWebServices.swift */; };
@@ -183,6 +184,7 @@
 		1470518420B1DEDF00F6FBE8 /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
 		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
+		1473A55620D848E100C2FC42 /* ReloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadService.swift; sourceTree = "<group>"; };
 		1481164120D058760013D5D2 /* QueryStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryStack.swift; sourceTree = "<group>"; };
 		1481165420D2D2430013D5D2 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
 		1484147E20C5D056008FD68E /* GeneralWebServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralWebServices.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				1481164120D058760013D5D2 /* QueryStack.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
 				1429AC7120D42B4000ABBCDE /* ServicesService.swift */,
+				1473A55620D848E100C2FC42 /* ReloadService.swift */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,
@@ -691,6 +694,7 @@
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
+				1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* Displayable.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
