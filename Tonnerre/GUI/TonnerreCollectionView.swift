@@ -18,12 +18,12 @@ protocol TonnerreCollectionViewDelegate: class {
 
 class TonnerreCollectionView: NSScrollView {
   private let cellHeight = 64
-  private var highlightedItem: DisplayableCellProtocol? // Actual index in the datasource array
+  private weak var highlightedItem: DisplayableCellProtocol? // Actual index in the datasource array
   private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   private var mouseMonitor: Any? = nil
   
-  var highlightedItemIndex = -1 {
+  private var highlightedItemIndex = -1 {
     didSet {
       if oldValue == highlightedItemIndex {
         if oldValue == -1 { iconChange() }
@@ -104,6 +104,9 @@ class TonnerreCollectionView: NSScrollView {
       delegate?.tabPressed(service: datasource[highlightIndex])
     case 49:
       (highlightedItem as? ServiceCell)?.preview()
+    case 36, 76: // Enter keys
+      guard event.modifierFlags.contains(.command), let (service, value) = enterPressed() else { break }
+      delegate?.serve(with: service, target: value, withCmd: true)
     case 125, 126:// Up/down arrow
       if event.modifierFlags.contains(.command) {
         visibleIndex = event.keyCode == 125 ? 7 : 1
@@ -116,18 +119,20 @@ class TonnerreCollectionView: NSScrollView {
           delegate?.retrieveLastQuery()
         }
       }
-    case 36, 76:// Enter
-      let selectIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
-      guard
-        !datasource.isEmpty,
-        case .result(let service, let value) = datasource[selectIndex]
-      else { return }
-      if let onoffCell = highlightedItem as? OnOffCell { onoffCell.disabled = !onoffCell.disabled }
-      else { datasource = [] }
-      delegate?.serve(with: service, target: value, withCmd: event.modifierFlags.contains(.command))
     default:
       highlightedItemIndex = -1
     }
+  }
+  
+  func enterPressed() -> (TonnerreService, Displayable)? {
+    let selectIndex = max(highlightedItemIndex, 0)
+    guard
+      !datasource.isEmpty,
+      case .result(let service, let value) = datasource[selectIndex]
+      else { return nil }
+    if let onoffCell = highlightedItem as? OnOffCell { onoffCell.disabled = !onoffCell.disabled }
+    else { datasource = [] }
+    return (service, value)
   }
   
   func modifierChanged(with event: NSEvent) {
@@ -193,9 +198,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     if case .result(let service, _) = data {
        identifier = service is ServicesService ? "OnOffCell" : "ServiceCell"
     } else { identifier = "ServiceCell" }
-    guard let cell = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), for: indexPath) as? DisplayableCellProtocol else {
-      return ServiceCell(nibName: NSNib.Name("ServiceCell.xib"), bundle: Bundle.main)
-    }
+    let origin = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), for: indexPath)
+    guard let cell = origin as? DisplayableCellProtocol else { return origin }
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
@@ -208,8 +212,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
           asyncedData.asyncedViewSetup?(servicecell)
         }
       }
-    } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data, let service = value as? TonnerreService {
-      onOffCell.disabled = type(of: service).isDisabled
+    } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data {
+      onOffCell.disabled = type(of: (value as! TonnerreService)).isDisabled
     }
     return cell as! NSCollectionViewItem
   }

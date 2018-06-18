@@ -18,12 +18,13 @@ class ViewController: NSViewController {
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
   private let queryStack = QueryStack<String>(size: 1)
+  private var withCmd: Bool = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    textField.tonnerreDelegate = self
+    textField.delegate = self
     collectionView.delegate = self
     NotificationCenter.default.addObserver(self, selector: #selector(suggestionNotificationDidArrive(notification:)), name: .suggestionDidFinish, object: nil)
   }
@@ -44,6 +45,7 @@ class ViewController: NSViewController {
         return $0
       }
       flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] in
+        self?.withCmd = $0.modifierFlags.contains(.command)
         self?.collectionView.modifierChanged(with: $0)
         return $0
       }
@@ -88,14 +90,26 @@ class ViewController: NSViewController {
       self.collectionView.datasource += webService.encodedSuggestions(queries: suggestions)
     }
   }
-}
-
-extension ViewController: TonnerreFieldDelegate {
-  func textDidChange(value: String) {
+  
+  private func textDidChange(value: String) {
     collectionView.datasource = interpreter.interpret(rawCmd: value)
     guard value.isEmpty else { return }
     interpreter.clearCache()
     refreshIcon()
+  }
+}
+
+extension ViewController: NSTextFieldDelegate {
+  override func controlTextDidChange(_ obj: Notification) {
+    guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
+    let text = textField.stringValue
+    textDidChange(value: text)
+  }
+  
+  override func controlTextDidEndEditing(_ obj: Notification) {
+    guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
+    guard let (service, value) = collectionView.enterPressed() else { return }
+    serve(with: service, target: value, withCmd: withCmd)
   }
 }
 
