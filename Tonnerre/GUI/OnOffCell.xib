@@ -5,13 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
-            <connections>
-                <outlet property="iconView" destination="Rg9-6s-fyc" id="K2C-uS-7sz"/>
-                <outlet property="introLabel" destination="iRs-aa-TZS" id="Bh5-px-gh7"/>
-                <outlet property="serviceLabel" destination="wMu-mJ-Pbz" id="9w7-2L-MFt"/>
-            </connections>
-        </customObject>
+        <customObject id="-2"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1p5-of-wVM">
@@ -59,7 +53,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
         </customView>
-        <collectionViewItem id="ghK-ik-Ar1" userLabel="OnOff Cell" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
+        <collectionViewItem id="ghK-ik-Ar1" userLabel="File's Owner" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
             <connections>
                 <outlet property="iconView" destination="Rg9-6s-fyc" id="Kbc-ot-Y6V"/>
                 <outlet property="introLabel" destination="iRs-aa-TZS" id="4q6-ee-IzB"/>

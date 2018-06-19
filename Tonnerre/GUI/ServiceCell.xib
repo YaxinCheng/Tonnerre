@@ -5,15 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ServiceCell" customModule="Tonnerre" customModuleProvider="target">
-            <connections>
-                <outlet property="cmdLabel" destination="eSm-bB-rbb" id="y73-2p-ive"/>
-                <outlet property="iconView" destination="zIt-L7-Ohv" id="bqf-0n-Zz6"/>
-                <outlet property="introLabel" destination="qiH-K4-ExG" id="7Be-wb-hiQ"/>
-                <outlet property="serviceLabel" destination="otR-5I-Obv" id="TsZ-WU-y4w"/>
-                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
-            </connections>
-        </customObject>
+        <customObject id="-2"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
@@ -71,7 +63,15 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
         </customView>
-        <collectionViewItem id="eZD-gZ-6Dv" customClass="ServiceCell" customModule="Tonnerre" customModuleProvider="target"/>
+        <collectionViewItem id="eZD-gZ-6Dv" userLabel="File's Owner" customClass="ServiceCell" customModule="Tonnerre" customModuleProvider="target">
+            <connections>
+                <outlet property="cmdLabel" destination="eSm-bB-rbb" id="cfc-cY-VBu"/>
+                <outlet property="iconView" destination="zIt-L7-Ohv" id="TRC-bp-DY1"/>
+                <outlet property="introLabel" destination="qiH-K4-ExG" id="qqG-q2-jvQ"/>
+                <outlet property="serviceLabel" destination="otR-5I-Obv" id="Nt9-kj-3yL"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="bqJ-xk-yOa"/>
+            </connections>
+        </collectionViewItem>
     </objects>
     <resources>
         <image name="tonnerre" width="48" height="48"/>
