@@ -16,6 +16,7 @@ enum StoredKeys: String {// Keys used in UserDefault
   case AppleInterfaceStyle
   case designatedX
   case designatedY
+  case defaultSearch
 }
 
 func getContext() -> NSManagedObjectContext {

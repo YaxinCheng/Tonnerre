@@ -54,8 +54,8 @@ struct TonnerreInterpreter {
     if possibleServices.isEmpty {
       let systemServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!, type: .system)
       if systemServices.isEmpty {// Load default web search services
-        let services: [WebService] = [GoogleSearch(suggestion: false), AmazonSearch(suggestion: false), WikipediaSearch(suggestion: false)]
-        cachedServices = services
+        let services = [DefaultSearchOption.defaultSearch.associatedService.init()]
+        cachedServices = []
         lastQuery = ""
         let values = services.map { $0.prepare(input: tokens) }
         return zip(services, values).map { ServiceResult(service: $0.0, value: $0.1.first!) }
