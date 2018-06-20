@@ -53,7 +53,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
         </customView>
-        <collectionViewItem id="ghK-ik-Ar1" userLabel="File's Owner" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
+        <collectionViewItem id="ghK-ik-Ar1" userLabel="OnOff Cell" customClass="OnOffCell" customModule="Tonnerre" customModuleProvider="target">
             <connections>
                 <outlet property="iconView" destination="Rg9-6s-fyc" id="Kbc-ot-Y6V"/>
                 <outlet property="introLabel" destination="iRs-aa-TZS" id="4q6-ee-IzB"/>

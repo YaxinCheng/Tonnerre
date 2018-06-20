@@ -18,7 +18,6 @@ class ViewController: NSViewController {
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
   private let queryStack = QueryStack<String>(size: 1)
-  private var withCmd: Bool = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -45,7 +44,6 @@ class ViewController: NSViewController {
         return $0
       }
       flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] in
-        self?.withCmd = $0.modifierFlags.contains(.command)
         self?.collectionView.modifierChanged(with: $0)
         return $0
       }
@@ -109,7 +107,7 @@ extension ViewController: NSTextFieldDelegate {
   override func controlTextDidEndEditing(_ obj: Notification) {
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
     guard let (service, value) = collectionView.enterPressed() else { return }
-    serve(with: service, target: value, withCmd: withCmd)
+    serve(with: service, target: value, withCmd: false)
   }
 }
 

@@ -213,7 +213,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
         }
       }
     } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data {
-      onOffCell.disabled = type(of: (value as! TonnerreService)).isDisabled
+      onOffCell.disabled = (value as? TonnerreExtendService)?.isDisabled ?? type(of: (value as! TonnerreService)).isDisabled
     }
     return cell as! NSCollectionViewItem
   }

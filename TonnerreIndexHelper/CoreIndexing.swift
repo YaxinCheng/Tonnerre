@@ -172,7 +172,6 @@ class CoreIndexing {
     while !queue.isEmpty {
       let processingURL = queue.removeFirst()// Get the first in the queue
       if processingURL.isSymlink || processingURL.typeIdentifier.starts(with: "dyn") { continue }// skip dynamic or sym files
-      autoreleasepool {
       do {
         if processingURL.isDirectory {// Directory
           for (mode, index) in zip(searchModes, indexes) where mode.includeDir == true {
@@ -206,7 +205,6 @@ class CoreIndexing {
       #if DEBUG
       debugPrint(processingURL.path)
       #endif
-      }
     }
   }
   

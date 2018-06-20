@@ -11,7 +11,7 @@ import Foundation
 struct TonnerreServiceLoader {
   private let normalServiceTrie: Trie<TonnerreService.Type>
   private let systemServiceTrie: Trie<TonnerreService.Type>
-  private let interpreterServiceTrie: Trie<TonnerreService.Type>
+  private let interpreterServicesDict: [String: [TonnerreService.Type]]
   private var extendedServiceTrie: Trie<TonnerreExtendService>
   private let prioritizedServices: [TonnerreService]
   
@@ -23,13 +23,14 @@ struct TonnerreServiceLoader {
   
   func autoComplete(key: String, type: serviceType = .normal, includeExtra: Bool = true) -> [TonnerreService] {
     if type == .normal {
-      let fetchedServices = normalServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }
-      let prioritized = includeExtra ? (prioritizedServices + extendedServiceTrie.find(value: key) as [TonnerreService]) : []
-      return fetchedServices.map { $0.init() } + prioritized
+      let fetchedServices = normalServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }.map { $0.init() }
+      let prioritized = includeExtra ? (prioritizedServices) : []
+      let extended = extendedServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }
+      return fetchedServices + prioritized + extended
     } else if type == .system {
-      return systemServiceTrie.find(value: key).map { $0.init() }
+      return systemServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra } .map { $0.init() }
     } else if type == .interpreter {
-      return interpreterServiceTrie.find(value: key).map { $0.init() }
+      return (interpreterServicesDict[key] ?? []).map { $0.init() }
     } else { return [] }
   }
   
@@ -40,7 +41,7 @@ struct TonnerreServiceLoader {
     let interpreterServices: [TonnerreService.Type] = [ServicesService.self, ReloadService.self]
     normalServiceTrie = Trie(values: normalServices) { $0.keyword }
     systemServiceTrie = Trie(values: systemServices) { $0.keyword }
-    interpreterServiceTrie = Trie(values: interpreterServices) { $0.keyword }
+    interpreterServicesDict = Dictionary(interpreterServices.map { ($0.keyword, [$0]) }, uniquingKeysWith: +)
     extendedServiceTrie = Trie(values: GeneralWebService.load()) { $0.keyword }
   }
   
