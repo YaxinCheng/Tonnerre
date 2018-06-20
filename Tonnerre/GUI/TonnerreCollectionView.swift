@@ -107,6 +107,7 @@ class TonnerreCollectionView: NSScrollView {
     case 36, 76: // Enter keys
       guard event.modifierFlags.contains(.command), let (service, value) = enterPressed() else { break }
       delegate?.serve(with: service, target: value, withCmd: true)
+    case 123, 124: break // Ignore left/right arrow
     case 125, 126:// Up/down arrow
       if event.modifierFlags.contains(.command) {
         visibleIndex = event.keyCode == 125 ? 7 : 1
@@ -130,7 +131,10 @@ class TonnerreCollectionView: NSScrollView {
       !datasource.isEmpty,
       case .result(let service, let value) = datasource[selectIndex]
       else { return nil }
-    if let onoffCell = highlightedItem as? OnOffCell { onoffCell.disabled = !onoffCell.disabled }
+    if let onoffCell = highlightedItem as? OnOffCell {
+      onoffCell.disabled = !onoffCell.disabled
+      onoffCell.animate()
+    }
     else { datasource = [] }
     return (service, value)
   }

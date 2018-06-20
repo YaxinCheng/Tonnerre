@@ -15,15 +15,7 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
   @IBOutlet weak var introLabel: NSTextField!
   private let toggleAnimation = LOTAnimationView(name: "toggle_switch")
   private let (onProgress, offProgress): (CGFloat, CGFloat) = (0.45, 0)
-  var disabled: Bool = true {
-    didSet {
-      if disabled {
-        toggleAnimation.play(fromProgress: onProgress, toProgress: offProgress, withCompletion: nil)
-      } else {
-        toggleAnimation.play(fromProgress: offProgress, toProgress: onProgress, withCompletion: nil)
-      }
-    }
-  }
+  var disabled: Bool = true
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,7 +23,7 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
     theme = .currentTheme
     let height = view.bounds.height
     toggleAnimation.frame = CGRect(x: view.bounds.width - height * 2, y: -height/2, width: height * 2, height: height * 2)
-    toggleAnimation.animationSpeed = 1.7
+    toggleAnimation.animationSpeed = 3
     view.addSubview(toggleAnimation)
   }
   
@@ -46,6 +38,14 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
       iconView.theme = newValue
       serviceLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour
+    }
+  }
+  
+  func animate() {
+    if disabled {
+      toggleAnimation.play(fromProgress: onProgress, toProgress: offProgress, withCompletion: nil)
+    } else {
+      toggleAnimation.play(fromProgress: offProgress, toProgress: onProgress, withCompletion: nil)
     }
   }
 }
