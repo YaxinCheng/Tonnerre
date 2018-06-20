@@ -75,13 +75,9 @@ class ViewController: NSViewController {
   
   @objc private func suggestionNotificationDidArrive(notification: Notification) {
     DispatchQueue.main.async { [unowned self] in
-      let tokens = self.textField.stringValue.components(separatedBy: .whitespaces)
       guard
         let suggestionPack = notification.userInfo as? [String: Any],
         let suggestions = suggestionPack["suggestions"] as? [String],
-        let queriedWord = suggestionPack["queriedWord"] as? String,
-        tokens.count > 1,
-        tokens[1...].joined(separator: " ").lowercased() == queriedWord || queriedWord.isEmpty,
         case .result(let service, _)? = self.collectionView.datasource.first,
         let webService = service as? WebService
       else { return }

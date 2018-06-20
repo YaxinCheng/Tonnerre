@@ -32,9 +32,8 @@ struct AmazonSearch: WebService {
     guard
       let jsonData = data,
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
-      let queriedWord = jsonObject[0] as? String,
       let suggestions = jsonObject[1] as? [String]
     else { return [:] }
-    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": AmazonSearch.keyword]
+    return ["suggestions": suggestions]
   }
 }

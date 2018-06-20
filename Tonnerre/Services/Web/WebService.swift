@@ -87,7 +87,7 @@ extension WebService {
     Self.ongoinTask = session.dataTask(with: suggestionURL) { (data, response, error) in
       if error != nil {
         #if DEBUG
-        debugPrint(error)
+        debugPrint(error!)
         #endif
         return
       }

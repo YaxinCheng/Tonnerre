@@ -25,11 +25,10 @@ extension Google {
       let jsonData = data,
       let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
       json.count > 2,
-      let queriedWord = json[0] as? String,
       let availableOptions = json[1] as? [NSArray]
       else { return [:] }
     let suggestions = availableOptions.compactMap { $0[0] as? String }
-    return ["suggestions": suggestions, "queriedWord": queriedWord, "queriedKey": Self.keyword]
+    return ["suggestions": suggestions]
   }
 }
 
