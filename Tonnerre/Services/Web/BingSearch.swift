@@ -10,7 +10,7 @@ import Cocoa
 
 struct BingSearch: WebService {
   let name: String = "Bing"
-  let template: String = "http://www.bing.%@/search?q=%@"
+  let template: String = "http://www.bing.com/search?q=%@"
 //  let suggestionTemplate: String = "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"// May not be stable
   let contentTemplate: String = "Search %@ on bing"

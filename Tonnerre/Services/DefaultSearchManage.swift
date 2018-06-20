@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+ This enum defines which service to use when there is not matched services from the input
+ Generally, google/bing/duckDuckGo like web search services will be prefered
+*/
 enum DefaultSearchOption: String {
   case google
   case bing
