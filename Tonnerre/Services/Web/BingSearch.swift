@@ -32,7 +32,7 @@ struct BingSearch: WebService {
 //    return ["suggestions": suggestions]
 //  }
   
-  func processJSON(data: Data?) -> [String : Any] {
+  func parseSuggestions(data: Data?) -> [String : Any] {
     guard
       let htmlData = data,
       let html = String(data: htmlData, encoding: .utf8)
@@ -41,8 +41,8 @@ struct BingSearch: WebService {
     let matches = keywordExtractor.matches(in: html, options: .withoutAnchoringBounds, range: NSRange(location: 0, length: html.count))
     let ranges = matches.map { $0.range(at: 1) }
     let suggestions = ranges.compactMap { Range($0, in: html) }
-      .map { String(html[$0]) }.compactMap { $0.removingPercentEncoding }
-      .map { $0.replacingOccurrences(of: "+", with: " ") }
+      .map { String(html[$0]) }.map { $0.replacingOccurrences(of: "+", with: " ") }
+      .compactMap { $0.removingPercentEncoding }
     return ["suggestions": suggestions]
   }
 }

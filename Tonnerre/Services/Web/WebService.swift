@@ -15,7 +15,7 @@ protocol WebService: TonnerreService {
   var loadSuggestion: Bool { get }
   static var ongoinTask: URLSessionDataTask? { get set }
   func encodedSuggestions(queries: [String]) -> [ServiceResult]
-  func processJSON(data: Data?) -> [String: Any]
+  func parseSuggestions(data: Data?) -> [String: Any]
 }
 
 extension WebService {
@@ -55,9 +55,18 @@ extension WebService {
   */
   func encodedSuggestions(queries: [String]) -> [ServiceResult] {
     return queries.compactMap {
-      guard let url = fillInTemplate(input: [$0]) else { return nil }
-      let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\($0)'") : contentTemplate
-      return DisplayableContainer(name: $0, content: content.capitalized, icon: icon, innerItem: url)
+      guard
+        let url = fillInTemplate(input: [$0])
+      else { return nil }
+      let readableContent: String
+      if $0.starts(with: "&#") {
+        let decodedData = $0.data(using: .utf8)
+        readableContent = (try? NSAttributedString(data: decodedData!, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil))?.string ?? $0
+      } else {
+        readableContent = $0.removingPercentEncoding ?? $0
+      }
+      let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(readableContent)'") : contentTemplate
+      return DisplayableContainer(name: readableContent, content: content.capitalized, icon: icon, innerItem: url)
       }.map {
       ServiceResult(service: self, value: $0)
      }
@@ -91,7 +100,7 @@ extension WebService {
         #endif
         return
       }
-      let processedData = self.processJSON(data: data)
+      let processedData = self.parseSuggestions(data: data)
       let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: processedData)
       NotificationCenter.default.post(notification)
     }

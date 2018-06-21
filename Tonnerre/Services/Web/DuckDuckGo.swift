@@ -21,7 +21,7 @@ struct DuckDuckGoSearch: WebService {
   
   static var ongoinTask: URLSessionDataTask?
   
-  func processJSON(data: Data?) -> [String : Any] {
+  func parseSuggestions(data: Data?) -> [String : Any] {
     guard
       let jsonData = data,
       let jsonObj = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [[String: String]]

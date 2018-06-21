@@ -131,7 +131,7 @@ class CoreIndexing {
     let notificationCentre = NotificationCenter.default
     queue.async { [unowned self] in // Restore for defaults
       notificationCentre.post(Notification(name: .defaultIndexingDidBegin))
-      let defaultIndex = self.indexes[.defaultMode]
+      let defaultIndex = self.indexes[.defaultMode, true]
       for fd in failedDefault { dealFailure(fd, defaultIndex) }
       let ongoingDefaultURL = ongoingDefault.map({ URL(fileURLWithPath: $0.path!) })
       for od in ongoingDefaultURL { self.addContent(in: od, modes: [.defaultMode], indexes: [defaultIndex]) }
@@ -139,8 +139,8 @@ class CoreIndexing {
     }
     queue.async { [unowned self] in // Restore for documents
       notificationCentre.post(Notification(name: .documentIndexingDidBegin))
-      let nameIndex = self.indexes[.name]
-      let contentIndex = self.indexes[.content]
+      let nameIndex = self.indexes[.name, true]
+      let contentIndex = self.indexes[.content, true]
       for fd in failedDocuments {
         let index = fd.category == 1 ? nameIndex : contentIndex
         dealFailure(fd, index)

@@ -78,8 +78,8 @@ class ViewController: NSViewController {
       let tokens = self.textField.stringValue.components(separatedBy: " ").filter { !$0.isEmpty }
       guard tokens.count > 0, case .result(let service, _)? = self.collectionView.datasource.first else { return }
       let withKeyword = type(of: service).keyword.starts(with: tokens.first!)// The default search option has no keyword
-      guard tokens.count - withKeyword.hashValue > 0 else { return }// Make sure there is at least a query
       guard
+        tokens.count - withKeyword.hashValue > 0,// Make sure there is at least a query
         let suggestionPack = notification.userInfo as? [String: Any],
         let suggestions = suggestionPack["suggestions"] as? [String],
         let webService = service as? WebService

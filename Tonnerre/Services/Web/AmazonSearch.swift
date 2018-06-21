@@ -28,7 +28,7 @@ struct AmazonSearch: WebService {
     loadSuggestion = suggestion
   }
 
-  func processJSON(data: Data?) -> [String : Any] {
+  func parseSuggestions(data: Data?) -> [String : Any] {
     guard
       let jsonData = data,
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,

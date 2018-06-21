@@ -20,7 +20,7 @@ extension Google {
   var loadSuggestion: Bool { return true }
   var argUpperBound: Int { return Int.max }
   
-  func processJSON(data: Data?) -> [String: Any] {
+  func parseSuggestions(data: Data?) -> [String: Any] {
     guard
       let jsonData = data,
       let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
