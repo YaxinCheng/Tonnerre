@@ -45,6 +45,11 @@ class TonnerreField: NSTextField, ThemeProtocol {
     
     // Drawing code here.
   }
+  
+  override func selectText(_ sender: Any?) {
+    super.selectText(sender)
+    currentEditor()?.selectedRange = NSRange(location: stringValue.count, length: 0)
+  }
 
   override var mouseDownCanMoveWindow: Bool {
     return true
