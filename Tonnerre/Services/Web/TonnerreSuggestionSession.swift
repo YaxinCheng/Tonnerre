@@ -35,17 +35,20 @@ class TonnerreSuggestionSession {
     suggestionRequest = request
     queue.asyncAfter(deadline: .now() + seconds) { [weak self] in
       TonnerreSuggestionSession.lock.wait()
+      defer { TonnerreSuggestionSession.lock.signal() }
       guard
         self?.suggestionRequest != nil,
         self?.suggestionRequest?.state == .suspended
       else { return }
       self?.suggestionRequest?.resume()
-      TonnerreSuggestionSession.lock.signal()
+      self?.suggestionRequest = nil
     }
   }
   
   func cancel() {
+    guard suggestionRequest != nil else { return }
     suggestionRequest?.cancel()
+    suggestionRequest = nil
   }
   
   func dataTask(request: URLRequest, completionHanlder: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
