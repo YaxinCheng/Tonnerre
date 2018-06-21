@@ -27,6 +27,8 @@ class ViewController: NSViewController {
     textField.delegate = self
     collectionView.delegate = self
     NotificationCenter.default.addObserver(self, selector: #selector(suggestionNotificationDidArrive(notification:)), name: .suggestionDidFinish, object: nil)
+    view.layer?.masksToBounds = true
+    view.layer?.cornerRadius = 7
   }
   
   override func viewWillAppear() {

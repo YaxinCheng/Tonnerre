@@ -9,7 +9,7 @@
 import Cocoa
 import HotKey
 
-class BaseWindow: NSWindow {
+class BaseWindow: NSPanel {
   override var canBecomeKey: Bool {
     return true
   }
@@ -23,7 +23,7 @@ class BaseWindow: NSWindow {
         orderOut(self)
       } else {
         makeKeyAndOrderFront(self)
-        NSApp.activate(ignoringOtherApps: true)
+        orderFrontRegardless()
       }
       #endif
     }
@@ -32,7 +32,7 @@ class BaseWindow: NSWindow {
   let hotkey: HotKey
   
   override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
-    hotkey = HotKey(key: .space, modifiers: [.option, .command])
+    hotkey = HotKey(key: .space, modifiers: [.option])
     super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
     hotkey.keyDownHandler = { [weak self] in
       self?.isHidden = !(self?.isHidden ?? true)
@@ -40,6 +40,8 @@ class BaseWindow: NSWindow {
     isMovableByWindowBackground = true
     isMovable = true
     level = .floating
+    isOpaque = false
+    backgroundColor = .clear
     folderChecks()
     setupCache()
     launchHelper()
