@@ -32,6 +32,16 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
       serviceLabel.textColor = newValue.imgColour
       cmdLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour
+      switch newValue {
+      case .dark: iconView.shadow = nil
+      case .light: iconView.shadow = {
+          let shadow = NSShadow()
+          shadow.shadowColor = NSColor(calibratedRed: 0, green: 0, blue: 0, alpha: 0.5)
+          shadow.shadowBlurRadius = 1
+          shadow.shadowOffset = NSSize(width: 2, height: 3)
+          return shadow
+        }()
+      }
     }
   }
   

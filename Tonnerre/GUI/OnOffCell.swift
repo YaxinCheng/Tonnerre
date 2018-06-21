@@ -37,6 +37,21 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol {
     } set {
       serviceLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour
+      let generateShadow: () -> NSShadow = {
+        let shadow = NSShadow()
+        shadow.shadowColor = NSColor(calibratedRed: 0, green: 0, blue: 0, alpha: 0.5)
+        shadow.shadowBlurRadius = 1
+        shadow.shadowOffset = NSSize(width: 2, height: 3)
+        return shadow
+      }
+      switch newValue {
+      case .dark:
+        iconView.shadow = nil
+        toggleAnimation.shadow = nil
+      case .light:
+        iconView.shadow = generateShadow()
+        toggleAnimation.shadow = generateShadow()
+      }
     }
   }
   

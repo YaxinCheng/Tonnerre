@@ -64,8 +64,5 @@ class TonnerreField: NSTextField, ThemeProtocol {
       stringValue = "\(cmd) ".lowercased()
     }
     window?.makeFirstResponder(nil)
-    DispatchQueue.main.async { [unowned self] in
-      self.currentEditor()?.selectedRange = NSMakeRange(self.stringValue.count, 0)
-    }
   }
 }
