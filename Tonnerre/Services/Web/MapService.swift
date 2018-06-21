@@ -9,7 +9,6 @@
 import Cocoa
 
 struct GoogleMapService: WebService {
-  static var ongoinTask: URLSessionDataTask?
   let template: String = "https://maps.google.%@/?q=%@"
   let suggestionTemplate: String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=AIzaSyBErLf0zbtiML5B_b1HdqAmLE2Um5xB6Aw"
   let loadSuggestion: Bool = true

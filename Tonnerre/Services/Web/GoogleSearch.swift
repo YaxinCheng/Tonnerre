@@ -33,7 +33,6 @@ extension Google {
 }
 
 struct GoogleSearch: Google {
-  static var ongoinTask: URLSessionDataTask?
   let name: String = "Google"
   let contentTemplate: String = "Search %@ on google"
   let template: String = "https://google.%@/search?q=%@"
@@ -48,7 +47,6 @@ struct GoogleSearch: Google {
 }
 
 struct GoogleImageSearch: Google {
-  static var ongoinTask: URLSessionDataTask?
   let name: String = "Google Images"
   let contentTemplate: String = "Search %@ on google image"
   let template: String = "https://google.%@/search?q=%@&tbm=isch"
@@ -56,7 +54,6 @@ struct GoogleImageSearch: Google {
 }
 
 struct YoutubeSearch: Google {
-  static var ongoinTask: URLSessionDataTask?
   let suggestionTemplate: String = "https://clients1.google.com/complete/search?client=safari&q=%@"
   let name: String = "Youtube"
   let contentTemplate: String = "Find %@ on Youtube"

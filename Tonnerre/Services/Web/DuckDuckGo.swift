@@ -19,8 +19,6 @@ struct DuckDuckGoSearch: WebService {
   let loadSuggestion: Bool = true
   let icon: NSImage = #imageLiteral(resourceName: "duck")
   
-  static var ongoinTask: URLSessionDataTask?
-  
   func parseSuggestions(data: Data?) -> [String : Any] {
     guard
       let jsonData = data,

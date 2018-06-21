@@ -18,6 +18,7 @@ class ViewController: NSViewController {
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
   private let queryStack = QueryStack<String>(size: 1)
+  private let suggestionSession = TonnerreSuggestionSession.shared
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -78,11 +79,8 @@ class ViewController: NSViewController {
   
   @objc private func suggestionNotificationDidArrive(notification: Notification) {
     DispatchQueue.main.async { [unowned self] in
-      let tokens = self.textField.stringValue.components(separatedBy: " ").filter { !$0.isEmpty }
-      guard tokens.count > 0, case .result(let service, _)? = self.collectionView.datasource.first else { return }
-      let withKeyword = type(of: service).keyword.starts(with: tokens.first!)// The default search option has no keyword
       guard
-        tokens.count - withKeyword.hashValue > 0,// Make sure there is at least a query
+        case .result(let service, _)? = self.collectionView.datasource.first,
         let suggestionPack = notification.userInfo as? [String: Any],
         let suggestions = suggestionPack["suggestions"] as? [String],
         let webService = service as? WebService
@@ -102,6 +100,7 @@ class ViewController: NSViewController {
 extension ViewController: NSTextFieldDelegate {
   override func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
+    suggestionSession.cancel()
     let text = textField.stringValue
     textDidChange(value: text)
   }

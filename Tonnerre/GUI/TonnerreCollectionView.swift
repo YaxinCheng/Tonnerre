@@ -26,6 +26,7 @@ class TonnerreCollectionView: NSScrollView {
   private var highlightedItemIndex = -1 {
     didSet {
       if oldValue == highlightedItemIndex {
+        visibleIndex = -1
         if oldValue == -1 { iconChange() }
         return
       }

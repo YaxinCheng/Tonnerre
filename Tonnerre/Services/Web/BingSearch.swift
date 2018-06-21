@@ -11,7 +11,6 @@ import Cocoa
 struct BingSearch: WebService {
   let name: String = "Bing"
   let template: String = "http://www.bing.com/search?q=%@"
-//  let suggestionTemplate: String = "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"// May not be stable
   let contentTemplate: String = "Search %@ on bing"
   static let keyword: String = "bing"
@@ -19,18 +18,6 @@ struct BingSearch: WebService {
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "bing")
-  static var ongoinTask: URLSessionDataTask?
-  
-//  func processJSON(data: Data?) -> [String : Any] {
-//    guard
-//      let jsonData = data,
-//      let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
-//      json.count > 2,
-//      let availableOptions = json[1] as? [NSArray]
-//      else { return [:] }
-//    let suggestions = availableOptions.compactMap { $0[0] as? String }
-//    return ["suggestions": suggestions]
-//  }
   
   func parseSuggestions(data: Data?) -> [String : Any] {
     guard

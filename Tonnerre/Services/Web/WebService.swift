@@ -13,7 +13,6 @@ protocol WebService: TonnerreService {
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
   var loadSuggestion: Bool { get }
-  static var ongoinTask: URLSessionDataTask? { get set }
   func encodedSuggestions(queries: [String]) -> [ServiceResult]
   func parseSuggestions(data: Data?) -> [String: Any]
 }
@@ -83,14 +82,14 @@ extension WebService {
     guard argLowerBound != 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
-    let session = URLSession(configuration: .default)
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
       return [originalSearch]
     }
-    Self.ongoinTask?.cancel()
+    let session = TonnerreSuggestionSession.shared
     let suggestionPath = String(format: suggestionTemplate, arguments: [query])
     guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
-    Self.ongoinTask = session.dataTask(with: suggestionURL) { (data, response, error) in
+    let request = URLRequest(url: suggestionURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 60 * 1)
+    let ongoingTask = session.dataTask(request: request) { (data, response, error) in
       if error != nil {
         #if DEBUG
         debugPrint(error!)
@@ -101,9 +100,7 @@ extension WebService {
       let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: processedData)
       NotificationCenter.default.post(notification)
     }
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-      Self.ongoinTask?.resume()
-    }
+    session.send(request: ongoingTask)
     return [originalSearch]
   }
 }
