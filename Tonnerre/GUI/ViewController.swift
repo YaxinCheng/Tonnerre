@@ -52,12 +52,15 @@ class ViewController: NSViewController {
   
   override func viewDidAppear() {
     _ = textField.becomeFirstResponder()
+    iconView.theme = .currentTheme
+    textField.theme = .currentTheme
   }
   
   override func viewWillDisappear() {
-    guard let kmonitor = keyboardMonitor, let fmonitor = flagsMonitor else { return }
+    guard let kmonitor = keyboardMonitor else { return }
     NSEvent.removeMonitor(kmonitor)
     keyboardMonitor = nil
+    guard let fmonitor = flagsMonitor else { return }
     NSEvent.removeMonitor(fmonitor)
     flagsMonitor = nil
   }

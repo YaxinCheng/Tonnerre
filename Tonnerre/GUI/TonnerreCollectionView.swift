@@ -17,9 +17,9 @@ protocol TonnerreCollectionViewDelegate: class {
 }
 
 class TonnerreCollectionView: NSScrollView {
-  private let cellHeight = 64
+  private let cellHeight = 56
   private weak var highlightedItem: DisplayableCellProtocol? // Actual index in the datasource array
-  private var visibleIndex: Int = 0// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
+  private var visibleIndex: Int = -1// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   private var mouseMonitor: Any? = nil
   
@@ -94,10 +94,12 @@ class TonnerreCollectionView: NSScrollView {
                         83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
       let selectedIndex = keyCodeMap[event.keyCode]! - 1
       let currentIndex = visibleIndex
-      let actualIndex = selectedIndex - currentIndex + max(highlightedItemIndex, 0)
+      let actualIndex = selectedIndex - max(currentIndex, 0) + max(highlightedItemIndex, 0)
       guard actualIndex < datasource.count, case .result(let service, let value) = datasource[actualIndex] else { return }
-      datasource = []
       delegate?.serve(with: service, target: value, withCmd: false)
+      guard let cell = collectionView.item(at: actualIndex) as? OnOffCell else { datasource = []; return }
+      cell.disabled = !cell.disabled
+      cell.animate()
     case 48:// Tab
       let highlightIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
       guard datasource.count > 0 else { return }
@@ -235,8 +237,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
   
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    let width: CGFloat = 760
-    return NSSize(width: width, height: 64)
+    let width: CGFloat = 640
+    return NSSize(width: width, height: CGFloat(cellHeight))
   }
 }
 

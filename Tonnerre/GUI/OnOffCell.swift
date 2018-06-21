@@ -9,7 +9,7 @@
 import Cocoa
 import Lottie
 
-class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
+class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol {
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
@@ -20,7 +20,6 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
-    theme = .currentTheme
     let height = view.bounds.height
     toggleAnimation.frame = CGRect(x: view.bounds.width - height * 2, y: -height/2, width: height * 2, height: height * 2)
     toggleAnimation.animationSpeed = 3
@@ -29,13 +28,13 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol, ThemeProtocol {
   
   override func viewWillAppear() {
     toggleAnimation.animationProgress = disabled ? offProgress : onProgress
+    theme = .currentTheme
   }
   
   var theme: TonnerreTheme {
     get {
       return .currentTheme
     } set {
-      iconView.theme = newValue
       serviceLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour
     }

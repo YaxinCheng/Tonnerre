@@ -263,6 +263,16 @@
 			path = Dictionary;
 			sourceTree = "<group>";
 		};
+		145DA16E20DC09BF00C1E804 /* InterpreterServices */ = {
+			isa = PBXGroup;
+			children = (
+				1429AC7120D42B4000ABBCDE /* ServicesService.swift */,
+				145DA16C20DAE60600C1E804 /* DefaultSearchManage.swift */,
+				1473A55620D848E100C2FC42 /* ReloadService.swift */,
+			);
+			path = InterpreterServices;
+			sourceTree = "<group>";
+		};
 		146AAE6420BDD7C2009AC9C6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,9 +292,7 @@
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				1481164120D058760013D5D2 /* QueryStack.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
-				1429AC7120D42B4000ABBCDE /* ServicesService.swift */,
-				145DA16C20DAE60600C1E804 /* DefaultSearchManage.swift */,
-				1473A55620D848E100C2FC42 /* ReloadService.swift */,
+				145DA16E20DC09BF00C1E804 /* InterpreterServices */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,

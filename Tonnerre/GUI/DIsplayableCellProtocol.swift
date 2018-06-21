@@ -8,12 +8,13 @@
 
 import Cocoa
 
-protocol DisplayableCellProtocol: class {
+protocol DisplayableCellProtocol: class, ThemeProtocol {
   var view: NSView { get set }
   var iconView: TonnerreIconView! { get set }
   var serviceLabel: NSTextField! { get set }
   var introLabel: NSTextField! { get set }
   var highlighted: Bool { get set }
+  var theme: TonnerreTheme { get set }
 }
 
 extension DisplayableCellProtocol {
@@ -21,13 +22,13 @@ extension DisplayableCellProtocol {
     set {
       DispatchQueue.main.async { [weak self] in
         if newValue {
-          self?.view.layer?.backgroundColor = NSColor(calibratedRed: 99/255, green: 147/255, blue: 1, alpha: 0.6).cgColor
+          self?.view.layer?.backgroundColor = self?.theme.highlightColour.cgColor
         } else {
           self?.view.layer?.backgroundColor = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0).cgColor
         }
       }
     } get {
-      return view.layer?.backgroundColor == NSColor(calibratedRed: 99/255, green: 147/255, blue: 1, alpha: 0.6).cgColor
+      return view.layer?.backgroundColor == theme.highlightColour.cgColor
     }
   }
 }

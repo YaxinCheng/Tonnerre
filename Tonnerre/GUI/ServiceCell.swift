@@ -9,7 +9,7 @@
 import Cocoa
 import Quartz
 
-class ServiceCell: NSCollectionViewItem, ThemeProtocol, DisplayableCellProtocol {
+class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
@@ -21,8 +21,7 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol, DisplayableCellProtocol 
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
-    theme = .currentTheme
-    popoverView.contentSize = NSSize(width: 450, height: 280)
+    popoverView.contentSize = NSSize(width: 450, height: 300)
     popoverView.behavior = .transient
   }
   
@@ -30,11 +29,14 @@ class ServiceCell: NSCollectionViewItem, ThemeProtocol, DisplayableCellProtocol 
     get {
       return .currentTheme
     } set {
-      iconView.theme = newValue
       serviceLabel.textColor = newValue.imgColour
       cmdLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour
     }
+  }
+  
+  override func viewWillAppear() {
+    theme = .currentTheme
   }
   
   func preview() {

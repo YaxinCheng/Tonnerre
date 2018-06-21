@@ -12,7 +12,7 @@ class TonnerreField: NSTextField, ThemeProtocol {
   
   private var placeholderColour: NSColor! {
     didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 40)])
+      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
     }
   }
   
@@ -27,6 +27,7 @@ class TonnerreField: NSTextField, ThemeProtocol {
   var theme: TonnerreTheme {
     set {
       placeholderColour = newValue.placeholderColour
+      textColor = newValue.imgColour
     } get {
       return .currentTheme
     }

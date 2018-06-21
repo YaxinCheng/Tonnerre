@@ -706,27 +706,27 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
+                        <rect key="frame" x="0.0" y="0.0" width="640" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
-                                <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
+                            <visualEffectView appearanceType="vibrantLight" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
+                                <rect key="frame" x="0.0" y="0.0" width="640" height="56"/>
                             </visualEffectView>
                             <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5FM-BE-sWa">
-                                <rect key="frame" x="0.0" y="0.0" width="760" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="640" height="56"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="INu-6D-MeR" customClass="TonnerreIconView" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                        <rect key="frame" x="8" y="8" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="48" id="43G-gy-h5m"/>
-                                            <constraint firstAttribute="height" constant="48" id="Tv3-Ud-GaE"/>
+                                            <constraint firstAttribute="width" constant="40" id="43G-gy-h5m"/>
+                                            <constraint firstAttribute="height" constant="40" id="Tv3-Ud-GaE"/>
                                         </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="Ocs-GP-EaD"/>
                                     </imageView>
                                     <textField focusRingType="none" horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="8" width="688" height="48"/>
+                                        <rect key="frame" x="52" y="8" width="580" height="40"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" drawsBackground="YES" id="VxW-E4-dLH">
-                                            <font key="font" metaFont="system" size="40"/>
+                                            <font key="font" metaFont="system" size="35"/>
                                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="0.073751100352112672" colorSpace="deviceWhite"/>
                                         </textFieldCell>
@@ -736,24 +736,24 @@
                                     <constraint firstAttribute="trailing" secondItem="aLE-uw-uC8" secondAttribute="trailing" constant="8" id="9Mt-S6-4EV"/>
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="top" constant="8" id="Mdx-MC-KG0"/>
                                     <constraint firstItem="INu-6D-MeR" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="top" constant="8" id="Zqg-g0-7Zp"/>
-                                    <constraint firstAttribute="height" constant="64" id="d88-QE-mrF"/>
+                                    <constraint firstAttribute="height" constant="56" id="d88-QE-mrF"/>
                                     <constraint firstItem="INu-6D-MeR" firstAttribute="leading" secondItem="5FM-BE-sWa" secondAttribute="leading" constant="8" id="ovw-O5-3DB"/>
                                     <constraint firstAttribute="bottom" secondItem="aLE-uw-uC8" secondAttribute="bottom" constant="8" id="sQl-KG-6uW"/>
                                     <constraint firstAttribute="bottom" secondItem="INu-6D-MeR" secondAttribute="bottom" constant="8" id="xKz-Sn-DBb"/>
-                                    <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="8" symbolic="YES" id="zvl-ID-CFr"/>
+                                    <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="4" id="zvl-ID-CFr"/>
                                 </constraints>
                             </customView>
                             <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vM-ry-4Bc" customClass="TonnerreCollectionView" customModule="Tonnerre" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="760" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="640" height="0.0"/>
                                 <clipView key="contentView" drawsBackground="NO" id="Q88-Ie-UpR">
-                                    <rect key="frame" x="0.0" y="0.0" width="760" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="640" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <collectionView selectable="YES" allowsEmptySelection="NO" id="9Se-tn-h1j">
-                                            <rect key="frame" x="0.0" y="0.0" width="760" height="158"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="640" height="158"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" id="EYr-UI-0Ya">
-                                                <size key="itemSize" width="760" height="64"/>
+                                                <size key="itemSize" width="640" height="56"/>
                                             </collectionViewFlowLayout>
                                             <color key="primaryBackgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                             <connections>
@@ -768,11 +768,11 @@
                                     <constraint firstAttribute="height" identifier="collectionViewHeightConstraint" id="3So-zL-tkw"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="TYx-mj-r3R">
-                                    <rect key="frame" x="1" y="144" width="233" height="15"/>
+                                    <rect key="frame" x="0.0" y="-16" width="640" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
-                                    <rect key="frame" x="744" y="0.0" width="16" height="0.0"/>
+                                    <rect key="frame" x="624" y="0.0" width="16" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <connections>

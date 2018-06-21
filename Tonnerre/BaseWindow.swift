@@ -39,6 +39,7 @@ class BaseWindow: NSWindow {
     }
     isMovableByWindowBackground = true
     isMovable = true
+    level = .floating
     folderChecks()
     setupCache()
     launchHelper()
