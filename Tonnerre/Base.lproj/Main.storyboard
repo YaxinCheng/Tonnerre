@@ -706,14 +706,14 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="640" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <visualEffectView appearanceType="vibrantLight" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
-                                <rect key="frame" x="0.0" y="0.0" width="640" height="56"/>
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="56"/>
                             </visualEffectView>
                             <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5FM-BE-sWa">
-                                <rect key="frame" x="0.0" y="0.0" width="640" height="56"/>
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="56"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="INu-6D-MeR" customClass="TonnerreIconView" customModule="Tonnerre" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="40" height="40"/>
@@ -724,7 +724,7 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="Ocs-GP-EaD"/>
                                     </imageView>
                                     <textField focusRingType="none" horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="52" y="8" width="580" height="40"/>
+                                        <rect key="frame" x="52" y="8" width="640" height="40"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" drawsBackground="YES" id="VxW-E4-dLH">
                                             <font key="font" metaFont="system" size="35"/>
                                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
@@ -744,13 +744,13 @@
                                 </constraints>
                             </customView>
                             <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vM-ry-4Bc" customClass="TonnerreCollectionView" customModule="Tonnerre" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="640" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="0.0"/>
                                 <clipView key="contentView" drawsBackground="NO" id="Q88-Ie-UpR">
-                                    <rect key="frame" x="0.0" y="0.0" width="640" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="700" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <collectionView selectable="YES" allowsEmptySelection="NO" id="9Se-tn-h1j">
-                                            <rect key="frame" x="0.0" y="0.0" width="640" height="158"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="700" height="158"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" id="EYr-UI-0Ya">
                                                 <size key="itemSize" width="640" height="56"/>
@@ -772,7 +772,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
-                                    <rect key="frame" x="624" y="0.0" width="16" height="0.0"/>
+                                    <rect key="frame" x="684" y="0.0" width="16" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <connections>
