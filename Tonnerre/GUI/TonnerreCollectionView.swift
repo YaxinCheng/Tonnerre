@@ -172,7 +172,7 @@ class TonnerreCollectionView: NSScrollView {
   
   @objc private func collectionViewDidScroll() {
     let visibleCells = getVisibleCells()
-    for (index, cell) in visibleCells.enumerated() {
+    for (index, cell) in (visibleCells as? [ServiceCell] ?? []).enumerated() {
       cell.cmdLabel.stringValue = "⌘\(index + 1)"
     }
   }
@@ -182,10 +182,10 @@ class TonnerreCollectionView: NSScrollView {
     return (0...8).map({ topIndex + $0 }).filter { $0 >= 0 && $0 < datasource.count }
   }
   
-  func getVisibleCells() -> [ServiceCell] {
+  func getVisibleCells() -> [DisplayableCellProtocol] {
     let visibleIndexes = getVisibleIndexes()
     let indexPaths = visibleIndexes.map { IndexPath(item: $0, section: 0) }
-    return indexPaths.compactMap { collectionView.item(at: $0) as? ServiceCell }
+    return indexPaths.compactMap { collectionView.item(at: $0) as? DisplayableCellProtocol }
   }
 }
 
@@ -238,7 +238,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
   
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    let width: CGFloat = 640
+    let width: CGFloat = 700
     return NSSize(width: width, height: CGFloat(cellHeight))
   }
 }

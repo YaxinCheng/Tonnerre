@@ -24,7 +24,7 @@ extension DisplayableCellProtocol {
         if newValue {
           self?.view.layer?.backgroundColor = self?.theme.highlightColour.cgColor
         } else {
-          self?.view.layer?.backgroundColor = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0).cgColor
+          self?.view.layer?.backgroundColor = NSColor.clear.cgColor
         }
       }
     } get {

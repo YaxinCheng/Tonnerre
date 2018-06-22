@@ -18,7 +18,7 @@ enum TonnerreTheme {
   
   var placeholderColour: NSColor {
     switch self {
-    case .dark: return NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0.4)
+    case .dark: return NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 0.5)
     case .light: return NSColor(calibratedRed: 61/255, green: 61/255, blue: 61/255, alpha: 0.4)
     }
   }

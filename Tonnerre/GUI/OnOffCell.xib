@@ -21,15 +21,15 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="fjE-td-PsB"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wMu-mJ-Pbz">
-                    <rect key="frame" x="54" y="18" width="580" height="30"/>
+                    <rect key="frame" x="50" y="21" width="584" height="27"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="ServiceName" usesSingleLineMode="YES" id="u0B-l7-hI8">
-                        <font key="font" metaFont="system" size="25"/>
+                        <font key="font" metaFont="system" size="22"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iRs-aa-TZS">
-                    <rect key="frame" x="54" y="8" width="580" height="17"/>
+                    <rect key="frame" x="50" y="8" width="584" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Intro label" id="SbH-cp-A1N">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -39,7 +39,7 @@
             </subviews>
             <constraints>
                 <constraint firstItem="Rg9-6s-fyc" firstAttribute="leading" secondItem="1p5-of-wVM" secondAttribute="leading" constant="8" id="7Jn-zS-7RF"/>
-                <constraint firstItem="wMu-mJ-Pbz" firstAttribute="leading" secondItem="Rg9-6s-fyc" secondAttribute="trailing" constant="8" id="89u-td-16x"/>
+                <constraint firstItem="wMu-mJ-Pbz" firstAttribute="leading" secondItem="Rg9-6s-fyc" secondAttribute="trailing" constant="4" id="89u-td-16x"/>
                 <constraint firstItem="iRs-aa-TZS" firstAttribute="trailing" secondItem="wMu-mJ-Pbz" secondAttribute="trailing" id="IsT-Vq-WV6"/>
                 <constraint firstItem="Rg9-6s-fyc" firstAttribute="top" secondItem="1p5-of-wVM" secondAttribute="top" constant="8" id="NXz-uy-MLc"/>
                 <constraint firstItem="iRs-aa-TZS" firstAttribute="bottom" secondItem="Rg9-6s-fyc" secondAttribute="bottom" id="ZSb-pN-CkB"/>
@@ -49,7 +49,7 @@
             </constraints>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="layer.opacity">
-                    <real key="value" value="0.5"/>
+                    <integer key="value" value="0"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
         </customView>

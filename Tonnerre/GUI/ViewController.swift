@@ -39,7 +39,7 @@ class ViewController: NSViewController {
     } else {
       iconView.theme = .dark
       textField.theme = .dark
-      backgroundView.material = .light
+      backgroundView.material = .mediumLight
     }
     if keyboardMonitor == nil {
       keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
