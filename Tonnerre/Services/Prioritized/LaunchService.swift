@@ -22,10 +22,10 @@ struct LaunchService: TonnerreService {
   
   func prepare(input: [String]) -> [Displayable] {
     let indexStorage = IndexStorage()
-    let index = indexStorage[.defaultMode]
+    let index = indexStorage[.default]
     let query = input.joined(separator: " ")
     guard !query.starts(with: "http") else { return [] }
-    return index.search(query: query + "*", limit: 9 * 9, options: .defaultOption).map {
+    return index.search(query: query + "*", limit: 9 * 9, options: .default).map {
       let name: String
       if $0.pathExtension == "prefPane" {
         name = LaunchService.aliasDict[$0.lastPathComponent] ?? $0.name

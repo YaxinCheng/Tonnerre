@@ -25,7 +25,7 @@ extension FileSearchService {
     let query = input.joined(separator: " ") + "*"
     let indexStorage = IndexStorage()
     let index = indexStorage[associatedMode]
-    return index.search(query: query, limit: 5 * 9, options: .defaultOption)
+    return index.search(query: query, limit: 5 * 9, options: .default)
   }
   
   func serve(source: Displayable, withCmd: Bool) {

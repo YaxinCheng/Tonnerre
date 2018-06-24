@@ -10,7 +10,7 @@ import Foundation
 import TonnerreSearch
 
 enum SearchMode: String {
-  case defaultMode
+  case `default`
   case name
   case content
   
@@ -37,7 +37,7 @@ enum SearchMode: String {
   */
   var storedInt: Int {
     switch self {
-    case .defaultMode: return 0
+    case .default: return 0
     case .name: return 1
     case .content: return 2
     }
@@ -46,7 +46,7 @@ enum SearchMode: String {
   var indexTargets: [URL] {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     switch self {
-    case .defaultMode:
+    case .default:
       return ["/System/Library/CoreServices/Finder.app", "/System/Library/CoreServices/Applications", "/System/Library/PreferencePanes", "/Applications"].map { URL(fileURLWithPath: $0) } + [homeDir.appendingPathComponent("Applications")]
     default:
       let exclusions = Set<String>(["Public", "Library", "Applications"])
@@ -61,7 +61,7 @@ enum SearchMode: String {
   
   func include(fileURL: URL) -> Bool {
     switch self {
-    case .defaultMode:
+    case .default:
       return FileTypeControl(types: .app, .systemPref).isInControl(file: fileURL)
     case .content:
       return FileTypeControl(types: .document, .message).isInControl(file: fileURL)

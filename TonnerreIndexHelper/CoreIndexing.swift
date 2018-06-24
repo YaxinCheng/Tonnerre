@@ -33,7 +33,7 @@ class CoreIndexing {
   private var detector: TonnerreFSDetector! = nil
   
   init() {
-    let pathes: [String] = [SearchMode.defaultMode.indexTargets, SearchMode.name.indexTargets].reduce([], +).map({$0.path})
+    let pathes: [String] = [SearchMode.default.indexTargets, SearchMode.name.indexTargets].reduce([], +).map({$0.path})
     if !pathes.isEmpty {
       self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
     }
@@ -44,7 +44,7 @@ class CoreIndexing {
   
   private func lostIndeces() -> [SearchMode] {
     let fileManager = FileManager.default
-    let allModes: [SearchMode] = [.defaultMode, .name, .content]
+    let allModes: [SearchMode] = [.default, .name, .content]
     let lostIndexes = allModes.filter { !fileManager.fileExists(atPath: $0.indexPath.path) }
     return lostIndexes
   }
@@ -58,10 +58,10 @@ class CoreIndexing {
       let fetchRequest = NSFetchRequest<IndexingDir>(entityName: CoreDataEntities.IndexingDir.rawValue)
       let count = (try? context.count(for: fetchRequest)) ?? 0
       if count == 0 {
-        if indexingMode.contains(.defaultMode) {
-          fullIndex(modes: .defaultMode)
+        if indexingMode.contains(.default) {
+          fullIndex(modes: .default)
         }
-        let filteredModes = indexingMode.filter { $0 != .defaultMode }
+        let filteredModes = indexingMode.filter { $0 != .default }
         fullIndex(modes: filteredModes)
       } else {
         recoverFromErrors()
@@ -131,10 +131,10 @@ class CoreIndexing {
     let notificationCentre = NotificationCenter.default
     queue.async { [unowned self] in // Restore for defaults
       notificationCentre.post(Notification(name: .defaultIndexingDidBegin))
-      let defaultIndex = self.indexes[.defaultMode, true]
+      let defaultIndex = self.indexes[.default, true]
       for fd in failedDefault { dealFailure(fd, defaultIndex) }
       let ongoingDefaultURL = ongoingDefault.map({ URL(fileURLWithPath: $0.path!) })
-      for od in ongoingDefaultURL { self.addContent(in: od, modes: [.defaultMode], indexes: [defaultIndex]) }
+      for od in ongoingDefaultURL { self.addContent(in: od, modes: [.default], indexes: [defaultIndex]) }
       notificationCentre.post(Notification(name: .defaultIndexingDidFinish))
     }
     queue.async { [unowned self] in // Restore for documents
@@ -235,8 +235,8 @@ class CoreIndexing {
     if FileTypeControl.isExcludedURL(url: path) { return [] }
     if FileTypeControl.isExcludedDir(url: path) { return [] }
     if path.typeIdentifier.starts(with: "dyn") { return [] }
-    let defaultDir = Set(SearchMode.defaultMode.indexTargets)
-    if defaultDir.contains(path) { return [.defaultMode] }
+    let defaultDir = Set(SearchMode.default.indexTargets)
+    if defaultDir.contains(path) { return [.default] }
     let documentDir = Set(SearchMode.name.indexTargets)
     let exclusions = FileTypeControl(types: .media, .image)
     let extensionAnalyze: (URL) -> [SearchMode] = { path in
@@ -247,7 +247,7 @@ class CoreIndexing {
       return extensionAnalyze(path)
     }
     for defaultPath in defaultDir {
-      if path.isChildOf(url: defaultPath) { return [.defaultMode] }
+      if path.isChildOf(url: defaultPath) { return [.default] }
     }
     for documentPath in documentDir {
       if path.isChildOf(url: documentPath) { return extensionAnalyze(path) }
