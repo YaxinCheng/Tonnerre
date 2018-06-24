@@ -89,6 +89,7 @@
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */; };
 		14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */; };
+		14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989720DEA5B7001A882D /* DefaultService.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 /* End PBXBuildFile section */
 
@@ -218,6 +219,7 @@
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExpression.swift; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathInterpreter.swift; sourceTree = "<group>"; };
+		14EA989720DEA5B7001A882D /* DefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultService.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				1429AC7120D42B4000ABBCDE /* ServicesService.swift */,
+				14EA989720DEA5B7001A882D /* DefaultService.swift */,
 				145DA16C20DAE60600C1E804 /* DefaultSearchManage.swift */,
 				1473A55620D848E100C2FC42 /* ReloadService.swift */,
 			);
@@ -726,6 +729,7 @@
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */,
+				14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
 				145DA17420DC243D00C1E804 /* TonnerreSuggestionSession.swift in Sources */,
 			);

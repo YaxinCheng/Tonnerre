@@ -10,7 +10,6 @@ import Cocoa
 
 struct ServicesService: TonnerreInterpreterService {
   static let keyword: String = "@services"
-  let content: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")

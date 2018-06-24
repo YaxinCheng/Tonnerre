@@ -68,12 +68,6 @@ class ViewController: NSViewController {
     flagsMonitor = nil
   }
 
-  override var representedObject: Any? {
-    didSet {
-    // Update the view, if already loaded.
-    }
-  }
-  
   private func refreshIcon() {
     iconView.image = #imageLiteral(resourceName: "tonnerre")
     iconView.theme = .currentTheme
@@ -126,14 +120,14 @@ extension ViewController: TonnerreCollectionViewDelegate {
   }
   
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {
-    queryStack.append(value: textField.stringValue)
-    service.serve(source: target, withCmd: withCmd)
-    guard !(service is TonnerreInterpreterService) else { return }
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
+      guard !(service is TonnerreInterpreterService) else { return }
+      (self?.view.window as? BaseWindow)?.isHidden = true
       self?.refreshIcon()
       self?.textField.stringValue = ""
-      (self?.view.window as? BaseWindow)?.isHidden = true
     }
+    queryStack.append(value: textField.stringValue)
+    service.serve(source: target, withCmd: withCmd)
   }
   func tabPressed(service: ServiceResult) {
     switch service {

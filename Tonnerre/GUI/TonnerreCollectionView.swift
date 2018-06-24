@@ -17,13 +17,13 @@ protocol TonnerreCollectionViewDelegate: class {
 }
 
 class TonnerreCollectionView: NSScrollView {
-  private let cellHeight = 56
-  private weak var highlightedItem: DisplayableCellProtocol? // Actual index in the datasource array
+  private let cellHeight: CGFloat = 56
+  private weak var highlightedItem: DisplayableCellProtocol?
   private var visibleIndex: Int = -1// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   private var mouseMonitor: Any? = nil
   
-  private var highlightedItemIndex = -1 {
+  private var highlightedItemIndex = -1 {// Actual index in the datasource array
     didSet {
       if oldValue == highlightedItemIndex {
         visibleIndex = -1
@@ -77,7 +77,7 @@ class TonnerreCollectionView: NSScrollView {
   
   var datasource: [ServiceResult] = [] {
     didSet {
-      collectionViewHeight.constant = CGFloat(cellHeight * min(datasource.count, 9))
+      collectionViewHeight.constant = cellHeight * CGFloat(min(datasource.count, 9))
       collectionView.reloadData()
       if datasource.isEmpty { return }
       DispatchQueue.main.async { [weak self] in
@@ -238,8 +238,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
   
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    let width: CGFloat = 700
-    return NSSize(width: width, height: CGFloat(cellHeight))
+    let width: CGFloat = 670
+    return NSSize(width: width, height: cellHeight)
   }
 }
 
