@@ -137,8 +137,7 @@ class TonnerreCollectionView: NSScrollView {
     if let onoffCell = highlightedItem as? OnOffCell {
       onoffCell.disabled = !onoffCell.disabled
       onoffCell.animate()
-    }
-    else { datasource = [] }
+    } else { datasource = [] }
     return (service, value)
   }
   
@@ -201,11 +200,8 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let data = datasource[indexPath.item]
-    let identifier: String
-    if case .result(let service, _) = data {
-       identifier = service is ServicesService ? "OnOffCell" : "ServiceCell"
-    } else { identifier = "ServiceCell" }
-    let origin = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), for: indexPath)
+    let identifier = data.itemIdentifier
+    let origin = collectionView.makeItem(withIdentifier: identifier, for: indexPath)
     guard let cell = origin as? DisplayableCellProtocol else { return origin }
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
@@ -219,8 +215,12 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
           asyncedData.asyncedViewSetup?(servicecell)
         }
       }
-    } else if let onOffCell = cell as? OnOffCell, case .result(_, let value) = data {
-      onOffCell.disabled = (value as? TonnerreExtendService)?.isDisabled ?? type(of: (value as! TonnerreService)).isDisabled
+    } else if let onOffCell = cell as? OnOffCell, case .result(let service, let value) = data {
+      if service is ServicesService {
+        onOffCell.disabled = (value as? TonnerreExtendService)?.isDisabled ?? type(of: (value as! TonnerreService)).isDisabled
+      } else if service is DefaultService, let serviceOption = value as? TonnerreService {
+        onOffCell.disabled = type(of: serviceOption) != DefaultSearchOption.default.associatedService
+      }
     }
     return cell as! NSCollectionViewItem
   }

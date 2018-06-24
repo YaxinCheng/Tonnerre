@@ -54,11 +54,11 @@ struct TonnerreInterpreter {
     if possibleServices.isEmpty {
       let systemServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!, type: .system)
       if systemServices.isEmpty {// Load default web search services
-        let services = [DefaultSearchOption.defaultSearch.associatedService.init()]
+        let service = DefaultSearchOption.default.associatedService.init()
         cachedServices = []
         lastQuery = ""
-        let values = services.map { $0.prepare(input: tokens) }
-        return zip(services, values).map { ServiceResult(service: $0.0, value: $0.1.first!) }
+        let value = service.prepare(input: tokens)
+        return value.map { ServiceResult(service: service, value: $0) }
       } else {// load system services
         cachedServices = systemServices
         return systemServices.map { prepareService(service: $0, input: tokens) }.reduce([], +)

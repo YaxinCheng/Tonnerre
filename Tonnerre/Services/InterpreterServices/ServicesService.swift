@@ -13,6 +13,7 @@ struct ServicesService: TonnerreInterpreterService {
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
+  let itemIdentifier: NSUserInterfaceItemIdentifier = .OnOffCell
   
   func prepare(input: [String]) -> [Displayable] {
     let query = input.joined(separator: " ")

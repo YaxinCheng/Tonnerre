@@ -33,6 +33,13 @@ enum ServiceResult: Displayable {
     }
   }
   
+  var itemIdentifier: NSUserInterfaceItemIdentifier {
+    switch self {
+    case .service(origin: let value): return value.itemIdentifier
+    case .result(service: let service, value: _): return service.itemIdentifier
+    }
+  }
+  
   init(service: TonnerreService) {
     self = .service(origin: service)
   }

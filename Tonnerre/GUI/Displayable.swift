@@ -14,6 +14,7 @@ protocol Displayable {
   var content: String { get }
   var alterContent: String? { get }
   var alterIcon: NSImage? { get }
+  var itemIdentifier: NSUserInterfaceItemIdentifier { get }
 }
 
 extension Displayable {
@@ -21,6 +22,7 @@ extension Displayable {
   var content: String { return "" }
   var alterContent: String? { return nil }
   var alterIcon: NSImage? { return nil }
+  var itemIdentifier: NSUserInterfaceItemIdentifier { return .ServiceCell }
 }
 
 extension URL: Displayable {

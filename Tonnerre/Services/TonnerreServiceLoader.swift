@@ -38,7 +38,7 @@ struct TonnerreServiceLoader {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
     let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self]
     let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
-    let interpreterServices: [TonnerreService.Type] = [ServicesService.self, ReloadService.self]
+    let interpreterServices: [TonnerreService.Type] = [ServicesService.self, ReloadService.self/*, DefaultService.self*/]
     normalServiceTrie = Trie(values: normalServices) { $0.keyword }
     systemServiceTrie = Trie(values: systemServices) { $0.keyword }
     interpreterServicesDict = Dictionary(interpreterServices.map { ($0.keyword, [$0]) }, uniquingKeysWith: +)

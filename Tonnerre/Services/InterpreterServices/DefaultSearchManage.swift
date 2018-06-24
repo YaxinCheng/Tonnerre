@@ -34,7 +34,7 @@ enum DefaultSearchOption: String {
     }
   }
   
-  static var defaultSearch: DefaultSearchOption {
+  static var `default`: DefaultSearchOption {
     get {
       let userDefault = UserDefaults.standard
       let value = userDefault.string(forKey: StoredKeys.defaultSearch.rawValue) ?? "google"
