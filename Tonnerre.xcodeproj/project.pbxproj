@@ -67,7 +67,6 @@
 		1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1473A55620D848E100C2FC42 /* ReloadService.swift */; };
 		1481164220D058760013D5D2 /* QueryStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481164120D058760013D5D2 /* QueryStack.swift */; };
 		1481165520D2D2440013D5D2 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481165420D2D2430013D5D2 /* PreviewItem.swift */; };
-		1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484147E20C5D056008FD68E /* GeneralWebServices.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* SystemServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* SystemServices.swift */; };
 		1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148D20C78542008FD68E /* TrashEmptyService.swift */; };
@@ -199,7 +198,6 @@
 		1473A55620D848E100C2FC42 /* ReloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadService.swift; sourceTree = "<group>"; };
 		1481164120D058760013D5D2 /* QueryStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryStack.swift; sourceTree = "<group>"; };
 		1481165420D2D2430013D5D2 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
-		1484147E20C5D056008FD68E /* GeneralWebServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralWebServices.swift; sourceTree = "<group>"; };
 		1484148220C63A1A008FD68E /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		1484148420C70263008FD68E /* SystemServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServices.swift; sourceTree = "<group>"; };
 		1484148D20C78542008FD68E /* TrashEmptyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashEmptyService.swift; sourceTree = "<group>"; };
@@ -415,7 +413,6 @@
 				145DA17320DC243D00C1E804 /* TonnerreSuggestionSession.swift */,
 				14561B8D20C45A650057B4C1 /* WebService.swift */,
 				1484148220C63A1A008FD68E /* MapService.swift */,
-				1484147E20C5D056008FD68E /* GeneralWebServices.swift */,
 				14561B9220C4686C0057B4C1 /* GoogleSearch.swift */,
 				148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */,
 				14561B9420C4803A0057B4C1 /* AmazonSearch.swift */,
@@ -720,7 +717,6 @@
 				1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
-				1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,

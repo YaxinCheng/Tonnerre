@@ -12,7 +12,7 @@ struct TonnerreServiceLoader {
   private let normalServiceTrie: Trie<TonnerreService.Type>
   private let systemServiceTrie: Trie<TonnerreService.Type>
   private let interpreterServicesDict: [String: [TonnerreService.Type]]
-  private var extendedServiceTrie: Trie<TonnerreExtendService>
+  private var extendedServiceTrie: Trie<TonnerreService.Type>
   private let prioritizedServices: [TonnerreService]
   
   enum serviceType {
@@ -23,7 +23,7 @@ struct TonnerreServiceLoader {
   
   func autoComplete(key: String, type: serviceType = .normal, includeExtra: Bool = true) -> [TonnerreService] {
     if type == .normal {
-      let fetchedServices: [TonnerreService] = normalServiceTrie.find(value: key)
+      let fetchedServices: [TonnerreService] = (normalServiceTrie.find(value: key) + extendedServiceTrie.find(value: key))
         .filter { !$0.isDisabled || !includeExtra }
         .map {
           if let ext = $0 as? ExtendedWebService.Type {
@@ -32,8 +32,7 @@ struct TonnerreServiceLoader {
           return $0.init()
       }
       let prioritized = includeExtra ? (prioritizedServices) : []
-//      let extended = extendedServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }
-      return fetchedServices + prioritized //+ extended
+      return fetchedServices + prioritized
     } else if type == .system {
       return systemServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra } .map { $0.init() }
     } else if type == .interpreter {
@@ -43,17 +42,22 @@ struct TonnerreServiceLoader {
   
   init() {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
-    let extServiceLoader = ExtWebServicesLoader()
-    let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self] + extServiceLoader.load()
+    let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self]
     let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
     let interpreterServices: [TonnerreService.Type] = [ServicesService.self, ReloadService.self/*, DefaultService.self*/]
     normalServiceTrie = Trie(values: normalServices) { $0.keyword }
     systemServiceTrie = Trie(values: systemServices) { $0.keyword }
     interpreterServicesDict = Dictionary(interpreterServices.map { ($0.keyword, [$0]) }, uniquingKeysWith: +)
-    extendedServiceTrie = Trie(values: GeneralWebService.load()) { $0.keyword }
+    let extServiceLoader = ExtWebServicesLoader()
+    extendedServiceTrie = Trie(values: extServiceLoader.load()) { $0.keyword }
   }
   
   mutating func reload() {
-    extendedServiceTrie = Trie(values: GeneralWebService.load()) { $0.keyword }
+    let extendedServices = extendedServiceTrie.find(value: "")
+    for service in extendedServices {
+      objc_disposeClassPair(service as! AnyClass)
+    }
+    let extServiceLoader = ExtWebServicesLoader()
+    extendedServiceTrie = Trie(values: extServiceLoader.load()) { $0.keyword }
   }
 }

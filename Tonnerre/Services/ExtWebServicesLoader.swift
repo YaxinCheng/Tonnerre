@@ -9,18 +9,22 @@
 import Cocoa
 
 struct ExtWebServicesLoader {
+  static var nameToKeywords: [String: String] = [:]
+  
   @objcMembers class ExtWebService: NSObject, TonnerreService, ExtendedWebService {
     var icon: NSImage {
-      return type(of: self).storedImage ?? #imageLiteral(resourceName: "safari")
+      return storedImage ?? #imageLiteral(resourceName: "safari")
     }
-    static var keyword: String = ""
+    static var keyword: String {
+      return ExtWebServicesLoader.nameToKeywords[self.className()] ?? ""
+    }
     let argLowerBound: Int = 0
     let argUpperBound: Int = 0
     let name: String = ""
     let content: String = ""
     let template: String = ""
     let iconURL: String = ""
-    static var storedImage: NSImage? = nil
+    internal var storedImage: NSImage? = nil
     
     func prepare(input: [String]) -> [Displayable] {
       guard let url = fillInTemplate(input: input) else { return [] }
@@ -60,6 +64,34 @@ struct ExtWebServicesLoader {
       guard content.contains("%@") else { return content }
       return String(format: content, arguments: input)
     }
+    
+    internal func loadImage() {
+      let setupImage: (NSImage?)-> Void = { [weak self] in
+        $0?.size = NSSize(width: 40, height: 40)
+        self?.storedImage = $0
+      }
+      guard !iconURL.isEmpty else { return }
+      if iconURL.starts(with: "https") {//web image
+        guard let url = URL(string: iconURL) else { return }
+        let session = URLSession(configuration: .default)
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 60 * 12)
+        
+        if let response = URLCache.shared.cachedResponse(for: request) {
+          guard let image = NSImage(data: response.data) else { return }
+          setupImage(image)
+        } else {
+          session.dataTask(with: request) { (data, response, error) in
+            guard let imgData = data, let image = NSImage(data: imgData) else { return }
+            setupImage(image)
+            }.resume()
+        }
+      } else {//local file image
+        let userDefault = UserDefaults.standard
+        let appSupDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
+        let desiredURL = URL(fileURLWithPath: iconURL, relativeTo: appSupDir)
+        setupImage(NSImage(contentsOf: desiredURL))
+      }
+    }
   }
   
   private func constructInit(data: [Ivar: Any]) -> IMP {
@@ -78,6 +110,7 @@ struct ExtWebServicesLoader {
           }
         }
       }
+      (SELF as? ExtendedWebService)?.loadImage()
       return SELF
     }
     return imp_implementationWithBlock(constructor)
@@ -108,7 +141,7 @@ struct ExtWebServicesLoader {
       class_addProtocol(Class, ExtendedWebService.self)
     else { return nil }
     objc_registerClassPair(Class)
-    // - TODO: set keyword here
+    ExtWebServicesLoader.nameToKeywords[(Class as! NSObject.Type).className()] = content["keyword"] as? String ?? name
     return Class as? TonnerreService.Type
   }
   

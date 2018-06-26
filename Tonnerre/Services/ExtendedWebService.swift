@@ -10,5 +10,6 @@ import Cocoa
 
 @objc protocol ExtendedWebService {
   init()
-  static var storedImage: NSImage? { get set }
+  var storedImage: NSImage? { get set }
+  func loadImage()
 }

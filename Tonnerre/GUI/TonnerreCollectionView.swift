@@ -217,7 +217,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
       }
     } else if let onOffCell = cell as? OnOffCell, case .result(let service, let value) = data {
       if service is ServicesService {
-        onOffCell.disabled = (value as? TonnerreExtendService)?.isDisabled ?? type(of: (value as! TonnerreService)).isDisabled
+        onOffCell.disabled = type(of: (value as! TonnerreService)).isDisabled
       } else if service is DefaultService, let serviceOption = value as? TonnerreService {
         onOffCell.disabled = type(of: serviceOption) != DefaultSearchOption.default.associatedService
       }
