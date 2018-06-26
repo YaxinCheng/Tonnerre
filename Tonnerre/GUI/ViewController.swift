@@ -126,8 +126,12 @@ extension ViewController: TonnerreCollectionViewDelegate {
       self?.refreshIcon()
       self?.textField.stringValue = ""
     }
-    queryStack.append(value: textField.stringValue)
-    service.serve(source: target, withCmd: withCmd)
+    let queue = DispatchQueue.global(qos: .userInitiated)
+    let queryValue = textField.stringValue
+    queue.async { [unowned self] in
+      self.queryStack.append(value: queryValue)
+      service.serve(source: target, withCmd: withCmd)
+    }
   }
   func tabPressed(service: ServiceResult) {
     switch service {

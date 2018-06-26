@@ -74,6 +74,8 @@
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
 		148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A420C85AC3008FD68E /* DisplayableContainer.swift */; };
 		148414A720C8675F008FD68E /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A620C8675F008FD68E /* URLService.swift */; };
+		148AD19620E19D9D00CCE33D /* ExtendedWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148AD19520E19D9D00CCE33D /* ExtendedWebService.swift */; };
+		148AD19C20E1CCB800CCE33D /* ExtWebServicesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148AD19B20E1CCB800CCE33D /* ExtWebServicesLoader.swift */; };
 		148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
 		14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
@@ -204,6 +206,8 @@
 		1484148F20C84589008FD68E /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
 		148414A420C85AC3008FD68E /* DisplayableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableContainer.swift; sourceTree = "<group>"; };
 		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
+		148AD19520E19D9D00CCE33D /* ExtendedWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedWebService.swift; sourceTree = "<group>"; };
+		148AD19B20E1CCB800CCE33D /* ExtWebServicesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtWebServicesLoader.swift; sourceTree = "<group>"; };
 		148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateService.swift; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
 		14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTheme.swift; sourceTree = "<group>"; };
@@ -299,6 +303,8 @@
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				1481164120D058760013D5D2 /* QueryStack.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
+				148AD19520E19D9D00CCE33D /* ExtendedWebService.swift */,
+				148AD19B20E1CCB800CCE33D /* ExtWebServicesLoader.swift */,
 				145DA16E20DC09BF00C1E804 /* InterpreterServices */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
@@ -696,6 +702,7 @@
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
 				146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */,
+				148AD19620E19D9D00CCE33D /* ExtendedWebService.swift in Sources */,
 				1429AC7820D4375500ABBCDE /* DIsplayableCellProtocol.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
@@ -730,6 +737,7 @@
 				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,
 				145D056020CE1FDD0027F8DF /* CurrencyService.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
+				148AD19C20E1CCB800CCE33D /* ExtWebServicesLoader.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */,
 				14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */,

@@ -44,9 +44,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "NSCollectionView"
-            landmarkType = "21">
+            endingLineNumber = "260">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
