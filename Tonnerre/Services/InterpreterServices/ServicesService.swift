@@ -22,7 +22,9 @@ struct ServicesService: TonnerreInterpreterService {
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    if let service = source as? TonnerreService {
+    if let service = source as? TonnerreExtendService {
+      service.isDisabled = !service.isDisabled
+    } else if let service = source as? TonnerreService {
       type(of: service).isDisabled = !(type(of: service).isDisabled)
     }
   }

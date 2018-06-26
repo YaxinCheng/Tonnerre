@@ -29,7 +29,7 @@ struct TonnerreInterpreter {
   }
   
   private func prepareService(service: TonnerreService, input: [String]) -> [ServiceResult] {
-    let keywordCount = (type(of: service).keyword != "" || service is ExtendedWebService).hashValue
+    let keywordCount = (type(of: service).keyword != "").hashValue
     if input.count >= keywordCount + service.argLowerBound && input.count - keywordCount <= service.argUpperBound {
       return service.prepare(input: Array(input[keywordCount...])).map { queryResult in
         ServiceResult(service: service, value: queryResult)
