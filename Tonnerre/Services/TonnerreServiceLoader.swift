@@ -23,10 +23,17 @@ struct TonnerreServiceLoader {
   
   func autoComplete(key: String, type: serviceType = .normal, includeExtra: Bool = true) -> [TonnerreService] {
     if type == .normal {
-      let fetchedServices = normalServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }.map { $0.init() }
+      let fetchedServices: [TonnerreService] = normalServiceTrie.find(value: key)
+        .filter { !$0.isDisabled || !includeExtra }
+        .map {
+          if let ext = $0 as? ExtendedWebService.Type {
+            return ext.init() as! TonnerreService
+          }
+          return $0.init()
+      }
       let prioritized = includeExtra ? (prioritizedServices) : []
-      let extended = extendedServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }
-      return fetchedServices + prioritized + extended
+//      let extended = extendedServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }
+      return fetchedServices + prioritized //+ extended
     } else if type == .system {
       return systemServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra } .map { $0.init() }
     } else if type == .interpreter {
@@ -36,7 +43,8 @@ struct TonnerreServiceLoader {
   
   init() {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
-    let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self]
+    let extServiceLoader = ExtWebServicesLoader()
+    let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self] + extServiceLoader.load()
     let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
     let interpreterServices: [TonnerreService.Type] = [ServicesService.self, ReloadService.self/*, DefaultService.self*/]
     normalServiceTrie = Trie(values: normalServices) { $0.keyword }

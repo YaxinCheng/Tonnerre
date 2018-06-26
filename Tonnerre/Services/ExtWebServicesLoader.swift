@@ -8,10 +8,10 @@
 
 import Cocoa
 
-class ExtWebServicesLoader {
-  @objcMembers class ExtWebService: NSObject, TonnerreService {
+struct ExtWebServicesLoader {
+  @objcMembers class ExtWebService: NSObject, TonnerreService, ExtendedWebService {
     var icon: NSImage {
-      return storedImage ?? #imageLiteral(resourceName: "safari")
+      return type(of: self).storedImage ?? #imageLiteral(resourceName: "safari")
     }
     static var keyword: String = ""
     let argLowerBound: Int = 0
@@ -19,7 +19,8 @@ class ExtWebServicesLoader {
     let name: String = ""
     let content: String = ""
     let template: String = ""
-    var storedImage: NSImage? = nil
+    let iconURL: String = ""
+    static var storedImage: NSImage? = nil
     
     func prepare(input: [String]) -> [Displayable] {
       guard let url = fillInTemplate(input: input) else { return [] }
@@ -38,7 +39,7 @@ class ExtWebServicesLoader {
     
     private func fillInTemplate(input: [String]) -> URL? {
       let requestingTemplate: String
-      let localeInTemplate = (ExtWebServicesLoader.ExtWebService.keyword.components(separatedBy: "@").count - 1 - argLowerBound) == 1
+      let localeInTemplate = (type(of: self).keyword.components(separatedBy: "@").count - 1 - argLowerBound) == 1
       if localeInTemplate {
         let locale = Locale.current
         let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
@@ -61,7 +62,7 @@ class ExtWebServicesLoader {
     }
   }
   
-  private func constructInit(data: [Ivar: Any]) -> (@convention(block) (AnyObject, Selector)->AnyObject) {
+  private func constructInit(data: [Ivar: Any]) -> IMP {
     let constructor: (@convention(block) (AnyObject, Selector)->AnyObject) = { SELF, _ in
       for (attr, value) in data {
         let offSet = ivar_getOffset(attr)
@@ -79,8 +80,45 @@ class ExtWebServicesLoader {
       }
       return SELF
     }
-    return constructor
+    return imp_implementationWithBlock(constructor)
   }
   
+  private func buildIvarContent(fields: [String: Any]) -> [Ivar: Any] {
+    var emptyDict: [Ivar: Any] = [:]
+    for (field, value) in fields {
+      guard
+        let fieldBytes = (field as NSString).utf8String,
+        let associatedIvar = class_getInstanceVariable(ExtWebService.self, fieldBytes)
+      else { continue }
+      emptyDict[associatedIvar] = value
+    }
+    return emptyDict
+  }
   
+  private func constructClass(name: String, content: [String: Any]) -> TonnerreService.Type? {
+    guard
+      let nameBytes = (name as NSString).utf8String,
+      let Class = objc_allocateClassPair(ExtWebService.self, nameBytes, 0),
+      let superConstructor = class_getClassMethod(ExtWebService.self, #selector(ExtWebService.init)),
+      let constructorType = method_getTypeEncoding(superConstructor)
+    else { return nil }
+    let subConstructor = constructInit(data: buildIvarContent(fields: content))
+    guard
+      class_addMethod(Class, #selector(ExtWebService.init), subConstructor, constructorType),
+      class_addProtocol(Class, ExtendedWebService.self)
+    else { return nil }
+    objc_registerClassPair(Class)
+    // - TODO: set keyword here
+    return Class as? TonnerreService.Type
+  }
+  
+  func load() -> [TonnerreService.Type] {
+    let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
+    let serviceJSON = appSupDir.appendingPathComponent("Services/webExt.json")
+    guard
+      let jsonData = try? Data(contentsOf: serviceJSON, options: .mappedIfSafe),
+      let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [String: [String: Any]]
+    else { return [] }
+    return jsonObject.compactMap { constructClass(name: $0.key.capitalized.replacingOccurrences(of: " ", with: ""), content: $0.value) }
+  }
 }
