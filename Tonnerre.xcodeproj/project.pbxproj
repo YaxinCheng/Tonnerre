@@ -11,10 +11,12 @@
 		1429AC7220D42B4000ABBCDE /* ServicesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7120D42B4000ABBCDE /* ServicesService.swift */; };
 		1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7320D435A300ABBCDE /* OnOffCell.swift */; };
 		1429AC7620D435A300ABBCDE /* OnOffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7420D435A300ABBCDE /* OnOffCell.xib */; };
-		1429AC7820D4375500ABBCDE /* DIsplayableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */; };
+		1429AC7820D4375500ABBCDE /* DisplayableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7720D4375500ABBCDE /* DisplayableCellProtocol.swift */; };
 		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7C20D4466A00ABBCDE /* toggle_switch.json */; };
+		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
+		144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
 		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
@@ -70,7 +72,6 @@
 		1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484147E20C5D056008FD68E /* GeneralWebServices.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* SystemServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* SystemServices.swift */; };
-		1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148D20C78542008FD68E /* TrashEmptyService.swift */; };
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
 		148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A420C85AC3008FD68E /* DisplayableContainer.swift */; };
 		148414A720C8675F008FD68E /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A620C8675F008FD68E /* URLService.swift */; };
@@ -92,8 +93,6 @@
 		14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989720DEA5B7001A882D /* DefaultService.swift */; };
 		14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
-		14FBA69220E420BF00386824 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FBA69120E420BF00386824 /* CollectionView.swift */; };
-		14FBA69420E4246500386824 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FBA69320E4246500386824 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,9 +145,11 @@
 		1429AC7120D42B4000ABBCDE /* ServicesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesService.swift; sourceTree = "<group>"; };
 		1429AC7320D435A300ABBCDE /* OnOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffCell.swift; sourceTree = "<group>"; };
 		1429AC7420D435A300ABBCDE /* OnOffCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnOffCell.xib; sourceTree = "<group>"; };
-		1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIsplayableCellProtocol.swift; sourceTree = "<group>"; };
+		1429AC7720D4375500ABBCDE /* DisplayableCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableCellProtocol.swift; sourceTree = "<group>"; };
 		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
 		1429AC7C20D4466A00ABBCDE /* toggle_switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = toggle_switch.json; sourceTree = "<group>"; };
+		144E0C1120ED2F4300E4F2DA /* ASServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASServices.swift; sourceTree = "<group>"; };
+		144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptServiceProtocol.swift; sourceTree = "<group>"; };
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
 		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
@@ -202,7 +203,6 @@
 		1484147E20C5D056008FD68E /* GeneralWebServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralWebServices.swift; sourceTree = "<group>"; };
 		1484148220C63A1A008FD68E /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		1484148420C70263008FD68E /* SystemServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServices.swift; sourceTree = "<group>"; };
-		1484148D20C78542008FD68E /* TrashEmptyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashEmptyService.swift; sourceTree = "<group>"; };
 		1484148F20C84589008FD68E /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
 		148414A420C85AC3008FD68E /* DisplayableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableContainer.swift; sourceTree = "<group>"; };
 		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
@@ -225,8 +225,6 @@
 		14EA989720DEA5B7001A882D /* DefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultService.swift; sourceTree = "<group>"; };
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
-		14FBA69120E420BF00386824 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
-		14FBA69320E4246500386824 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,7 +400,6 @@
 			isa = PBXGroup;
 			children = (
 				146AAE6720BDE096009AC9C6 /* FileSearchServices.swift */,
-				1484148D20C78542008FD68E /* TrashEmptyService.swift */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -428,6 +425,8 @@
 			isa = PBXGroup;
 			children = (
 				1484148420C70263008FD68E /* SystemServices.swift */,
+				144E0C1120ED2F4300E4F2DA /* ASServices.swift */,
+				144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -446,14 +445,12 @@
 			isa = PBXGroup;
 			children = (
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
-				14FBA69120E420BF00386824 /* CollectionView.swift */,
-				14FBA69320E4246500386824 /* CollectionViewCell.swift */,
 				14AEB2E120BF0F3400D10D44 /* Displayable.swift */,
 				14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */,
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
 				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
-				1429AC7720D4375500ABBCDE /* DIsplayableCellProtocol.swift */,
+				1429AC7720D4375500ABBCDE /* DisplayableCellProtocol.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
 				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
 				1429AC7320D435A300ABBCDE /* OnOffCell.swift */,
@@ -699,16 +696,14 @@
 				1484148520C70263008FD68E /* SystemServices.swift in Sources */,
 				14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */,
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
-				14FBA69420E4246500386824 /* CollectionViewCell.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
 				146AAE6C20BDEBD9009AC9C6 /* TonnerreInterpreter.swift in Sources */,
-				1429AC7820D4375500ABBCDE /* DIsplayableCellProtocol.swift in Sources */,
+				1429AC7820D4375500ABBCDE /* DisplayableCellProtocol.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
-				14FBA69220E420BF00386824 /* CollectionView.swift in Sources */,
 				14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
@@ -718,10 +713,10 @@
 				1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */,
 				1481165520D2D2440013D5D2 /* PreviewItem.swift in Sources */,
 				1481164220D058760013D5D2 /* QueryStack.swift in Sources */,
-				1484148E20C78542008FD68E /* TrashEmptyService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */,
+				144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
@@ -731,6 +726,7 @@
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				145DA16D20DAE60600C1E804 /* DefaultSearchManage.swift in Sources */,
 				1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */,
+				144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* Displayable.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,

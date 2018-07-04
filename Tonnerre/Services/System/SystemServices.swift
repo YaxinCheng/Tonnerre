@@ -87,7 +87,7 @@ struct VolumeService: SystemService {
     let volumeURLs = fileManager.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeIsInternalKey], options: .skipHiddenVolumes) ?? []
     guard !volumeURLs.isEmpty else { return [] }
     let workspace = NSWorkspace.shared
-    let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? true) }
+    let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }
     guard !externalVolumes.isEmpty else { return [] }
     let volumeRequest = externalVolumes.map {
       DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
