@@ -54,29 +54,33 @@ struct VolumeService: SystemService {
   
   func serve(source: Displayable, withCmd: Bool) {
     let fileManager = FileManager.default
+    let localNotification = NSUserNotification()
     if let allVolumes = (source as? DisplayableContainer<[URL]>)?.innerItem {
       for volume in allVolumes {
         fileManager.unmountVolume(at: volume, options: .withoutUI) { (error) in
-          let localNotification = NSUserNotification()
           if error != nil {
             localNotification.title = "Eject Failed"
             localNotification.informativeText = "Error: \(error!)"
             localNotification.soundName = NSUserNotificationDefaultSoundName
             self.send(notification: localNotification)
-          } else {
-            localNotification.title = "Eject Successfully"
-            localNotification.informativeText = "Ejected: \(volume.lastPathComponent)"
-            localNotification.soundName = nil
-            self.send(notification: localNotification)
           }
         }
       }
+      localNotification.title = "Eject Successfully"
+      localNotification.informativeText = "Successfully ejected all volumes"
+      localNotification.soundName = nil
+      self.send(notification: localNotification)
     } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
       fileManager.unmountVolume(at: specificVolume, options: .withoutUI) { (error) in
-        let localNotification = NSUserNotification()
-        localNotification.title = "Eject Successfully"
-        localNotification.informativeText = "Ejected: \(specificVolume.lastPathComponent)"
-        localNotification.soundName = nil
+        if error != nil {
+          localNotification.title = "Eject Failed"
+          localNotification.informativeText = "Error: \(error!)"
+          localNotification.soundName = NSUserNotificationDefaultSoundName
+        } else {
+          localNotification.title = "Eject Successfully"
+          localNotification.informativeText = "Ejected: \(specificVolume.lastPathComponent)"
+          localNotification.soundName = nil
+        }
         self.send(notification: localNotification)
       }
     }
@@ -85,10 +89,11 @@ struct VolumeService: SystemService {
   func prepare(input: [String]) -> [Displayable] {
     let fileManager = FileManager.default
     let volumeURLs = fileManager.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeIsInternalKey], options: .skipHiddenVolumes) ?? []
-    guard !volumeURLs.isEmpty else { return [] }
+    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: #imageLiteral(resourceName: "eject"))
+    guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }
-    guard !externalVolumes.isEmpty else { return [] }
+    guard !externalVolumes.isEmpty else { return [noEjectable] }
     let volumeRequest = externalVolumes.map {
       DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
     }
