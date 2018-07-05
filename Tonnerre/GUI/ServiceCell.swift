@@ -16,13 +16,14 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
   var displayItem: Displayable?
-  var popoverView = NSPopover()
+  var popoverView: NSPopover = NSPopover()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
     popoverView.contentSize = NSSize(width: 450, height: 300)
     popoverView.behavior = .transient
+    popoverView.delegate = self
   }
   
   var theme: TonnerreTheme {
@@ -71,3 +72,8 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   }
 }
 
+extension ServiceCell: NSPopoverDelegate {
+  func popoverDidClose(_ notification: Notification) {
+    popoverView.contentViewController = nil
+  }
+}
