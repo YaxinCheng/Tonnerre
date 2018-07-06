@@ -63,13 +63,14 @@ struct VolumeService: SystemService {
             localNotification.informativeText = "Error: \(error!)"
             localNotification.soundName = NSUserNotificationDefaultSoundName
             self.send(notification: localNotification)
+          } else {
+            localNotification.title = "Eject Successfully"
+            localNotification.informativeText = "Successfully ejected all volumes"
+            localNotification.soundName = nil
+            self.send(notification: localNotification)
           }
         }
       }
-      localNotification.title = "Eject Successfully"
-      localNotification.informativeText = "Successfully ejected all volumes"
-      localNotification.soundName = nil
-      self.send(notification: localNotification)
     } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
       fileManager.unmountVolume(at: specificVolume, options: .withoutUI) { (error) in
         if error != nil {
