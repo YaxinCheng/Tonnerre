@@ -17,7 +17,9 @@ struct ApplicationService: SystemService {
   let content: String = "Find and quite a running program"
   let alterContent: String? = "Force quit program"
   static let keyword: String = "quit"
-  let icon: NSImage = #imageLiteral(resourceName: "close")
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "close").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   let argUpperBound: Int = Int.max
   let argLowerBound: Int = 0
   
@@ -43,7 +45,9 @@ struct VolumeService: SystemService {
   let name: String = "Eject Volumes"
   let content: String = "Eject selected volumes"
   static let keyword: String = "eject"
-  let icon: NSImage = #imageLiteral(resourceName: "eject")
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "eject").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   let argUpperBound: Int = Int.max
   let argLowerBound: Int = 0
   
@@ -92,7 +96,7 @@ struct VolumeService: SystemService {
   func prepare(input: [String]) -> [Displayable] {
     let fileManager = FileManager.default
     let volumeURLs = fileManager.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeIsInternalKey], options: .skipHiddenVolumes) ?? []
-    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: #imageLiteral(resourceName: "eject"))
+    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon)
     guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }
@@ -100,7 +104,7 @@ struct VolumeService: SystemService {
     let volumeRequest = externalVolumes.map {
       DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
     }
-    let ejectAllRequest = DisplayableContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: #imageLiteral(resourceName: "eject"), innerItem: externalVolumes)
+    let ejectAllRequest = DisplayableContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: icon, innerItem: externalVolumes)
     return [ejectAllRequest] + volumeRequest
   }
 }

@@ -12,7 +12,7 @@ class TonnerreIconView: NSImageView , ThemeProtocol {
   
   var theme: TonnerreTheme {
     get {
-      return TonnerreTheme.currentTheme
+      return TonnerreTheme.current
     }
     set {
       guard let image = self.image else { return }
@@ -25,7 +25,7 @@ class TonnerreIconView: NSImageView , ThemeProtocol {
     
     NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
       self?.image = #imageLiteral(resourceName: "tonnerre")
-      self?.theme = .currentTheme
+      self?.theme = .current
     }
   }
   

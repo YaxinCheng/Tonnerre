@@ -28,7 +28,7 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   
   var theme: TonnerreTheme {
     get {
-      return .currentTheme
+      return .current
     } set {
       serviceLabel.textColor = newValue.imgColour
       cmdLabel.textColor = newValue.imgColour
@@ -47,7 +47,7 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   }
   
   override func viewWillAppear() {
-    theme = .currentTheme
+    theme = .current
   }
   
   func preview() {

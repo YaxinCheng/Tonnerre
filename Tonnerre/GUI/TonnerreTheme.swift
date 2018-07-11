@@ -37,7 +37,7 @@ enum TonnerreTheme {
     }
   }
   
-  static var currentTheme: TonnerreTheme {
+  static var current: TonnerreTheme {
     return UserDefaults.standard.value(forKey: StoredKeys.AppleInterfaceStyle.rawValue) != nil ? .dark : .light
   }
 }

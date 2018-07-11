@@ -269,6 +269,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1405334720F692F500C289CF /* Clipboard */ = {
+			isa = PBXGroup;
+			children = (
+				144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */,
+				1405334320F66D2E00C289CF /* ClipboardService.swift */,
+			);
+			path = Clipboard;
+			sourceTree = "<group>";
+		};
 		140A62CD20CB0C7000B759A4 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,8 +439,7 @@
 		1484149220C845A7008FD68E /* System */ = {
 			isa = PBXGroup;
 			children = (
-				144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */,
-				1405334320F66D2E00C289CF /* ClipboardService.swift */,
+				1405334720F692F500C289CF /* Clipboard */,
 				1484148420C70263008FD68E /* SystemServices.swift */,
 				144E0C1120ED2F4300E4F2DA /* ASServices.swift */,
 				144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */,

@@ -10,7 +10,9 @@ import Cocoa
 
 struct LockService: AppleScriptServiceProtocol {
   static let keyword: String = "lock"
-  let icon: NSImage = #imageLiteral(resourceName: "lock")
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "lock").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   let name: String = "Lock Screen"
   let content: String = "Lock your Mac"
   let script: String = "tell application \"Finder\" to sleep"

@@ -14,7 +14,7 @@ struct ReloadService: TonnerreService {
   let name: String = "Reload Service"
   let content: String = "Reload the extended service from files again..."
   var icon: NSImage {
-    return #imageLiteral(resourceName: "tonnerre").tintedImage(with: TonnerreTheme.currentTheme.imgColour)
+    return #imageLiteral(resourceName: "tonnerre").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   
   func prepare(input: [String]) -> [Displayable] {

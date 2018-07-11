@@ -29,7 +29,7 @@ class TonnerreField: NSTextField, ThemeProtocol {
       placeholderColour = newValue.placeholderColour
       textColor = newValue.imgColour
     } get {
-      return .currentTheme
+      return .current
     }
   }
   

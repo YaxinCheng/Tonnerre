@@ -32,7 +32,7 @@ class ViewController: NSViewController {
   }
   
   override func viewWillAppear() {
-    if TonnerreTheme.currentTheme == .dark {
+    if TonnerreTheme.current == .dark {
       iconView.theme = .dark
       textField.theme = .dark
       backgroundView.material = .dark
@@ -55,8 +55,8 @@ class ViewController: NSViewController {
   
   override func viewDidAppear() {
     _ = textField.becomeFirstResponder()
-    iconView.theme = .currentTheme
-    textField.theme = .currentTheme
+    iconView.theme = .current
+    textField.theme = .current
   }
   
   override func viewWillDisappear() {
@@ -70,7 +70,7 @@ class ViewController: NSViewController {
 
   private func refreshIcon() {
     iconView.image = #imageLiteral(resourceName: "tonnerre")
-    iconView.theme = .currentTheme
+    iconView.theme = .current
   }
   
   @objc private func suggestionNotificationDidArrive(notification: Notification) {
@@ -133,6 +133,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
       service.serve(source: target, withCmd: withCmd)
     }
   }
+  
   func tabPressed(service: ServiceResult) {
     switch service {
     case .service(origin: let service) where !type(of: service).keyword.isEmpty:

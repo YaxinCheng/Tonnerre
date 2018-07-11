@@ -28,12 +28,12 @@ class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol {
   
   override func viewWillAppear() {
     toggleAnimation.animationProgress = disabled ? offProgress : onProgress
-    theme = .currentTheme
+    theme = .current
   }
   
   var theme: TonnerreTheme {
     get {
-      return .currentTheme
+      return .current
     } set {
       serviceLabel.textColor = newValue.imgColour
       introLabel.textColor = newValue.imgColour

@@ -13,7 +13,9 @@ struct ClipboardService: SystemService {
   static let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
-  let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "clipboard").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
     CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)
@@ -51,7 +53,7 @@ struct ClipboardService: SystemService {
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
           let content = "Copied at \(dateFmt.string(from: $0.time!))"
-          let icon = #imageLiteral(resourceName: "tonnerre")
+          let icon = self.icon
           return DisplayableContainer(name: name, content: content, icon: icon, innerItem: $0.value!)
         }
       }
