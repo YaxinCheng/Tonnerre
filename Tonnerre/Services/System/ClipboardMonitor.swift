@@ -16,7 +16,7 @@ class ClipboardMonitor {
   private let callback: (String, NSPasteboard.PasteboardType)->Void
   private var timer: Timer?
   
-  init(interval: TimeInterval, repeat: Bool = true, callback: @escaping (String, NSPasteboard.PasteboardType)->Void) {
+  init(interval: TimeInterval, repeat: Bool = false, callback: @escaping (String, NSPasteboard.PasteboardType)->Void) {
     pasteboard = NSPasteboard.general
     changedCount = pasteboard.changeCount
     self.`repeat` = `repeat`
@@ -25,7 +25,8 @@ class ClipboardMonitor {
   }
   
   func start() {
-    timer = Timer(timeInterval: interval, repeats: `repeat`) { [weak self] _ in
+    guard !(timer?.isValid ?? false) else { return }
+    timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: `repeat`) { [weak self] _ in
       guard
         let changedCount = self?.pasteboard.changeCount,
         let originCount = self?.changedCount,
@@ -42,6 +43,8 @@ class ClipboardMonitor {
   }
   
   func stop() {
+    guard timer?.isValid ?? false else { return }
     timer?.invalidate()
+    timer = nil
   }
 }

@@ -724,8 +724,8 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="Ocs-GP-EaD"/>
                                     </imageView>
                                     <textField focusRingType="none" horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="52" y="8" width="610" height="40"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" drawsBackground="YES" id="VxW-E4-dLH">
+                                        <rect key="frame" x="50" y="8" width="614" height="40"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" usesSingleLineMode="YES" id="VxW-E4-dLH">
                                             <font key="font" metaFont="system" size="35"/>
                                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>

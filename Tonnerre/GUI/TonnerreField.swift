@@ -40,12 +40,6 @@ class TonnerreField: NSTextField, ThemeProtocol {
     }
   }
   
-  override func draw(_ dirtyRect: NSRect) {
-    super.draw(dirtyRect)
-    
-    // Drawing code here.
-  }
-  
   override func selectText(_ sender: Any?) {
     super.selectText(sender)
     currentEditor()?.selectedRange = NSRange(location: stringValue.count, length: 0)

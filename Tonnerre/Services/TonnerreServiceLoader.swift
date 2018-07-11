@@ -37,12 +37,15 @@ struct TonnerreServiceLoader {
   init() {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
     let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, ScreenSaverService.self, LockService.self]
-    let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
+    let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self, ClipboardService.self]
     let interpreterServices: [TonnerreService.Type] = [ServicesService.self, ReloadService.self/*, DefaultService.self*/]
     normalServiceTrie = Trie(values: normalServices) { $0.keyword }
     systemServiceTrie = Trie(values: systemServices) { $0.keyword }
     interpreterServicesDict = Dictionary(interpreterServices.map { ($0.keyword, [$0]) }, uniquingKeysWith: +)
     extendedServiceTrie = Trie(values: GeneralWebService.load()) { $0.keyword }
+    if ClipboardService.isDisabled == false {
+      ClipboardService.monitor.start()
+    }
   }
   
   mutating func reload() {
