@@ -67,8 +67,10 @@ struct ClipboardService: SystemService {
     if let item = source as? DisplayableContainer<URL>, let url = item.innerItem {
       if withCmd {
         NSWorkspace.shared.activateFileViewerSelecting([url])
-      } else {
+      } else if FileManager.default.fileExists(atPath: url.path) {
         NSPasteboard.general.setString(url.absoluteString, forType: .fileURL)
+      } else {
+        NSPasteboard.general.setString(url.path, forType: .string)
       }
     } else if let item = source as? DisplayableContainer<String>, let string = item.innerItem {
       NSPasteboard.general.setString(string, forType: .string)

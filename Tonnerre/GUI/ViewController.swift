@@ -139,7 +139,11 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .service(origin: let service) where !type(of: service).keyword.isEmpty:
       textField.autoComplete(cmd: type(of: service).keyword)
     case .result(service: _, value: let value) where !value.name.isEmpty:
-      textField.autoComplete(cmd: value.name)
+      if let service = value as? TonnerreService {
+        textField.autoComplete(cmd: type(of: service).keyword)
+      } else {
+        textField.autoComplete(cmd: value.name)
+      }
     default: return
     }
     textDidChange(value: textField.stringValue)
