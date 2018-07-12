@@ -46,18 +46,7 @@ class BaseWindow: NSPanel {
     setupCache()
     launchHelper()
     collectionBehavior.insert(.canJoinAllSpaces)
-    let defaultCentre = NotificationCenter.default
-    defaultCentre.addObserver(self, selector: #selector(windowDidMove(notification:)), name: NSWindow.didMoveNotification, object: nil)
     DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
-  }
-  
-  @objc private func windowDidMove(notification: Notification) {
-    let userDefault = UserDefaults.standard
-    let (x, y) = (frame.origin.x, frame.origin.y)
-    #if RELEASE
-    userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
-    userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
-    #endif
   }
   
   private func folderChecks() {

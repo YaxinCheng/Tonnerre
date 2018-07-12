@@ -34,4 +34,28 @@ class BaseWindowController: NSWindowController, NSWindowDelegate {
   func windowDidResignKey(_ notification: Notification) {
     (window as? BaseWindow)?.isHidden = true
   }
+  
+  func windowDidMove(_ notification: Notification) {
+    let userDefault = UserDefaults.standard
+    let (x, y) = (window!.frame.origin.x, window!.frame.origin.y)
+    windowMagnet(window: notification.object)
+    #if RELEASE
+    userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
+    userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
+    #endif
+  }
+  
+  private func windowMagnet(window: Any?) {
+    guard let screen = NSScreen.main, let theWindow = window as? NSWindow else { return }
+    let designedArea = NSRect(x: screen.frame.width/2 - theWindow.frame.width/2, y: screen.frame.height*3/4 - theWindow.frame.height/2, width: 0, height: 0)
+    let gravity: CGFloat = 10
+    var frame = theWindow.frame
+    if fabs(theWindow.frame.origin.x - designedArea.origin.x) <= gravity {
+      frame.origin.x = designedArea.origin.x
+    }
+    if fabs(theWindow.frame.origin.y - designedArea.origin.y) <= gravity {
+      frame.origin.y = designedArea.origin.y
+    }
+    theWindow.setFrame(frame, display: true)
+  }
 }
