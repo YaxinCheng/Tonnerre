@@ -14,55 +14,29 @@ extension CBRecord {
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     let context = getContext()
     let count = (try? context.count(for: fetchRequest)) ?? 0
-    if count >= limit { _ = removeOldest() }
+    if count >= limit { removeOldest() }
     let newObject = CBRecord(context: context)
     newObject.type = type
     newObject.value = value
     newObject.time = Date()
+    #if RELEASE
     try? context.save()
+    #endif
   }
   
-  private static func removeOldest() -> CBRecord? {
-    let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
+  private static func removeOldest() {
+    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CBRecord")
     fetchRequest.fetchLimit = 1
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: true)]
     let context = getContext()
-    guard let fetchedData = (try? context.fetch(fetchRequest))?.first else { return nil }
+    guard let fetchedData = (try? context.fetch(fetchRequest))?.first else { return }
     context.delete(fetchedData)
     do {
       try context.save()
-      return fetchedData
     } catch {
-      return nil
+      #if DEBUG
+      print(error)
+      #endif
     }
   }
-}
-
-extension CBRecord: Displayable {
-  var name: String {
-    if type! == "public.file-url" {
-      return value!.components(separatedBy: "/").last ?? ""
-    }
-    return value ?? ""
-  }
-  
-  var content: String {
-    if type! == "public.file-url" {
-      return URL(string: value!)?.path ?? value!
-    } else {
-      let dateFmt = DateFormatter()
-      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-      return "Copied at \(dateFmt.string(from: time!))"
-    }
-  }
-  
-  var icon: NSImage {
-    if type! == "public.file-url" {
-      let url = URL(string: value!)!
-      return NSWorkspace.shared.icon(forFile: url.path)
-    }
-    return #imageLiteral(resourceName: "tonnerre")
-  }
-  
-  
 }

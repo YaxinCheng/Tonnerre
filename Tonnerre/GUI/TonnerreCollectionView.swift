@@ -28,6 +28,9 @@ class TonnerreCollectionView: NSScrollView {
       if oldValue == highlightedItemIndex {
         visibleIndex = -1
         if oldValue == -1 { iconChange() }
+        if datasource.count > 0 {
+          collectionView.scrollToItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)
+        }
         return
       }
       let moveDown = highlightedItemIndex - oldValue >= 1
@@ -115,6 +118,9 @@ class TonnerreCollectionView: NSScrollView {
       if event.modifierFlags.contains(.command) {
         visibleIndex = event.keyCode == 125 ? 7 : 1
         highlightedItemIndex = event.keyCode == 125 ? datasource.count - 1 : 0
+        DispatchQueue.main.async { [weak self] in
+          self?.collectionViewDidScroll()
+        }
       } else {
         let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
         if datasource.count != 0 {
