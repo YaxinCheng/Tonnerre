@@ -59,37 +59,42 @@ struct VolumeService: SystemService {
   func serve(source: Displayable, withCmd: Bool) {
     let workspace = NSWorkspace.shared
     let localNotification = NSUserNotification()
+    let queue = DispatchQueue.global(qos: .userInitiated)
     if let allVolumes = (source as? DisplayableContainer<[URL]>)?.innerItem {
-      var errorCount = 0
-      for volume in allVolumes {
-        do {
-          try workspace.unmountAndEjectDevice(at: volume)
-        } catch {
-          errorCount += 1
-          localNotification.title = "Eject Failed"
-          localNotification.informativeText = "Error: \(error)"
-          localNotification.soundName = NSUserNotificationDefaultSoundName
+      queue.async {
+        var errorCount = 0
+        for volume in allVolumes {
+          do {
+            try workspace.unmountAndEjectDevice(at: volume)
+          } catch {
+            errorCount += 1
+            localNotification.title = "Eject Failed"
+            localNotification.informativeText = "Error: \(error)"
+            localNotification.soundName = NSUserNotificationDefaultSoundName
+            self.send(notification: localNotification)
+          }
+        }
+        if errorCount == 0 {
+          localNotification.title = "Eject Successfully"
+          localNotification.informativeText = "Successfully ejected all volumes"
+          localNotification.soundName = nil
           self.send(notification: localNotification)
         }
       }
-      if errorCount == 0 {
-        localNotification.title = "Eject Successfully"
-        localNotification.informativeText = "Successfully ejected all volumes"
-        localNotification.soundName = nil
+    } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
+      queue.async {
+        do {
+          try workspace.unmountAndEjectDevice(at: specificVolume)
+          localNotification.title = "Eject Successfully"
+          localNotification.informativeText = "Ejected: \(specificVolume.lastPathComponent)"
+          localNotification.soundName = nil
+        } catch {
+          localNotification.title = "Eject Failed"
+          localNotification.informativeText = "Error: \(error)"
+          localNotification.soundName = NSUserNotificationDefaultSoundName
+        }
         self.send(notification: localNotification)
       }
-    } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
-      do {
-        try workspace.unmountAndEjectDevice(at: specificVolume)
-        localNotification.title = "Eject Successfully"
-        localNotification.informativeText = "Ejected: \(specificVolume.lastPathComponent)"
-        localNotification.soundName = nil
-      } catch {
-        localNotification.title = "Eject Failed"
-        localNotification.informativeText = "Error: \(error)"
-        localNotification.soundName = NSUserNotificationDefaultSoundName
-      }
-      send(notification: localNotification)
     }
   }
   
