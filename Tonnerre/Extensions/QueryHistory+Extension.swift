@@ -10,7 +10,8 @@ import Cocoa
 import CoreData
 
 extension QueryHistory {
-  static func queryInsert(identifier: String, query: String, limit: Int) {
+  static func queryInsert(identifier: String, query: String, limit: Int, unique: Bool = false) {
+    if unique { uniquelize(identifier: identifier, query: query) }
     let fetchRequest = NSFetchRequest<QueryHistory>(entityName: "QueryHistory")
     fetchRequest.predicate = NSPredicate(format: "identifier=%@", identifier)
     let context = getContext()
@@ -38,5 +39,14 @@ extension QueryHistory {
       print(error)
       #endif
     }
+  }
+  
+  private static func uniquelize(identifier: String, query: String) {
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QueryHistory")
+    fetchRequest.predicate = NSPredicate(format: "identifier=%@ AND query=%@", identifier, query)
+    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+    let context = getContext()
+    try! context.execute(deleteRequest)
+    try! context.save()
   }
 }

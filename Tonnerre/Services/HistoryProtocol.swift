@@ -12,20 +12,20 @@ import CoreData
 protocol HistoryProtocol {
   var identifier: String { get }
   var historyLimit: Int { get }
-  func appendHistory(query: String)
+  func appendHistory(query: String, unique: Bool)
   func histories() -> [String]
   func reuse(history: [String]) -> [Displayable]
 }
 
 extension HistoryProtocol {
-  func appendHistory(query: String) {
-    QueryHistory.queryInsert(identifier: identifier, query: query, limit: historyLimit)
+  func appendHistory(query: String, unique: Bool = false) {
+    QueryHistory.queryInsert(identifier: identifier, query: query, limit: historyLimit, unique: unique)
   }
   
   func histories() -> [String] {
     let fetchRequest = NSFetchRequest<QueryHistory>(entityName: "QueryHistory")
     fetchRequest.predicate = NSPredicate(format: "identifier=%@", identifier)
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: true)]
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
     do {
       let fetchedData = try context.fetch(fetchRequest)

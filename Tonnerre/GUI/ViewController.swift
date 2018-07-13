@@ -17,7 +17,7 @@ class ViewController: NSViewController {
   @IBOutlet weak var collectionView: TonnerreCollectionView!
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
-  private let queryStack = QueryStack<String>(size: 1)
+  private var lastQuery: String = ""
   private let suggestionSession = TonnerreSuggestionSession.shared
   
   override func viewDidLoad() {
@@ -115,7 +115,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
   }
   
   func retrieveLastQuery() {
-    textField.stringValue = queryStack.pop() ?? ""
+    textField.stringValue = lastQuery
     textDidChange(value: textField.stringValue)
   }
   
@@ -129,7 +129,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     let queue = DispatchQueue.global(qos: .userInitiated)
     let queryValue = textField.stringValue
     queue.async { [unowned self] in
-      self.queryStack.append(value: queryValue)
+      self.lastQuery = queryValue
       service.serve(source: target, withCmd: withCmd)
     }
   }
