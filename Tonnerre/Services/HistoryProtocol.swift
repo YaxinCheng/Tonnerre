@@ -19,10 +19,12 @@ protocol HistoryProtocol {
 
 extension HistoryProtocol {
   func appendHistory(query: String, unique: Bool = false) {
+    guard historyLimit > 0 else { return }
     QueryHistory.queryInsert(identifier: identifier, query: query, limit: historyLimit, unique: unique)
   }
   
   func histories() -> [String] {
+    guard historyLimit > 0 else { return [] }
     let fetchRequest = NSFetchRequest<QueryHistory>(entityName: "QueryHistory")
     fetchRequest.predicate = NSPredicate(format: "identifier=%@", identifier)
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
