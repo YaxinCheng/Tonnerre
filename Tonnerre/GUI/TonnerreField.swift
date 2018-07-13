@@ -10,12 +10,6 @@ import Cocoa
 
 class TonnerreField: NSTextField, ThemeProtocol {
   
-  private var placeholderColour: NSColor! {
-    didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
-    }
-  }
-  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
@@ -26,7 +20,6 @@ class TonnerreField: NSTextField, ThemeProtocol {
   
   var theme: TonnerreTheme {
     set {
-      placeholderColour = newValue.placeholderColour
       textColor = newValue.imgColour
     } get {
       return .current
@@ -59,4 +52,12 @@ class TonnerreField: NSTextField, ThemeProtocol {
     }
     window?.makeFirstResponder(nil)
   }
+  
+  override var intrinsicContentSize: NSSize {
+    let cell = NSTextFieldCell(textCell: stringValue)
+    cell.attributedStringValue = attributedStringValue
+    return cell.cellSize
+  }
+  
+  
 }
