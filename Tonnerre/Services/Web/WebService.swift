@@ -55,7 +55,7 @@ extension WebService {
   func encodedSuggestions(queries: [String]) -> [ServiceResult] {
     return queries.compactMap {
       let readableContent: String
-      if $0.starts(with: "&#"), let decodedData = $0.data(using: .utf8) {
+      if $0.contains("&#"), let decodedData = $0.data(using: .utf8) {
         readableContent = (try? NSAttributedString(data: decodedData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil))?.string ?? $0
       } else {
         readableContent = $0.removingPercentEncoding ?? $0

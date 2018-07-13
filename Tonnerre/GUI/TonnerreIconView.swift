@@ -43,7 +43,7 @@ class TonnerreIconView: NSImageView , ThemeProtocol {
     guard event.clickCount == 2 else { return }
     guard var designedFrame = window?.frame, let mainScreen = NSScreen.main else { return }
     designedFrame.origin.x = mainScreen.frame.width/2 - designedFrame.width/2
-    designedFrame.origin.y = mainScreen.frame.height * 3 / 4 - designedFrame.height/2
+    designedFrame.origin.y = mainScreen.frame.height * 3 / 4 - designedFrame.height
     window?.setFrame(designedFrame, display: true)
   }
 }
