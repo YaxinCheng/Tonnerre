@@ -70,6 +70,8 @@ class TonnerreField: NSTextField, ThemeProtocol {
       attributedString = attributedStringValue
     }
     cell.attributedStringValue = attributedString
-    return cell.cellSize
+    let extraLength: CGFloat = 110// Used to contain the next input word when it is using pinyin
+    let contentSize = NSSize(width: cell.cellSize.width + extraLength, height: cell.cellSize.height)
+    return contentSize
   }
 }

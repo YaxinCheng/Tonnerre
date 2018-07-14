@@ -83,6 +83,8 @@ class TonnerreCollectionView: NSScrollView {
       collectionViewHeight.constant = cellHeight * CGFloat(min(datasource.count, 9))
       DispatchQueue.main.async { [weak self] in
         self?.collectionView.reloadData()
+      }
+      DispatchQueue.main.async { [weak self] in
         if self?.datasource.isEmpty ?? true { return }
         self?.highlightedItemIndex = -1
       }
