@@ -96,7 +96,7 @@
 		14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */; };
 		14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */; };
 		14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C220F8F6D100537160 /* HistoryProtocol.swift */; };
-		14F015C520F93EE200537160 /* PlaceholderField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C420F93EE200537160 /* PlaceholderField.swift */; };
+		14F015C720F999E300537160 /* PlaceholderField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C620F999E200537160 /* PlaceholderField.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 /* End PBXBuildFile section */
 
@@ -233,7 +233,7 @@
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
 		14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QueryHistory+Extension.swift"; sourceTree = "<group>"; };
 		14F015C220F8F6D100537160 /* HistoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryProtocol.swift; sourceTree = "<group>"; };
-		14F015C420F93EE200537160 /* PlaceholderField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderField.swift; sourceTree = "<group>"; };
+		14F015C620F999E200537160 /* PlaceholderField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderField.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -469,7 +469,7 @@
 				14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */,
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
-				14F015C420F93EE200537160 /* PlaceholderField.swift */,
+				14F015C620F999E200537160 /* PlaceholderField.swift */,
 				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
 				1429AC7720D4375500ABBCDE /* DisplayableCellProtocol.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
@@ -715,7 +715,7 @@
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
 				14561B8C20C444470057B4C1 /* ServiceResult.swift in Sources */,
-				14F015C520F93EE200537160 /* PlaceholderField.swift in Sources */,
+				14F015C720F999E300537160 /* PlaceholderField.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
 				1484148320C63A1A008FD68E /* MapService.swift in Sources */,
 				1484148520C70263008FD68E /* SystemServices.swift in Sources */,

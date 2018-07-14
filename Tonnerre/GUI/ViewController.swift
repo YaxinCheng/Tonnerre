@@ -14,7 +14,6 @@ class ViewController: NSViewController {
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
-  @IBOutlet weak var placeholderField: PlaceholderField!
   @IBOutlet weak var collectionView: TonnerreCollectionView!
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
@@ -34,14 +33,12 @@ class ViewController: NSViewController {
   
   override func viewWillAppear() {
     if TonnerreTheme.current == .dark {
-      iconView.theme = .dark
-      textField.theme = .dark
       backgroundView.material = .dark
     } else {
-      iconView.theme = .dark
-      textField.theme = .dark
       backgroundView.material = .mediumLight
     }
+    iconView.theme = .current
+    textField.theme = .current
     if keyboardMonitor == nil {
       keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
         self?.collectionView.keyDown(with: $0)
@@ -56,9 +53,6 @@ class ViewController: NSViewController {
   
   override func viewDidAppear() {
     _ = textField.becomeFirstResponder()
-    iconView.theme = .current
-    textField.theme = .current
-    placeholderField.theme = .current
   }
   
   override func viewWillDisappear() {
@@ -89,8 +83,7 @@ class ViewController: NSViewController {
   
   private func textDidChange(value: String) {
     collectionView.datasource = interpreter.interpret(rawCmd: value)
-    guard value.isEmpty else { placeholderField.empty(); return }
-    placeholderField.reset()
+    guard value.isEmpty else { return }
     interpreter.clearCache()
     refreshIcon()
   }

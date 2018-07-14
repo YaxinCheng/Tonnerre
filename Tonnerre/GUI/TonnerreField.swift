@@ -18,9 +18,16 @@ class TonnerreField: NSTextField, ThemeProtocol {
     }
   }
   
+  private var placeholderColour: NSColor! {
+    didSet {
+      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
+    }
+  }
+  
   var theme: TonnerreTheme {
     set {
       textColor = newValue.imgColour
+      placeholderColour = newValue.placeholderColour
     } get {
       return .current
     }
@@ -54,10 +61,15 @@ class TonnerreField: NSTextField, ThemeProtocol {
   }
   
   override var intrinsicContentSize: NSSize {
-    let cell = NSTextFieldCell(textCell: stringValue)
-    cell.attributedStringValue = attributedStringValue
+    let value = stringValue.isEmpty ? "Tonnerre" : stringValue
+    let cell = NSTextFieldCell(textCell: value)
+    let attributedString: NSAttributedString
+    if stringValue.isEmpty {
+      attributedString = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 35)])
+    } else {
+      attributedString = attributedStringValue
+    }
+    cell.attributedStringValue = attributedString
     return cell.cellSize
   }
-  
-  
 }

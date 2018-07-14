@@ -724,33 +724,31 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="Ocs-GP-EaD"/>
                                     </imageView>
                                     <textField focusRingType="none" horizontalHuggingPriority="252" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="8" width="483" height="40"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" usesSingleLineMode="YES" id="VxW-E4-dLH">
+                                        <rect key="frame" x="50" y="8" width="614" height="40"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" usesSingleLineMode="YES" id="VxW-E4-dLH">
                                             <font key="font" metaFont="system" size="35"/>
                                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RgT-fO-nAZ" customClass="PlaceholderField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="529" y="8" width="135" height="40"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Tonnerre" usesSingleLineMode="YES" id="E0T-2R-xZ8">
-                                            <font key="font" metaFont="system" size="35"/>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5eP-PP-XxY">
+                                        <rect key="frame" x="660" y="20" width="4" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="ve2-ne-lqC">
+                                            <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="RgT-fO-nAZ" firstAttribute="leading" secondItem="aLE-uw-uC8" secondAttribute="trailing" id="HUe-E8-Zqc"/>
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="top" constant="8" id="Mdx-MC-KG0"/>
-                                    <constraint firstAttribute="trailing" secondItem="RgT-fO-nAZ" secondAttribute="trailing" constant="8" id="VAV-Af-iAQ"/>
                                     <constraint firstItem="INu-6D-MeR" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="top" constant="8" id="Zqg-g0-7Zp"/>
                                     <constraint firstAttribute="height" constant="56" id="d88-QE-mrF"/>
-                                    <constraint firstItem="RgT-fO-nAZ" firstAttribute="top" secondItem="aLE-uw-uC8" secondAttribute="top" id="f88-2T-r7g"/>
+                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="centerY" secondItem="aLE-uw-uC8" secondAttribute="centerY" id="ovP-V7-Kxl"/>
                                     <constraint firstItem="INu-6D-MeR" firstAttribute="leading" secondItem="5FM-BE-sWa" secondAttribute="leading" constant="8" id="ovw-O5-3DB"/>
+                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="leading" secondItem="aLE-uw-uC8" secondAttribute="trailing" id="pgO-is-tuQ"/>
                                     <constraint firstAttribute="bottom" secondItem="aLE-uw-uC8" secondAttribute="bottom" constant="8" id="sQl-KG-6uW"/>
                                     <constraint firstAttribute="bottom" secondItem="INu-6D-MeR" secondAttribute="bottom" constant="8" id="xKz-Sn-DBb"/>
-                                    <constraint firstItem="RgT-fO-nAZ" firstAttribute="bottom" secondItem="aLE-uw-uC8" secondAttribute="bottom" id="zPG-Ma-oTc"/>
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="4" id="zvl-ID-CFr"/>
                                 </constraints>
                             </customView>
@@ -793,6 +791,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="5FM-BE-sWa" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="8yu-vN-Z6g"/>
+                            <constraint firstAttribute="trailing" secondItem="5eP-PP-XxY" secondAttribute="trailing" constant="8" id="BsT-1h-0Mu"/>
                             <constraint firstItem="2vM-ry-4Bc" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="bottom" id="DtR-Nj-b5i"/>
                             <constraint firstAttribute="trailing" secondItem="5FM-BE-sWa" secondAttribute="trailing" id="H1f-UI-cSI"/>
                             <constraint firstAttribute="bottom" secondItem="hZT-aK-YhT" secondAttribute="bottom" id="RZs-nE-e38"/>
@@ -809,7 +808,6 @@
                         <outlet property="backgroundView" destination="hZT-aK-YhT" id="mCU-K0-Zcd"/>
                         <outlet property="collectionView" destination="2vM-ry-4Bc" id="Zcm-Nf-KK6"/>
                         <outlet property="iconView" destination="INu-6D-MeR" id="RKf-CR-kGB"/>
-                        <outlet property="placeholderField" destination="RgT-fO-nAZ" id="fdM-hj-r56"/>
                         <outlet property="textField" destination="aLE-uw-uC8" id="sFU-wH-JcM"/>
                     </connections>
                 </viewController>
