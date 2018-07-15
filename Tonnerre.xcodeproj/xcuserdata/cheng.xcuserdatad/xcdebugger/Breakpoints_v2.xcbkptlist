@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tonnerre/GUI/TonnerreCollectionView.swift"
-            timestampString = "553317195.2687581"
+            timestampString = "553317306.537819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268">
+            startingLineNumber = "266"
+            endingLineNumber = "266">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tonnerre/GUI/TonnerreCollectionView.swift"
-            timestampString = "553317195.268837"
+            timestampString = "553317306.538856"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268">
+            startingLineNumber = "266"
+            endingLineNumber = "266">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
