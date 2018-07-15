@@ -97,14 +97,19 @@ class ViewController: NSViewController {
 extension ViewController: NSTextFieldDelegate {
   override func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
-    let current = objTextField.stringValue
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-      let now = self?.textField.stringValue ?? ""
-      if now.count > current.count {
-        self?.fullEditing()
-      } else {
-        self?.adjustEditing(withString: now)
+    let current = objTextField.stringValue// Capture the current value
+    if !current.isEmpty {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in// dispatch after 1 second
+        let now = self?.textField.stringValue ?? ""// Test the current value (after 1 second)
+        if now.count > current.count {// If the length is increasing, means there are more to type
+          self?.fullEditing()// Keep the length to max
+        } else {// If user is deleting the text or not editing anymore
+          self?.adjustEditing(withString: now)// Adjust the size
+        }
       }
+    } else {// If the text is empty
+      textField.window?.makeFirstResponder(nil)// End the editing status
+      textField.window?.makeFirstResponder(textField)
     }
     suggestionSession.cancel()
     let text = textField.stringValue
@@ -127,12 +132,19 @@ extension ViewController: NSTextFieldDelegate {
     return cell.cellSize
   }
   
+  /**
+   Make the editing area full length
+  */
   private func fullEditing() {
     let maxWidth: CGFloat = 610
     textFieldWidth.constant = maxWidth
     placeholderWidth.constant = 0
   }
   
+  /**
+   Make the editing area as long as the string
+   - parameter string: current displaying value
+  */
   private func adjustEditing(withString string: String) {
     let cellSize = calculateSize(value: string)
     let minSize = calculateSize(value: "Tonnerre")
