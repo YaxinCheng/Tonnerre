@@ -15,10 +15,15 @@ class ViewController: NSViewController {
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
   @IBOutlet weak var collectionView: TonnerreCollectionView!
+  @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
+  @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
+  
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
   private var lastQuery: String = ""
   private let suggestionSession = TonnerreSuggestionSession.shared
+  
+  private var previousText: String = ""
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -92,15 +97,35 @@ class ViewController: NSViewController {
 extension ViewController: NSTextFieldDelegate {
   override func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
+    Timer(timeInterval: 0.5, repeats: false, block: { [weak self] _ in
+      self?.controlTextDidEndEditing(obj)
+    }).fire()
     suggestionSession.cancel()
     let text = textField.stringValue
     textDidChange(value: text)
   }
   
   override func controlTextDidEndEditing(_ obj: Notification) {
+    guard let stringValue = (obj.object as? NSTextField)?.stringValue else { return }
+    let cellSize = calculateSize(value: stringValue)
+    let minSize = calculateSize(value: "Tonnerre")
+    textFieldWidth.constant = max(cellSize.width, minSize.width)
+    placeholderWidth.constant = 610 - max(cellSize.width, minSize.width)
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
     guard let (service, value) = collectionView.enterPressed() else { return }
     serve(with: service, target: value, withCmd: false)
+  }
+  
+  override func controlTextDidBeginEditing(_ obj: Notification) {
+    let maxWidth: CGFloat = 610
+    textFieldWidth.constant = maxWidth
+    placeholderWidth.constant = 0
+  }
+  
+  private func calculateSize(value: String) -> NSSize {
+    let cell = NSTextFieldCell(textCell: value)
+    cell.attributedStringValue = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 35)])
+    return cell.cellSize
   }
 }
 

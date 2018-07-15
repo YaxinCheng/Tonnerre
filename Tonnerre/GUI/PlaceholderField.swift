@@ -15,7 +15,7 @@ class PlaceholderField: NSTextField, ThemeProtocol {
   
   private var placeholderColour: NSColor! {
     didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
+      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
     }
   }
   
@@ -27,11 +27,11 @@ class PlaceholderField: NSTextField, ThemeProtocol {
     }
   }
   
-  func reset() {
-    placeholderAttributedString = NSAttributedString(string: "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
-  }
-  
-  func empty() {
-    placeholderAttributedString = NSAttributedString(string: "", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
+  override func mouseUp(with event: NSEvent) {
+    guard event.clickCount == 2 else { return }
+    guard var designedFrame = window?.frame, let mainScreen = NSScreen.main else { return }
+    designedFrame.origin.x = mainScreen.frame.width/2 - designedFrame.width/2
+    designedFrame.origin.y = mainScreen.frame.height * 5 / 6 - designedFrame.height
+    window?.setFrame(designedFrame, display: true)
   }
 }

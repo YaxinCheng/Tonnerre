@@ -39,7 +39,7 @@ class TonnerreIconView: NSImageView , ThemeProtocol {
     return true
   }
   
-  override func mouseDown(with event: NSEvent) {
+  override func mouseUp(with event: NSEvent) {
     guard event.clickCount == 2 else { return }
     guard var designedFrame = window?.frame, let mainScreen = NSScreen.main else { return }
     designedFrame.origin.x = mainScreen.frame.width/2 - designedFrame.width/2
