@@ -97,35 +97,48 @@ class ViewController: NSViewController {
 extension ViewController: NSTextFieldDelegate {
   override func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
-    Timer(timeInterval: 0.5, repeats: false, block: { [weak self] _ in
-      self?.controlTextDidEndEditing(obj)
-    }).fire()
+    let current = objTextField.stringValue
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+      let now = self?.textField.stringValue ?? ""
+      if now.count > current.count {
+        self?.fullEditing()
+      } else {
+        self?.adjustEditing(withString: now)
+      }
+    }
     suggestionSession.cancel()
     let text = textField.stringValue
     textDidChange(value: text)
   }
   
   override func controlTextDidEndEditing(_ obj: Notification) {
-    guard let stringValue = (obj.object as? NSTextField)?.stringValue else { return }
-    let cellSize = calculateSize(value: stringValue)
-    let minSize = calculateSize(value: "Tonnerre")
-    textFieldWidth.constant = max(cellSize.width, minSize.width)
-    placeholderWidth.constant = 610 - max(cellSize.width, minSize.width)
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
     guard let (service, value) = collectionView.enterPressed() else { return }
     serve(with: service, target: value, withCmd: false)
   }
   
   override func controlTextDidBeginEditing(_ obj: Notification) {
-    let maxWidth: CGFloat = 610
-    textFieldWidth.constant = maxWidth
-    placeholderWidth.constant = 0
+    fullEditing()
   }
   
   private func calculateSize(value: String) -> NSSize {
     let cell = NSTextFieldCell(textCell: value)
     cell.attributedStringValue = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 35)])
     return cell.cellSize
+  }
+  
+  private func fullEditing() {
+    let maxWidth: CGFloat = 610
+    textFieldWidth.constant = maxWidth
+    placeholderWidth.constant = 0
+  }
+  
+  private func adjustEditing(withString string: String) {
+    let cellSize = calculateSize(value: string)
+    let minSize = calculateSize(value: "Tonnerre")
+    let width = string.isEmpty ? minSize.width : cellSize.width
+    textFieldWidth.constant = width
+    placeholderWidth.constant = 610 - width
   }
 }
 
