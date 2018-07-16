@@ -102,7 +102,7 @@ extension ViewController: NSTextFieldDelegate {
     let current = objTextField.stringValue// Capture the current value
     if !current.isEmpty {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in// dispatch after 1 second
-        let now = self?.textField.stringValue ?? ""// Test the current value (after 1 second)
+        guard let now = self?.textField.stringValue else { return } // Test the current value (after 1 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
           self?.fullEditing()// Keep the length to max
         } else if !now.isEmpty {// If user is deleting the text or not editing anymore
@@ -112,8 +112,6 @@ extension ViewController: NSTextFieldDelegate {
     } else {// If the text is empty
       adjustEditing(withString: "")
       placeholderField.placeholderString = nil
-      textField.window?.makeFirstResponder(nil)// End the editing status
-      textField.window?.makeFirstResponder(textField)
     }
     suggestionSession.cancel()
     let text = textField.stringValue
@@ -156,6 +154,8 @@ extension ViewController: NSTextFieldDelegate {
     let width = string.isEmpty ? minSize.width : cellSize.width
     textFieldWidth.constant = width
     placeholderWidth.constant = 610 - width
+    textField.window?.makeFirstResponder(nil)// End the editing status
+    textField.window?.makeFirstResponder(textField)
   }
 }
 
