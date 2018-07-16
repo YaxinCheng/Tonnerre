@@ -705,7 +705,7 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
+                    <view key="view" wantsLayer="YES" misplaced="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -724,9 +724,9 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="Ocs-GP-EaD"/>
                                     </imageView>
                                     <textField focusRingType="none" horizontalHuggingPriority="252" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="aLE-uw-uC8" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="8" width="614" height="40"/>
+                                        <rect key="frame" x="50" y="8" width="604" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="610" id="el2-u3-rnd"/>
+                                            <constraint firstAttribute="width" constant="600" id="el2-u3-rnd"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" usesSingleLineMode="YES" id="VxW-E4-dLH">
                                             <font key="font" metaFont="system" size="35"/>
@@ -735,12 +735,12 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5eP-PP-XxY" customClass="PlaceholderField" customModule="Tonnerre" customModuleProvider="target">
-                                        <rect key="frame" x="660" y="20" width="4" height="17"/>
+                                        <rect key="frame" x="646" y="8" width="18" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" id="lBk-XE-177"/>
+                                            <constraint firstAttribute="width" constant="14" id="lBk-XE-177"/>
                                         </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="ve2-ne-lqC">
-                                            <font key="font" metaFont="system"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="ve2-ne-lqC">
+                                            <font key="font" metaFont="system" size="35"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -748,11 +748,12 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="top" constant="8" id="Mdx-MC-KG0"/>
+                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="height" secondItem="aLE-uw-uC8" secondAttribute="height" id="ZVm-sg-fNf"/>
                                     <constraint firstItem="INu-6D-MeR" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="top" constant="8" id="Zqg-g0-7Zp"/>
                                     <constraint firstAttribute="height" constant="56" id="d88-QE-mrF"/>
-                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="centerY" secondItem="aLE-uw-uC8" secondAttribute="centerY" id="ovP-V7-Kxl"/>
                                     <constraint firstItem="INu-6D-MeR" firstAttribute="leading" secondItem="5FM-BE-sWa" secondAttribute="leading" constant="8" id="ovw-O5-3DB"/>
-                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="leading" secondItem="aLE-uw-uC8" secondAttribute="trailing" id="pgO-is-tuQ"/>
+                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="leading" secondItem="aLE-uw-uC8" secondAttribute="trailing" constant="-4" id="pgO-is-tuQ"/>
+                                    <constraint firstItem="5eP-PP-XxY" firstAttribute="centerY" secondItem="aLE-uw-uC8" secondAttribute="centerY" id="rqx-Or-rLi"/>
                                     <constraint firstAttribute="bottom" secondItem="aLE-uw-uC8" secondAttribute="bottom" constant="8" id="sQl-KG-6uW"/>
                                     <constraint firstAttribute="bottom" secondItem="INu-6D-MeR" secondAttribute="bottom" constant="8" id="xKz-Sn-DBb"/>
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="4" id="zvl-ID-CFr"/>
@@ -783,7 +784,7 @@
                                     <constraint firstAttribute="height" identifier="collectionViewHeightConstraint" id="3So-zL-tkw"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="TYx-mj-r3R">
-                                    <rect key="frame" x="0.0" y="-16" width="670" height="16"/>
+                                    <rect key="frame" x="0.0" y="-16" width="666" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
@@ -814,6 +815,7 @@
                         <outlet property="backgroundView" destination="hZT-aK-YhT" id="mCU-K0-Zcd"/>
                         <outlet property="collectionView" destination="2vM-ry-4Bc" id="Zcm-Nf-KK6"/>
                         <outlet property="iconView" destination="INu-6D-MeR" id="RKf-CR-kGB"/>
+                        <outlet property="placeholderField" destination="5eP-PP-XxY" id="jHZ-0I-mRH"/>
                         <outlet property="placeholderWidth" destination="lBk-XE-177" id="fUA-Og-hgo"/>
                         <outlet property="textField" destination="aLE-uw-uC8" id="sFU-wH-JcM"/>
                         <outlet property="textFieldWidth" destination="el2-u3-rnd" id="GCY-Ch-snN"/>

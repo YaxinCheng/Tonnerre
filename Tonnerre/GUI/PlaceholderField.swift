@@ -27,6 +27,12 @@ class PlaceholderField: NSTextField, ThemeProtocol {
     }
   }
   
+  override var placeholderString: String? {
+    didSet {
+      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
+    }
+  }
+  
   override func mouseUp(with event: NSEvent) {
     guard event.clickCount == 2 else { return }
     guard var designedFrame = window?.frame, let mainScreen = NSScreen.main else { return }

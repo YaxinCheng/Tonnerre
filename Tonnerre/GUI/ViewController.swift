@@ -14,6 +14,7 @@ class ViewController: NSViewController {
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField!
+  @IBOutlet weak var placeholderField: PlaceholderField!
   @IBOutlet weak var collectionView: TonnerreCollectionView!
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
@@ -42,6 +43,7 @@ class ViewController: NSViewController {
     }
     iconView.theme = .current
     textField.theme = .current
+    placeholderField.theme = .current
     if keyboardMonitor == nil {
       keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
         self?.collectionView.keyDown(with: $0)
@@ -99,7 +101,7 @@ extension ViewController: NSTextFieldDelegate {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
     let current = objTextField.stringValue// Capture the current value
     if !current.isEmpty {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in// dispatch after 1 second
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in// dispatch after 1 second
         let now = self?.textField.stringValue ?? ""// Test the current value (after 1 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
           self?.fullEditing()// Keep the length to max
@@ -109,6 +111,7 @@ extension ViewController: NSTextFieldDelegate {
       }
     } else {// If the text is empty
       adjustEditing(withString: "")
+      placeholderField.placeholderString = nil
       textField.window?.makeFirstResponder(nil)// End the editing status
       textField.window?.makeFirstResponder(textField)
     }
@@ -186,14 +189,17 @@ extension ViewController: TonnerreCollectionViewDelegate {
     switch service {
     case .service(origin: let service) where !type(of: service).keyword.isEmpty:
       textField.autoComplete(cmd: type(of: service).keyword)
-    case .result(service: _, value: let value) where !value.name.isEmpty:
-      if let service = value as? TonnerreService {
-        textField.autoComplete(cmd: type(of: service).keyword)
+    case .result(service: let service, value: let value) where !value.name.isEmpty:
+      if let extService = service as? TonnerreExtendService {
+        textField.autoComplete(cmd: extService.keyword)
+      } else if let tservice = value as? TonnerreService {
+        textField.autoComplete(cmd: type(of: tservice).keyword)
       } else {
         textField.autoComplete(cmd: value.name)
       }
     default: return
     }
+    fullEditing()
     textDidChange(value: textField.stringValue)
   }
   
@@ -208,6 +214,31 @@ extension ViewController: TonnerreCollectionViewDelegate {
         refreshIcon()
       }
     }
+  }
+  
+  func fillPlaceholder(with service: ServiceResult?) {
+    guard let data = service else {
+      placeholderField.placeholderString = ""
+      return
+    }
+    let stringValue = textField.stringValue.lowercased()
+    let serviceValue: String
+    switch data {
+    case .result(service: let service, value: let value):
+      if let extService = service as? TonnerreExtendService {
+        serviceValue = extService.keyword
+      } else {
+        serviceValue = value.name.lowercased()
+      }
+    case .service(origin: let service):
+      serviceValue = type(of: service).keyword
+    }
+    guard serviceValue.starts(with: stringValue) else {
+      placeholderField.placeholderString = ""
+      return
+    }
+    let placeholder = String(serviceValue[stringValue.endIndex...])
+    placeholderField.placeholderString = placeholder
   }
 }
 

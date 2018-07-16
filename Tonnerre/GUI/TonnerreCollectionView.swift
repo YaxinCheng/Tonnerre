@@ -12,6 +12,7 @@ protocol TonnerreCollectionViewDelegate: class {
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool)
   func tabPressed(service: ServiceResult)
   func serviceHighlighted(service: ServiceResult?)
+  func fillPlaceholder(with service: ServiceResult?)
   func viewIsClicked()
   func retrieveLastQuery()
 }
@@ -30,6 +31,7 @@ class TonnerreCollectionView: NSScrollView {
         if oldValue == -1 { iconChange() }
         if datasource.count > 0 {
           collectionView.scrollToItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)
+          delegate?.fillPlaceholder(with: datasource[0])
         }
         return
       }
@@ -42,11 +44,13 @@ class TonnerreCollectionView: NSScrollView {
       visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
       if highlightedItemIndex != 0 { visibleIndex = max(visibleIndex, 0) }
       if highlightedItemIndex >= 0 {
+        delegate?.fillPlaceholder(with: datasource[highlightedItemIndex])
         collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
       } else {
         iconChange()
         highlightedItem?.highlighted = false
         highlightedItem = nil
+        delegate?.fillPlaceholder(with: datasource[0])
       }
     }
   }
