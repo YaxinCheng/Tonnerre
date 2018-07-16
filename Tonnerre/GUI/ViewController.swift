@@ -221,19 +221,9 @@ extension ViewController: TonnerreCollectionViewDelegate {
       placeholderField.placeholderString = ""
       return
     }
-    let stringValue = textField.stringValue.lowercased()
-    let serviceValue: String
-    switch data {
-    case .result(service: let service, value: let value):
-      if let extService = service as? TonnerreExtendService {
-        serviceValue = extService.keyword
-      } else {
-        serviceValue = value.name.lowercased()
-      }
-    case .service(origin: let service):
-      serviceValue = type(of: service).keyword
-    }
-    guard serviceValue.starts(with: stringValue) else {
+    let stringValue = textField.stringValue.components(separatedBy: .whitespaces).last?.lowercased() ?? textField.stringValue
+    let serviceValue = data.placeholder.lowercased()
+    guard !stringValue.isEmpty, serviceValue.starts(with: stringValue) else {
       placeholderField.placeholderString = ""
       return
     }

@@ -34,7 +34,7 @@ struct GoogleTranslateService: TonnerreService, HistoryProtocol {
     if let currentLangCode = Locale.current.languageCode {
       let prefix = "🖥 ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
       let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
-      let translator = DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)))
+      let translator = DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)), placeholder: "from to content")
       return [translator]
     } else { return [] }
   }

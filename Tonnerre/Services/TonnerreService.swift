@@ -16,6 +16,8 @@ protocol TonnerreService: Displayable {
   func prepare(input: [String]) -> [Displayable]
   func serve(source: Displayable, withCmd: Bool)
   
+  var placeholder: String { get }
+  
   init()
 }
 extension TonnerreService {
@@ -31,11 +33,15 @@ extension TonnerreService {
       userDeafult.set(newValue, forKey: "\(Self.self)+Disabled")
     }
   }
+  var placeholder: String {
+    return Self.keyword
+  }
 }
 
 protocol TonnerreExtendService: class, TonnerreService, Codable {
   var keyword: String { get }
   var isDisabled: Bool { get set }
+  var placeholder: String { get }
 }
 
 extension TonnerreExtendService {
@@ -45,6 +51,10 @@ extension TonnerreExtendService {
   static var isDisabled: Bool {
     get { return false }
     set {}
+  }
+  
+  var placeholder: String {
+    return keyword
   }
   
   var isDisabled: Bool {

@@ -13,13 +13,18 @@ struct DisplayableContainer<T>: Displayable {
   let content: String
   let icon: NSImage
   let innerItem: T?
+  let _placeholder: String
+  var placeholder: String {
+    return _placeholder.isEmpty ? (innerItem as? Displayable)?.placeholder ?? "" : _placeholder
+  }
   
-  init(name: String, content: String, icon: NSImage, innerItem: T? = nil) {
+  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "") {
     self.name = name
     self.content = content
     self.icon = icon
     self.icon.size = NSSize(width: 64, height: 64)
     self.innerItem = innerItem
+    self._placeholder = placeholder
   }
 }
 
@@ -33,13 +38,18 @@ struct AsyncedDisplayableContainer<T>: Displayable, AsyncedProtocol {
   let icon: NSImage
   let innerItem: T?
   let asyncedViewSetup: ((ServiceCell)->Void)?
+  let _placeholder: String
+  var placeholder: String {
+    return _placeholder.isEmpty ? (innerItem as? Displayable)?.placeholder ?? "" : _placeholder
+  }
   
-  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, viewSetup: ((ServiceCell)->Void)? = nil) {
+  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "", viewSetup: ((ServiceCell)->Void)? = nil) {
     self.name = name
     self.content = content
     self.icon = icon
     self.icon.size = NSSize(width: 64, height: 64)
     self.innerItem = innerItem
+    self._placeholder = placeholder
     self.asyncedViewSetup = viewSetup
   }
 }

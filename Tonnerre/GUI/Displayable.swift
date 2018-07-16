@@ -15,6 +15,7 @@ protocol Displayable {
   var alterContent: String? { get }
   var alterIcon: NSImage? { get }
   var itemIdentifier: NSUserInterfaceItemIdentifier { get }
+  var placeholder: String { get }
 }
 
 extension Displayable {
@@ -28,6 +29,10 @@ extension Displayable {
 extension URL: Displayable {
   var name: String {
     return self.deletingPathExtension().lastPathComponent
+  }
+  
+  var placeholder: String {
+    return name
   }
   
   var content: String {
