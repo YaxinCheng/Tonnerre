@@ -23,8 +23,6 @@ class ViewController: NSViewController {
   private var lastQuery: String = ""
   private let suggestionSession = TonnerreSuggestionSession.shared
   
-  private var previousText: String = ""
-  
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -67,6 +65,8 @@ class ViewController: NSViewController {
     guard let fmonitor = flagsMonitor else { return }
     NSEvent.removeMonitor(fmonitor)
     flagsMonitor = nil
+    adjustEditing(withString: "")
+    textField.window?.makeFirstResponder(nil)
   }
 
   private func refreshIcon() {
@@ -99,15 +99,16 @@ extension ViewController: NSTextFieldDelegate {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
     let current = objTextField.stringValue// Capture the current value
     if !current.isEmpty {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in// dispatch after 1 second
+      DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in// dispatch after 1 second
         let now = self?.textField.stringValue ?? ""// Test the current value (after 1 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
           self?.fullEditing()// Keep the length to max
-        } else {// If user is deleting the text or not editing anymore
+        } else if !now.isEmpty {// If user is deleting the text or not editing anymore
           self?.adjustEditing(withString: now)// Adjust the size
         }
       }
     } else {// If the text is empty
+      adjustEditing(withString: "")
       textField.window?.makeFirstResponder(nil)// End the editing status
       textField.window?.makeFirstResponder(textField)
     }
@@ -117,6 +118,7 @@ extension ViewController: NSTextFieldDelegate {
   }
   
   override func controlTextDidEndEditing(_ obj: Notification) {
+    if (obj.object as? NSTextField)?.stringValue.isEmpty ?? true { adjustEditing(withString: "") }
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
     guard let (service, value) = collectionView.enterPressed() else { return }
     serve(with: service, target: value, withCmd: false)
