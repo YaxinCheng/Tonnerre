@@ -27,6 +27,7 @@ class TonnerreCollectionView: NSScrollView {
   private var highlightedItemIndex = -1 {// Actual index in the datasource array
     didSet {
       if oldValue == highlightedItemIndex {
+        if oldValue != -1 { return }
         visibleIndex = -1
         if oldValue == -1 { iconChange() }
         if datasource.count > 0 {
@@ -42,7 +43,7 @@ class TonnerreCollectionView: NSScrollView {
       else if (visibleIndex == 0 || oldValue - highlightedItemIndex > 8) && !moveDown { scrollPosition = .top }
       else { scrollPosition = .init(rawValue: 0) }
       visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
-      if highlightedItemIndex != 0 { visibleIndex = max(visibleIndex, 0) }
+      if oldValue != 0 || moveDown { visibleIndex = max(visibleIndex, 0) }
       if highlightedItemIndex >= 0 {
         delegate?.fillPlaceholder(with: datasource[highlightedItemIndex])
         collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
@@ -123,7 +124,10 @@ class TonnerreCollectionView: NSScrollView {
         visibleIndex = event.keyCode == 125 ? 7 : 1
         highlightedItemIndex = event.keyCode == 125 ? datasource.count - 1 : 0
         DispatchQueue.main.async { [weak self] in
-          self?.collectionViewDidScroll()
+          guard let index = self?.highlightedItemIndex else { return }
+          let indexPath = IndexPath(item: index, section: 0)
+          let scrollPosition: NSCollectionView.ScrollPosition = event.keyCode == 125 ? .top : .bottom
+          self?.collectionView.scrollToItems(at: [indexPath], scrollPosition: scrollPosition)
         }
       } else {
         let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
