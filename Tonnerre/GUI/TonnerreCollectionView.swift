@@ -27,11 +27,11 @@ class TonnerreCollectionView: NSScrollView {
   private var highlightedItemIndex = -1 {// Actual index in the datasource array
     didSet {
       if oldValue == highlightedItemIndex {
-        if oldValue != -1 { return }
+        guard oldValue == -1 else { return }
         visibleIndex = -1
-        if oldValue == -1 { iconChange() }
+        iconChange()
         if datasource.count > 0 {
-          collectionView.scrollToItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)
+          collectionView.scrollToItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)// Scroll to top
           delegate?.fillPlaceholder(with: datasource[0])
         }
         return
@@ -43,7 +43,7 @@ class TonnerreCollectionView: NSScrollView {
       else if (visibleIndex == 0 || oldValue - highlightedItemIndex > 8) && !moveDown { scrollPosition = .top }
       else { scrollPosition = .init(rawValue: 0) }
       visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
-      if oldValue != 0 || moveDown { visibleIndex = max(visibleIndex, 0) }
+      if oldValue != 0 || moveDown { visibleIndex = max(visibleIndex, 0) }// if it is not move up from 0
       if highlightedItemIndex >= 0 {
         delegate?.fillPlaceholder(with: datasource[highlightedItemIndex])
         collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
@@ -127,14 +127,14 @@ class TonnerreCollectionView: NSScrollView {
           guard let index = self?.highlightedItemIndex else { return }
           let indexPath = IndexPath(item: index, section: 0)
           let scrollPosition: NSCollectionView.ScrollPosition = event.keyCode == 125 ? .top : .bottom
-          self?.collectionView.scrollToItems(at: [indexPath], scrollPosition: scrollPosition)
+          self?.collectionView.scrollToItems(at: [indexPath], scrollPosition: scrollPosition)// Scroll to bottom or top
         }
       } else {
-        let movement = NSDecimalNumber(decimal: pow(-1, (event.keyCode == 126).hashValue)).intValue// if key == 125, 1, else -1
-        if datasource.count != 0 {
-          highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
-        } else {
+        let movement = 2 * (event.keyCode == 125).hashValue - 1// if key == 125, 1, else -1
+        if datasource.count == 0 && movement == -1 {
           delegate?.retrieveLastQuery()
+        } else {
+          highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
         }
       }
     default:
@@ -252,7 +252,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
   
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    let width: CGFloat = 670
+    let width: CGFloat = 665
     return NSSize(width: width, height: cellHeight)
   }
 }
