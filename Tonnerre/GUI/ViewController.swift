@@ -170,6 +170,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
   func retrieveLastQuery() {
     textField.stringValue = lastQuery
     textDidChange(value: textField.stringValue)
+    adjustEditing(withString: lastQuery)
   }
   
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {

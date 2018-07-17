@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 extension LaunchOrder {
-  static func order(identifier: String) {
+  static func saveOrder(for identifier: String) {
     let context = getContext()
     let launchOrder: LaunchOrder
     if let existing = find(identifier: identifier) {
@@ -18,9 +18,19 @@ extension LaunchOrder {
     } else {
       launchOrder = LaunchOrder(context: context)
       launchOrder.identifier = identifier
-      launchOrder.score = 9
+      launchOrder.time = Date()
     }
-    launchOrder.pileupScore()
+    do {
+      try context.save()
+    } catch {
+      #if DEBUG
+      print(error)
+      #endif
+    }
+  }
+  
+  static func retrieveTime(with identifier: String) -> Date {
+    return find(identifier: identifier)?.time ?? Date(timeIntervalSince1970: 0)
   }
   
   static private func find(identifier: String) -> LaunchOrder? {
@@ -29,13 +39,5 @@ extension LaunchOrder {
     fetchRequest.fetchLimit = 1
     let context = getContext()
     return (try? context.fetch(fetchRequest))?.first
-  }
-  
-  private func pileupScore() {
-    let inc: (Int16)->(Int16) = {
-      let step = $0 == 9 ? 0 : 9 - $0 % 9
-      return 9 - 1 - (-1 + Int16(sqrt(Float(1 + 8 * step)))) / 2
-    }// Generate sequence 9, 9 + 8, 9 + 8 + 7, 9 + 8 + 7 + 6, ..., 9 + 8 + 7 + ... + 1 + 0 + 0 + ... + 0
-    score += inc(score)
   }
 }

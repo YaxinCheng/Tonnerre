@@ -36,9 +36,6 @@ extension TonnerreService {
   var placeholder: String {
     return Self.keyword
   }
-  var serviceIdentifier: String {
-    return "\(Self.keyword)+\(name):\(argLowerBound)-\(argUpperBound)"
-  }
 }
 
 protocol TonnerreExtendService: class, TonnerreService, Codable {
@@ -68,9 +65,6 @@ extension TonnerreExtendService {
       let userDeafult = UserDefaults.standard
       userDeafult.set(newValue, forKey: "\(name)+\(keyword)+Disabled")
     }
-  }
-  var serviceIdentifier: String {
-    return "\(keyword)+\(name):\(argLowerBound)-\(argUpperBound)"
   }
 }
 

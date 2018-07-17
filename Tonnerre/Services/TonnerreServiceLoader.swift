@@ -23,10 +23,13 @@ struct TonnerreServiceLoader {
   
   func autoComplete(key: String, type: serviceType = .normal, includeExtra: Bool = true) -> [TonnerreService] {
     if type == .normal {
-      let fetchedServices = normalServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }.map { $0.init() }
-      let prioritized = includeExtra ? (prioritizedServices) : []
-      let extended = extendedServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra }
-      return fetchedServices + prioritized + extended
+      let prioritized = includeExtra ? prioritizedServices : []
+      let fetchedServices = normalServiceTrie.find(value: key)
+        .filter { !$0.isDisabled || !includeExtra }
+        .map { $0.init() }
+      let extended: [TonnerreService] = extendedServiceTrie.find(value: key)
+        .filter { !$0.isDisabled || !includeExtra }
+      return fetchedServices + extended + prioritized
     } else if type == .system {
       return systemServiceTrie.find(value: key).filter { !$0.isDisabled || !includeExtra } .map { $0.init() }
     } else if type == .interpreter {

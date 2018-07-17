@@ -31,11 +31,16 @@ struct LaunchService: TonnerreService {
         name = LaunchService.aliasDict[$0.lastPathComponent] ?? $0.name
       } else { name = $0.name }
       return DisplayableContainer(name: name, content: $0.content, icon: $0.icon, innerItem: $0)
+    }.sorted {
+      let firstTime = LaunchOrder.retrieveTime(with: ($0 as! DisplayableContainer<URL>).innerItem!.absoluteString)
+      let secondTime = LaunchOrder.retrieveTime(with: ($1 as! DisplayableContainer<URL>).innerItem!.absoluteString)
+      return firstTime > secondTime
     }
   }
   
   func serve(source: Displayable, withCmd: Bool) {
     guard let appURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+    LaunchOrder.saveOrder(for: appURL.absoluteString)
     let workspace = NSWorkspace.shared
     if withCmd {
       workspace.activateFileViewerSelecting([appURL])
