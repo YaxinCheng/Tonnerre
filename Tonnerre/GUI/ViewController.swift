@@ -154,8 +154,10 @@ extension ViewController: NSTextFieldDelegate {
     let width = string.isEmpty ? minSize.width : cellSize.width
     textFieldWidth.constant = width
     placeholderWidth.constant = 610 - width
+    guard let position = textField.currentEditor()?.selectedRange.location else { return }
     textField.window?.makeFirstResponder(nil)// End the editing status
     textField.window?.makeFirstResponder(textField)
+    textField.currentEditor()?.selectedRange = NSRange(location: position, length: 0)
   }
 }
 
