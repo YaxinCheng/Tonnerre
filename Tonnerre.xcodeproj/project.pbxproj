@@ -98,6 +98,7 @@
 		14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C220F8F6D100537160 /* HistoryProtocol.swift */; };
 		14F015C720F999E300537160 /* PlaceholderField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C620F999E200537160 /* PlaceholderField.swift */; };
 		14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015CC20FE794700537160 /* LaunchOrder+Extension.swift */; };
+		14F015CF20FFD25200537160 /* BookmarksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015CE20FFD25200537160 /* BookmarksService.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 /* End PBXBuildFile section */
 
@@ -236,6 +237,7 @@
 		14F015C220F8F6D100537160 /* HistoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryProtocol.swift; sourceTree = "<group>"; };
 		14F015C620F999E200537160 /* PlaceholderField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderField.swift; sourceTree = "<group>"; };
 		14F015CC20FE794700537160 /* LaunchOrder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchOrder+Extension.swift"; sourceTree = "<group>"; };
+		14F015CE20FFD25200537160 /* BookmarksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksService.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -438,6 +440,7 @@
 				14561B9620C4892D0057B4C1 /* WikipediaSearch.swift */,
 				145DA16820DAD70100C1E804 /* BingSearch.swift */,
 				145DA16A20DADA2800C1E804 /* DuckDuckGo.swift */,
+				14F015CE20FFD25200537160 /* BookmarksService.swift */,
 			);
 			path = Web;
 			sourceTree = "<group>";
@@ -737,6 +740,7 @@
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
+				14F015CF20FFD25200537160 /* BookmarksService.swift in Sources */,
 				1429AC7220D42B4000ABBCDE /* ServicesService.swift in Sources */,
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
