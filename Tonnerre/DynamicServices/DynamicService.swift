@@ -16,6 +16,53 @@ final class DynamicService: TonnerreService {
   private var scripts = Dictionary<String, [DisplayableContainer<String>]>()
   private var scriptTrie: Trie<(String, DisplayableContainer<String>)>
   private let encode = JSONSerialization.data
+  
+  // MARK: - Tool
+  func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage) -> Displayable? {
+    guard
+      let rawName = jsonObject["name"]
+    else { return nil }
+    let name: String = "\(rawName)"
+    let content = jsonObject["content"] as? String ?? ""
+    let innerItem = jsonObject["innerItem"]
+    let placeholder = jsonObject["placeholder"] as? String ?? ""
+    if let stringItem = innerItem as? String {
+      if let urlItem = URL(string: stringItem), let _ = NSWorkspace.shared.urlForApplication(toOpen: urlItem) {
+        return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: urlItem, placeholder: placeholder)
+      } else {
+        return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: stringItem, placeholder: placeholder)
+      }
+    } else if let arrayItem = innerItem as? [String] {
+      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: arrayItem, placeholder: placeholder)
+    } else if let dictItem = innerItem as? [String: Any] {
+      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: dictItem, placeholder: placeholder)
+    } else if let decimalItem = innerItem as? Decimal {
+      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: decimalItem, placeholder: placeholder)
+    } else if let decimalArrayItem = innerItem as? [Decimal] {
+      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: decimalArrayItem, placeholder: placeholder)
+    } else {
+      return DisplayableContainer<Decimal>(name: name, content: content, icon: withIcon)
+    }
+  }
+  
+  func dictionarize(_ displayItem: Displayable) -> Dictionary<String, Any> {
+    var resultDictionary = Dictionary<String, Any>()
+    resultDictionary["name"] = displayItem.name
+    resultDictionary["content"] = displayItem.content
+    resultDictionary["placeholder"] = displayItem.placeholder
+    if let urlContent = (displayItem as? DisplayableContainer<URL>)?.innerItem {
+      resultDictionary["innerItem"] = urlContent.absoluteString
+    } else if let content = (displayItem as? DisplayableContainer<String>)?.innerItem {
+      resultDictionary["innerItem"] = content
+    } else if let content = (displayItem as? DisplayableContainer<[String]>)?.innerItem {
+      resultDictionary["innerItem"] = content
+    } else if let content = (displayItem as? DisplayableContainer<Decimal>)?.innerItem {
+      resultDictionary["innerItem"] = content
+    } else if let content = (displayItem as? DisplayableContainer<[String: Any]>)?.innerItem {
+      resultDictionary["innerItem"] = content
+    }
+    return resultDictionary
+  }
 
   // MARK: - Constructions
   
@@ -27,7 +74,7 @@ final class DynamicService: TonnerreService {
   private static func generateService(from url: URL) -> (String, DisplayableContainer<String>)? {
     let script = url.appendingPathComponent("main.py")
     guard FileManager.default.fileExists(atPath: script.path) else { return nil }
-    let iconURL = url.appendingPathComponent("icon")
+    let iconURL = url.appendingPathComponent("icon.png")
     let icon = NSImage(contentsOf: iconURL) ?? #imageLiteral(resourceName: "tonnerre")
     let jsonURL = url.appendingPathComponent("description.json")
     do {
@@ -52,7 +99,7 @@ final class DynamicService: TonnerreService {
    Load TNE extensions from the Services folder in the App Support
    - returns: An array of available services, where as the first value is the keyword, and second is how to display it
   */
-  private static func load() -> [(String, DisplayableContainer<String>)] {
+  private static func prefetch() -> [(String, DisplayableContainer<String>)] {
     let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
     let serviceFolder = appSupDir.appendingPathComponent("Services")
     do {
@@ -68,7 +115,7 @@ final class DynamicService: TonnerreService {
   }
   
   required init() {
-    let scripts = DynamicService.load()
+    let scripts = DynamicService.prefetch()
     scriptTrie = Trie(values: scripts) { $0.0 }
   }
   
@@ -99,10 +146,20 @@ final class DynamicService: TonnerreService {
     case .serve(choice: let choice):
       inputPipe.fileHandleForWriting.write(try encode(choice, .prettyPrinted))
     }
+    inputPipe.fileHandleForWriting.closeFile()
     try process.run()
     let runningResult = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    guard !runningResult.isEmpty else { return [] }
-    // Process output to displayable
+    guard
+      !runningResult.isEmpty
+    else { return [] }
+    let returned = try JSONSerialization.jsonObject(with: runningResult, options: .mutableLeaves)
+    if let jsonObject = returned as? [Dictionary<String, Any>] {
+      return jsonObject.compactMap { decode($0, withIcon: script.icon) }
+    } else if let errorInfo = returned as? Dictionary<String, String> {
+      #if DEBUG
+      print(errorInfo)
+      #endif
+    }
     return []
   }
   
@@ -114,10 +171,25 @@ final class DynamicService: TonnerreService {
     let possibleServices = scriptTrie.find(value: queryKey).map { $0.1 }
     guard input.count > 1 else { return possibleServices }
     let queryContent = Array(input[1...])
-    return possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
+    let preparedResult = possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }
+    return zip(possibleServices, preparedResult).map { value in
+      value.1.map { DynamicServiceBound(service: value.0, result: $0) }
+    }.reduce([], +)
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    
+    guard let dynService = source as? DynamicServiceBound else { return }
+    let (service, choice) = (dynService.service, dynService.result)
+    var dictionarizedChoice = dictionarize(choice)
+    dictionarizedChoice["withCmd"] = withCmd
+    do {
+      _ = try execute(script: service, runningMode: .serve(choice: dictionarizedChoice))
+    } catch {
+      #if DEBUG
+      print("Serve Error: ", error)
+      #endif
+    }
   }
 }
+
+

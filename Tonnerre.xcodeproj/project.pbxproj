@@ -11,6 +11,7 @@
 		1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1405334520F66F7400C289CF /* CBRecord+Extension.swift */; };
 		140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A62CB20CB078500B759A4 /* DictionaryService.swift */; };
 		1421F285210257D90020480A /* DynamicServiceExec.py in Resources */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
+		1421F28721026D220020480A /* DynamicServiceBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1421F28621026D220020480A /* DynamicServiceBound.swift */; };
 		1429AC7220D42B4000ABBCDE /* ServicesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7120D42B4000ABBCDE /* ServicesService.swift */; };
 		1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429AC7320D435A300ABBCDE /* OnOffCell.swift */; };
 		1429AC7620D435A300ABBCDE /* OnOffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7420D435A300ABBCDE /* OnOffCell.xib */; };
@@ -156,6 +157,7 @@
 		140A62CB20CB078500B759A4 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		1421F284210257D90020480A /* DynamicServiceExec.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = DynamicServiceExec.py; sourceTree = SOURCE_ROOT; };
+		1421F28621026D220020480A /* DynamicServiceBound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicServiceBound.swift; sourceTree = "<group>"; };
 		1429AC7120D42B4000ABBCDE /* ServicesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesService.swift; sourceTree = "<group>"; };
 		1429AC7320D435A300ABBCDE /* OnOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffCell.swift; sourceTree = "<group>"; };
 		1429AC7420D435A300ABBCDE /* OnOffCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnOffCell.xib; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				14F015D72102314600537160 /* DynamicService.swift */,
+				1421F28621026D220020480A /* DynamicServiceBound.swift */,
 			);
 			path = DynamicServices;
 			sourceTree = "<group>";
@@ -770,6 +773,7 @@
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
+				1421F28721026D220020480A /* DynamicServiceBound.swift in Sources */,
 				14F015CF20FFD25200537160 /* BookmarksService.swift in Sources */,
 				1429AC7220D42B4000ABBCDE /* ServicesService.swift in Sources */,
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,

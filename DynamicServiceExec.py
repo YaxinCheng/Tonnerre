@@ -33,6 +33,8 @@ with NoPrintsZone():
         error = e
 
 if error:
-    print('{{"Error": "{}"}}'.format(error), end='')
-elif isinstance(feedback, dict) or isinstance(feedback, list):
-    print(json.dumps(feedback), end='')
+    print('{{"Error": "{}"}}'.format(error))
+elif isinstance(feedback, list):
+    print(json.dumps(feedback))
+elif isinstance(feedback, dict):
+    print(json.dumps([feedback]))
