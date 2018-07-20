@@ -39,7 +39,7 @@ class BaseWindow: NSPanel {
     }
     isMovableByWindowBackground = true
     isMovable = true
-    level = .floating
+    level = .mainMenu
     isOpaque = false
     backgroundColor = .clear
     folderChecks()
@@ -76,7 +76,7 @@ class BaseWindow: NSPanel {
   }
   
   private func setupCache() {
-    let cache = URLCache(memoryCapacity: 1024 * 1024, diskCapacity: 1024 * 1024 * 10, diskPath: {
+    let cache = URLCache(memoryCapacity: 1024 * 1024 * 5, diskCapacity: 1024 * 1024 * 25, diskPath: {
       let userDefault = UserDefaults.standard
       let appSupFolder = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
       return appSupFolder.appendingPathComponent("Cache").path

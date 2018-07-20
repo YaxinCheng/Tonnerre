@@ -51,7 +51,8 @@ class TonnerreCollectionView: NSScrollView {
         iconChange()
         highlightedItem?.highlighted = false
         highlightedItem = nil
-        delegate?.fillPlaceholder(with: datasource[0])
+        guard let first = datasource.first else { return }
+        delegate?.fillPlaceholder(with: first)
       }
     }
   }
