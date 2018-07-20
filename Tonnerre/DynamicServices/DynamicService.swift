@@ -15,14 +15,15 @@ final class DynamicService: TonnerreService {
   let argUpperBound: Int = Int.max
   private var scripts = Dictionary<String, [DisplayableContainer<String>]>()
   private var scriptTrie: Trie<(String, DisplayableContainer<String>)>
-  
-  // MARK: - Tool functions
-  private func encode(array: [String]) throws -> Data {
-    return try JSONSerialization.data(withJSONObject: array, options: .prettyPrinted)
-  }
-  
+  private let encode = JSONSerialization.data
+
   // MARK: - Constructions
   
+  /**
+   Parse information in a json file to get the service
+   - parameter url: the url to the TNE script
+   - returns: (keyword, DisplayableContainer with information in the JSON)
+  */
   private static func generateService(from url: URL) -> (String, DisplayableContainer<String>)? {
     let script = url.appendingPathComponent("main.py")
     guard FileManager.default.fileExists(atPath: script.path) else { return nil }
@@ -47,6 +48,10 @@ final class DynamicService: TonnerreService {
     }
   }
   
+  /**
+   Load TNE extensions from the Services folder in the App Support
+   - returns: An array of available services, where as the first value is the keyword, and second is how to display it
+  */
   private static func load() -> [(String, DisplayableContainer<String>)] {
     let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
     let serviceFolder = appSupDir.appendingPathComponent("Services")
@@ -69,32 +74,47 @@ final class DynamicService: TonnerreService {
   
   // MARK: - Script Execute
   private enum Mode {
-    case prepare
-    case serve
+    case prepare(input: [String])
+    case serve(choice: [String: Any])
+    
+    var argument: String {
+      switch self {
+      case .prepare(input: _): return "--prepare"
+      case .serve(choice: _): return "--serve"
+      }
+    }
   }
   
-  private func execute(script: DisplayableContainer<String>, runningMode: Mode) -> [Displayable] {
+  private func execute(script: DisplayableContainer<String>, runningMode: Mode) throws -> [Displayable] {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
-    // Launch default python script to execute
+    process.arguments = [runningMode.argument, scriptPath]
+    process.executableURL = Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")
+    let (inputPipe, outputPipe) = (Pipe(), Pipe())
+    process.standardInput = inputPipe
+    process.standardOutput = outputPipe
+    switch runningMode {
+    case .prepare(input: let input):
+      inputPipe.fileHandleForWriting.write(try encode(input, .prettyPrinted))
+    case .serve(choice: let choice):
+      inputPipe.fileHandleForWriting.write(try encode(choice, .prettyPrinted))
+    }
+    try process.run()
+    let runningResult = outputPipe.fileHandleForReading.readDataToEndOfFile()
+    guard !runningResult.isEmpty else { return [] }
+    // Process output to displayable
     return []
   }
   
   // MARK: - TonnerreService
   
   func prepare(input: [String]) -> [Displayable] {
-    do {
-      guard input.count > 0 else { return [] }
-      let queryKey = input.first!
-      let possibleServices = scriptTrie.find(value: queryKey)
-      guard input.count > 1 else { return possibleServices.map { $0.1 } }
-      let queryContent = Array(input[1...])
-      let encodedContent = try encode(array: queryContent)
-      
-    } catch {
-      
-    }
-    return []
+    guard input.count > 0 else { return [] }
+    let queryKey = input.first!
+    let possibleServices = scriptTrie.find(value: queryKey).map { $0.1 }
+    guard input.count > 1 else { return possibleServices }
+    let queryContent = Array(input[1...])
+    return possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
   }
   
   func serve(source: Displayable, withCmd: Bool) {
