@@ -26,22 +26,13 @@ final class DynamicService: TonnerreService {
     let content = jsonObject["content"] as? String ?? ""
     let innerItem = jsonObject["innerItem"]
     let placeholder = jsonObject["placeholder"] as? String ?? ""
-    if let stringItem = innerItem as? String {
-      if let urlItem = URL(string: stringItem), let _ = NSWorkspace.shared.urlForApplication(toOpen: urlItem) {
-        return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: urlItem, placeholder: placeholder)
-      } else {
-        return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: stringItem, placeholder: placeholder)
-      }
-    } else if let arrayItem = innerItem as? [String] {
-      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: arrayItem, placeholder: placeholder)
-    } else if let dictItem = innerItem as? [String: Any] {
-      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: dictItem, placeholder: placeholder)
-    } else if let decimalItem = innerItem as? Decimal {
-      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: decimalItem, placeholder: placeholder)
-    } else if let decimalArrayItem = innerItem as? [Decimal] {
-      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: decimalArrayItem, placeholder: placeholder)
+    if
+      let stringItem = innerItem as? String,
+      let urlItem = URL(string: stringItem),
+      let _ = NSWorkspace.shared.urlForApplication(toOpen: urlItem) {
+      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: urlItem, placeholder: placeholder)
     } else {
-      return DisplayableContainer<Decimal>(name: name, content: content, icon: withIcon)
+      return DisplayableContainer<Any>(name: name, content: content, icon: withIcon, innerItem: innerItem, placeholder: placeholder)
     }
   }
   
@@ -52,14 +43,8 @@ final class DynamicService: TonnerreService {
     resultDictionary["placeholder"] = displayItem.placeholder
     if let urlContent = (displayItem as? DisplayableContainer<URL>)?.innerItem {
       resultDictionary["innerItem"] = urlContent.absoluteString
-    } else if let content = (displayItem as? DisplayableContainer<String>)?.innerItem {
-      resultDictionary["innerItem"] = content
-    } else if let content = (displayItem as? DisplayableContainer<[String]>)?.innerItem {
-      resultDictionary["innerItem"] = content
-    } else if let content = (displayItem as? DisplayableContainer<Decimal>)?.innerItem {
-      resultDictionary["innerItem"] = content
-    } else if let content = (displayItem as? DisplayableContainer<[String: Any]>)?.innerItem {
-      resultDictionary["innerItem"] = content
+    } else {
+      resultDictionary["innerItem"] = (displayItem as? DisplayableContainer<Any>)?.innerItem
     }
     return resultDictionary
   }
