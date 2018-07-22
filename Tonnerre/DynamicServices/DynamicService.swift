@@ -104,6 +104,11 @@ final class DynamicService: TonnerreService {
     scriptTrie = Trie(values: scripts) { $0.0 }
   }
   
+  func reload() {
+    let scripts = DynamicService.prefetch()
+    scriptTrie = Trie(values: scripts) { $0.0 }
+  }
+  
   // MARK: - Script Execute
   private enum Mode {
     case prepare(input: [String])
@@ -117,11 +122,13 @@ final class DynamicService: TonnerreService {
     }
   }
   
+  private static weak var runningProcess: Process?
+  
   private func execute(script: DisplayableContainer<String>, runningMode: Mode) throws -> [Displayable] {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
-    process.arguments = [runningMode.argument, scriptPath]
-    process.executableURL = Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")
+    process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
+    process.executableURL = URL(fileURLWithPath: "/usr/local/bin/python3")
     let (inputPipe, outputPipe) = (Pipe(), Pipe())
     process.standardInput = inputPipe
     process.standardOutput = outputPipe
@@ -132,6 +139,7 @@ final class DynamicService: TonnerreService {
       inputPipe.fileHandleForWriting.write(try encode(choice, .prettyPrinted))
     }
     inputPipe.fileHandleForWriting.closeFile()
+    type(of: self).runningProcess = process
     try process.run()
     let runningResult = outputPipe.fileHandleForReading.readDataToEndOfFile()
     guard
@@ -150,11 +158,28 @@ final class DynamicService: TonnerreService {
   
   // MARK: - TonnerreService
   
+  /**
+   Cached request key. Used to avoid duplicate writting and requesting from the Trie
+  */
+  private var cachedKey: String?
+  /**
+   Cached services.
+  */
+  private var cachedServices: [DisplayableContainer<String>] = []
+  
   func prepare(input: [String]) -> [Displayable] {
     guard input.count > 0 else { return [] }
     let queryKey = input.first!
-    let possibleServices = scriptTrie.find(value: queryKey).map { $0.1 }
+    let possibleServices: [DisplayableContainer<String>]
+    if let cache = cachedKey, cache == queryKey {
+      possibleServices = cachedServices
+    } else {
+      cachedKey = queryKey
+      possibleServices = scriptTrie.find(value: queryKey).map { $0.1 }
+      cachedServices = possibleServices
+    }
     guard input.count > 1 else { return possibleServices }
+    type(of: self).runningProcess?.terminate()
     let queryContent = Array(input[1...])
     return possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
   }
@@ -169,6 +194,7 @@ final class DynamicService: TonnerreService {
       let service = anyResult.extraContent as? DisplayableContainer<String> {
       originalService = service
     } else { return }
+    type(of: self).runningProcess?.terminate()
     var dictionarizedChoice = dictionarize(source)
     dictionarizedChoice["withCmd"] = withCmd
     do {

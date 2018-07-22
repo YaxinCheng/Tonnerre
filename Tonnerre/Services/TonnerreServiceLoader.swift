@@ -53,5 +53,6 @@ struct TonnerreServiceLoader {
   
   mutating func reload() {
     extendedServiceTrie = Trie(values: GeneralWebService.load()) { $0.keyword }
+    (prioritizedServices.last as? DynamicService)?.reload()
   }
 }
