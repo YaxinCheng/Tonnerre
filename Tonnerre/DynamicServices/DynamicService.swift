@@ -16,6 +16,7 @@ final class DynamicService: TonnerreService {
   private var scripts = Dictionary<String, [DisplayableContainer<String>]>()
   private var scriptTrie: Trie<(String, DisplayableContainer<String>)>
   private let encode = JSONSerialization.data
+  private let suggestionSession = TonnerreSuggestionSession.shared
   
   // MARK: - Tool
   func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> Displayable? {
@@ -178,32 +179,46 @@ final class DynamicService: TonnerreService {
       possibleServices = scriptTrie.find(value: queryKey).map { $0.1 }
       cachedServices = possibleServices
     }
-    guard input.count > 1 else { return possibleServices }
-    type(of: self).runningProcess?.terminate()
-    let queryContent = Array(input[1...])
-    return possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
+    if input.count > 1 {
+      let task = DispatchWorkItem { [unowned self] in
+        DynamicService.runningProcess?.terminate()
+        let queryContent = Array(input[1...])
+        let content = possibleServices.compactMap { try? self.execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
+        guard content.count > 0 else { return }
+        let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: ["suggestions": content])
+        NotificationCenter.default.post(notification)
+      }
+      suggestionSession.send(request: task)
+    }
+    return possibleServices
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    let originalService: DisplayableContainer<String>
-    if let urlResult = source as? DisplayableContainer<URL>,
-      let service = urlResult.extraContent as? DisplayableContainer<String> {
-      originalService = service
-    } else if
-      let anyResult = source as? DisplayableContainer<Any>,
-      let service = anyResult.extraContent as? DisplayableContainer<String> {
-      originalService = service
-    } else { return }
-    type(of: self).runningProcess?.terminate()
-    var dictionarizedChoice = dictionarize(source)
-    dictionarizedChoice["withCmd"] = withCmd
-    do {
-      _ = try execute(script: originalService, runningMode: .serve(choice: dictionarizedChoice))
-    } catch {
-      #if DEBUG
-      print("Serve Error: ", error)
-      #endif
+    DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
+      let originalService: DisplayableContainer<String>
+      if let urlResult = source as? DisplayableContainer<URL>,
+        let service = urlResult.extraContent as? DisplayableContainer<String> {
+        originalService = service
+      } else if
+        let anyResult = source as? DisplayableContainer<Any>,
+        let service = anyResult.extraContent as? DisplayableContainer<String> {
+        originalService = service
+      } else { return }
+      type(of: self).runningProcess?.terminate()
+      var dictionarizedChoice = self.dictionarize(source)
+      dictionarizedChoice["withCmd"] = withCmd
+      do {
+        _ = try self.execute(script: originalService, runningMode: .serve(choice: dictionarizedChoice))
+      } catch {
+        #if DEBUG
+        print("Serve Error: ", error)
+        #endif
+      }
     }
+  }
+  
+  func encodedSuggestions(queries: [Displayable]) -> [ServiceResult] {
+    return queries.map { ServiceResult(service: self, value: $0) }
   }
 }
 

@@ -45,10 +45,33 @@ class TonnerreSuggestionSession {
     }
   }
   
+  private var asyncRequest: DispatchWorkItem? = nil
+  
+  func send(request: DispatchWorkItem, after second: Double = 0) {
+    asyncRequest?.cancel()
+    asyncRequest = request
+    queue.asyncAfter(deadline: .now() + second) { [weak self] in
+      TonnerreSuggestionSession.lock.wait()
+      defer { TonnerreSuggestionSession.lock.signal() }
+      guard
+        self?.asyncRequest != nil,
+        self?.asyncRequest?.isCancelled == false,
+        self?.asyncRequest === request
+      else { return }
+      DispatchQueue.global(qos: .userInteractive).async(execute: request)
+      self?.asyncRequest = nil
+    }
+  }
+  
   func cancel() {
-    guard suggestionRequest != nil else { return }
-    suggestionRequest?.cancel()
-    suggestionRequest = nil
+    if suggestionRequest != nil {
+      suggestionRequest?.cancel()
+      suggestionRequest = nil
+    }
+    if asyncRequest != nil {
+      asyncRequest?.cancel()
+      asyncRequest = nil
+    }
   }
   
   func dataTask(request: URLRequest, completionHanlder: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
