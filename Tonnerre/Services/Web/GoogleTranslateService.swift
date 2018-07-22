@@ -65,9 +65,12 @@ struct GoogleTranslateService: TonnerreService, HistoryProtocol {
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
-    let requestedLangues = parseLangues(fromURL: request)
-    if !requestedLangues.starts(with: "auto") {
+    guard
+      let item = source as? DisplayableContainer<URL>,
+      let request = item.innerItem
+    else { return }
+    if let requestedLangues = item.extraContent as? String,
+      !requestedLangues.starts(with: "auto") {
       appendHistory(query: requestedLangues, unique: true)
     }
     NSWorkspace.shared.open(request)
@@ -81,12 +84,7 @@ struct GoogleTranslateService: TonnerreService, HistoryProtocol {
     let url = URL(string: String(format: template, regionCode ?? "com", "#" + fromLangue, toLangue, encodedContent))
     let localizedFromLangue = NSLocale(localeIdentifier: fromLangue).displayName(forKey: .identifier, value: fromLangue) ?? "..."
     let localizedToLangue = NSLocale(localeIdentifier: toLangue).displayName(forKey: .identifier, value: toLangue) ?? "..."
-    return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url)
-  }
-  
-  private func parseLangues(fromURL url: URL) -> String {
-    let components = url.absoluteString.split { $0 == "/" || $0 == "#" }
-    return String(components[4]) + "/" + String(components[5])
+    return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url, extraContent: "\(fromLangue)/\(toLangue)")
   }
   
   func reuse(history: [String]) -> [Displayable] {

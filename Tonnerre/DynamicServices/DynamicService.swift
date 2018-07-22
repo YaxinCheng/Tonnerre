@@ -18,7 +18,7 @@ final class DynamicService: TonnerreService {
   private let encode = JSONSerialization.data
   
   // MARK: - Tool
-  func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage) -> Displayable? {
+  func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> Displayable? {
     guard
       let rawName = jsonObject["name"]
     else { return nil }
@@ -30,9 +30,9 @@ final class DynamicService: TonnerreService {
       let stringItem = innerItem as? String,
       let urlItem = URL(string: stringItem),
       let _ = NSWorkspace.shared.urlForApplication(toOpen: urlItem) {
-      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: urlItem, placeholder: placeholder)
+      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: urlItem, placeholder: placeholder, extraContent: extraInfo)
     } else {
-      return DisplayableContainer<Any>(name: name, content: content, icon: withIcon, innerItem: innerItem, placeholder: placeholder)
+      return DisplayableContainer<Any>(name: name, content: content, icon: withIcon, innerItem: innerItem, placeholder: placeholder, extraContent: extraInfo)
     }
   }
   
@@ -139,7 +139,7 @@ final class DynamicService: TonnerreService {
     else { return [] }
     let returned = try JSONSerialization.jsonObject(with: runningResult, options: .mutableLeaves)
     if let jsonObject = returned as? [Dictionary<String, Any>] {
-      return jsonObject.compactMap { decode($0, withIcon: script.icon) }
+      return jsonObject.compactMap { decode($0, withIcon: script.icon, extraInfo: script) }
     } else if let errorInfo = returned as? Dictionary<String, String> {
       #if DEBUG
       print(errorInfo)
@@ -156,19 +156,23 @@ final class DynamicService: TonnerreService {
     let possibleServices = scriptTrie.find(value: queryKey).map { $0.1 }
     guard input.count > 1 else { return possibleServices }
     let queryContent = Array(input[1...])
-    let preparedResult = possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }
-    return zip(possibleServices, preparedResult).map { value in
-      value.1.map { DynamicServiceBound(service: value.0, result: $0) }
-    }.reduce([], +)
+    return possibleServices.compactMap { try? execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let dynService = source as? DynamicServiceBound else { return }
-    let (service, choice) = (dynService.service, dynService.result)
-    var dictionarizedChoice = dictionarize(choice)
+    let originalService: DisplayableContainer<String>
+    if let urlResult = source as? DisplayableContainer<URL>,
+      let service = urlResult.extraContent as? DisplayableContainer<String> {
+      originalService = service
+    } else if
+      let anyResult = source as? DisplayableContainer<Any>,
+      let service = anyResult.extraContent as? DisplayableContainer<String> {
+      originalService = service
+    } else { return }
+    var dictionarizedChoice = dictionarize(source)
     dictionarizedChoice["withCmd"] = withCmd
     do {
-      _ = try execute(script: service, runningMode: .serve(choice: dictionarizedChoice))
+      _ = try execute(script: originalService, runningMode: .serve(choice: dictionarizedChoice))
     } catch {
       #if DEBUG
       print("Serve Error: ", error)

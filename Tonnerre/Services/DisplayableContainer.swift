@@ -17,14 +17,16 @@ struct DisplayableContainer<T>: Displayable {
   var placeholder: String {
     return _placeholder.isEmpty ? (innerItem as? Displayable)?.placeholder ?? "" : _placeholder
   }
+  var extraContent: Any? = nil
   
-  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "") {
+  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "", extraContent: Any? = nil) {
     self.name = name
     self.content = content
     self.icon = icon
     self.icon.size = NSSize(width: 64, height: 64)
     self.innerItem = innerItem
     self._placeholder = placeholder
+    self.extraContent = extraContent
   }
 }
 
