@@ -10,9 +10,9 @@ import Cocoa
 
 struct DisplayableContainer<T>: Displayable {
   let name: String
-  let content: String
+  var content: String
   let icon: NSImage
-  let innerItem: T?
+  var innerItem: T?
   let _placeholder: String
   var placeholder: String {
     return _placeholder.isEmpty ? (innerItem as? Displayable)?.placeholder ?? "" : _placeholder

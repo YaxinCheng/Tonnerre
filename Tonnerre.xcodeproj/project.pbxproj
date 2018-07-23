@@ -334,6 +334,7 @@
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
+				143FD19D210567F100E79F7E /* TerminalService.swift */,
 				145DA16E20DC09BF00C1E804 /* InterpreterServices */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
@@ -537,7 +538,6 @@
 			isa = PBXGroup;
 			children = (
 				14F015D72102314600537160 /* DynamicService.swift */,
-				143FD19D210567F100E79F7E /* TerminalService.swift */,
 			);
 			path = DynamicServices;
 			sourceTree = "<group>";

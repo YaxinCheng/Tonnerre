@@ -182,15 +182,21 @@ final class DynamicService: TonnerreService {
       cachedServices = possibleServices
     }
     if input.count > 1 {
+      let queryContent = Array(input[1...])
       let task = DispatchWorkItem { [unowned self] in
         DynamicService.runningProcess?.terminate()
-        let queryContent = Array(input[1...])
         let content = possibleServices.compactMap { try? self.execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
         guard content.count > 0 else { return }
-        let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: ["suggestions": content])
+        let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: ["suggestions": content])
         NotificationCenter.default.post(notification)
       }
       suggestionSession.send(request: task)
+      var filledService = [DisplayableContainer<String>]()
+      for var service in possibleServices {
+        service.content = fill(template: service.content, withArguments: queryContent)
+        filledService.append(service)
+      }
+      return filledService
     }
     return possibleServices
   }
@@ -216,6 +222,18 @@ final class DynamicService: TonnerreService {
         print("Serve Error: ", error)
         #endif
       }
+    }
+  }
+  
+  private func fill(template: String, withArguments args: [String]) -> String {
+    let placeholderCount = template.components(separatedBy: "%@").count - 1
+    guard placeholderCount <= args.count else { return template }
+    if placeholderCount == args.count {
+      return String(format: template, arguments: args)
+    } else {
+      let lastArg = args[placeholderCount...].joined(separator: " ")
+      let fillInArgs = Array(args[..<placeholderCount]) + [lastArg]
+      return String(format: template, arguments: fillInArgs)
     }
   }
   
