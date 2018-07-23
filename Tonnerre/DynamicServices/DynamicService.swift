@@ -71,7 +71,8 @@ final class DynamicService: TonnerreService {
         let name = descriptionObj["name"],
         let keyword = descriptionObj["keyword"]
       else { return nil }
-      let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "")
+      let pythonRuntime: String? = descriptionObj["runtime"] ?? nil
+      let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: pythonRuntime)
       return (keyword, item)
     } catch {
       #if DEBUG
@@ -129,7 +130,8 @@ final class DynamicService: TonnerreService {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
-    process.executableURL = URL(fileURLWithPath: "/usr/local/bin/python3")
+    let pythonPath = (script.extraContent as? String) ?? "/usr/bin/python"
+    process.executableURL = URL(fileURLWithPath: pythonPath)
     let (inputPipe, outputPipe) = (Pipe(), Pipe())
     process.standardInput = inputPipe
     process.standardOutput = outputPipe
@@ -170,7 +172,7 @@ final class DynamicService: TonnerreService {
   
   func prepare(input: [String]) -> [Displayable] {
     guard input.count > 0 else { return [] }
-    let queryKey = input.first!
+    let queryKey = input.first!.lowercased()
     let possibleServices: [DisplayableContainer<String>]
     if let cache = cachedKey, cache == queryKey {
       possibleServices = cachedServices
@@ -217,8 +219,8 @@ final class DynamicService: TonnerreService {
     }
   }
   
-  func encodedSuggestions(queries: [Displayable]) -> [ServiceResult] {
-    return queries.map { ServiceResult(service: self, value: $0) }
+  func present(suggestions: [Displayable]) -> [ServiceResult] {
+    return suggestions.map { ServiceResult(service: self, value: $0) }
   }
 }
 

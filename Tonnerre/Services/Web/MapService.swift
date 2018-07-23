@@ -15,9 +15,9 @@ struct GoogleMapService: WebService {
   let alterContent: String? = "Open in Apple Maps"
   let argUpperBound: Int = Int.max
   
-  func parseSuggestions(data: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String : Any] {
     guard
-      let jsonData = data,
+      let jsonData = suggestionData,
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [String: Any],
       (jsonObject["status"] as? String) == "OK",
       let predictions = jsonObject["predictions"] as? [[String: Any]]

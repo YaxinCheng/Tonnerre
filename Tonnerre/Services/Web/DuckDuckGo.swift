@@ -19,9 +19,9 @@ struct DuckDuckGoSearch: WebService {
   let loadSuggestion: Bool = true
   let icon: NSImage = #imageLiteral(resourceName: "duck")
   
-  func parseSuggestions(data: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String : Any] {
     guard
-      let jsonData = data,
+      let jsonData = suggestionData,
       let jsonObj = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [[String: String]]
     else { return [:] }
     let suggestions = jsonObj.compactMap { $0["phrase"] }

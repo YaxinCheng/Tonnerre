@@ -27,7 +27,7 @@ struct URLService: TonnerreService {
     if query.starts(with: "http") { url = URL(string: query)! }
     else { url = URL(string: "https://\(query)")! }
     let defaultBrowserName = NSWorkspace.shared.urlForApplication(toOpen: url)?.deletingPathExtension().lastPathComponent ?? "your default browser"
-    let webRequest = DisplayableContainer(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", icon: url.icon, innerItem: url)
+    let webRequest = DisplayableContainer(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", icon: #imageLiteral(resourceName: "safari"), innerItem: url)
     return [webRequest]
   }
   

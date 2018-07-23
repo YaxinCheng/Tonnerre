@@ -68,5 +68,7 @@ extension TonnerreExtendService {
   }
 }
 
-protocol TonnerreInterpreterService: TonnerreService {
+protocol TonnerreInstantService {}
+
+protocol TonnerreInterpreterService: TonnerreService, TonnerreInstantService {
 }

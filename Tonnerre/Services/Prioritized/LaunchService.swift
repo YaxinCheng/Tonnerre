@@ -26,11 +26,12 @@ struct LaunchService: TonnerreService {
     let query = input.joined(separator: " ")
     guard !query.starts(with: "http") else { return [] }
     return index.search(query: query + "*", limit: 9 * 9, options: .default).map {
+      let fileName: String = $0.deletingPathExtension().lastPathComponent
       let name: String
       if $0.pathExtension == "prefPane" {
-        name = LaunchService.aliasDict[$0.lastPathComponent] ?? $0.name
-      } else { name = $0.name }
-      return DisplayableContainer(name: name, content: $0.content, icon: $0.icon, innerItem: $0)
+        name = LaunchService.aliasDict[$0.lastPathComponent] ?? fileName
+      } else { name = fileName }
+      return DisplayableContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0)
     }.sorted {
       let firstTime = LaunchOrder.retrieveTime(with: ($0 as! DisplayableContainer<URL>).innerItem!.absoluteString)
       let secondTime = LaunchOrder.retrieveTime(with: ($1 as! DisplayableContainer<URL>).innerItem!.absoluteString)

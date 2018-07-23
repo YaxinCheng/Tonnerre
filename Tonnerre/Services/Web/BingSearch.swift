@@ -19,9 +19,9 @@ struct BingSearch: WebService {
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "bing")
   
-  func parseSuggestions(data: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String : Any] {
     guard
-      let htmlData = data,
+      let htmlData = suggestionData,
       let html = String(data: htmlData, encoding: .utf8)
     else { return [:] }
     let keywordExtractor = try! NSRegularExpression(pattern: "\\/search\\?q=(.*?)&", options: .caseInsensitive)

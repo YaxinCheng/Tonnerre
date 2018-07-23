@@ -84,10 +84,10 @@ class ViewController: NSViewController {
       else { return }
       if let suggestions = suggestionPack["suggestions"] as? [String],
         let webService = service as? WebService {
-        self.collectionView.datasource += webService.encodedSuggestions(queries: suggestions)
+        self.collectionView.datasource += webService.present(suggestions: suggestions)
       } else if let suggestions = suggestionPack["suggestions"] as? [Displayable],
         let dynService = service as? DynamicService {
-        self.collectionView.datasource = dynService.encodedSuggestions(queries: suggestions)
+        self.collectionView.datasource = dynService.present(suggestions: suggestions)
       }
     }
   }
@@ -179,7 +179,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
   
   func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
-      guard !(service is TonnerreInterpreterService) else { return }
+      guard !(service is TonnerreInstantService) && withCmd == false else { return }
       (self?.view.window as? BaseWindow)?.isHidden = true
       self?.refreshIcon()
       self?.textField.stringValue = ""

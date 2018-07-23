@@ -27,9 +27,9 @@ struct WikipediaSearch: WebService {
     loadSuggestion = suggestion
   }
   
-  func parseSuggestions(data: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String : Any] {
     guard
-      let jsonData = data,
+      let jsonData = suggestionData,
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
       let suggestions = jsonObject[1] as? [String]
       else { return [:] }

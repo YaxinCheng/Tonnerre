@@ -13,8 +13,14 @@ protocol WebService: TonnerreService {
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
   var loadSuggestion: Bool { get }
-  func encodedSuggestions(queries: [String]) -> [ServiceResult]
-  func parseSuggestions(data: Data?) -> [String: Any]
+  /**
+   When async-loaded suggestions arrive (by notification), use this function to encode them into Displayable items
+   
+   - parameter suggestions: loaded suggestion names (e.g. When input "D", suggestions may include ["donald trump", "diana"]
+   - returns: Encoded suggestions
+   */
+  func present(suggestions: [String]) -> [ServiceResult]
+  func parse(suggestionData: Data?) -> [String: Any]
 }
 
 extension WebService {
@@ -46,14 +52,8 @@ extension WebService {
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
-  /**
-   When loaded suggestions arrive (by notification), use this function to encode them into Displayable items
-   
-   - parameter queries: loaded suggestion names (e.g. When input "D", suggestions may include ["donald trump", "diana"]
-   - returns: Encoded suggestions
-  */
-  func encodedSuggestions(queries: [String]) -> [ServiceResult] {
-    return queries.compactMap {
+  func present(suggestions: [String]) -> [ServiceResult] {
+    return suggestions.compactMap {
       let readableContent: String
       if $0.contains("&#"), let decodedData = $0.data(using: .utf8) {
         readableContent = (try? NSAttributedString(data: decodedData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil))?.string ?? $0
@@ -96,8 +96,8 @@ extension WebService {
         #endif
         return
       }
-      let processedData = self.parseSuggestions(data: data)
-      let notification = Notification(name: .suggestionDidFinish, object: nil, userInfo: processedData)
+      let processedData = self.parse(suggestionData: data)
+      let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: processedData)
       NotificationCenter.default.post(notification)
     }
     session.send(request: ongoingTask)
