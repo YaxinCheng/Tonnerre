@@ -56,7 +56,7 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
       let name = (displayItem as? DisplayableContainer<URL>)?.name,
       !popoverView.isShown
     else { return }
-    guard let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: 450, height: 280), style: .normal) else { return }
+    guard let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: 450, height: 600), style: .normal) else { return }
     let viewController = NSViewController()
     qlView.previewItem = PreviewItem(title: name, url: url)
     qlView.shouldCloseWithWindow = true

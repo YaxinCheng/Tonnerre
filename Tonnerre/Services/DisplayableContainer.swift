@@ -13,13 +13,13 @@ struct DisplayableContainer<T>: Displayable {
   var content: String
   let icon: NSImage
   var innerItem: T?
-  let _placeholder: String
+  let _placeholder: String?
   var placeholder: String {
-    return _placeholder.isEmpty ? (innerItem as? Displayable)?.placeholder ?? "" : _placeholder
+    return _placeholder == nil ? ((innerItem as? Displayable)?.placeholder ?? name) : _placeholder!
   }
   var extraContent: Any? = nil
   
-  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "", extraContent: Any? = nil) {
+  init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String? = nil, extraContent: Any? = nil) {
     self.name = name
     self.content = content
     self.icon = icon
