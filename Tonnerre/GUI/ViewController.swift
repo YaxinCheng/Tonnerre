@@ -88,6 +88,9 @@ class ViewController: NSViewController {
       } else if let suggestions = suggestionPack["suggestions"] as? [Displayable],
         let dynService = service as? DynamicService {
         self.collectionView.datasource = dynService.present(suggestions: suggestions)
+      } else if let suggestions = suggestionPack["suggestions"] as? [Displayable],
+        let termService = service as? TerminalService {
+        self.collectionView.datasource = termService.present(suggestions: suggestions)
       }
     }
   }

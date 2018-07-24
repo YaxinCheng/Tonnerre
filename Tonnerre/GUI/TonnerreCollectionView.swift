@@ -152,7 +152,7 @@ class TonnerreCollectionView: NSScrollView {
     if let onoffCell = highlightedItem as? OnOffCell {
       onoffCell.disabled = !onoffCell.disabled
       onoffCell.animate()
-    } else { datasource = [] }
+    } else if !(service is TonnerreInstantService) { datasource = [] }
     return (service, value)
   }
   

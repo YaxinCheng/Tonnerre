@@ -31,7 +31,7 @@ extension FileSearchService {
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    guard let fileURL = source as? URL else { return }
+    guard let fileURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
       workspace.activateFileViewerSelecting([fileURL])

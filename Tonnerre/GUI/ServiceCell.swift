@@ -52,8 +52,8 @@ class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   
   func preview() {
     guard
-      let url = (displayItem as? URL) ?? (displayItem as? DisplayableContainer<URL>)?.innerItem,
-      let name = (displayItem as? URL)?.deletingPathExtension().lastPathComponent ?? (displayItem as? DisplayableContainer<URL>)?.name,
+      let url = (displayItem as? DisplayableContainer<URL>)?.innerItem,
+      let name = (displayItem as? DisplayableContainer<URL>)?.name,
       !popoverView.isShown
     else { return }
     guard let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: 450, height: 280), style: .normal) else { return }
