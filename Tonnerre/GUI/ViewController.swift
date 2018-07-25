@@ -106,7 +106,7 @@ class ViewController: NSViewController {
 extension ViewController: NSTextFieldDelegate {
   override func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
-    let current = objTextField.stringValue// Capture the current value
+    let current = objTextField.stringValue.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)// Capture the current value
     if !current.isEmpty {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in// dispatch after 1 second
         guard let now = self?.textField.stringValue else { return } // Test the current value (after 1 second)

@@ -45,13 +45,14 @@ struct TonnerreInterpreter {
   }
   
   mutating func interpret(rawCmd: String) -> [ServiceResult] {
-    guard !rawCmd.isEmpty else { return [] }
-    let tokens = tokenize(rawCmd: rawCmd)
+    let trimmedCmd = rawCmd.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
+    guard !trimmedCmd.isEmpty else { return [] }
+    let tokens = tokenize(rawCmd: trimmedCmd)
     let services = parse(tokens: tokens)
     let possibleServices: [ServiceResult] = services.map { service in
       prepareService(service: service, input: tokens)
     }.reduce([], +)
-    if possibleServices.isEmpty {
+    if possibleServices.isEmpty && !trimmedCmd.starts(with: "@") {
       let systemServices = TonnerreInterpreter.loader.autoComplete(key: tokens.first!, type: .system)
       if systemServices.isEmpty {// Load default web search services
         let service = DefaultSearchOption.default.associatedService.init()
