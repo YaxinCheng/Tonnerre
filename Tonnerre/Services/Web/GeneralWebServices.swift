@@ -18,7 +18,7 @@ class GeneralWebService: TonnerreExtendService {
   let iconURL: String
   private var storedImage: NSImage? = nil
   var icon: NSImage {
-    return storedImage ?? #imageLiteral(resourceName: "safari")
+    return storedImage ?? .safari
   }
   
   enum CodingKeys: String, CodingKey {

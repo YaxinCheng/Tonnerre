@@ -11,12 +11,10 @@ import Cocoa
 struct TerminalService: TonnerreService, TonnerreInstantService {
   static let keyword: String = ">"
   let name: String = "Run shell commands here"
-  var content: String = "Click enter to execute it"
+  let content: String = "Click enter to execute it"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  var icon: NSImage {
-    return NSImage(contentsOfFile: "/Applications/Utilities/Terminal.app/Contents/Resources/Terminal.icns")!
-  }
+  let icon: NSImage = .terminal
   
   func prepare(input: [String]) -> [Displayable] {
     let cmd = input.joined(separator: " ")

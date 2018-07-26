@@ -35,3 +35,29 @@ extension Array {
     return (first, second)
   }
 }
+
+extension NSImage {
+  static var safari: NSImage {
+    return NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns") ?? #imageLiteral(resourceName: "tonnerre")
+  }
+  
+  static var screenLock: NSImage {
+    return NSImage(contentsOfFile: "/System/Library/PreferencePanes/DesktopScreenEffectsPref.prefPane/Contents/Resources/DesktopScreenEffectsPref.icns") ?? #imageLiteral(resourceName: "tonnerre")
+  }
+  
+  static var terminal: NSImage {
+    return NSImage(contentsOfFile: "/Applications/Utilities/Terminal.app/Contents/Resources/Terminal.icns") ?? #imageLiteral(resourceName: "tonnerre")
+  }
+  
+  static var finder: NSImage {
+    return NSImage(contentsOfFile: "/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.icns") ?? #imageLiteral(resourceName: "tonnerre")
+  }
+  
+  static var dictionary: NSImage {
+    return NSImage(contentsOfFile: "/Applications/Dictionary.app/Contents/Resources/Dictionary.icns") ?? #imageLiteral(resourceName: "tonnerre")
+  }
+  
+  static var calculator: NSImage {
+    return NSImage(contentsOfFile: "/Applications/Calculator.app/Contents/Resources/AppIcon.icns") ?? #imageLiteral(resourceName: "tonnerre")
+  }
+}

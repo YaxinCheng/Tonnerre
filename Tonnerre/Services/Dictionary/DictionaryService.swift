@@ -10,7 +10,7 @@ import CoreServices
 import Cocoa
 
 struct DictionarySerivce: TonnerreService, HistoryProtocol {
-  let icon: NSImage = #imageLiteral(resourceName: "dictionary")
+  let icon: NSImage = .dictionary
   let content: String = "Find definition for word in dictionary"
   let name: String = "Define words..."
   static let keyword: String = "define"

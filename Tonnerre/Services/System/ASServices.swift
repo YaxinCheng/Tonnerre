@@ -33,7 +33,7 @@ struct TrashEmptyService: AppleScriptServiceProtocol {// Clean transh bin
 
 struct ScreenSaverService: AppleScriptServiceProtocol {
   static let keyword: String = "lock"
-  let icon: NSImage = #imageLiteral(resourceName: "screensaver")
+  let icon: NSImage = .screenLock
   let name: String = "Screen Saver"
   let content: String = "Lock your Mac & Launch Screen Saver"
   let script: String = """

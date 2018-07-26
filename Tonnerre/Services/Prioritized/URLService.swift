@@ -12,7 +12,7 @@ struct URLService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 1
   var icon: NSImage {
-    guard let defaultBrowser = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!) else { return #imageLiteral(resourceName: "safari") }
+    guard let defaultBrowser = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!) else { return .safari }
     let defaultIcon = NSWorkspace.shared.icon(forFile: defaultBrowser.path)
     defaultIcon.size = NSSize(width: 64, height: 64)
     return defaultIcon

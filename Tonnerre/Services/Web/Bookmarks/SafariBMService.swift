@@ -12,7 +12,7 @@ struct SafariBMService: BookMarkService {
   let bookmarksFile: URL
   let name: String = "Safari BookMarks"
   let content: String = "Quick launch Safari Bookmarks"
-  let icon: NSImage = #imageLiteral(resourceName: "safari")
+  let icon: NSImage = .safari
   static let keyword: String = "safari"
   
   func parseFile() -> [BookMarkService.BookMark] {

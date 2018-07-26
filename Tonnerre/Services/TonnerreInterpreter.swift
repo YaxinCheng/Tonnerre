@@ -45,7 +45,9 @@ struct TonnerreInterpreter {
   }
   
   mutating func interpret(rawCmd: String) -> [ServiceResult] {
-    let trimmedCmd = rawCmd.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
+    let trimmedCmd = rawCmd
+        .replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
+        .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)
     guard !trimmedCmd.isEmpty else { return [] }
     let tokens = tokenize(rawCmd: trimmedCmd)
     let services = parse(tokens: tokens)

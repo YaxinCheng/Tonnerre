@@ -9,7 +9,6 @@
 import Cocoa
 
 protocol SystemService: TonnerreService {
-  
 }
 
 struct ApplicationService: SystemService {
