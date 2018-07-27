@@ -30,11 +30,11 @@ struct DisplayableContainer<T>: Displayable {
   }
 }
 
-protocol AsyncedProtocol {
+protocol AsyncDisplayable {
   var asyncedViewSetup: ((ServiceCell)->Void)? { get }
 }
 
-struct AsyncedDisplayableContainer<T>: Displayable, AsyncedProtocol {
+struct AsyncedDisplayableContainer<T>: Displayable, AsyncDisplayable {
   let name: String
   let content: String
   let icon: NSImage

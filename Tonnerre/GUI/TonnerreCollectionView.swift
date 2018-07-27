@@ -226,7 +226,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
       servicecell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
       if case .result(_, let value) = data {
         servicecell.displayItem = value
-        if let asyncedData = value as? AsyncedProtocol {
+        if let asyncedData = value as? AsyncDisplayable {
           asyncedData.asyncedViewSetup?(servicecell)
         }
       }

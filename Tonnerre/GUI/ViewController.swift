@@ -80,17 +80,15 @@ class ViewController: NSViewController {
     DispatchQueue.main.async { [unowned self] in
       guard
         case .result(let service, _)? = self.collectionView.datasource.first,
-        let suggestionPack = notification.userInfo as? [String: Any]
+        let suggestionPack = notification.userInfo as? [String: Any],
+        let asyncLoader = service as? AsyncLoadingProtocol,
+        let suggestions = suggestionPack["suggestions"] as? [Any]
       else { return }
-      if let suggestions = suggestionPack["suggestions"] as? [String],
-        let webService = service as? WebService {
-        self.collectionView.datasource += webService.present(suggestions: suggestions)
-      } else if let suggestions = suggestionPack["suggestions"] as? [Displayable],
-        let dynService = service as? DynamicService {
-        self.collectionView.datasource = dynService.present(suggestions: suggestions)
-      } else if let suggestions = suggestionPack["suggestions"] as? [Displayable],
-        let termService = service as? TerminalService {
-        self.collectionView.datasource = termService.present(suggestions: suggestions)
+      let processedSuggestions = asyncLoader.present(suggestions: suggestions)
+      if asyncLoader.mode == .append {
+        self.collectionView.datasource += processedSuggestions
+      } else if asyncLoader.mode == .replaced {
+        self.collectionView.datasource = processedSuggestions
       }
     }
   }

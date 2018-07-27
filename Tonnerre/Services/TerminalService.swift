@@ -8,13 +8,14 @@
 
 import Cocoa
 
-struct TerminalService: TonnerreService, TonnerreInstantService {
+struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingProtocol {
   static let keyword: String = ">"
   let name: String = "Run shell commands here"
   let content: String = "Click enter to execute it"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let icon: NSImage = .terminal
+  let mode: LoadingMode = .replaced
   
   func prepare(input: [String]) -> [Displayable] {
     let cmd = input.joined(separator: " ")
@@ -33,7 +34,7 @@ struct TerminalService: TonnerreService, TonnerreInstantService {
         try process.run()
         let returnedData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         guard let resultString = String(data: returnedData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        let result = resultString.components(separatedBy: "\n").map { DisplayableContainer(name: $0, content: "Result of \(cmd.joined(separator: " "))", icon: self.icon, innerItem: $0) }
+        let result = resultString.components(separatedBy: "\n").map { DisplayableContainer(name: $0, content: "Result of \"\(cmd.joined(separator: " "))\"", icon: self.icon, innerItem: $0) }
         let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: ["suggestions": result])
         NotificationCenter.default.post(notification)
       } catch {
@@ -44,7 +45,8 @@ struct TerminalService: TonnerreService, TonnerreInstantService {
     }
   }
   
-  func present(suggestions: [Displayable]) -> [ServiceResult] {
-    return suggestions.map { ServiceResult(service: self, value: $0) }
+  func present(suggestions: [Any]) -> [ServiceResult] {
+    guard suggestions is [Displayable] else { return [] }
+    return (suggestions as! [Displayable]).map { ServiceResult(service: self, value: $0) }
   }
 }

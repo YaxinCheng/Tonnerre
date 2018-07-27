@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol WebService: TonnerreService {
+protocol WebService: TonnerreService, AsyncLoadingProtocol {
   var template: String { get }
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
@@ -19,11 +19,15 @@ protocol WebService: TonnerreService {
    - parameter suggestions: loaded suggestion names (e.g. When input "D", suggestions may include ["donald trump", "diana"]
    - returns: Encoded suggestions
    */
-  func present(suggestions: [String]) -> [ServiceResult]
+  func present(suggestions: [Any]) -> [ServiceResult]
   func parse(suggestionData: Data?) -> [String: Any]
 }
 
 extension WebService {
+  var mode: LoadingMode {
+    return .append
+  }
+  
   var localeInTemplate: Bool {
     let numOfFomatters = template.components(separatedBy: "%@").count - 1
     return numOfFomatters - argLowerBound == 1
@@ -52,8 +56,9 @@ extension WebService {
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
-  func present(suggestions: [String]) -> [ServiceResult] {
-    return suggestions.compactMap {
+  func present(suggestions: [Any]) -> [ServiceResult] {
+    guard suggestions is [String] else { return [] }
+    return (suggestions as! [String]).compactMap {
       let readableContent: String
       if $0.contains("&#"), let decodedData = $0.data(using: .utf8) {
         readableContent = (try? NSAttributedString(data: decodedData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil))?.string ?? $0

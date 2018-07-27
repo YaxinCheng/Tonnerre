@@ -19,6 +19,7 @@
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7C20D4466A00ABBCDE /* toggle_switch.json */; };
 		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
+		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
 		144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */; };
 		144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */; };
@@ -164,6 +165,7 @@
 		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
 		1429AC7C20D4466A00ABBCDE /* toggle_switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = toggle_switch.json; sourceTree = "<group>"; };
 		143FD19D210567F100E79F7E /* TerminalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalService.swift; sourceTree = "<group>"; };
+		143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLoadingProtocol.swift; sourceTree = "<group>"; };
 		144E0C1120ED2F4300E4F2DA /* ASServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASServices.swift; sourceTree = "<group>"; };
 		144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptServiceProtocol.swift; sourceTree = "<group>"; };
 		144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitor.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				14561B8B20C444470057B4C1 /* ServiceResult.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
+				143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
 				143FD19D210567F100E79F7E /* TerminalService.swift */,
 				145DA16E20DC09BF00C1E804 /* InterpreterServices */,
@@ -786,6 +789,7 @@
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1484147F20C5D056008FD68E /* GeneralWebServices.swift in Sources */,
 				144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */,
+				143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,

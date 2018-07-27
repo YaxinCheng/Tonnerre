@@ -8,7 +8,7 @@
 
 import Cocoa
 
-final class DynamicService: TonnerreService {
+final class DynamicService: TonnerreService, AsyncLoadingProtocol {
   static let keyword: String = ""
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   let argLowerBound: Int = 0
@@ -17,6 +17,7 @@ final class DynamicService: TonnerreService {
   private var scriptTrie: Trie<(String, DisplayableContainer<String>)>
   private let encode = JSONSerialization.data
   private let suggestionSession = TonnerreSuggestionSession.shared
+  let mode: LoadingMode = .replaced
   
   // MARK: - Tool
   func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> Displayable? {
@@ -237,8 +238,9 @@ final class DynamicService: TonnerreService {
     }
   }
   
-  func present(suggestions: [Displayable]) -> [ServiceResult] {
-    return suggestions.map { ServiceResult(service: self, value: $0) }
+  func present(suggestions: [Any]) -> [ServiceResult] {
+    guard suggestions is [Displayable] else { return [] }
+    return (suggestions as! [Displayable]).map { ServiceResult(service: self, value: $0) }
   }
 }
 
