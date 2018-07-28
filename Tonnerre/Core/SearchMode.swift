@@ -47,7 +47,7 @@ enum SearchMode: String {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     switch self {
     case .default:
-      return ["/System/Library/CoreServices/Finder.app", "/System/Library/CoreServices/Applications", "/System/Library/PreferencePanes", "/Applications"].map { URL(fileURLWithPath: $0) } + [homeDir.appendingPathComponent("Applications")]
+      return ["/System/Library/CoreServices/Finder.app", "/System/Library/CoreServices/Applications", "/System/Library/PreferencePanes", "/Applications", "/Applications/xcode.app/Contents/Applications"].map { URL(fileURLWithPath: $0) } + [homeDir.appendingPathComponent("Applications")]
     default:
       let exclusions = Set<String>(["Public", "Library", "Applications"])
       do {
