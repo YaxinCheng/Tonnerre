@@ -10,18 +10,18 @@ import Foundation
 
 struct MathInterpreter {
   enum Token {
-    case number(Decimal)
+    case number(Double)
     case openBracket
     case closeBracket
-    case binaryOp((Decimal, Decimal)->Decimal, Int)
-    case unaryOp((Decimal)->Decimal)
+    case binaryOp((Double, Double)->Double, Int)
+    case unaryOp((Double)->Double)
   }
   
   private let numberPattern = "^(\\d*\\.\\d+)|^(\\d+)|^(PI)|^π|^(pi)"
   private let binaryOperatorPattern = "^\\*\\*|[+\\-*/%^]"
   private let openBracketPattern = "^\\("
   private let closeBracketPattern = "^\\)"
-  private let unaryOperatorPattern = "log|ln|sqrt|√|exp"
+  private let unaryOperatorPattern = "log2|log10|log|ln|sqrt|√|exp|cosh?|sinh?|tanh?|floor|ceil"
   
   private func match(string: String, regex: String, range: NSRange) -> (Substring, NSRange)? {
     let regularExp = try! NSRegularExpression(pattern: regex, options: .anchorsMatchLines)
@@ -29,6 +29,51 @@ struct MathInterpreter {
     let matchedString = string[Range(matched.range, in: string)!]
     return (matchedString, matched.range)
   }
+  
+  private func binaryOperator(matchWith string: Substring) throws -> Token {
+    let Operator: Token
+    switch string {
+    case "**", "^": Operator = .binaryOp(pow, 3)
+    case "*": Operator = .binaryOp(*, 2)
+    case "/": Operator = .binaryOp(/, 2)
+    case "%": Operator = .binaryOp(%, 2)
+    case "+": Operator = .binaryOp(+, 1)
+    case "-": Operator = .binaryOp(-, 1)
+    default: throw MathExpressionError.invalidToken
+    }
+    return Operator
+  }
+  
+  private func unaryOperator(matchWith string: Substring) throws -> Token {
+    let Operator: Token
+    switch string {
+    case "ln", "log": Operator = .unaryOp(log)
+    case "log10": Operator = .unaryOp(log10)
+    case "log2": Operator = .unaryOp(log2)
+    case "sqrt", "√": Operator = .unaryOp(sqrt)
+    case "exp": Operator = .unaryOp(exp)
+    case "cos": Operator = .unaryOp(cos)
+    case "sin": Operator = .unaryOp(sin)
+    case "tan": Operator = .unaryOp(tan)
+    case "sinh": Operator = .unaryOp(sinh)
+    case "cosh": Operator = .unaryOp(cosh)
+    case "tanh": Operator = .unaryOp(tanh)
+    case "floor": Operator = .unaryOp(floor)
+    case "ceil": Operator = .unaryOp(ceil)
+    default: throw MathExpressionError.invalidToken
+    }
+    return Operator
+  }
+  
+  private func constant(matchWith string: Substring) -> Token {
+    let convertedConstant: Token
+    switch string {
+    case "PI", "π", "pi": convertedConstant = .number(.pi)
+    default: convertedConstant = .number(Double(String(string))!)
+    }
+    return convertedConstant
+  }
+  
   /**
    Tokenize and lexicalize the raw string expression
    - parameter rawString: original string taken in
@@ -39,36 +84,17 @@ struct MathInterpreter {
     guard beginIndex < rawString.count else { return [] }
     let range = NSRange(rawString.index(rawString.startIndex, offsetBy: beginIndex)..., in: rawString)
     if let (matchedNum, matchedRange) = match(string: rawString, regex: numberPattern, range: range) {
-      let convertedNumber: Token
-      switch matchedNum {
-      case "PI", "π", "pi": convertedNumber = .number(.pi)
-      default: convertedNumber = .number(Decimal(string: String(matchedNum))!)
-      }
+      let convertedNumber = constant(matchWith: matchedNum)
       return [convertedNumber] + (try lexicalize(rawString: rawString, beginIndex: beginIndex + matchedRange.length))
     } else if let (_, matchedRange) = match(string: rawString, regex: openBracketPattern, range: range) {
       return [Token.openBracket] + (try lexicalize(rawString: rawString, beginIndex: beginIndex + matchedRange.length))
     } else if let (_, matchedRange) = match(string: rawString, regex: closeBracketPattern, range: range) {
       return [Token.closeBracket] + (try lexicalize(rawString: rawString, beginIndex: beginIndex + matchedRange.length))
     } else if let (binaryOp, matchedRange) = match(string: rawString, regex: binaryOperatorPattern, range: range) {
-      let Operator: Token
-      switch binaryOp {
-      case "**", "^": Operator = .binaryOp(Decimal.pow, 3)
-      case "*": Operator = .binaryOp(*, 2)
-      case "/": Operator = .binaryOp(/, 2)
-      case "%": Operator = .binaryOp(%, 2)
-      case "+": Operator = .binaryOp(+, 1)
-      case "-": Operator = .binaryOp(-, 1)
-      default: throw MathExpressionError.invalidToken
-      }
+      let Operator = try binaryOperator(matchWith: binaryOp)
       return [Operator] + (try lexicalize(rawString: rawString, beginIndex: beginIndex + matchedRange.length))
     } else if let (unaryOp, matchedRange) = match(string: rawString, regex: unaryOperatorPattern, range: range) {
-      let Operator: Token
-      switch unaryOp {
-      case "log", "ln": Operator = .unaryOp(Decimal.log)
-      case "sqrt", "√": Operator = .unaryOp(Decimal.sqrt)
-      case "exp": Operator = .unaryOp(Decimal.exp)
-      default: throw MathExpressionError.invalidToken
-      }
+      let Operator = try unaryOperator(matchWith: unaryOp)
       return [Operator] + (try lexicalize(rawString: rawString, beginIndex: beginIndex + matchedRange.length))
     }
     throw MathExpressionError.invalidToken
@@ -159,25 +185,8 @@ struct MathInterpreter {
   }
 }
 
-private extension Decimal {
-  
-  static func pow(lhs: Decimal, rhs: Decimal) -> Decimal {
-    return Foundation.pow(lhs, NSDecimalNumber(decimal: rhs).intValue)
-  }
-  
-  static func log(_ value: Decimal) -> Decimal {
-    return Decimal(Darwin.log(NSDecimalNumber(decimal: value).doubleValue))
-  }
-  
-  static func sqrt(_ value: Decimal) -> Decimal {
-    return Decimal(Darwin.sqrt(NSDecimalNumber(decimal: value).doubleValue))
-  }
-  
-  static func exp(_ value: Decimal) -> Decimal {
-    return Decimal(Darwin.exp(NSDecimalNumber(decimal: value).doubleValue))
-  }
-  
-  static func % (lhs: Decimal, rhs: Decimal) -> Decimal {
-    return Decimal(NSDecimalNumber(decimal: lhs).intValue % NSDecimalNumber(decimal: rhs).intValue)
+extension Double {
+  static func % (lhs: Double, rhs: Double) -> Double {
+    return Double(Int(lhs) % Int(rhs))
   }
 }

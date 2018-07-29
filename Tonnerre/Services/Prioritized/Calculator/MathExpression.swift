@@ -9,11 +9,11 @@
 import Foundation
 
 indirect enum MathExpression {
-  case value(Decimal)
-  case unaryExp(Operator: (Decimal)->Decimal, value: MathExpression)
-  case binaryExp(lhs: MathExpression, op: (Decimal, Decimal)->Decimal, priority: Int, rhs: MathExpression)
+  case value(Double)
+  case unaryExp(Operator: (Double)->Double, value: MathExpression)
+  case binaryExp(lhs: MathExpression, op: (Double, Double)->Double, priority: Int, rhs: MathExpression)
   
-  func eval() -> Decimal? {
+  func eval() -> Double? {
     switch self {
     case .value(let value): return value
     case .unaryExp(Operator: let op, value: let value):
