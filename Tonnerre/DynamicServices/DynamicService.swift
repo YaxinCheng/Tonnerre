@@ -62,7 +62,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
     let script = url.appendingPathComponent("main.py")
     guard FileManager.default.fileExists(atPath: script.path) else { return nil }
     let iconURL = url.appendingPathComponent("icon.png")
-    let icon = NSImage(contentsOf: iconURL) ?? #imageLiteral(resourceName: "tonnerre")
+    let fileIcon = NSImage(contentsOf: iconURL)
     let jsonURL = url.appendingPathComponent("description.json")
     do {
       let jsonData = try Data(contentsOf: jsonURL)
@@ -73,6 +73,11 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
         let keyword = descriptionObj["keyword"]
       else { return nil }
       let pythonRuntime: String? = descriptionObj["runtime"] ?? nil
+      let icon: NSImage
+      if fileIcon != nil { icon = fileIcon! }
+      else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
+        icon = iconFromPath
+      } else { icon = #imageLiteral(resourceName: "tonnerre") }
       let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: pythonRuntime)
       return (keyword, item)
     } catch {

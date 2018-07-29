@@ -11,7 +11,7 @@ import Cocoa
 struct DisplayableContainer<T>: Displayable {
   let name: String
   var content: String
-  let icon: NSImage
+  var icon: NSImage
   var innerItem: T?
   let _placeholder: String?
   var placeholder: String {
