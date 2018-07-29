@@ -64,6 +64,9 @@ struct FileTypeControl {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     let exclusionURL = Set(control.map( homeDir.appendingPathComponent ))
     if exclusionURL.contains(url) { return true }
+    for exURL in exclusionURL {
+      if url.isChildOf(url: exURL) { return true }
+    }
     return false
   }
   

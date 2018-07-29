@@ -14,18 +14,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   private let indexingManager = CoreIndexing()
   
   func applicationWillFinishLaunching(_ notification: Notification) {
-    indexingManager.check()
     let centre = NotificationCenter.default
-    centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main) { _ in
-      let userDefault = UserDefaults.standard
-      userDefault.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
+    let notifyAndExit: (Notification) -> Void = { [unowned self] _ in
+      if self.indexingManager.documentFinished && self.indexingManager.defaultFinished {
+        DistributedNotificationCenter.default().post(name: .helperAppDidExit, object: nil)
+        exit(0)
+      }
     }
-    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main) { _ in
-      UserDefaults.standard.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
-      let distributedCentre = DistributedNotificationCenter.default()
-      distributedCentre.post(name: .helperAppDidExit, object: nil)
-      exit(0)
-    }
+    centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main, using: notifyAndExit)
+    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main, using: notifyAndExit)
+    indexingManager.check()
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {

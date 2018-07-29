@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17F77" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="FailedPath" representedClassName="FailedPath" syncable="YES" codeGenerationType="class">
-        <attribute name="category" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="path" attributeType="String" syncable="YES"/>
-        <attribute name="reason" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="IndexingDir" representedClassName="IndexingDir" syncable="YES" codeGenerationType="class">
-        <attribute name="category" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="path" attributeType="String" syncable="YES"/>
-    </entity>
-    <elements>
-        <element name="IndexingDir" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="FailedPath" positionX="-54" positionY="9" width="128" height="90"/>
-    </elements>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <elements/>
 </model>
