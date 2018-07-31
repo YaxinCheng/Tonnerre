@@ -92,6 +92,7 @@
 		14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FC20BF824E00D10D44 /* LaunchService.swift */; };
 		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
 		14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30620C210EB00D10D44 /* BaseWindowController.swift */; };
+		14AFE693210FE196002BBBB2 /* DynamicWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE692210FE196002BBBB2 /* DynamicWebService.swift */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */; };
 		14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */; };
@@ -237,6 +238,7 @@
 		14AEB2FE20BF84D100D10D44 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
 		14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypeControl.swift; sourceTree = "<group>"; };
 		14AEB30620C210EB00D10D44 /* BaseWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindowController.swift; sourceTree = "<group>"; };
+		14AFE692210FE196002BBBB2 /* DynamicWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicWebService.swift; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExpression.swift; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathInterpreter.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 			isa = PBXGroup;
 			children = (
 				14F015D72102314600537160 /* DynamicService.swift */,
+				14AFE692210FE196002BBBB2 /* DynamicWebService.swift */,
 			);
 			path = DynamicServices;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				1484148320C63A1A008FD68E /* MapService.swift in Sources */,
 				1484148520C70263008FD68E /* SystemServices.swift in Sources */,
 				14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */,
+				14AFE693210FE196002BBBB2 /* DynamicWebService.swift in Sources */,
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,

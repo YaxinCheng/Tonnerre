@@ -36,7 +36,7 @@ extension Array {
   }
 }
 
-extension NSImage {
+extension NSImage { // Extensions for icons of built-in apps
   static var safari: NSImage {
     return NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns") ?? #imageLiteral(resourceName: "tonnerre")
   }

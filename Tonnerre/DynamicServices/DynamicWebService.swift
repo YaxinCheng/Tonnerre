@@ -14,18 +14,19 @@ final class DynamicWebService: TonnerreService {
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   private var serviceTrie: Trie<DisplayableContainer<URL>>!
+  private typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
   
   func reload() {
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       let services = type(of: self).prefetch()
-      self.serviceTrie = Trie(values: services) { ($0.extraContent! as! [String: String])["keyword"]! }
+      self.serviceTrie = Trie(values: services) { ($0.extraContent! as! ExtraContent).keyword }
     }
   }
   
   required init() {
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       let services = type(of: self).prefetch()
-      self.serviceTrie = Trie(values: services) { ($0.extraContent! as! [String: String])["keyword"]! }
+      self.serviceTrie = Trie(values: services) { ($0.extraContent! as! ExtraContent).keyword }
     }
   }
   
@@ -53,7 +54,7 @@ final class DynamicWebService: TonnerreService {
     let argUpperBound = json["argUpperBound"] as? Int ?? argLowerBound
     let content = json["content"] as? String ?? ""
     let icon = loadImage(rawURL: iconString)
-    return DisplayableContainer(name: name, content: content, icon: icon, innerItem: url, placeholder: name, extraContent: ["argLowerBound": argLowerBound, "argUpperBound": argUpperBound, "keyword": keyword])
+    return DisplayableContainer(name: name, content: content, icon: icon, innerItem: url, placeholder: name, extraContent: (keyword, argLowerBound, argUpperBound))
   }
   
   private static func generateService(from url: URL) -> [DisplayableContainer<URL>] {

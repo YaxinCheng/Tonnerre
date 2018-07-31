@@ -18,6 +18,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
   private let encode = JSONSerialization.data
   private let suggestionSession = TonnerreSuggestionSession.shared
   let mode: LoadingMode = .replaced
+  private typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
   private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> Displayable? {
@@ -78,7 +79,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
       else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
         icon = iconFromPath
       } else { icon = #imageLiteral(resourceName: "tonnerre") }
-      let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: ["runtime": pythonRuntime, "keyword": keyword])
+      let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: (keyword, pythonRuntime))
       return item
     } catch {
       #if DEBUG
@@ -109,12 +110,12 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
   
   required init() {
     let scripts = DynamicService.prefetch()
-    scriptTrie = Trie(values: scripts) { ($0.extraContent as! [String: String])["keyword"]! }
+    scriptTrie = Trie(values: scripts) { ($0.extraContent as! ExtraContent).keyword }
   }
   
   func reload() {
     let scripts = DynamicService.prefetch()
-    scriptTrie = Trie(values: scripts) { ($0.extraContent as! [String: String])["keyword"]! }
+    scriptTrie = Trie(values: scripts) { ($0.extraContent as! ExtraContent).keyword }
   }
   
   // MARK: - Script Execute
@@ -136,7 +137,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
-    let pythonPath = (script.extraContent as! [String: String])["runtime"] ?? "/usr/bin/python"
+    let pythonPath = (script.extraContent as! ExtraContent).runtime ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)
     let (inputPipe, outputPipe) = (Pipe(), Pipe())
     process.standardInput = inputPipe
