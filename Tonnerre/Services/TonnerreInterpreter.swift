@@ -9,7 +9,7 @@
 import Foundation
 
 struct TonnerreInterpreter {
-  static var loader = TonnerreServiceLoader()
+  static let loader = TonnerreServiceLoader()
   private var cachedServices = [TonnerreService]()
   private var lastQuery: String = ""
   

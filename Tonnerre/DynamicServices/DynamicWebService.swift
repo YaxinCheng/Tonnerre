@@ -8,25 +8,25 @@
 
 import Cocoa
 
-final class DynamicWebService: TonnerreService {
+final class DynamicWebService: TonnerreService, DynamicProtocol {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
-  private var serviceTrie: Trie<DisplayableContainer<URL>>!
-  private typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
+  var serviceTrie: Trie<ServiceType>
+  internal typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
   
   func reload() {
+    serviceTrie = Trie(values: []) { ($0.extraContent! as! ExtraContent).keyword }
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-      let services = type(of: self).prefetch()
-      self.serviceTrie = Trie(values: services) { ($0.extraContent! as! ExtraContent).keyword }
+      self.prefetch(fileExtension: "json")
     }
   }
   
   required init() {
+    serviceTrie = Trie(values: []) { ($0.extraContent! as! ExtraContent).keyword }
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-      let services = type(of: self).prefetch()
-      self.serviceTrie = Trie(values: services) { ($0.extraContent! as! ExtraContent).keyword }
+      self.prefetch(fileExtension: "json")
     }
   }
   
@@ -42,54 +42,73 @@ final class DynamicWebService: TonnerreService {
     }
   }
   
-  private static func constructService(from json: Dictionary<String, Any>) -> DisplayableContainer<URL>? {
+  private static func process(json: Dictionary<String, Any>) -> ServiceType? {
     guard
       let name = json["name"] as? String,
       let keyword = json["keyword"] as? String,
       let urlRaw = json["template"] as? String,
-      let url = URL(string: urlRaw),
       let iconString = json["icon"] as? String
     else { return nil }
     let argLowerBound = json["argLowerBound"] as? Int ?? 1
     let argUpperBound = json["argUpperBound"] as? Int ?? argLowerBound
     let content = json["content"] as? String ?? ""
     let icon = loadImage(rawURL: iconString)
-    return DisplayableContainer(name: name, content: content, icon: icon, innerItem: url, placeholder: name, extraContent: (keyword, argLowerBound, argUpperBound))
+    return DisplayableContainer(name: name, content: content, icon: icon, innerItem: urlRaw, placeholder: keyword, extraContent: (keyword, argLowerBound, argUpperBound))
   }
   
-  private static func generateService(from url: URL) -> [DisplayableContainer<URL>] {
+  static func generateService(from url: URL) -> [ServiceType] {
     guard
       let jsonData = try? Data(contentsOf: url),
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves))
     else { return [] }
-    if let singleJson = jsonObject as? Dictionary<String, Any>, let service = constructService(from: singleJson) {
+    if let singleJson = jsonObject as? Dictionary<String, Any>, let service = process(json: singleJson) {
       return [service]
     } else if let multipleJson = jsonObject as? [Dictionary<String, Any>] {
-      return multipleJson.compactMap(constructService)
+      return multipleJson.compactMap(process)
     }
     return []
   }
   
-  private static func prefetch() -> [DisplayableContainer<URL>] {
-    let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
-    let serviceFolder = appSupDir.appendingPathComponent("Services")
-    do {
-      let contents = try FileManager.default.contentsOfDirectory(at: serviceFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
-      let extensions = contents.filter { $0.pathExtension.lowercased() == "json" } // Tonnerre Extension File Type
-      return extensions.map(generateService).reduce([], +)
-    } catch {
-      #if DEBUG
-      print("Error with loading: ", error)
-      #endif
-      return []
-    }
-  }
+  // MARK: - Tonnerre Service functions
+  
+  private var cachedKey: String?
+  private var cachedServices: [ServiceType] = []
   
   func prepare(input: [String]) -> [Displayable] {
-    return []
+    guard input.count > 0 else { return [] }
+    let queryKey = input.first!.lowercased()
+    let possibleServices: [ServiceType]
+    if let cache = cachedKey, cache == queryKey {
+      possibleServices = cachedServices
+    } else {
+      cachedKey = queryKey
+      possibleServices = serviceTrie.find(value: queryKey)
+      cachedServices = possibleServices
+    }
+    if input.count > 1 {
+      let queryContent = Array(input[1...])
+      let servicesInRange = possibleServices.filter {
+        let serviceExtra = $0.extraContent! as! ExtraContent
+        return serviceExtra.argLowerBound <= input.count - 1 && serviceExtra.argUpperBound >= input.count - 1
+      }
+      return servicesInRange.compactMap {
+        let filledURL = fill(template: $0.innerItem!, withArguments: queryContent)
+        let filledContent = fill(template: $0.content, withArguments: queryContent)
+        guard let url = URL(string: filledURL) else { return nil }
+        return DisplayableContainer(name: $0.name, content: filledContent, icon: $0.icon, innerItem: url, placeholder: $0.name)
+      }
+    }
+    return possibleServices
   }
   
   func serve(source: Displayable, withCmd: Bool) {
-    
+    let workspace = NSWorkspace.shared
+    if let url = (source as? DisplayableContainer<URL>)?.innerItem {
+      workspace.open(url)
+    } else if let rawURL = (source as? DisplayableContainer<String>)?.innerItem,
+      let url = URL(string: rawURL),
+      let _ = workspace.urlForApplication(toOpen: url) {
+      workspace.open(url)
+    }
   }
 }

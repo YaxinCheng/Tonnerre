@@ -43,7 +43,7 @@ enum ServiceResult: Displayable {
   var placeholder: String {
     switch self {
     case .service(origin: let value): return value.placeholder
-    case .result(service: let service, value: let value): return (service as? TonnerreExtendService)?.keyword ?? value.placeholder
+    case .result(service: _, value: let value): return value.placeholder
     }
   }
   

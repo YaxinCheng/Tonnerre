@@ -38,36 +38,6 @@ extension TonnerreService {
   }
 }
 
-protocol TonnerreExtendService: class, TonnerreService, Codable {
-  var keyword: String { get }
-  var isDisabled: Bool { get set }
-  var placeholder: String { get }
-}
-
-extension TonnerreExtendService {
-  static var keyword: String { return "ExtendedService" }
-  init() { fatalError("Load from JSON instead") }
-  
-  static var isDisabled: Bool {
-    get { return false }
-    set {}
-  }
-  
-  var placeholder: String {
-    return keyword
-  }
-  
-  var isDisabled: Bool {
-    get {
-      let userDeafult = UserDefaults.standard
-      return userDeafult.bool(forKey: "\(name)+\(keyword)+Disabled")
-    } set {
-      let userDeafult = UserDefaults.standard
-      userDeafult.set(newValue, forKey: "\(name)+\(keyword)+Disabled")
-    }
-  }
-}
-
 protocol TonnerreInstantService {}
 
 protocol TonnerreInterpreterService: TonnerreService, TonnerreInstantService {

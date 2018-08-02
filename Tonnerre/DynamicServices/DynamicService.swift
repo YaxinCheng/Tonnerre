@@ -8,17 +8,18 @@
 
 import Cocoa
 
-final class DynamicService: TonnerreService, AsyncLoadingProtocol {
+final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtocol {
   static let keyword: String = ""
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
-  private var scripts = Dictionary<String, [DisplayableContainer<String>]>()
-  private var scriptTrie: Trie<DisplayableContainer<String>>
+  
+  var serviceTrie: Trie<ServiceType>
+  
   private let encode = JSONSerialization.data
   private let suggestionSession = TonnerreSuggestionSession.shared
   let mode: LoadingMode = .replaced
-  private typealias ExtraContent = (keyword: String, runtime: String?)
+  internal typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
   private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> Displayable? {
@@ -51,7 +52,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
     }
     return resultDictionary
   }
-
+  
   // MARK: - Constructions
   
   /**
@@ -59,9 +60,9 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
    - parameter url: the url to the TNE script
    - returns: (keyword, DisplayableContainer with information in the JSON)
   */
-  private static func generateService(from url: URL) -> DisplayableContainer<String>? {
+  static func generateService(from url: URL) -> [ServiceType] {
     let script = url.appendingPathComponent("main.py")
-    guard FileManager.default.fileExists(atPath: script.path) else { return nil }
+    guard FileManager.default.fileExists(atPath: script.path) else { return [] }
     let iconURL = url.appendingPathComponent("icon.png")
     let fileIcon = NSImage(contentsOf: iconURL)
     let jsonURL = url.appendingPathComponent("description.json")
@@ -72,7 +73,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
         let descriptionObj = jsonObject,
         let name = descriptionObj["name"],
         let keyword = descriptionObj["keyword"]
-      else { return nil }
+      else { return [] }
       let pythonRuntime: String? = descriptionObj["runtime"] ?? nil
       let icon: NSImage
       if fileIcon != nil { icon = fileIcon! }
@@ -80,42 +81,27 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
         icon = iconFromPath
       } else { icon = #imageLiteral(resourceName: "tonnerre") }
       let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: (keyword, pythonRuntime))
-      return item
+      return [item]
     } catch {
       #if DEBUG
       print("Error happened in generate service: ", error)
-      #endif
-      return nil
-    }
-  }
-  
-  /**
-   Load TNE extensions from the Services folder in the App Support
-   - returns: An array of available services, where as the first value is the keyword, and second is how to display it
-  */
-  private static func prefetch() -> [DisplayableContainer<String>] {
-    let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
-    let serviceFolder = appSupDir.appendingPathComponent("Services")
-    do {
-      let contents = try FileManager.default.contentsOfDirectory(at: serviceFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
-      let extensions = contents.filter { $0.pathExtension.lowercased() == "tne" } // Tonnerre Extension File Type
-      return extensions.compactMap(generateService)
-    } catch {
-      #if DEBUG
-      print("Error with loading: ", error)
       #endif
       return []
     }
   }
   
   required init() {
-    let scripts = DynamicService.prefetch()
-    scriptTrie = Trie(values: scripts) { ($0.extraContent as! ExtraContent).keyword }
+    serviceTrie = Trie(values: []) { ($0.extraContent as! ExtraContent).keyword }
+    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+      self.prefetch(fileExtension: "tne")
+    }
   }
   
   func reload() {
-    let scripts = DynamicService.prefetch()
-    scriptTrie = Trie(values: scripts) { ($0.extraContent as! ExtraContent).keyword }
+    serviceTrie = Trie(values: []) { ($0.extraContent as! ExtraContent).keyword }
+    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+      self.prefetch(fileExtension: "tne")
+    }
   }
   
   // MARK: - Script Execute
@@ -166,7 +152,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
     return []
   }
   
-  // MARK: - TonnerreService
+  // MARK: - TonnerreService functions
   
   /**
    Cached request key. Used to avoid duplicate writting and requesting from the Trie
@@ -185,7 +171,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
       possibleServices = cachedServices
     } else {
       cachedKey = queryKey
-      possibleServices = scriptTrie.find(value: queryKey)
+      possibleServices = serviceTrie.find(value: queryKey)
       cachedServices = possibleServices
     }
     if input.count > 1 {
@@ -229,18 +215,6 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol {
         print("Serve Error: ", error)
         #endif
       }
-    }
-  }
-  
-  private func fill(template: String, withArguments args: [String]) -> String {
-    let placeholderCount = template.components(separatedBy: "%@").count - 1
-    guard placeholderCount <= args.count else { return template }
-    if placeholderCount == args.count {
-      return String(format: template, arguments: args)
-    } else {
-      let lastArg = args[placeholderCount...].joined(separator: " ")
-      let fillInArgs = Array(args[..<placeholderCount]) + [lastArg]
-      return String(format: template, arguments: fillInArgs)
     }
   }
   

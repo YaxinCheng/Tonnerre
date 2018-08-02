@@ -199,8 +199,8 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .service(origin: let service) where !type(of: service).keyword.isEmpty:
       textField.autoComplete(cmd: type(of: service).keyword)
     case .result(service: let service, value: let value) where !value.name.isEmpty:
-      if let extService = service as? TonnerreExtendService {
-        textField.autoComplete(cmd: extService.keyword)
+      if service is DynamicProtocol {
+        textField.autoComplete(cmd: value.placeholder)
       } else if let tservice = value as? TonnerreService {
         textField.autoComplete(cmd: type(of: tservice).keyword)
       } else {
