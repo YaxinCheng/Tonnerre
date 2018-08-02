@@ -12,7 +12,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
-  let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
+  let icon: NSImage = #imageLiteral(resourceName: "extension")
   var serviceTrie: Trie<ServiceType>
   internal typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
   
@@ -38,7 +38,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
       let userDefault = UserDefaults.standard
       let appSupDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
       let desiredURL = URL(fileURLWithPath: rawURL, relativeTo: appSupDir)
-      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "tonnerre")
+      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "extension")
     }
   }
   

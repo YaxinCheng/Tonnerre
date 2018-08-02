@@ -10,7 +10,7 @@ import Cocoa
 
 final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtocol {
   static let keyword: String = ""
-  let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
+  let icon: NSImage = #imageLiteral(resourceName: "extension")
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   
@@ -79,7 +79,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtoc
       if fileIcon != nil { icon = fileIcon! }
       else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
         icon = iconFromPath
-      } else { icon = #imageLiteral(resourceName: "tonnerre") }
+      } else { icon = #imageLiteral(resourceName: "extension") }
       let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: (keyword, pythonRuntime))
       return [item]
     } catch {
