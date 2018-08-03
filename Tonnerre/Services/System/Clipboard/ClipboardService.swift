@@ -40,9 +40,12 @@ struct ClipboardService: SystemService {
     let copy: [Displayable]
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
-    if !query.isEmpty {// If any content, copy to clipboard
-      copy = [ DisplayableContainer<String>(name: "Copy: " + query, content: "Copy the text content to clipboard", icon: icon, innerItem: query) ]
-      fetchRequest.predicate = NSPredicate(format: "value CONTAINS[c] %@", query)
+    if input.count > 0 {// If any content, copy to clipboard
+      let text = query.isEmpty ? "..." : query
+      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query) ]
+      if !query.isEmpty {
+        fetchRequest.predicate = NSPredicate(format: "value CONTAINS[c] %@", query)
+      }
     } else { copy = [] }
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()

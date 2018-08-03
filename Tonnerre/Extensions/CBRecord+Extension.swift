@@ -11,6 +11,7 @@ import CoreData
 
 extension CBRecord {
   static func recordInsert(value: String, type: String, limit: Int) {
+    uniquelize(value: value)
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     let context = getContext()
     let count = (try? context.count(for: fetchRequest)) ?? 0
@@ -38,5 +39,14 @@ extension CBRecord {
       print(error)
       #endif
     }
+  }
+  
+  private static func uniquelize(value: String) {
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CBRecord")
+    fetchRequest.predicate = NSPredicate(format: "value=%@", value)
+    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+    let context = getContext()
+    try! context.execute(deleteRequest)
+    try! context.save()
   }
 }
