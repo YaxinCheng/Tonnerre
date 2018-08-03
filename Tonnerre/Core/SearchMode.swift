@@ -21,19 +21,15 @@ enum SearchMode: String {
     }
   }
   
-  var indexPath: URL {
+  var indexFileURL: URL {
     let userDefault = UserDefaults(suiteName: "Tonnerre")!
     let appSupportDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
     let indecesFolder = appSupportDir.appendingPathComponent("Indices")
     return indecesFolder.appendingPathComponent(self.rawValue + ".tnidx")
   }
   
-  var includeDir: Bool {
-    return self == .name
-  }
-  
   /**
-   Value used to identify the type in CoreData
+   Value used to identify the type in indexStorage
   */
   var storedInt: Int {
     switch self {
@@ -43,7 +39,7 @@ enum SearchMode: String {
     }
   }
   
-  var indexTargets: [URL] {
+  var targetFilePaths: [URL] {
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
     switch self {
     case .default:
@@ -59,7 +55,7 @@ enum SearchMode: String {
     }
   }
   
-  func include(fileURL: URL) -> Bool {
+  func canInclude(fileURL: URL) -> Bool {
     switch self {
     case .default:
       return FileTypeControl(types: .app, .systemPref).isInControl(file: fileURL)

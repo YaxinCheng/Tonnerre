@@ -22,7 +22,7 @@ struct IndexStorage {
         IndexStorage.storedIndexes[index.storedInt] = indexFile
         return indexFile
       } else {
-        return TonnerreIndex(filePath: index.indexPath, indexType: index.indexType, writable: writable)!
+        return TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: writable)!
       }
     } set {
       IndexStorage.storedIndexes[index.storedInt] = newValue

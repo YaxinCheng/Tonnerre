@@ -33,10 +33,24 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   }
   
   private static func loadImage(rawURL: String) -> NSImage {
-    if rawURL.starts(with: "http") || rawURL.starts(with: "https") {
+    if rawURL.starts(with: "http") || rawURL.starts(with: "https") {// If it's http url, send sync request to load
       let url = URL(string: rawURL)!
-      return NSImage(contentsOf: url) ?? #imageLiteral(resourceName: "tonnerre").tintedImage(with: TonnerreTheme.current.imgColour)
-    } else {
+      let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 60 * 24)
+      var image: NSImage = #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
+      let asyncSemaphore = DispatchSemaphore(value: 0)
+      URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+        defer { asyncSemaphore.signal() }
+        guard let imageData = data, let loadedImg = NSImage(data: imageData) else {
+          #if DEBUG
+          if error != nil { print(error!) }
+          #endif
+          return
+        }
+        image = loadedImg
+      }.resume()
+      _ = asyncSemaphore.wait(timeout: .distantFuture)
+      return image
+    } else {// Load from file
       let userDefault = UserDefaults.standard
       let appSupDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
       let desiredURL = URL(fileURLWithPath: rawURL, relativeTo: appSupDir)

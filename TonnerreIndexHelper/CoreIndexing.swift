@@ -25,7 +25,7 @@ final class CoreIndexing {
   private var detector: TonnerreFSDetector! = nil
   
   init() {
-    let pathes: [String] = [SearchMode.default.indexTargets, SearchMode.name.indexTargets].reduce([], +).map({$0.path})
+    let pathes: [String] = [SearchMode.default.targetFilePaths, SearchMode.name.targetFilePaths].reduce([], +).map({$0.path})
     if !pathes.isEmpty {
       self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
     }
@@ -37,7 +37,7 @@ final class CoreIndexing {
   private func lostIndeces() -> [SearchMode] {
     let fileManager = FileManager.default
     let allModes: [SearchMode] = [.default, .name, .content]
-    let lostIndexes = allModes.filter { !fileManager.fileExists(atPath: $0.indexPath.path) }
+    let lostIndexes = allModes.filter { !fileManager.fileExists(atPath: $0.indexFileURL.path) }
     return lostIndexes
   }
   
@@ -93,7 +93,7 @@ final class CoreIndexing {
   }
   
   private func fullIndex(modes: [SearchMode]) {
-    guard let targetPaths: [URL] = modes.first?.indexTargets else { return }
+    guard let targetPaths: [URL] = modes.first?.targetFilePaths else { return }
     let queue = DispatchQueue.global(qos: .utility)
     let notificationCentre = NotificationCenter.default
     let beginNotification = modes.contains(.default) ? Notification(name: .defaultIndexingDidBegin) : Notification(name: .documentIndexingDidBegin)
@@ -127,14 +127,14 @@ final class CoreIndexing {
    */
   private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
     if path.isSymlink || path.typeIdentifier.starts(with: "dyn") { return }
-    for (mode, index) in zip(searchModes, indexes) where mode.include(fileURL: path) {
+    for (mode, index) in zip(searchModes, indexes) where mode.canInclude(fileURL: path) {
       _ = try? index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))
     }
     guard let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil) else { return }
     for case let fileURL as URL in enumerator {
       for (mode, index) in zip(searchModes, indexes) {
         guard
-          mode.include(fileURL: fileURL),
+          mode.canInclude(fileURL: fileURL),
           !fileURL.typeIdentifier.starts(with: "dyn"),
           !FileTypeControl.isExcludedURL(url: fileURL),
           !FileTypeControl.isExcludedDir(url: fileURL)
@@ -171,9 +171,9 @@ final class CoreIndexing {
     if FileTypeControl.isExcludedURL(url: path) { return [] }
     if FileTypeControl.isExcludedDir(url: path) { return [] }
     if path.typeIdentifier.starts(with: "dyn") { return [] }
-    let defaultDir = Set(SearchMode.default.indexTargets)
+    let defaultDir = Set(SearchMode.default.targetFilePaths)
     if defaultDir.contains(path) { return [.default] }
-    let documentDir = Set(SearchMode.name.indexTargets)
+    let documentDir = Set(SearchMode.name.targetFilePaths)
     let exclusions = FileTypeControl(types: .media, .image)
     let extensionAnalyze: (URL) -> [SearchMode] = { path in
       if path.isDirectory || exclusions.isInControl(file: path) { return [.name] }
