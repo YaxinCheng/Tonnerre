@@ -37,11 +37,17 @@ struct ClipboardService: SystemService {
   }
   
   func prepare(input: [String]) -> [Displayable] {
+    let copy: [Displayable]
+    let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
+    if !query.isEmpty {// If any content, copy to clipboard
+      copy = [ DisplayableContainer<String>(name: "Copy: " + query, content: "Copy the text content to clipboard", icon: icon, innerItem: query) ]
+      fetchRequest.predicate = NSPredicate(format: "value CONTAINS[c] %@", query)
+    } else { copy = [] }
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
     do {
-      return try context.fetch(fetchRequest).map {
+      return copy + (try context.fetch(fetchRequest).map {
         if $0.type! == "public.file-url" {
           let name = $0.value!.components(separatedBy: "/").last ?? ""
           let url = URL(string: $0.value!)!
@@ -56,9 +62,9 @@ struct ClipboardService: SystemService {
           let icon = self.icon
           return DisplayableContainer(name: name, content: content, icon: icon, innerItem: $0.value!)
         }
-      }
+      })
     } catch {
-      return []
+      return copy
     }
   }
   

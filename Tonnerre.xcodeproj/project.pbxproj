@@ -61,7 +61,6 @@
 		146AD8E620C9C83700D9E591 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
-		146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		146AD8EE20CA12C200D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
@@ -97,6 +96,7 @@
 		14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE69E2112A4F1002BBBB2 /* ViewController.swift */; };
 		14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A22112A4F4002BBBB2 /* Main.storyboard */; };
+		14AFE6AC2114D0BF002BBBB2 /* TonnerreIndexHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */; };
 		14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */; };
@@ -153,6 +153,16 @@
 				1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14AFE6AB2114D087002BBBB2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Tonnerre.app/Contents/Applications;
+			dstSubfolderSpec = 16;
+			files = (
+				14AFE6AC2114D0BF002BBBB2 /* TonnerreIndexHelper.app in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -610,6 +620,7 @@
 				1470513D20B1BEF900F6FBE8 /* Frameworks */,
 				1470513E20B1BEF900F6FBE8 /* Resources */,
 				1470518820B1EA6000F6FBE8 /* Embed Frameworks */,
+				14AFE6AB2114D087002BBBB2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -757,7 +768,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				146AD8EC20C9DA3500D9E591 /* TonnerreIndexHelper.app in Resources */,
 				1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,

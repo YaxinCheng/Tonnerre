@@ -86,7 +86,7 @@ final class BaseWindow: NSPanel {
   
   @objc private func launchHelper() {
     #if RELEASE
-    let helperLocation = Bundle.main.bundlePath.appending("/Contents/Resources/TonnerreIndexHelper.app")
+    let helperLocation = Bundle.main.bundlePath.appending("/Contents/Applications/TonnerreIndexHelper.app")
     let workspace = NSWorkspace.shared
     _ = try? workspace.launchApplication(at: URL(fileURLWithPath: helperLocation), options: .andHide, configuration: [:])
     #endif
