@@ -21,7 +21,7 @@ final class CoreIndexing {
     return NSDictionary(contentsOfFile: aliasFile) as! [String : String]
   }()
   
-  private let indexes = IndexStorage()
+  private var indexes = IndexStorage()
   private var detector: TonnerreFSDetector! = nil
   
   init() {

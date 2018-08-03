@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ClipboardMonitor {
+final class ClipboardMonitor {
   private let pasteboard: NSPasteboard
   private var changedCount: Int
   private let `repeat`: Bool

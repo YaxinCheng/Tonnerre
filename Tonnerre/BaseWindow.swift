@@ -9,7 +9,7 @@
 import Cocoa
 import HotKey
 
-class BaseWindow: NSPanel {
+final class BaseWindow: NSPanel {
   override var canBecomeKey: Bool {
     return true
   }

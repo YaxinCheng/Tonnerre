@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TonnerreField: NSTextField, ThemeProtocol {
+final class TonnerreField: NSTextField, ThemeProtocol {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)

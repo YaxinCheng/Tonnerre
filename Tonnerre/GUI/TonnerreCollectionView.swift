@@ -17,7 +17,7 @@ protocol TonnerreCollectionViewDelegate: class {
   func retrieveLastQuery()
 }
 
-class TonnerreCollectionView: NSScrollView {
+final class TonnerreCollectionView: NSScrollView {
   private let cellHeight: CGFloat = 56
   private weak var highlightedItem: DisplayableCellProtocol?
   private var visibleIndex: Int = -1// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)

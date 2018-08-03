@@ -12,7 +12,9 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
-  let icon: NSImage = #imageLiteral(resourceName: "extension")
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   var serviceTrie: Trie<ServiceType>
   internal typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
   
@@ -33,12 +35,12 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   private static func loadImage(rawURL: String) -> NSImage {
     if rawURL.starts(with: "http") || rawURL.starts(with: "https") {
       let url = URL(string: rawURL)!
-      return NSImage(contentsOf: url) ?? #imageLiteral(resourceName: "tonnerre")
+      return NSImage(contentsOf: url) ?? #imageLiteral(resourceName: "tonnerre").tintedImage(with: TonnerreTheme.current.imgColour)
     } else {
       let userDefault = UserDefaults.standard
       let appSupDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
       let desiredURL = URL(fileURLWithPath: rawURL, relativeTo: appSupDir)
-      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "extension")
+      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
     }
   }
   

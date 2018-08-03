@@ -8,7 +8,7 @@
 
 import Quartz
 
-class PreviewItem: NSObject, QLPreviewItem {
+final class PreviewItem: NSObject, QLPreviewItem {
   let previewItemTitle: String!
   let previewItemURL: URL!
   

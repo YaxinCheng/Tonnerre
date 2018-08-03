@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DynamicProtocol {
+protocol DynamicProtocol: class {
   typealias ServiceType = DisplayableContainer<String>
   var serviceTrie: Trie<ServiceType> { get set }
   static func generateService(from url: URL) -> [ServiceType]

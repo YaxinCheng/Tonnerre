@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+final class ViewController: NSViewController {
   var interpreter = TonnerreInterpreter()
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!

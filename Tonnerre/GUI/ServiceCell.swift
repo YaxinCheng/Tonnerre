@@ -9,7 +9,7 @@
 import Cocoa
 import Quartz
 
-class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
+final class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!

@@ -9,7 +9,7 @@
 import Foundation
 import TonnerreSearch
 
-class IndexStorage {
+struct IndexStorage {
   private static var storedIndexes = [TonnerreIndex?](repeating: nil, count: 3)
   
   subscript(index: SearchMode) -> TonnerreIndex {

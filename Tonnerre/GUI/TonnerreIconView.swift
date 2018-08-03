@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TonnerreIconView: NSImageView , ThemeProtocol {
+final class TonnerreIconView: NSImageView , ThemeProtocol {
   
   var theme: TonnerreTheme {
     get {

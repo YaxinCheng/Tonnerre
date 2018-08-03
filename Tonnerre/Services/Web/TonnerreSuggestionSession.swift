@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TonnerreSuggestionSession {
+final class TonnerreSuggestionSession {
   private static var instance: TonnerreSuggestionSession? = nil
   private static let lock = DispatchSemaphore(value: 1)
   

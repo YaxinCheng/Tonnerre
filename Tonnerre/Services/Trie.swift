@@ -10,7 +10,7 @@ import Foundation
 
 struct Trie<T> {
   
-  class Node {
+  private class Node {
     var children: [Character: Node]
     var values: [T]
     
@@ -20,13 +20,15 @@ struct Trie<T> {
     }
   }
   
-  var rootNode: Node
-  let getKeyword: (T)->String
+  private var rootNode: Node
+  private let getKeyword: (T)->String
   
   init(values: [T], getKeyword: @escaping (T)->String) {
     self.getKeyword = getKeyword
     rootNode = Node(children: [:], values: values)
-    values.forEach(insert)
+    for value in values {
+      insert(value: value)
+    }
   }
   
   func find(value: String) -> [T] {
@@ -42,7 +44,7 @@ struct Trie<T> {
     return node.values
   }
   
-  func insert(value: T) {
+  mutating func insert(value: T) {
     if getKeyword(value).isEmpty { return }
     var node = rootNode
     var lastIndex = -1

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PlaceholderField: NSTextField, ThemeProtocol {
+final class PlaceholderField: NSTextField, ThemeProtocol {
   override var mouseDownCanMoveWindow: Bool {
     return true
   }
