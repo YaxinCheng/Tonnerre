@@ -13,13 +13,6 @@ protocol WebService: TonnerreService, AsyncLoadingProtocol {
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
   var loadSuggestion: Bool { get }
-  /**
-   When async-loaded suggestions arrive (by notification), use this function to encode them into Displayable items
-   
-   - parameter suggestions: loaded suggestion names (e.g. When input "D", suggestions may include ["donald trump", "diana"]
-   - returns: Encoded suggestions
-   */
-  func present(suggestions: [Any]) -> [ServiceResult]
   func parse(suggestionData: Data?) -> [String: Any]
 }
 
@@ -56,9 +49,9 @@ extension WebService {
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
-  func present(suggestions: [Any]) -> [ServiceResult] {
-    guard suggestions is [String] else { return [] }
-    return (suggestions as! [String]).compactMap {
+  func present(rawElements: [Any]) -> [ServiceResult] {
+    guard rawElements is [String] else { return [] }
+    return (rawElements as! [String]).compactMap {
       let readableContent: String
       if $0.contains("&#"), let decodedData = $0.data(using: .utf8) {
         readableContent = (try? NSAttributedString(data: decodedData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil))?.string ?? $0
@@ -90,7 +83,7 @@ extension WebService {
     guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
       return [originalSearch]
     }
-    let session = TonnerreSuggestionSession.shared
+    let session = TonnerreSession.shared
     let suggestionPath = String(format: suggestionTemplate, arguments: [query])
     guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
     let request = URLRequest(url: suggestionURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 60 * 1)
@@ -102,7 +95,7 @@ extension WebService {
         return
       }
       let processedData = self.parse(suggestionData: data)
-      let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: processedData)
+      let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: processedData)
       NotificationCenter.default.post(notification)
     }
     session.send(request: ongoingTask)

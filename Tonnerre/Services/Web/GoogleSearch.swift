@@ -28,7 +28,7 @@ extension Google {
       let availableOptions = json[1] as? [NSArray]
       else { return [:] }
     let suggestions = availableOptions.compactMap { $0[0] as? String }
-    return ["suggestions": suggestions]
+    return ["rawElements": suggestions]
   }
 }
 

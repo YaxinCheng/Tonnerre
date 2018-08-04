@@ -31,9 +31,9 @@ protocol AsyncLoadingProtocol {
   */
   var mode: AsyncLoadingType { get }
   /**
-   Convert the raw suggestions loaded to types that can be displayed
-   - parameter suggestions: any types of data that is loaded asynchronously from file, web, or anywhere
+   Convert the raw data loaded to types that can be displayed
+   - parameter rawElements: any types of data that is loaded asynchronously from file, web, or anywhere
    - returns: a well structured array of ServiceResult that are ready to be displayed
   */
-  func present(suggestions: [Any]) -> [ServiceResult]
+  func present(rawElements: [Any]) -> [ServiceResult]
 }

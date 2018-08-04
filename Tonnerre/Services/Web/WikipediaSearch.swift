@@ -33,6 +33,6 @@ struct WikipediaSearch: WebService {
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
       let suggestions = jsonObject[1] as? [String]
       else { return [:] }
-    return ["suggestions": suggestions]
+    return ["rawElements": suggestions]
   }
 }

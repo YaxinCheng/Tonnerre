@@ -23,7 +23,7 @@ struct GoogleMapService: WebService {
       let predictions = jsonObject["predictions"] as? [[String: Any]]
     else { return [:] }
     let matchedTerms = predictions.compactMap { $0["description"] as? String }
-    return ["suggestions": matchedTerms]
+    return ["rawElements": matchedTerms]
   }
   static let keyword: String = "map"
   let argLowerBound: Int = 1

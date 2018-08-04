@@ -30,6 +30,6 @@ struct BingSearch: WebService {
     let suggestions = ranges.compactMap { Range($0, in: html) }
       .map { String(html[$0]) }.map { $0.replacingOccurrences(of: "+", with: " ") }
       .compactMap { $0.removingPercentEncoding }
-    return ["suggestions": suggestions]
+    return ["rawElements": suggestions]
   }
 }

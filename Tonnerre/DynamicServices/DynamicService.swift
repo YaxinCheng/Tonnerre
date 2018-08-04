@@ -8,7 +8,7 @@
 
 import Cocoa
 
-final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtocol {
+final class DynamicService: TonnerreService, DynamicProtocol {
   static let keyword: String = ""
   var icon: NSImage {
     return #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
@@ -19,8 +19,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtoc
   var serviceTrie: Trie<ServiceType>
   
   private let encode = JSONSerialization.data
-  private let suggestionSession = TonnerreSuggestionSession.shared
-  let mode: AsyncLoadingType = .replaced
+  private let asyncSession = TonnerreSession.shared
   internal typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
@@ -189,10 +188,10 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtoc
         DynamicService.runningProcess?.terminate()
         let content = possibleServices.compactMap { try? self.execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
         guard content.count > 0 else { return }
-        let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: ["suggestions": content])
+        let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": content])
         NotificationCenter.default.post(notification)
       }
-      suggestionSession.send(request: task)
+      asyncSession.send(request: task)
       var filledService = [DisplayableContainer<String>]()
       for var service in possibleServices {
         service.content = fill(template: service.content, withArguments: queryContent)
@@ -226,11 +225,15 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtoc
       }
     }
   }
-  
-  func present(suggestions: [Any]) -> [ServiceResult] {
-    guard suggestions is [Displayable] else { return [] }
-    return (suggestions as! [Displayable]).map { ServiceResult(service: self, value: $0) }
-  }
 }
 
-
+extension DynamicService: AsyncLoadingProtocol {
+  var mode: AsyncLoadingType {
+    return .replaced
+  }
+  
+  func present(rawElements: [Any]) -> [ServiceResult] {
+    guard rawElements is [Displayable] else { return [] }
+    return (rawElements as! [Displayable]).map { ServiceResult(service: self, value: $0) }
+  }
+}

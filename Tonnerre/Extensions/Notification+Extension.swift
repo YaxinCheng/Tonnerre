@@ -9,7 +9,7 @@
 import Foundation
 
 extension Notification.Name {
-  static let suggestionDidFinish = Notification.Name("suggestionDidFinish")
+  static let asyncLoadingDidFinish = Notification.Name("asyncLoadingDidFinish")
   static let windowIsHiding = Notification.Name("windowIsHiding")
   static let helperAppDidExit = Notification.Name("helperAppDidExit")
   static let mainAppWillExit = Notification.Name("mainAppWillExit")

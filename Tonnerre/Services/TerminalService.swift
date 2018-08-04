@@ -35,18 +35,18 @@ struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingPro
         let returnedData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         guard let resultString = String(data: returnedData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         let result = resultString.components(separatedBy: "\n").map { DisplayableContainer(name: $0, content: "Result of \"\(cmd.joined(separator: " "))\"", icon: self.icon, innerItem: $0) }
-        let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: ["suggestions": result])
+        let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": result])
         NotificationCenter.default.post(notification)
       } catch {
         let errorInfo = DisplayableContainer(name: "\(error)", content: "Error happened when running \(cmd.joined(separator: " "))", icon: self.icon, innerItem: error.localizedDescription)
-        let notification = Notification(name: .suggestionDidFinish, object: self, userInfo: ["suggestions": errorInfo])
+        let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": errorInfo])
         NotificationCenter.default.post(notification)
       }
     }
   }
   
-  func present(suggestions: [Any]) -> [ServiceResult] {
-    guard suggestions is [Displayable] else { return [] }
-    return (suggestions as! [Displayable]).map { ServiceResult(service: self, value: $0) }
+  func present(rawElements: [Any]) -> [ServiceResult] {
+    guard rawElements is [Displayable] else { return [] }
+    return (rawElements as! [Displayable]).map { ServiceResult(service: self, value: $0) }
   }
 }

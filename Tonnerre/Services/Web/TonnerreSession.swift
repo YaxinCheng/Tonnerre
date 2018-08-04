@@ -1,5 +1,5 @@
 //
-//  TonnerreSuggestionSession.swift
+//  TonnerreSession.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-06-21.
@@ -8,21 +8,16 @@
 
 import Foundation
 
-final class TonnerreSuggestionSession {
-  private static var instance: TonnerreSuggestionSession? = nil
+final class TonnerreSession {
   private static let lock = DispatchSemaphore(value: 1)
   
-  static var shared: TonnerreSuggestionSession {
-    lock.wait()
-    if instance == nil {
-      instance = TonnerreSuggestionSession()
-    }
-    lock.signal()
-    return instance!
-  }
+  /**
+   Returns the shared instance of TonnerreSession
+  */
+  static let shared = TonnerreSession()
   
   private let session: URLSession
-  private var suggestionRequest: URLSessionDataTask? = nil
+  private var URLDataTask: URLSessionDataTask? = nil
   private let queue: DispatchQueue
   
   private init() {
@@ -31,17 +26,17 @@ final class TonnerreSuggestionSession {
   }
   
   func send(request: URLSessionDataTask, after seconds: Double = 0.7) {
-    suggestionRequest?.cancel()
-    suggestionRequest = request
+    URLDataTask?.cancel()
+    URLDataTask = request
     queue.asyncAfter(deadline: .now() + seconds) { [weak self] in
-      TonnerreSuggestionSession.lock.wait()
-      defer { TonnerreSuggestionSession.lock.signal() }
+      TonnerreSession.lock.wait()
+      defer { TonnerreSession.lock.signal() }
       guard
-        self?.suggestionRequest != nil,
-        self?.suggestionRequest?.state == .suspended
+        self?.URLDataTask != nil,
+        self?.URLDataTask?.state == .suspended
       else { return }
-      self?.suggestionRequest?.resume()
-      self?.suggestionRequest = nil
+      self?.URLDataTask?.resume()
+      self?.URLDataTask = nil
     }
   }
   
@@ -51,8 +46,8 @@ final class TonnerreSuggestionSession {
     asyncRequest?.cancel()
     asyncRequest = request
     queue.asyncAfter(deadline: .now() + second) { [weak self] in
-      TonnerreSuggestionSession.lock.wait()
-      defer { TonnerreSuggestionSession.lock.signal() }
+      TonnerreSession.lock.wait()
+      defer { TonnerreSession.lock.signal() }
       guard
         self?.asyncRequest != nil,
         self?.asyncRequest?.isCancelled == false,
@@ -64,9 +59,9 @@ final class TonnerreSuggestionSession {
   }
   
   func cancel() {
-    if suggestionRequest != nil {
-      suggestionRequest?.cancel()
-      suggestionRequest = nil
+    if URLDataTask != nil {
+      URLDataTask?.cancel()
+      URLDataTask = nil
     }
     if asyncRequest != nil {
       asyncRequest?.cancel()

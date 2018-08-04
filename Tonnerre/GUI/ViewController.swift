@@ -22,7 +22,7 @@ final class ViewController: NSViewController {
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
   private var lastQuery: String = ""
-  private let suggestionSession = TonnerreSuggestionSession.shared
+  private let asyncSession = TonnerreSession.shared
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,7 +30,7 @@ final class ViewController: NSViewController {
     // Do any additional setup after loading the view.
     textField.delegate = self
     collectionView.delegate = self
-    NotificationCenter.default.addObserver(self, selector: #selector(suggestionNotificationDidArrive(notification:)), name: .suggestionDidFinish, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(asyncContentDidLoad(notification:)), name: .asyncLoadingDidFinish, object: nil)
     view.layer?.masksToBounds = true
     view.layer?.cornerRadius = 7
   }
@@ -76,19 +76,19 @@ final class ViewController: NSViewController {
     iconView.theme = .current
   }
   
-  @objc private func suggestionNotificationDidArrive(notification: Notification) {
+  @objc private func asyncContentDidLoad(notification: Notification) {
     DispatchQueue.main.async { [unowned self] in
       guard
         case .result(let service, _)? = self.collectionView.datasource.first,
-        let suggestionPack = notification.userInfo as? [String: Any],
+        let dataPack = notification.userInfo as? [String: Any],
         let asyncLoader = service as? AsyncLoadingProtocol,
-        let suggestions = suggestionPack["suggestions"] as? [Any]
+        let content = dataPack["rawElements"] as? [Any]
       else { return }
-      let processedSuggestions = asyncLoader.present(suggestions: suggestions)
+      let processedData = asyncLoader.present(rawElements: content)
       if asyncLoader.mode == .append {
-        self.collectionView.datasource += processedSuggestions
+        self.collectionView.datasource += processedData
       } else if asyncLoader.mode == .replaced {
-        self.collectionView.datasource = processedSuggestions
+        self.collectionView.datasource = processedData
       }
     }
   }
@@ -120,7 +120,7 @@ extension ViewController: NSTextFieldDelegate {
       adjustEditing(withString: "")
       placeholderField.placeholderString = nil
     }
-    suggestionSession.cancel()
+    asyncSession.cancel()
     textDidChange(value: trimmedValue)
   }
   

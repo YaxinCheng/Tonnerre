@@ -25,6 +25,6 @@ struct DuckDuckGoSearch: WebService {
       let jsonObj = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [[String: String]]
     else { return [:] }
     let suggestions = jsonObj.compactMap { $0["phrase"] }
-    return ["suggestions": suggestions]
+    return ["rawElements": suggestions]
   }
 }
