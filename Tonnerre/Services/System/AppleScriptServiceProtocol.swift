@@ -8,7 +8,13 @@
 
 import Foundation
 
+/**
+ Services running based on Apple Script
+*/
 protocol AppleScriptServiceProtocol: TonnerreService {
+  /**
+   The script that provides the action
+  */
   var script: String { get }
 }
 

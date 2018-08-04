@@ -20,7 +20,7 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtoc
   
   private let encode = JSONSerialization.data
   private let suggestionSession = TonnerreSuggestionSession.shared
-  let mode: LoadingMode = .replaced
+  let mode: AsyncLoadingType = .replaced
   internal typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
@@ -121,7 +121,14 @@ final class DynamicService: TonnerreService, AsyncLoadingProtocol, DynamicProtoc
   
   private static weak var runningProcess: Process?
   
-  private func execute(script: DisplayableContainer<String>, runningMode: Mode) throws -> [Displayable] {
+  /**
+   Run the given script for a specific mode
+   - parameter script: a service that describes the python script file
+   - parameter runningMode: either `prepare` or `serve`. It determines which function in the script should be called
+   - throws: Error of process running; Error of JSONSerialization
+   - returns: an array of running result, can be empty (if with serve mode)
+  */
+  private func execute(script: ServiceType, runningMode: Mode) throws -> [Displayable] {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]

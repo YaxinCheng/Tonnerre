@@ -15,7 +15,7 @@ struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingPro
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let icon: NSImage = .terminal
-  let mode: LoadingMode = .replaced
+  let mode: AsyncLoadingType = .replaced
   
   func prepare(input: [String]) -> [Displayable] {
     let cmd = input.joined(separator: " ")

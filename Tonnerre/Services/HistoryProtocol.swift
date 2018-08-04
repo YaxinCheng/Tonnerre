@@ -9,11 +9,35 @@
 import Foundation
 import CoreData
 
+/**
+ Any service needs to store query history should conforms to this protocol
+*/
 protocol HistoryProtocol {
+  /**
+   Service identifier used to store history data into the db.
+   - Warning: must be unique
+  */
   var identifier: String { get }
+  /**
+   The number of history records must be lower than this number
+  */
   var historyLimit: Int { get }
+  /**
+   Append the query into history db
+   - parameter query: the query needs to be stored
+   - parameter unique: if true, remove all other records with the same query, and keep this as the only one
+  */
   func appendHistory(query: String, unique: Bool)
+  /**
+   Retrieve history records from db
+   - returns: An array of history records string
+  */
   func histories() -> [String]
+  /**
+   An optional function which converts the stored history to displayble objects
+   - parameter history: history data retrieved from db
+   - returns: an array of displayable objects
+  */
   func reuse(history: [String]) -> [Displayable]
 }
 

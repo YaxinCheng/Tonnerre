@@ -8,6 +8,9 @@
 
 import Cocoa
 
+/**
+ A protocol for loading bookmarks from safari and chrome
+*/
 protocol BookMarkService: TonnerreService {
   /**
    Type of bookmark

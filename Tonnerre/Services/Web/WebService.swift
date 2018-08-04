@@ -24,7 +24,7 @@ protocol WebService: TonnerreService, AsyncLoadingProtocol {
 }
 
 extension WebService {
-  var mode: LoadingMode {
+  var mode: AsyncLoadingType {
     return .append
   }
   
