@@ -20,7 +20,7 @@ extension FileSearchService {
   var argUpperBound: Int { return Int.max }
   var argLowerBound: Int { return 1 }
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard !(input.first?.isEmpty ?? false) else { return [self] }
     let query = input.joined(separator: " ") + "*"
     let indexStorage = IndexStorage()
@@ -30,7 +30,7 @@ extension FileSearchService {
     }
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let fileURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {

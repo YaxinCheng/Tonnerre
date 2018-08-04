@@ -36,8 +36,8 @@ struct ClipboardService: SystemService {
     }
   }
   
-  func prepare(input: [String]) -> [Displayable] {
-    let copy: [Displayable]
+  func prepare(input: [String]) -> [DisplayProtocol] {
+    let copy: [DisplayProtocol]
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
@@ -71,7 +71,7 @@ struct ClipboardService: SystemService {
     }
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     NSPasteboard.general.clearContents()
     if let item = source as? DisplayableContainer<URL>, let url = item.innerItem {
       if withCmd {

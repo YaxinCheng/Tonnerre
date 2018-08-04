@@ -17,12 +17,12 @@ struct ReloadService: TonnerreService {
     return #imageLiteral(resourceName: "tonnerre").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count == 0 else { return [] }
     return [self]
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     TonnerreInterpreter.loader.reload()
   }
 

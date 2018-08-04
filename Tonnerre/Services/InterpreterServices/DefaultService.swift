@@ -15,13 +15,13 @@ struct DefaultService: TonnerreInterpreterService {
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   let itemIdentifier: NSUserInterfaceItemIdentifier = .OnOffCell
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let searchOptions: [DefaultSearchOption] = [.google, .bing, .duckDuckGo]
     let searchServices = searchOptions.map { $0.associatedService.init() }
     return searchServices
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard
       let service = source as? TonnerreService,
       let searchOption = DefaultSearchOption(rawValue: type(of: service).keyword)

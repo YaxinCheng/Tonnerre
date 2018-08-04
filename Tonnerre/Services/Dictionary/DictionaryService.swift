@@ -19,7 +19,7 @@ struct DictionarySerivce: TonnerreService, HistoryProtocol {
   let historyLimit: Int = 8
   let identifier: String = "DictionaryService"
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count > 0, !input[0].isEmpty else {
       let history = histories()
       return [self] + reuse(history: history)
@@ -33,13 +33,13 @@ struct DictionarySerivce: TonnerreService, HistoryProtocol {
     return [DisplayableContainer(name: foundTerm, content: definition as String, icon: icon, innerItem: dictURL)]
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let request = source as? DisplayableContainer<URL>, let url = request.innerItem else { return }
     appendHistory(query: request.name)
     NSWorkspace.shared.open(url)
   }
   
-  func reuse(history: [String]) -> [Displayable] {
+  func reuse(history: [String]) -> [DisplayProtocol] {
     let termsAndDefs = history.compactMap { define($0) }
     return termsAndDefs.map {
       let urlEncoded = $0.0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? $0.0

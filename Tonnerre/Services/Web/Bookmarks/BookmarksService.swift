@@ -32,7 +32,7 @@ extension BookMarkService {
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return Int.max }
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let bookMarks = parseFile()
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
     let filteredBMs = bookMarks.filter {
@@ -41,7 +41,7 @@ extension BookMarkService {
     return filteredBMs.map { DisplayableContainer(name: $0.title, content: $0.url.absoluteString, icon: icon, innerItem: $0.url, placeholder: $0.title) }
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let innerItem = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     NSWorkspace.shared.open(innerItem)
   }

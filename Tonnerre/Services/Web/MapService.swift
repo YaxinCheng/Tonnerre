@@ -37,7 +37,7 @@ struct GoogleMapService: WebService {
     return icon
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {

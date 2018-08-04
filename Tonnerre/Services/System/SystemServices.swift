@@ -22,13 +22,13 @@ struct ApplicationService: SystemService {
   let argUpperBound: Int = Int.max
   let argLowerBound: Int = 0
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let value = (source as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
     if withCmd { value.forceTerminate() }
     else { value.terminate() }
   }
 
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
     if input.isEmpty || (input.first?.isEmpty ?? false) {
@@ -55,7 +55,7 @@ struct VolumeService: SystemService {
     centre.deliver(notification)
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     let workspace = NSWorkspace.shared
     let localNotification = NSUserNotification()
     let queue = DispatchQueue.global(qos: .userInitiated)
@@ -97,7 +97,7 @@ struct VolumeService: SystemService {
     }
   }
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let fileManager = FileManager.default
     let volumeURLs = fileManager.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeIsInternalKey], options: .skipHiddenVolumes) ?? []
     let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon)

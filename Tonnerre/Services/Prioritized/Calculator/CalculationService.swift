@@ -16,7 +16,7 @@ struct CalculationService: TonnerreService {
   let icon: NSImage = .calculator
   private let interpreter = MathInterpreter()
 
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let rawExpression = input.joined()
     do {
       let expression = try interpreter.tokenize(rawString: rawExpression)
@@ -27,7 +27,7 @@ struct CalculationService: TonnerreService {
     }
   }
 
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard
       let result = source as? DisplayableContainer<Int>,
       let _ = Double(result.name)

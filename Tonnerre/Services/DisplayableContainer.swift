@@ -8,14 +8,14 @@
 
 import Cocoa
 
-struct DisplayableContainer<T>: Displayable {
+struct DisplayableContainer<T>: DisplayProtocol {
   let name: String
   var content: String
   var icon: NSImage
   var innerItem: T?
   let _placeholder: String?
   var placeholder: String {
-    return _placeholder == nil ? ((innerItem as? Displayable)?.placeholder ?? name) : _placeholder!
+    return _placeholder == nil ? ((innerItem as? DisplayProtocol)?.placeholder ?? name) : _placeholder!
   }
   var extraContent: Any? = nil
   
@@ -34,7 +34,7 @@ protocol AsyncDisplayable {
   var asyncedViewSetup: ((ServiceCell)->Void)? { get }
 }
 
-struct AsyncedDisplayableContainer<T>: Displayable, AsyncDisplayable {
+struct AsyncedDisplayableContainer<T>: DisplayProtocol, AsyncDisplayable {
   let name: String
   let content: String
   let icon: NSImage
@@ -42,7 +42,7 @@ struct AsyncedDisplayableContainer<T>: Displayable, AsyncDisplayable {
   let asyncedViewSetup: ((ServiceCell)->Void)?
   let _placeholder: String
   var placeholder: String {
-    return _placeholder.isEmpty ? (innerItem as? Displayable)?.placeholder ?? "" : _placeholder
+    return _placeholder.isEmpty ? (innerItem as? DisplayProtocol)?.placeholder ?? "" : _placeholder
   }
   
   init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "", viewSetup: ((ServiceCell)->Void)? = nil) {

@@ -23,7 +23,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   internal typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
-  private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> Displayable? {
+  private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> DisplayProtocol? {
     guard
       let rawName = jsonObject["name"]
     else { return nil }
@@ -41,7 +41,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     }
   }
   
-  private func dictionarize(_ displayItem: Displayable) -> Dictionary<String, Any> {
+  private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
     var resultDictionary = Dictionary<String, Any>()
     resultDictionary["name"] = displayItem.name
     resultDictionary["content"] = displayItem.content
@@ -127,7 +127,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
    - throws: Error of process running; Error of JSONSerialization
    - returns: an array of running result, can be empty (if with serve mode)
   */
-  private func execute(script: ServiceType, runningMode: Mode) throws -> [Displayable] {
+  private func execute(script: ServiceType, runningMode: Mode) throws -> [DisplayProtocol] {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
@@ -171,7 +171,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   */
   private var cachedServices: [DisplayableContainer<String>] = []
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count > 0 else { return [] }
     let queryKey = input.first!.lowercased()
     let possibleServices: [DisplayableContainer<String>]
@@ -202,7 +202,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     return possibleServices
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
       let originalService: DisplayableContainer<String>
       if let urlResult = source as? DisplayableContainer<URL>,
@@ -233,7 +233,7 @@ extension DynamicService: AsyncLoadingProtocol {
   }
   
   func present(rawElements: [Any]) -> [ServiceResult] {
-    guard rawElements is [Displayable] else { return [] }
-    return (rawElements as! [Displayable]).map { ServiceResult(service: self, value: $0) }
+    guard rawElements is [DisplayProtocol] else { return [] }
+    return (rawElements as! [DisplayProtocol]).map { ServiceResult(service: self, value: $0) }
   }
 }

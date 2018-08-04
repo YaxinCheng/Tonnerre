@@ -56,7 +56,7 @@ struct CurrencyService: TonnerreService {
     return (fromCurrency, toCurrency, amount)
   }
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard let (fromCurrency, toCurrency, amount) = extractInfomation(from: input) else { return [] }
     // The async function to setup the view
     let label = "\(amount) \(fromCurrency) = %@ "
@@ -85,7 +85,7 @@ struct CurrencyService: TonnerreService {
     }
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let innerItem = (source as? AsyncedDisplayableContainer<[String]>)?.innerItem else { return }
     let encoded = innerItem.joined(separator: "+")
     let url = URL(string: "https://google.com/search?q=\(encoded)")!

@@ -179,7 +179,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     adjustEditing(withString: lastQuery)
   }
   
-  func serve(with service: TonnerreService, target: Displayable, withCmd: Bool) {
+  func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool) {
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
       guard !(service is TonnerreInstantService && withCmd == false) else { return }
       (self?.view.window as? BaseWindow)?.isHidden = true

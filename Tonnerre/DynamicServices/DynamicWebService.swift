@@ -90,7 +90,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   private var cachedKey: String?
   private var cachedServices: [ServiceType] = []
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count > 0 else { return [] }
     let queryKey = input.first!.lowercased()
     let possibleServices: [ServiceType]
@@ -117,7 +117,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
     return possibleServices
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     let workspace = NSWorkspace.shared
     if let url = (source as? DisplayableContainer<URL>)?.innerItem {
       workspace.open(url)

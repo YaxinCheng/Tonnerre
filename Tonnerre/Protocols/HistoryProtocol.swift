@@ -38,7 +38,7 @@ protocol HistoryProtocol {
    - parameter history: history data retrieved from db
    - returns: an array of displayable objects
   */
-  func reuse(history: [String]) -> [Displayable]
+  func reuse(history: [String]) -> [DisplayProtocol]
 }
 
 extension HistoryProtocol {

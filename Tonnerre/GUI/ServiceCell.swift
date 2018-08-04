@@ -9,13 +9,13 @@
 import Cocoa
 import Quartz
 
-final class ServiceCell: NSCollectionViewItem, DisplayableCellProtocol {
+final class ServiceCell: NSCollectionViewItem, CellProtocol {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
-  var displayItem: Displayable?
+  var displayItem: DisplayProtocol?
   var popoverView: NSPopover = NSPopover()
   
   override func viewDidLoad() {

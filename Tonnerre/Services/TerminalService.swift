@@ -17,12 +17,12 @@ struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingPro
   let icon: NSImage = .terminal
   let mode: AsyncLoadingType = .replaced
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let cmd = input.joined(separator: " ")
     return [DisplayableContainer(name: cmd, content: "Run \(cmd) in terminal", icon: icon, innerItem: input)]
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let cmd = (source as? DisplayableContainer<[String]>)?.innerItem else { return }
     DispatchQueue.global(qos: .userInitiated).async {
       let process = Process()
@@ -46,7 +46,7 @@ struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingPro
   }
   
   func present(rawElements: [Any]) -> [ServiceResult] {
-    guard rawElements is [Displayable] else { return [] }
-    return (rawElements as! [Displayable]).map { ServiceResult(service: self, value: $0) }
+    guard rawElements is [DisplayProtocol] else { return [] }
+    return (rawElements as! [DisplayProtocol]).map { ServiceResult(service: self, value: $0) }
   }
 }

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol DisplayableCellProtocol: class, ThemeProtocol {
+protocol CellProtocol: class, ThemeProtocol {
   var view: NSView { get set }
   var iconView: TonnerreIconView! { get set }
   var serviceLabel: NSTextField! { get set }
@@ -17,7 +17,7 @@ protocol DisplayableCellProtocol: class, ThemeProtocol {
   var theme: TonnerreTheme { get set }
 }
 
-extension DisplayableCellProtocol {
+extension CellProtocol {
   var highlighted: Bool {
     set {
       DispatchQueue.main.async { [weak self] in

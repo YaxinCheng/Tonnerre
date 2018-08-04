@@ -8,9 +8,9 @@
 
 import Cocoa
 
-enum ServiceResult: Displayable {
+enum ServiceResult: DisplayProtocol {
   case service(origin: TonnerreService)
-  case result(service: TonnerreService, value: Displayable)
+  case result(service: TonnerreService, value: DisplayProtocol)
   
   var icon: NSImage {
     switch self {
@@ -51,7 +51,7 @@ enum ServiceResult: Displayable {
     self = .service(origin: service)
   }
   
-  init(service: TonnerreService, value: Displayable) {
+  init(service: TonnerreService, value: DisplayProtocol) {
     self = .result(service: service, value: value)
   }
 }

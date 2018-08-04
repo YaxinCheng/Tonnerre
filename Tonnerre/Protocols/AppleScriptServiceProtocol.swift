@@ -16,17 +16,18 @@ protocol AppleScriptServiceProtocol: TonnerreService {
    The script that provides the action
   */
   var script: String { get }
+  // TODO: support loading apple script protocol from tne
 }
 
 extension AppleScriptServiceProtocol {
   var argLowerBound: Int { return 0 }
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count == 0 else { return [] }
     return [self]
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let script = NSAppleScript(source: script) else { return }
     script.executeAndReturnError(nil)
   }

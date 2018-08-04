@@ -12,7 +12,7 @@ import Cocoa
 /**
  The base protocol that each service in the system should conforms to
 */
-protocol TonnerreService: Displayable {
+protocol TonnerreService: DisplayProtocol {
   /**
    The specific word used to locate the service
   */
@@ -30,13 +30,13 @@ protocol TonnerreService: Displayable {
    - parameter input: the user input excluding the keyword
    - returns: an array of selectable result each represent a specific action
   */
-  func prepare(input: [String]) -> [Displayable]
+  func prepare(input: [String]) -> [DisplayProtocol]
   /**
    The function that serves the user with the action it selected
    - parameter source: the user selected action
    - parameter withCmd: if the user selected the action with cmd key modifier
   */
-  func serve(source: Displayable, withCmd: Bool)
+  func serve(source: DisplayProtocol, withCmd: Bool)
   
   /**
    Constructor.

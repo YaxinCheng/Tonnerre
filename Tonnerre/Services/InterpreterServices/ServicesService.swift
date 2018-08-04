@@ -15,13 +15,13 @@ struct ServicesService: TonnerreInterpreterService {
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre")
   let itemIdentifier: NSUserInterfaceItemIdentifier = .OnOffCell
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let query = input.joined(separator: " ")
     return TonnerreInterpreter.loader.autoComplete(key: query, type: .normal, includeExtra: false)
     + TonnerreInterpreter.loader.autoComplete(key: query, type: .system, includeExtra: false)
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     // TODO: Add detections for DynamicServices
    if let service = source as? TonnerreService {
       type(of: service).isDisabled = !(type(of: service).isDisabled)

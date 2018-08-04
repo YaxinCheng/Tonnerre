@@ -9,7 +9,7 @@
 import Cocoa
 import Lottie
 
-final class OnOffCell: NSCollectionViewItem, DisplayableCellProtocol {
+final class OnOffCell: NSCollectionViewItem, CellProtocol {
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!

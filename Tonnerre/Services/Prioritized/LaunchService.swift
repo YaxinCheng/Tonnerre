@@ -20,7 +20,7 @@ struct LaunchService: TonnerreService {
     return NSDictionary(contentsOfFile: aliasFile) as! [String: String]
   }()
   
-  func prepare(input: [String]) -> [Displayable] {
+  func prepare(input: [String]) -> [DisplayProtocol] {
     let indexStorage = IndexStorage()
     let index = indexStorage[.default]
     let query = input.joined(separator: " ")
@@ -39,7 +39,7 @@ struct LaunchService: TonnerreService {
     }
   }
   
-  func serve(source: Displayable, withCmd: Bool) {
+  func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let appURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     LaunchOrder.saveOrder(for: appURL.absoluteString)
     let workspace = NSWorkspace.shared

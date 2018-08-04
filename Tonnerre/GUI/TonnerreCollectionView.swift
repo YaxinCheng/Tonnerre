@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
-  func serve(with service: TonnerreService, target: Displayable, withCmd: Bool)
+  func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool)
   func tabPressed(service: ServiceResult)
   func serviceHighlighted(service: ServiceResult?)
   func fillPlaceholder(with service: ServiceResult?)
@@ -19,7 +19,7 @@ protocol TonnerreCollectionViewDelegate: class {
 
 final class TonnerreCollectionView: NSScrollView {
   private let cellHeight: CGFloat = 56
-  private weak var highlightedItem: DisplayableCellProtocol?
+  private weak var highlightedItem: CellProtocol?
   private var visibleIndex: Int = -1// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   private var mouseMonitor: Any? = nil
@@ -143,7 +143,7 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
-  func enterPressed() -> (TonnerreService, Displayable)? {
+  func enterPressed() -> (TonnerreService, DisplayProtocol)? {
     let selectIndex = max(highlightedItemIndex, 0)
     guard
       !datasource.isEmpty,
@@ -196,10 +196,10 @@ final class TonnerreCollectionView: NSScrollView {
     return (0...8).map({ topIndex + $0 }).filter { $0 >= 0 && $0 < datasource.count }
   }
   
-  func getVisibleCells() -> [DisplayableCellProtocol] {
+  func getVisibleCells() -> [CellProtocol] {
     let visibleIndexes = getVisibleIndexes()
     let indexPaths = visibleIndexes.map { IndexPath(item: $0, section: 0) }
-    return indexPaths.compactMap { collectionView.item(at: $0) as? DisplayableCellProtocol }
+    return indexPaths.compactMap { collectionView.item(at: $0) as? CellProtocol }
   }
 }
 
@@ -217,7 +217,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     let data = datasource[indexPath.item]
     let identifier = data.itemIdentifier
     let origin = collectionView.makeItem(withIdentifier: identifier, for: indexPath)
-    guard let cell = origin as? DisplayableCellProtocol else { return origin }
+    guard let cell = origin as? CellProtocol else { return origin }
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
@@ -244,7 +244,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard
       let indexPath = indexPaths.first,
-      let cell = collectionView.item(at: indexPath) as? DisplayableCellProtocol
+      let cell = collectionView.item(at: indexPath) as? CellProtocol
     else { return }
     if indexPath.item != highlightedItemIndex { highlightedItemIndex = indexPath.item }
     highlightedItem?.highlighted = false
