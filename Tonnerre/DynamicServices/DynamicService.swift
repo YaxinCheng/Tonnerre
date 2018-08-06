@@ -27,10 +27,10 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     guard
       let rawName = jsonObject["name"]
     else { return nil }
-    let name: String = "\(rawName)"
+    let name: String = String(reflecting: rawName)
     let content = jsonObject["content"] as? String ?? ""
     let innerItem = jsonObject["innerItem"]
-    let placeholder = jsonObject["placeholder"] as? String ?? ""
+    let placeholder = jsonObject["placeholder"] as? String ?? name
     if
       let stringItem = innerItem as? String,
       let urlItem = URL(string: stringItem),
@@ -42,16 +42,20 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   }
   
   private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
-    var resultDictionary = Dictionary<String, Any>()
-    resultDictionary["name"] = displayItem.name
-    resultDictionary["content"] = displayItem.content
-    resultDictionary["placeholder"] = displayItem.placeholder
-    if let urlContent = (displayItem as? DisplayableContainer<URL>)?.innerItem {
-      resultDictionary["innerItem"] = urlContent.absoluteString
-    } else {
-      resultDictionary["innerItem"] = (displayItem as? DisplayableContainer<Any>)?.innerItem
+    let unwrap: (Any) -> Any = {
+      let mirror = Mirror(reflecting: $0)
+      guard
+        mirror.displayStyle == .optional,
+        let value = mirror.children.first
+      else { return $0 }
+      return value.value
     }
-    return resultDictionary
+    let requiredKeys: Set<String> = ["name", "content", "innerItem"]
+    return Dictionary(uniqueKeysWithValues:
+      Mirror(reflecting: displayItem).children
+      .filter { requiredKeys.contains(($0.label ?? "")) }
+      .map { ($0.label!, String(reflecting: unwrap($0.value))) }
+    )
   }
   
   // MARK: - Constructions
