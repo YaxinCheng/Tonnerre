@@ -8,12 +8,17 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+final class ViewController: NSViewController {
 
+  @IBOutlet weak var contentView: NSView!
+  @IBOutlet weak var tabBarView: NSStackView!
+  private var currentTab: NSStoryboardSegue.Identifier = .secondTab
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    performSegue(withIdentifier: .firstTab, sender: self)
   }
 
   override var representedObject: Any? {
@@ -22,6 +27,10 @@ class ViewController: NSViewController {
     }
   }
 
-
+  override func shouldPerformSegue(withIdentifier identifier: NSStoryboardSegue.Identifier, sender: Any?) -> Bool {
+    guard identifier != currentTab else { return false }
+    currentTab = identifier
+    return true
+  }
 }
 

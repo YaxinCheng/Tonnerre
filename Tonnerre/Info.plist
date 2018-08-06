@@ -2,53 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleTypeIconFile</key>
-			<string>tonnerre</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.ycheng.tne</string>
-			</array>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>tne</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tonnerre</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>com.ycheng.tne</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>Tonnerre Extension</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
-		</dict>
-	</array>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeIconFile</key>
-			<string>tonnerre</string>
-			<key>UTTypeDescription</key>
-			<string>Tonnerre Extension</string>
-			<key>UTTypeConformsTo</key>
+			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.apple.package</string>
+				<string>com.ycheng.tne</string>
 			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.ycheng.tne</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.file-extension</key>
-				<string>tne</string>
-			</dict>
+			<key>LSTypeIsPackage</key>
+			<true/>
 		</dict>
 	</array>
-	<key>LSUIElement</key>
-	<true/>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
@@ -65,13 +47,87 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSUIElement</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Yaxin Cheng. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.ycheng.tne</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Tonnerre Extension</string>
+			<key>UTTypeIconFile</key>
+			<string>tonnerre</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.ycheng.tne</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.nspboard-type</key>
+				<array>
+					<string>com.ycheng.tne</string>
+				</array>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>tne</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>tne</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>com.ycheng.tne</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Tonnerre Extension</string>
+			<key>UTTypeIconFile</key>
+			<string>tonnerre</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.ycheng.tne</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.nspboard-type</key>
+				<array>
+					<string>com.ycheng.tne</string>
+				</array>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>tne</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>tne</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>com.ycheng.tne</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

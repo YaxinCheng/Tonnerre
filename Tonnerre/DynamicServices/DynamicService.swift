@@ -20,7 +20,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   
   private let encode = JSONSerialization.data
   private let asyncSession = TonnerreSession.shared
-  internal typealias ExtraContent = (keyword: String, runtime: String?)
+  private typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
   private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> DisplayProtocol? {

@@ -16,7 +16,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
     return #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   var serviceTrie: Trie<ServiceType>
-  internal typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
+  private typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
   
   func reload() {
     serviceTrie = Trie(values: []) { ($0.extraContent! as! ExtraContent).keyword }
