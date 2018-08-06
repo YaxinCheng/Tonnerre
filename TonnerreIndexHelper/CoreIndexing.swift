@@ -139,7 +139,7 @@ final class CoreIndexing {
           !FileTypeControl.isExcludedURL(url: fileURL),
           !FileTypeControl.isExcludedDir(url: fileURL)
         else { continue }
-        _ = try? index.addDocument(atPath: fileURL, additionalNote: self.getAlias(name: fileURL.deletingPathExtension().lastPathComponent))
+        _ = try? index.addDocument(atPath: fileURL, additionalNote: self.getAlias(name: fileURL.lastPathComponent))
         #if DEBUG
         print(fileURL)
         #endif
