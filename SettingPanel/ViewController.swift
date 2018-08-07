@@ -18,6 +18,7 @@ final class ViewController: NSViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    contentView.layer?.backgroundColor = NSColor.clear.cgColor
     performSegue(withIdentifier: .firstTab, sender: self)
   }
 

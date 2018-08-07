@@ -101,6 +101,9 @@
 		14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */; };
 		14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B22118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift */; };
 		14AFE6B72118FD99002BBBB2 /* tonnerre.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tonnerre.icns */; };
+		14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */; };
+		14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BA2119F031002BBBB2 /* SettingView.swift */; };
+		14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */; };
 		14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */; };
@@ -268,6 +271,9 @@
 		14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewAnimator.swift; sourceTree = "<group>"; };
 		14AFE6B22118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSStoryboardSegue+Extension.swift"; sourceTree = "<group>"; };
 		14AFE6B62118FD99002BBBB2 /* tonnerre.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tonnerre.icns; sourceTree = "<group>"; };
+		14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		14AFE6BA2119F031002BBBB2 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingCell.xib; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExpression.swift; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathInterpreter.swift; sourceTree = "<group>"; };
@@ -556,9 +562,12 @@
 			children = (
 				14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */,
 				14AFE69E2112A4F1002BBBB2 /* ViewController.swift */,
+				14AFE6BA2119F031002BBBB2 /* SettingView.swift */,
+				14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */,
 				14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */,
 				14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */,
 				14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */,
+				14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */,
 				14AFE6A22112A4F4002BBBB2 /* Main.storyboard */,
 				14AFE6A52112A4F4002BBBB2 /* Info.plist */,
 				14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */,
@@ -820,6 +829,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
+				14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -940,8 +950,10 @@
 				14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */,
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */,
+				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
+				14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

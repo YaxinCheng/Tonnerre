@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="9cp-he-9k2">
+            <rect key="frame" x="0.0" y="0.0" width="512" height="91"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CLk-rj-Dco">
+                    <rect key="frame" x="21" y="40" width="52" height="28"/>
+                    <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" title="Title" id="Z5A-WL-aN0">
+                        <font key="font" metaFont="systemBold" size="23"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OQ9-nS-ulw">
+                    <rect key="frame" x="21" y="19" width="485" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="details" id="grg-b8-LVz">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QSG-DY-zcM">
+                    <rect key="frame" x="87" y="41" width="417" height="21"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" placeholderString="Text here" drawsBackground="YES" usesSingleLineMode="YES" id="mF4-x1-fab">
+                        <font key="font" metaFont="system" size="17"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                    </textFieldCell>
+                </textField>
+                <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="gzO-BA-oNY">
+                    <rect key="frame" x="87" y="38" width="417" height="5"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="QSG-DY-zcM" firstAttribute="leading" secondItem="CLk-rj-Dco" secondAttribute="trailing" constant="16" id="5hU-ya-OpW"/>
+                <constraint firstItem="OQ9-nS-ulw" firstAttribute="top" secondItem="CLk-rj-Dco" secondAttribute="bottom" constant="2" id="6mX-Rv-qyL"/>
+                <constraint firstItem="gzO-BA-oNY" firstAttribute="trailing" secondItem="QSG-DY-zcM" secondAttribute="trailing" id="8NY-8y-GBV"/>
+                <constraint firstItem="CLk-rj-Dco" firstAttribute="leading" secondItem="9cp-he-9k2" secondAttribute="leading" constant="23" id="CDy-8h-4xc"/>
+                <constraint firstItem="gzO-BA-oNY" firstAttribute="leading" secondItem="QSG-DY-zcM" secondAttribute="leading" id="CqD-ga-dk2"/>
+                <constraint firstAttribute="trailing" secondItem="QSG-DY-zcM" secondAttribute="trailing" constant="8" id="HMh-aQ-wvt"/>
+                <constraint firstItem="gzO-BA-oNY" firstAttribute="top" secondItem="QSG-DY-zcM" secondAttribute="bottom" id="OTi-kl-7qk"/>
+                <constraint firstItem="OQ9-nS-ulw" firstAttribute="leading" secondItem="CLk-rj-Dco" secondAttribute="leading" id="Ug0-jM-Z0G"/>
+                <constraint firstItem="QSG-DY-zcM" firstAttribute="baseline" secondItem="CLk-rj-Dco" secondAttribute="baseline" id="aGV-rr-Da3"/>
+                <constraint firstItem="CLk-rj-Dco" firstAttribute="top" secondItem="9cp-he-9k2" secondAttribute="top" constant="23" id="rsQ-xF-goT"/>
+                <constraint firstAttribute="trailing" secondItem="OQ9-nS-ulw" secondAttribute="trailing" constant="8" id="rwl-e9-FC0"/>
+                <constraint firstAttribute="bottom" secondItem="OQ9-nS-ulw" secondAttribute="bottom" constant="19" id="s5Z-c8-ciP"/>
+            </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="layer.backgroundColor">
+                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="28.5" y="328"/>
+        </customView>
+        <viewController nibName="SettingCell" id="Zxh-a8-o8o">
+            <connections>
+                <outlet property="view" destination="9cp-he-9k2" id="lvs-UQ-Yl2"/>
+            </connections>
+        </viewController>
+    </objects>
+</document>

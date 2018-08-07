@@ -714,7 +714,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="KLH-EP-6kB">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="560"/>
                             </customView>
-                            <visualEffectView wantsLayer="YES" focusRingType="none" appearanceType="vibrantDark" blendingMode="withinWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
+                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="withinWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
                             </visualEffectView>
                             <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEH-u0-Qp6">
@@ -769,11 +769,6 @@
                             <constraint firstItem="YRu-Kb-ufR" firstAttribute="bottom" secondItem="kEH-u0-Qp6" secondAttribute="bottom" id="uYa-Ex-Svd"/>
                             <constraint firstItem="KLH-EP-6kB" firstAttribute="top" secondItem="pb1-oe-dJ9" secondAttribute="top" id="vB9-0R-Po1"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="layer?.backgroundColor">
-                                <color key="value" white="0.99366629464285716" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </customView>
                     <connections>
                         <outlet property="contentView" destination="KLH-EP-6kB" id="xcg-Dd-ODR"/>
@@ -784,12 +779,12 @@
             </objects>
             <point key="canvasLocation" x="75" y="655"/>
         </scene>
-        <!--View Controller-->
+        <!--Setting View Controller-->
         <scene sceneID="mwS-zo-Ccy">
             <objects>
                 <customObject id="Vw2-sE-bDl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController id="wUd-A6-LE0" sceneMemberID="viewController">
-                    <scrollView key="view" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="gNK-bX-mmQ">
+                <viewController id="wUd-A6-LE0" customClass="SettingViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
+                    <scrollView key="view" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="gNK-bX-mmQ" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="I5V-5w-M77">
@@ -807,11 +802,26 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="aN3-Io-bF5">
+                                            <rect key="frame" x="23" y="217" width="327" height="5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="327" id="vFG-Na-H0N"/>
+                                            </constraints>
+                                        </box>
+                                        <box focusRingType="none" horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="QSC-eN-OEa">
+                                            <rect key="frame" x="223" y="16" width="5" height="195"/>
+                                        </box>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="QSC-eN-OEa" secondAttribute="bottom" constant="16" id="CHc-RZ-Lqt"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cbu-9F-PG7" secondAttribute="trailing" constant="8" id="EhG-id-LZ0"/>
+                                        <constraint firstItem="aN3-Io-bF5" firstAttribute="top" secondItem="cbu-9F-PG7" secondAttribute="bottom" id="OMt-fm-2iA"/>
+                                        <constraint firstItem="QSC-eN-OEa" firstAttribute="top" secondItem="aN3-Io-bF5" secondAttribute="bottom" constant="8" id="T34-OS-Nfb"/>
+                                        <constraint firstItem="QSC-eN-OEa" firstAttribute="centerX" secondItem="rma-Ff-AJt" secondAttribute="centerX" id="a0k-Ir-Ddq"/>
                                         <constraint firstItem="cbu-9F-PG7" firstAttribute="top" secondItem="rma-Ff-AJt" secondAttribute="top" constant="23" id="djc-9Y-i7a"/>
                                         <constraint firstItem="cbu-9F-PG7" firstAttribute="leading" secondItem="rma-Ff-AJt" secondAttribute="leading" constant="23" id="epW-Ox-wbV"/>
+                                        <constraint firstItem="aN3-Io-bF5" firstAttribute="leading" secondItem="cbu-9F-PG7" secondAttribute="leading" id="gWC-I1-5Dd"/>
+                                        <constraint firstAttribute="height" constant="300" identifier="contentHeight" id="ry5-dX-kWq"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -820,27 +830,26 @@
                             <constraint firstItem="rma-Ff-AJt" firstAttribute="top" secondItem="gNK-bX-mmQ" secondAttribute="top" id="5j1-7Q-yrx"/>
                             <constraint firstItem="rma-Ff-AJt" firstAttribute="leading" secondItem="gNK-bX-mmQ" secondAttribute="leading" id="Biz-dh-Yhk"/>
                             <constraint firstAttribute="trailing" secondItem="rma-Ff-AJt" secondAttribute="trailing" id="WJJ-m0-rJk"/>
-                            <constraint firstAttribute="bottom" secondItem="rma-Ff-AJt" secondAttribute="bottom" id="gRx-GK-dg4"/>
                         </constraints>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.5" horizontal="YES" id="Bev-Lt-fKe">
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Bev-Lt-fKe">
                             <rect key="frame" x="1" y="283" width="448" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Qsw-7d-RbL">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Qsw-7d-RbL">
                             <rect key="frame" x="433" y="1" width="16" height="298"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-242" y="1204"/>
+            <point key="canvasLocation" x="-581" y="1314"/>
         </scene>
-        <!--View Controller-->
+        <!--Setting View Controller-->
         <scene sceneID="tHD-5c-fV8">
             <objects>
                 <customObject id="t1j-MR-mE7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController id="Xiv-Y5-BSV" sceneMemberID="viewController">
-                    <scrollView key="view" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1qx-Mf-mCX">
+                <viewController id="Xiv-Y5-BSV" customClass="SettingViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
+                    <scrollView key="view" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1qx-Mf-mCX" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="TUP-rO-Hjo">
@@ -858,10 +867,25 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="H4o-fF-APR">
+                                            <rect key="frame" x="23" y="217" width="327" height="5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="327" id="PLS-ni-HfZ"/>
+                                            </constraints>
+                                        </box>
+                                        <box focusRingType="none" horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="uxH-Az-Iyd">
+                                            <rect key="frame" x="223" y="16" width="5" height="195"/>
+                                        </box>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="uxH-Az-Iyd" firstAttribute="centerX" secondItem="A3G-dr-Njn" secondAttribute="centerX" id="4m5-b4-kCb"/>
                                         <constraint firstItem="8Kr-oA-fb7" firstAttribute="top" secondItem="A3G-dr-Njn" secondAttribute="top" constant="23" id="8hw-J6-faN"/>
+                                        <constraint firstAttribute="height" constant="300" identifier="contentHeight" id="Gyk-qA-XTi"/>
+                                        <constraint firstItem="uxH-Az-Iyd" firstAttribute="top" secondItem="H4o-fF-APR" secondAttribute="bottom" constant="8" id="LuU-jp-77y"/>
+                                        <constraint firstItem="H4o-fF-APR" firstAttribute="leading" secondItem="8Kr-oA-fb7" secondAttribute="leading" id="Nmx-8w-J3S"/>
                                         <constraint firstItem="8Kr-oA-fb7" firstAttribute="leading" secondItem="A3G-dr-Njn" secondAttribute="leading" constant="23" id="aWF-Ql-Eh7"/>
+                                        <constraint firstAttribute="bottom" secondItem="uxH-Az-Iyd" secondAttribute="bottom" constant="16" id="ekx-sE-6i5"/>
+                                        <constraint firstItem="H4o-fF-APR" firstAttribute="top" secondItem="8Kr-oA-fb7" secondAttribute="bottom" id="kkl-4r-nS7"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8Kr-oA-fb7" secondAttribute="trailing" constant="8" id="w9l-IV-C7J"/>
                                     </constraints>
                                 </view>
@@ -871,20 +895,19 @@
                             <constraint firstItem="A3G-dr-Njn" firstAttribute="leading" secondItem="1qx-Mf-mCX" secondAttribute="leading" id="1ea-qc-nG9"/>
                             <constraint firstAttribute="trailing" secondItem="A3G-dr-Njn" secondAttribute="trailing" id="W2S-wN-sXx"/>
                             <constraint firstItem="A3G-dr-Njn" firstAttribute="top" secondItem="1qx-Mf-mCX" secondAttribute="top" id="uA8-Xr-vDU"/>
-                            <constraint firstAttribute="bottom" secondItem="A3G-dr-Njn" secondAttribute="bottom" id="vNt-aA-0FX"/>
                         </constraints>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.5" horizontal="YES" id="mMA-v6-Zaf">
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="mMA-v6-Zaf">
                             <rect key="frame" x="1" y="283" width="448" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cSU-5c-H9o">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="cSU-5c-H9o">
                             <rect key="frame" x="433" y="1" width="16" height="298"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="442" y="1139"/>
+            <point key="canvasLocation" x="595" y="1324"/>
         </scene>
     </scenes>
     <resources>

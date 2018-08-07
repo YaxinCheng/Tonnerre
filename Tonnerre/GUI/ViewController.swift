@@ -177,6 +177,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     textField.stringValue = lastQuery
     textDidChange(value: textField.stringValue)
     adjustEditing(withString: lastQuery)
+    textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
   }
   
   func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool) {
