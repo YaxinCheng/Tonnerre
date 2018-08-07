@@ -10,8 +10,35 @@ import Cocoa
 
 final class SettingViewController: NSViewController {
   
+  private static var cells: [SettingCell.CellType: SettingCell] = {
+    var cellArray: NSArray?
+    var tempDict = [SettingCell.CellType: SettingCell]()
+    guard
+      let nib = NSNib(nibNamed: .settingCell, bundle: .main),
+      nib.instantiate(withOwner: self, topLevelObjects: &cellArray)
+      else { fatalError("Nib cannot be initialized") }
+    for controller in cellArray ?? [] {
+      if let validCell = (controller as? NSViewController)?.view as? SettingCell {
+        tempDict[validCell.type] = validCell
+      }
+    }
+    return tempDict
+  }()
+  
+  var settingOptions: (left: [SettingCell.CellType], right: [SettingCell.CellType])!
+  
+  @IBOutlet var settingView: SettingView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
+    reload()
+  }
+  
+  func reload() {
+    let leftViews = settingOptions.left.compactMap { type(of: self).cells[$0]?.copy() as? NSView }
+    let rightViews = settingOptions.right.compactMap { type(of: self).cells[$0]?.copy() as? NSView }
+    leftViews.forEach { settingView.addSubview($0, side: .left) }
+    rightViews.forEach { settingView.addSubview($0, side: .right) }
   }
 }

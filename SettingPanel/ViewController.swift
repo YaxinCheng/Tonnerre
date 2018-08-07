@@ -33,5 +33,17 @@ final class ViewController: NSViewController {
     currentTab = identifier
     return true
   }
+  
+  override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+    guard
+      let identifier = segue.identifier,
+      let destinationVC = segue.destinationController as? SettingViewController
+    else { return }
+    switch identifier {
+    case .firstTab: destinationVC.settingOptions = ([.text, .text], [.text])
+    case .secondTab: destinationVC.settingOptions = ([], [.text])
+    default: break
+    }
+  }
 }
 
