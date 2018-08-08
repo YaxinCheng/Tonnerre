@@ -10,9 +10,9 @@ import Cocoa
 
 final class SettingViewController: NSViewController {
   
-  private static var cells: [SettingCell.CellType: SettingCell] = {
+  private static var cells: [SettingCellType: SettingCell] = {
     var cellArray: NSArray?
-    var tempDict = [SettingCell.CellType: SettingCell]()
+    var tempDict = [SettingCellType: SettingCell]()
     guard
       let nib = NSNib(nibNamed: .settingCell, bundle: .main),
       nib.instantiate(withOwner: self, topLevelObjects: &cellArray)
@@ -25,7 +25,7 @@ final class SettingViewController: NSViewController {
     return tempDict
   }()
   
-  var settingOptions: (left: [SettingCell.CellType], right: [SettingCell.CellType])!
+  var settingOptions: (left: [SettingCellType], right: [SettingCellType])!
   
   @IBOutlet var settingView: SettingView!
   

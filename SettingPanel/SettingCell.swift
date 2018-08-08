@@ -8,24 +8,25 @@
 
 import Cocoa
 
-class SettingCell: NSView {
-  enum CellType: String {
-    case text
-    
-    var identifier: String {
-      return rawValue
-    }
-    
-    static var types: [CellType] {
-      return [.text]
-    }
+enum SettingCellType: String {
+  case text
+  
+  var identifier: String {
+    return rawValue
   }
   
-  var type: CellType { fatalError("please override in subclasses") }
-  
-  override func copy() -> Any {
-    return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self))!
+  static var types: [SettingCellType] {
+    return [.text]
   }
 }
 
+protocol SettingCell {
+  var type: SettingCellType { get }
+  func copy() -> Self
+}
 
+extension SettingCell {
+  func copy() -> Self {
+    return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! Self
+  }
+}
