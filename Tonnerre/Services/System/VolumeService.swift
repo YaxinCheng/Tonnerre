@@ -1,46 +1,14 @@
 //
-//  SystemServices.swift
+//  VolumeService.swift
 //  Tonnerre
 //
-//  Created by Yaxin Cheng on 2018-06-05.
+//  Created by Yaxin Cheng on 2018-08-07.
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
 import Cocoa
 
-protocol SystemService: TonnerreService {
-}
-
-struct ApplicationService: SystemService {
-  let name: String = "Quit program"
-  let content: String = "Find and quite a running program"
-  let alterContent: String? = "Force quit program"
-  static let keyword: String = "quit"
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "close").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
-  let argUpperBound: Int = Int.max
-  let argLowerBound: Int = 0
-  
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let value = (source as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
-    if withCmd { value.forceTerminate() }
-    else { value.terminate() }
-  }
-
-  func prepare(input: [String]) -> [DisplayProtocol] {
-    let workspace = NSWorkspace.shared
-    let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
-    if input.isEmpty || (input.first?.isEmpty ?? false) {
-      return runningApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
-    } else {
-      let filteredApps = runningApps.filter { $0.localizedName!.lowercased().contains(input.joined(separator: " ")) }
-      return filteredApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
-    }
-  }
-}
-
-struct VolumeService: SystemService {
+struct VolumeService: TonnerreService {
   let name: String = "Eject Volumes"
   let content: String = "Eject selected volumes"
   static let keyword: String = "eject"

@@ -9,7 +9,7 @@
 import Cocoa
 import CoreData
 
-struct ClipboardService: SystemService {
+struct ClipboardService: TonnerreService {
   static let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
