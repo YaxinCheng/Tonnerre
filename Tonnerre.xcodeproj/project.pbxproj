@@ -108,9 +108,14 @@
 		14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C0211A016E002BBBB2 /* SettingCell.swift */; };
 		14AFE6C3211A03A5002BBBB2 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C2211A03A5002BBBB2 /* TextCell.swift */; };
 		14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C4211A7093002BBBB2 /* VolumeService.swift */; };
+		14AFE6C7211A7B62002BBBB2 /* OnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */; };
+		14AFE6CA211A7E97002BBBB2 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
+		14AFE6CB211A7E97002BBBB2 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6CD211A8F5B002BBBB2 /* Switch.json */; };
+		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
+		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
-		14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */; };
-		14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */; };
+		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
 		14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989720DEA5B7001A882D /* DefaultService.swift */; };
 		14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */; };
 		14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */; };
@@ -174,6 +179,17 @@
 			files = (
 				14AFE6AC2114D0BF002BBBB2 /* TonnerreIndexHelper.app in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14AFE6CC211A7E97002BBBB2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				14AFE6CB211A7E97002BBBB2 /* Lottie.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -282,9 +298,12 @@
 		14AFE6C0211A016E002BBBB2 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		14AFE6C2211A03A5002BBBB2 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		14AFE6C4211A7093002BBBB2 /* VolumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeService.swift; sourceTree = "<group>"; };
+		14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffCell.swift; sourceTree = "<group>"; };
+		14AFE6CD211A8F5B002BBBB2 /* Switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Switch.json; sourceTree = "<group>"; };
+		14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathParser.swift; sourceTree = "<group>"; };
+		14AFE6D1211BA111002BBBB2 /* MathError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathError.swift; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
-		14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExpression.swift; sourceTree = "<group>"; };
-		14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathInterpreter.swift; sourceTree = "<group>"; };
+		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989720DEA5B7001A882D /* DefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultService.swift; sourceTree = "<group>"; };
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
 		14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QueryHistory+Extension.swift"; sourceTree = "<group>"; };
@@ -335,6 +354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AFE6CA211A7E97002BBBB2 /* Lottie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +549,7 @@
 			children = (
 				14E9AD5F20CDEC7600F3EEC8 /* Calculator */,
 				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
+				145D055F20CE1FDD0027F8DF /* CurrencyService.swift */,
 				148414A620C8675F008FD68E /* URLService.swift */,
 			);
 			path = Prioritized;
@@ -569,6 +590,7 @@
 		14AFE69B2112A4F1002BBBB2 /* SettingPanel */ = {
 			isa = PBXGroup;
 			children = (
+				14AFE6CD211A8F5B002BBBB2 /* Switch.json */,
 				14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */,
 				14AFE69E2112A4F1002BBBB2 /* ViewController.swift */,
 				14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */,
@@ -579,6 +601,7 @@
 				14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */,
 				14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */,
 				14AFE6C2211A03A5002BBBB2 /* TextCell.swift */,
+				14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */,
 				14AFE6A22112A4F4002BBBB2 /* Main.storyboard */,
 				14AFE6A52112A4F4002BBBB2 /* Info.plist */,
 				14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */,
@@ -606,9 +629,9 @@
 			isa = PBXGroup;
 			children = (
 				1484148F20C84589008FD68E /* CalculationService.swift */,
-				14E9AD6020CDEC9C00F3EEC8 /* MathExpression.swift */,
-				14E9AD6220CDECD100F3EEC8 /* MathInterpreter.swift */,
-				145D055F20CE1FDD0027F8DF /* CurrencyService.swift */,
+				14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */,
+				14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */,
+				14AFE6D1211BA111002BBBB2 /* MathError.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -715,6 +738,7 @@
 				14AFE6962112A4F1002BBBB2 /* Sources */,
 				14AFE6972112A4F1002BBBB2 /* Frameworks */,
 				14AFE6982112A4F1002BBBB2 /* Resources */,
+				14AFE6CC211A7E97002BBBB2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -840,6 +864,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */,
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
 				14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
@@ -871,6 +896,7 @@
 			files = (
 				14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */,
 				14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */,
+				14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */,
 				145DA16920DAD70100C1E804 /* BingSearch.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
@@ -892,7 +918,6 @@
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				1429AC7520D435A300ABBCDE /* OnOffCell.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
-				14E9AD6120CDEC9C00F3EEC8 /* MathExpression.swift in Sources */,
 				143FD19E210567F100E79F7E /* TerminalService.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
@@ -928,11 +953,12 @@
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,
 				145D056020CE1FDD0027F8DF /* CurrencyService.swift in Sources */,
+				14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */,
 				1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14F015D82102314600537160 /* DynamicService.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
-				14E9AD6320CDECD100F3EEC8 /* MathInterpreter.swift in Sources */,
+				14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */,
 				14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
@@ -964,6 +990,7 @@
 				14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */,
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
+				14AFE6C7211A7B62002BBBB2 /* OnOffCell.swift in Sources */,
 				14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */,
 				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
@@ -1314,6 +1341,10 @@
 				CODE_SIGN_ENTITLEMENTS = SettingPanel/SettingPanel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = SettingPanel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1332,6 +1363,10 @@
 				CODE_SIGN_ENTITLEMENTS = SettingPanel/SettingPanel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = SettingPanel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

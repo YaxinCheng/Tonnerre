@@ -14,15 +14,25 @@ struct CalculationService: TonnerreService {
   let argUpperBound: Int = Int.max
   let alterContent: String? = "Copy to clipboard"
   let icon: NSImage = .calculator
-  private let interpreter = MathInterpreter()
+  private let tokenizer = MathTokenizer()
+  private let parser = MathParser()
 
   func prepare(input: [String]) -> [DisplayProtocol] {
     let rawExpression = input.joined()
     do {
-      let expression = try interpreter.tokenize(rawString: rawExpression)
-      guard let result = interpreter.parse(tokens: expression)?.eval() else { return [] }
-      return [DisplayableContainer<Int>(name: "\(result)", content: rawExpression, icon: icon)]
+      let tokens = try tokenizer.tokenize(expression: rawExpression)
+      let calculationResult = try parser.parse(tokens: tokens)
+      return [DisplayableContainer<Int>(name: "\(calculationResult.value)", content: rawExpression, icon: icon, placeholder: "")]
+    } catch MathError.zeroDivision {
+      return [DisplayableContainer<Int>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
+    } catch MathError.unclosedBracket {
+      return [DisplayableContainer<Int>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
+    } catch MathError.missingBracket {
+      return [DisplayableContainer<Int>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
     } catch {
+      #if DEBUG
+      print(error)
+      #endif
       return []
     }
   }
