@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>firstTab</key>
+	<dict>
+		<key>right</key>
+		<array/>
+		<key>left</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>text</string>
+				<key>detail</key>
+				<string>The specific Python environment used to run dynamic services</string>
+				<key>title</key>
+				<string>Python Env</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>onOff</string>
+				<key>detail</key>
+				<string>App theme follows the system wide theme super long super long super long</string>
+				<key>title</key>
+				<string>Theme follows system</string>
+			</dict>
+		</array>
+	</dict>
+	<key>secondTab</key>
+	<dict>
+		<key>right</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>test</string>
+				<key>detail</key>
+				<string>Dummy</string>
+				<key>type</key>
+				<string>text</string>
+			</dict>
+		</array>
+		<key>left</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>onOff</string>
+				<key>detail</key>
+				<string>Test</string>
+				<key>title</key>
+				<string>Dummy</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

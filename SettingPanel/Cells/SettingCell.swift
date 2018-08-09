@@ -21,13 +21,9 @@ enum SettingCellType: String {
   }
 }
 
-protocol SettingCell {
+protocol SettingCell: class {
   var type: SettingCellType { get }
-  func copy() -> Self
+  var detailLabel: NSTextField! { get set }
+  var titleLabel: NSTextField! { get set }
 }
 
-extension SettingCell {
-  func copy() -> Self {
-    return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! Self
-  }
-}

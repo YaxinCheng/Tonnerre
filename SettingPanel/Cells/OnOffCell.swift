@@ -13,23 +13,24 @@ final class OnOffCell: NSView, SettingCell {
   @IBOutlet weak var detailLabel: NSTextField!
   let type: SettingCellType = .onOff
   
-  var disabled: Bool = true
-  
-  private let toggleAnimation: Switch
+  private let toggle: Switch
   
   required init?(coder decoder: NSCoder) {
-    toggleAnimation = Switch(name: "Switch")
+    toggle = {
+      $0.animationSpeed = 3
+      $0.animationProgress = 0
+      return $0
+    }(Switch(name: "Switch"))
     super.init(coder: decoder)
    
-    toggleAnimation.frame = NSRect(x: frame.width - frame.height, y: 0, width: frame.height, height: frame.height)
-    toggleAnimation.animationSpeed = 3
-    toggleAnimation.animationProgress = 0
-    addSubview(toggleAnimation)
+    toggle.delegate = self
+    toggle.frame = NSRect(x: frame.width - frame.height, y: frame.height/4, width: frame.height, height: frame.height)
+    addSubview(toggle)
   }
 }
 
 extension OnOffCell: SwitchDelegate {
   func valueChanged(sender: Switch) {
-    
+    print("switch")
   }
 }

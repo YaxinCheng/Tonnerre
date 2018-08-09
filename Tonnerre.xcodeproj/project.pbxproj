@@ -115,6 +115,7 @@
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
+		14AFE6DB211CDDCC002BBBB2 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
 		14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989720DEA5B7001A882D /* DefaultService.swift */; };
@@ -304,6 +305,7 @@
 		14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathParser.swift; sourceTree = "<group>"; };
 		14AFE6D1211BA111002BBBB2 /* MathError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathError.swift; sourceTree = "<group>"; };
 		14AFE6D5211BC6C8002BBBB2 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989720DEA5B7001A882D /* DefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultService.swift; sourceTree = "<group>"; };
@@ -597,15 +599,11 @@
 				14AFE69E2112A4F1002BBBB2 /* ViewController.swift */,
 				14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */,
 				14AFE6BA2119F031002BBBB2 /* SettingView.swift */,
-				14AFE6C0211A016E002BBBB2 /* SettingCell.swift */,
-				14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */,
-				14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */,
+				14AFE6D9211BD64D002BBBB2 /* Segue */,
 				14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */,
-				14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */,
-				14AFE6C2211A03A5002BBBB2 /* TextCell.swift */,
-				14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */,
-				14AFE6D5211BC6C8002BBBB2 /* Switch.swift */,
+				14AFE6D8211BD61F002BBBB2 /* Cells */,
 				14AFE6A22112A4F4002BBBB2 /* Main.storyboard */,
+				14AFE6DA211CDDCC002BBBB2 /* Settings.plist */,
 				14AFE6A52112A4F4002BBBB2 /* Info.plist */,
 				14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */,
 				14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */,
@@ -626,6 +624,27 @@
 				1429AC7720D4375500ABBCDE /* CellProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		14AFE6D8211BD61F002BBBB2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				14AFE6C0211A016E002BBBB2 /* SettingCell.swift */,
+				14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */,
+				14AFE6C2211A03A5002BBBB2 /* TextCell.swift */,
+				14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */,
+				14AFE6D5211BC6C8002BBBB2 /* Switch.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		14AFE6D9211BD64D002BBBB2 /* Segue */ = {
+			isa = PBXGroup;
+			children = (
+				14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */,
+				14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */,
+			);
+			path = Segue;
 			sourceTree = "<group>";
 		};
 		14E9AD5F20CDEC7600F3EEC8 /* Calculator */ = {
@@ -871,6 +890,7 @@
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
 				14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
+				14AFE6DB211CDDCC002BBBB2 /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
