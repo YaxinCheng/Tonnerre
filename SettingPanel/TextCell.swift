@@ -13,7 +13,5 @@ final class TextCell: NSView, SettingCell {
   @IBOutlet weak var detailLabel: NSTextField!
   @IBOutlet weak var textField: NSTextField!
   
-  var type: SettingCellType {
-    return .text
-  }
+  let type: SettingCellType = .text
 }

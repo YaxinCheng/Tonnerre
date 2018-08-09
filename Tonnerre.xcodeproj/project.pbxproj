@@ -114,6 +114,7 @@
 		14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6CD211A8F5B002BBBB2 /* Switch.json */; };
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
+		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
 		14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989720DEA5B7001A882D /* DefaultService.swift */; };
@@ -302,6 +303,7 @@
 		14AFE6CD211A8F5B002BBBB2 /* Switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Switch.json; sourceTree = "<group>"; };
 		14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathParser.swift; sourceTree = "<group>"; };
 		14AFE6D1211BA111002BBBB2 /* MathError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathError.swift; sourceTree = "<group>"; };
+		14AFE6D5211BC6C8002BBBB2 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989720DEA5B7001A882D /* DefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultService.swift; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 				14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */,
 				14AFE6C2211A03A5002BBBB2 /* TextCell.swift */,
 				14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */,
+				14AFE6D5211BC6C8002BBBB2 /* Switch.swift */,
 				14AFE6A22112A4F4002BBBB2 /* Main.storyboard */,
 				14AFE6A52112A4F4002BBBB2 /* Info.plist */,
 				14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */,
@@ -995,6 +998,7 @@
 				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
+				14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */,
 				14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */,
 				14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */,
 			);

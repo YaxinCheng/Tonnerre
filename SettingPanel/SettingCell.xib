@@ -84,5 +84,62 @@
                 <outlet property="view" destination="9cp-he-9k2" id="lvs-UQ-Yl2"/>
             </connections>
         </viewController>
+        <customView identifier="onOff" id="pfq-m9-fdI" customClass="OnOffCell" customModule="SettingPanel" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="481" height="49"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView hidden="YES" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="MGt-8Y-P3Q">
+                    <rect key="frame" x="0.0" y="0.0" width="481" height="49"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="481" identifier="cellWidth" id="YvG-zk-aK5"/>
+                    </constraints>
+                </customView>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tg8-CB-dwb">
+                    <rect key="frame" x="-2" y="21" width="437" height="28"/>
+                    <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" title="Title" id="luV-mV-bEo">
+                        <font key="font" metaFont="systemBold" size="23"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="csp-9F-9W2">
+                    <rect key="frame" x="-2" y="0.0" width="437" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="details" id="mKe-qs-PTi">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Tg8-CB-dwb" firstAttribute="leading" secondItem="pfq-m9-fdI" secondAttribute="leading" id="As8-7D-2wW"/>
+                <constraint firstAttribute="bottom" secondItem="csp-9F-9W2" secondAttribute="bottom" id="Ffp-0C-oez"/>
+                <constraint firstAttribute="trailing" secondItem="MGt-8Y-P3Q" secondAttribute="trailing" id="OIA-a2-0FF"/>
+                <constraint firstItem="MGt-8Y-P3Q" firstAttribute="leading" secondItem="pfq-m9-fdI" secondAttribute="leading" id="ZMc-BT-7jH"/>
+                <constraint firstAttribute="trailing" secondItem="Tg8-CB-dwb" secondAttribute="trailing" constant="48" id="bdC-HO-MBD"/>
+                <constraint firstItem="csp-9F-9W2" firstAttribute="top" secondItem="Tg8-CB-dwb" secondAttribute="bottom" constant="2" id="cCV-q0-qRg"/>
+                <constraint firstItem="MGt-8Y-P3Q" firstAttribute="top" secondItem="pfq-m9-fdI" secondAttribute="top" id="dRc-Wk-ATb"/>
+                <constraint firstAttribute="bottom" secondItem="MGt-8Y-P3Q" secondAttribute="bottom" id="m5O-lI-kZD"/>
+                <constraint firstItem="Tg8-CB-dwb" firstAttribute="top" secondItem="pfq-m9-fdI" secondAttribute="top" id="pgF-7Z-AtK"/>
+                <constraint firstAttribute="trailing" secondItem="csp-9F-9W2" secondAttribute="trailing" constant="48" id="rfs-R7-bG3"/>
+                <constraint firstItem="csp-9F-9W2" firstAttribute="leading" secondItem="Tg8-CB-dwb" secondAttribute="leading" id="ywM-PG-7YH"/>
+            </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="layer.backgroundColor">
+                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="detailLabel" destination="csp-9F-9W2" id="L11-1e-wPG"/>
+                <outlet property="titleLabel" destination="Tg8-CB-dwb" id="K6l-MP-Jyj"/>
+            </connections>
+            <point key="canvasLocation" x="22.5" y="529.5"/>
+        </customView>
+        <viewController nibName="SettingCell" id="II7-I7-9W0">
+            <connections>
+                <outlet property="view" destination="pfq-m9-fdI" id="BH1-O4-mTP"/>
+            </connections>
+        </viewController>
     </objects>
 </document>

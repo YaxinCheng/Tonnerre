@@ -25,7 +25,12 @@ final class SettingViewController: NSViewController {
     return tempDict
   }()
   
-  var settingOptions: (left: [SettingCellType], right: [SettingCellType])!
+  var settingOptions: (left: [SettingCellType], right: [SettingCellType])! {
+    didSet {
+      // adjust the height of scroll contentView
+      
+    }
+  }
   
   @IBOutlet var settingView: SettingView!
   

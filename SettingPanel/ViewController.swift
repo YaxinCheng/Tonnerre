@@ -40,7 +40,7 @@ final class ViewController: NSViewController {
       let destinationVC = segue.destinationController as? SettingViewController
     else { return }
     switch identifier {
-    case .firstTab: destinationVC.settingOptions = ([.text, .text], [.text])
+    case .firstTab: destinationVC.settingOptions = ([.onOff], [.text])
     case .secondTab: destinationVC.settingOptions = ([], [.text])
     default: break
     }

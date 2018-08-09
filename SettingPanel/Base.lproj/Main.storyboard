@@ -786,14 +786,14 @@
                 <customObject id="Vw2-sE-bDl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="wUd-A6-LE0" customClass="SettingViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
                     <scrollView key="view" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="gNK-bX-mmQ" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="I5V-5w-M77">
-                            <rect key="frame" x="0.0" y="0.0" width="1024" height="300"/>
+                            <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view translatesAutoresizingMaskIntoConstraints="NO" id="rma-Ff-AJt">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="300"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbu-9F-PG7">
                                             <rect key="frame" x="21" y="220" width="299" height="57"/>
@@ -810,13 +810,13 @@
                                             </constraints>
                                         </box>
                                         <box focusRingType="none" horizontalHuggingPriority="740" verticalHuggingPriority="200" horizontalCompressionResistancePriority="740" verticalCompressionResistancePriority="740" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="QSC-eN-OEa">
-                                            <rect key="frame" x="510" y="16" width="5" height="195"/>
+                                            <rect key="frame" x="223" y="16" width="5" height="195"/>
                                         </box>
                                         <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="240" verticalStackHuggingPriority="240" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5JU-SV-3ZT">
-                                            <rect key="frame" x="23" y="16" width="481" height="187"/>
+                                            <rect key="frame" x="23" y="16" width="194" height="187"/>
                                         </stackView>
                                         <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZ5-ah-Amm">
-                                            <rect key="frame" x="521" y="16" width="483" height="235"/>
+                                            <rect key="frame" x="234" y="16" width="196" height="235"/>
                                         </stackView>
                                     </subviews>
                                     <constraints>
@@ -847,11 +847,11 @@
                             <constraint firstAttribute="trailing" secondItem="rma-Ff-AJt" secondAttribute="trailing" id="WJJ-m0-rJk"/>
                         </constraints>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Bev-Lt-fKe">
-                            <rect key="frame" x="0.0" y="284" width="1024" height="16"/>
+                            <rect key="frame" x="0.0" y="284" width="450" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Qsw-7d-RbL">
-                            <rect key="frame" x="1008" y="0.0" width="16" height="300"/>
+                            <rect key="frame" x="434" y="0.0" width="16" height="300"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <connections>
