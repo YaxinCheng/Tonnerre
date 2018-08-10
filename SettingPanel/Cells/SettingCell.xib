@@ -41,7 +41,7 @@
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="left" placeholderString="Text here" drawsBackground="YES" usesSingleLineMode="YES" id="mF4-x1-fab">
                         <font key="font" metaFont="system" size="17"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.27843137254901962" green="0.63921568627450975" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="backgroundColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
@@ -85,17 +85,17 @@
             </connections>
         </viewController>
         <customView identifier="onOff" id="pfq-m9-fdI" customClass="OnOffCell" customModule="SettingPanel" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="481" height="51"/>
+            <rect key="frame" x="0.0" y="0.0" width="481" height="89"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView hidden="YES" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="MGt-8Y-P3Q">
-                    <rect key="frame" x="0.0" y="0.0" width="481" height="51"/>
+                    <rect key="frame" x="0.0" y="0.0" width="481" height="89"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="481" identifier="cellWidth" id="YvG-zk-aK5"/>
                     </constraints>
                 </customView>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tg8-CB-dwb">
-                    <rect key="frame" x="-2" y="23" width="433" height="28"/>
+                    <rect key="frame" x="-2" y="61" width="52" height="28"/>
                     <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" title="Title" id="luV-mV-bEo">
                         <font key="font" metaFont="systemBold" size="23"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -103,7 +103,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="QO8-vX-29g">
-                    <rect key="frame" x="-2" y="0.0" width="433" height="19"/>
+                    <rect key="frame" x="-2" y="0.0" width="52" height="57"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="qaI-gN-CFs">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
@@ -116,7 +116,6 @@
                 <constraint firstItem="Tg8-CB-dwb" firstAttribute="leading" secondItem="pfq-m9-fdI" secondAttribute="leading" id="As8-7D-2wW"/>
                 <constraint firstAttribute="trailing" secondItem="MGt-8Y-P3Q" secondAttribute="trailing" id="OIA-a2-0FF"/>
                 <constraint firstItem="MGt-8Y-P3Q" firstAttribute="leading" secondItem="pfq-m9-fdI" secondAttribute="leading" id="ZMc-BT-7jH"/>
-                <constraint firstAttribute="trailing" secondItem="Tg8-CB-dwb" secondAttribute="trailing" constant="52" id="bdC-HO-MBD"/>
                 <constraint firstItem="QO8-vX-29g" firstAttribute="top" secondItem="Tg8-CB-dwb" secondAttribute="bottom" constant="4" id="bhV-XS-GZY"/>
                 <constraint firstItem="QO8-vX-29g" firstAttribute="trailing" secondItem="Tg8-CB-dwb" secondAttribute="trailing" id="bpP-dH-ZVd"/>
                 <constraint firstItem="MGt-8Y-P3Q" firstAttribute="top" secondItem="pfq-m9-fdI" secondAttribute="top" id="dRc-Wk-ATb"/>

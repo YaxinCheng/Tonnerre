@@ -44,6 +44,7 @@ final class SettingViewController: NSViewController {
     let cell = instantiateCell(withType: datasource.type)
     cell?.titleLabel.stringValue = datasource.title
     cell?.detailLabel.stringValue = datasource.detail
+    cell?.settingKey = datasource.settingKey
     return cell as? NSView
   }
   

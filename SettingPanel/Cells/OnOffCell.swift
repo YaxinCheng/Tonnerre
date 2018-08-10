@@ -12,8 +12,9 @@ final class OnOffCell: NSView, SettingCell {
   @IBOutlet weak var titleLabel: NSTextField!
   @IBOutlet weak var detailLabel: NSTextField!
   let type: SettingCellType = .onOff
+  var settingKey: String!
   
-  private let toggle: Switch
+  let toggle: Switch
   
   required init?(coder decoder: NSCoder) {
     toggle = {
@@ -24,13 +25,31 @@ final class OnOffCell: NSView, SettingCell {
     super.init(coder: decoder)
    
     toggle.delegate = self
-    toggle.frame = NSRect(x: frame.width - frame.height, y: frame.height/4, width: frame.height, height: frame.height)
+    toggle.translatesAutoresizingMaskIntoConstraints = false
+    translatesAutoresizingMaskIntoConstraints = false
     addSubview(toggle)
+    NSLayoutConstraint.activate([
+      toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+      toggle.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0),
+      toggle.heightAnchor.constraint(equalToConstant: 50),
+      toggle.widthAnchor.constraint(equalToConstant: 50)
+    ])
+  }
+  
+  override func draw(_ dirtyRect: NSRect) {
+    super.draw(dirtyRect)
+    
+    NSLayoutConstraint.activate([toggle.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 0)])
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let state = userDefault.bool(forKey: settingKey)
+    if state == false { toggle.state = .off }
+    else { toggle.state = .on }
   }
 }
 
 extension OnOffCell: SwitchDelegate {
   func valueChanged(sender: Switch) {
-    print("switch")
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    userDefault.set(sender.state == .on, forKey: settingKey)
   }
 }

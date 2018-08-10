@@ -116,6 +116,7 @@
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
 		14AFE6DB211CDDCC002BBBB2 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
+		14AFE6E3211E3085002BBBB2 /* DSEnforcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* DSEnforcement.swift */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
 		14EA989820DEA5B7001A882D /* DefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989720DEA5B7001A882D /* DefaultService.swift */; };
@@ -306,6 +307,7 @@
 		14AFE6D1211BA111002BBBB2 /* MathError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathError.swift; sourceTree = "<group>"; };
 		14AFE6D5211BC6C8002BBBB2 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		14AFE6E2211E3085002BBBB2 /* DSEnforcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSEnforcement.swift; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989720DEA5B7001A882D /* DefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultService.swift; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 			children = (
 				14AFE6CD211A8F5B002BBBB2 /* Switch.json */,
 				14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */,
+				14AFE6E2211E3085002BBBB2 /* DSEnforcement.swift */,
 				14AFE69E2112A4F1002BBBB2 /* ViewController.swift */,
 				14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */,
 				14AFE6BA2119F031002BBBB2 /* SettingView.swift */,
@@ -814,6 +817,11 @@
 					};
 					14AFE6992112A4F1002BBBB2 = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1018,6 +1026,7 @@
 				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
+				14AFE6E3211E3085002BBBB2 /* DSEnforcement.swift in Sources */,
 				14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */,
 				14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */,
 				14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */,

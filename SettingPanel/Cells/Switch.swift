@@ -33,17 +33,15 @@ final class Switch: LOTAnimationView {
   }
   
   weak var delegate: SwitchDelegate?
-  var state: State {
-    set {
-      play(fromProgress: animationProgress, toProgress: newValue.rawValue, withCompletion: nil)
-    } get {
-      return State(rawValue: animationProgress)
+  var state: State = .off {
+    didSet {
+      play(fromProgress: animationProgress, toProgress: state.rawValue, withCompletion: nil)
     }
   }
   
   override func mouseUp(with event: NSEvent) {
     state = !state
-    delegate?.valueChanged(sender: self)
+    self.delegate?.valueChanged(sender: self)
   }
   
   /**

@@ -43,14 +43,14 @@ final class ViewController: NSViewController {
     return true
   }
   
-  typealias SettingOption = (title: String, detail: String, type: SettingCellType)
+  typealias SettingOption = (title: String, detail: String, type: SettingCellType, settingKey: String)
   
   private func loadSettings(with identifier: NSStoryboardSegue.Identifier) -> (left: [SettingOption], right: [SettingOption]) {
     guard
       let tabData = ViewController.settingOptions[identifier.rawValue] as? [String: [[String: String]]]
     else { return ([], []) }
     let constructOption: ([String: String]) -> SettingOption = {
-      ($0["title"]!, $0["detail"]!, SettingCellType(rawValue: $0["type"]!)!)
+      ($0["title"]!, $0["detail"]!, SettingCellType(rawValue: $0["type"]!)!, $0["settingKey"] ?? "")
     }
     let leftOptions = tabData["left"]!.map(constructOption)
     let rightOptions = tabData["right"]!.map(constructOption)

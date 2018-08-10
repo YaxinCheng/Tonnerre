@@ -14,4 +14,15 @@ final class TextCell: NSView, SettingCell {
   @IBOutlet weak var textField: NSTextField!
   
   let type: SettingCellType = .text
+  var settingKey: String!
+  
+  override func draw(_ dirtyRect: NSRect) {
+    super.draw(dirtyRect)
+    
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let text = userDefault.string(forKey: settingKey) ?? ""
+    textField.stringValue = text
+    window?.makeFirstResponder(nil)
+//    textField.currentEditor()?.selectedRange = NSRange(location: text.count, length: 0)
+  }
 }

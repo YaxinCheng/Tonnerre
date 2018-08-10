@@ -9,6 +9,8 @@
 		<key>left</key>
 		<array>
 			<dict>
+				<key>settingKey</key>
+				<string>settings:python</string>
 				<key>type</key>
 				<string>text</string>
 				<key>detail</key>
@@ -17,6 +19,8 @@
 				<string>Python Env</string>
 			</dict>
 			<dict>
+				<key>settingKey</key>
+				<string>settings:themeFollowsSystem</string>
 				<key>type</key>
 				<string>onOff</string>
 				<key>detail</key>
@@ -31,6 +35,8 @@
 		<key>right</key>
 		<array>
 			<dict>
+				<key>settingKey</key>
+				<string></string>
 				<key>title</key>
 				<string>test</string>
 				<key>detail</key>
@@ -42,6 +48,8 @@
 		<key>left</key>
 		<array>
 			<dict>
+				<key>settingKey</key>
+				<string></string>
 				<key>type</key>
 				<string>onOff</string>
 				<key>detail</key>

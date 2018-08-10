@@ -25,5 +25,6 @@ protocol SettingCell: class {
   var type: SettingCellType { get }
   var detailLabel: NSTextField! { get set }
   var titleLabel: NSTextField! { get set }
+  var settingKey: String! { get set }
 }
 
