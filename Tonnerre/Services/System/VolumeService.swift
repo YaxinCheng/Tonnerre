@@ -67,7 +67,13 @@ struct VolumeService: TonnerreService {
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     let fileManager = FileManager.default
-    let volumeURLs = fileManager.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeIsInternalKey], options: .skipHiddenVolumes) ?? []
+    let semaphore = DispatchSemaphore(value: 0)
+    var volumeURLs: [URL] = []
+    DispatchQueue(label: "volumeChecking").async {
+      volumeURLs = fileManager.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeIsInternalKey], options: .skipHiddenVolumes) ?? []
+      semaphore.signal()
+    }
+    _ = semaphore.wait(timeout: .now() + 0.2)
     let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon)
     guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
