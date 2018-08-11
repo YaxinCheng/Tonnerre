@@ -709,17 +709,17 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
                     <customView key="view" id="pb1-oe-dJ9">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="560"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1074" height="560"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="KLH-EP-6kB">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="560"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1074" height="560"/>
                             </customView>
-                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="withinWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
+                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="withinWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
+                                <rect key="frame" x="0.0" y="0.0" width="1074" height="48"/>
                             </visualEffectView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="vQv-oU-xJd">
-                                <rect key="frame" x="0.0" y="540" width="1024" height="20"/>
+                                <rect key="frame" x="0.0" y="540" width="1074" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="r6e-4A-mP9"/>
                                 </constraints>
@@ -731,11 +731,11 @@
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEH-u0-Qp6">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1074" height="48"/>
                                 <subviews>
                                     <button focusRingType="none" verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nrx-wC-ZJ4">
-                                        <rect key="frame" x="0.0" y="0.0" width="512" height="48"/>
-                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSPreferencesGeneral" imagePosition="overlaps" alignment="center" state="on" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="jAF-cr-Hul">
+                                        <rect key="frame" x="0.0" y="15" width="537" height="19"/>
+                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="settings" imagePosition="overlaps" alignment="center" state="on" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="jAF-cr-Hul">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
@@ -744,8 +744,8 @@
                                         </connections>
                                     </button>
                                     <button focusRingType="none" verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="043-eD-oQx">
-                                        <rect key="frame" x="512" y="0.0" width="512" height="48"/>
-                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSPathTemplate" imagePosition="overlaps" alignment="center" state="on" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="zZ8-tg-GK6">
+                                        <rect key="frame" x="537" y="15" width="537" height="19"/>
+                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="more" imagePosition="overlaps" alignment="center" state="on" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="zZ8-tg-GK6">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
@@ -756,8 +756,6 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="W6x-Cu-9uu"/>
-                                    <constraint firstItem="043-eD-oQx" firstAttribute="height" secondItem="kEH-u0-Qp6" secondAttribute="height" id="ZPw-mG-UEq"/>
-                                    <constraint firstItem="nrx-wC-ZJ4" firstAttribute="height" secondItem="kEH-u0-Qp6" secondAttribute="height" id="xiK-T9-R9C"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <real value="1000"/>
@@ -772,17 +770,17 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="kEH-u0-Qp6" secondAttribute="bottom" id="0eg-dd-eBh"/>
                             <constraint firstItem="vQv-oU-xJd" firstAttribute="leading" secondItem="pb1-oe-dJ9" secondAttribute="leading" id="3rw-LF-ceQ"/>
-                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="leading" secondItem="kEH-u0-Qp6" secondAttribute="leading" id="4OB-Z7-A1P"/>
+                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="leading" secondItem="kEH-u0-Qp6" secondAttribute="leading" id="42e-5h-wDc"/>
                             <constraint firstAttribute="bottom" secondItem="KLH-EP-6kB" secondAttribute="bottom" id="5Fs-gA-kPh"/>
                             <constraint firstItem="kEH-u0-Qp6" firstAttribute="leading" secondItem="pb1-oe-dJ9" secondAttribute="leading" id="79C-dt-zwN"/>
-                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="top" secondItem="kEH-u0-Qp6" secondAttribute="top" id="8T3-cB-rNo"/>
-                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="trailing" secondItem="kEH-u0-Qp6" secondAttribute="trailing" id="J9n-n4-WIN"/>
+                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="trailing" secondItem="kEH-u0-Qp6" secondAttribute="trailing" id="ErL-B7-94K"/>
                             <constraint firstItem="KLH-EP-6kB" firstAttribute="leading" secondItem="pb1-oe-dJ9" secondAttribute="leading" id="LRO-GO-87f"/>
                             <constraint firstItem="vQv-oU-xJd" firstAttribute="top" secondItem="pb1-oe-dJ9" secondAttribute="top" id="No0-1n-MyK"/>
                             <constraint firstAttribute="trailing" secondItem="KLH-EP-6kB" secondAttribute="trailing" id="Nre-0i-oKU"/>
                             <constraint firstAttribute="trailing" secondItem="kEH-u0-Qp6" secondAttribute="trailing" id="ZyY-LN-jPU"/>
+                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="top" secondItem="kEH-u0-Qp6" secondAttribute="top" id="dgw-G1-h8d"/>
                             <constraint firstAttribute="trailing" secondItem="vQv-oU-xJd" secondAttribute="trailing" id="ezS-N9-eFb"/>
-                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="bottom" secondItem="kEH-u0-Qp6" secondAttribute="bottom" id="uYa-Ex-Svd"/>
+                            <constraint firstItem="YRu-Kb-ufR" firstAttribute="bottom" secondItem="kEH-u0-Qp6" secondAttribute="bottom" id="q6W-qN-0wK"/>
                             <constraint firstItem="KLH-EP-6kB" firstAttribute="top" secondItem="pb1-oe-dJ9" secondAttribute="top" id="vB9-0R-Po1"/>
                         </constraints>
                     </customView>
@@ -972,7 +970,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSPathTemplate" width="16" height="10"/>
-        <image name="NSPreferencesGeneral" width="32" height="32"/>
+        <image name="more" width="48" height="48"/>
+        <image name="settings" width="96" height="96"/>
     </resources>
 </document>

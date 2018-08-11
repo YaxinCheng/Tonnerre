@@ -19,6 +19,8 @@
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7C20D4466A00ABBCDE /* toggle_switch.json */; };
 		14398FB6211F6D3100F5AFCA /* DSEnforcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* DSEnforcement.swift */; };
+		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
+		14398FB8211F968D00F5AFCA /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
 		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
 		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
@@ -866,6 +868,7 @@
 			files = (
 				1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
+				14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 				14AFE6B72118FD99002BBBB2 /* tonnerre.icns in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
@@ -1026,6 +1029,7 @@
 				14AFE6C7211A7B62002BBBB2 /* OnOffCell.swift in Sources */,
 				14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */,
 				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
+				14398FB8211F968D00F5AFCA /* NSImage+Tint.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
 				14AFE6E3211E3085002BBBB2 /* DSEnforcement.swift in Sources */,

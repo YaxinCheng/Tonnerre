@@ -13,6 +13,7 @@ final class ViewController: NSViewController {
   @IBOutlet weak var statusBarView: NSView!
   @IBOutlet weak var contentView: NSView!
   @IBOutlet weak var tabBarView: NSStackView!
+  
   private var currentTab: NSStoryboardSegue.Identifier = .secondTab
   private static let settingOptions: [String: Any] = {
     guard
@@ -24,23 +25,38 @@ final class ViewController: NSViewController {
     return settingData
   }()
   
+  private let themeColour = NSColor(calibratedRed: 71/255, green: 163/255, blue: 153/255, alpha: 1)
+  private var highlightedButton: NSButton?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
     statusBarView.layer?.backgroundColor = .white
+    tabBarView.layer?.backgroundColor = .clear
     contentView.layer?.backgroundColor = .clear
-    performSegue(withIdentifier: .firstTab, sender: self)
+    
+    for button in tabBarView.subviews where button is NSButton {
+      NSLayoutConstraint.activate([
+        button.heightAnchor.constraint(equalToConstant: 36)
+      ])
+      (button as! NSButton).image = (button as! NSButton).image?.tintedImage(with: .gray)
+    }
+    highlightedButton = tabBarView.subviews[0] as? NSButton
+    performSegue(withIdentifier: .firstTab, sender: highlightedButton)
   }
 
   override func viewWillAppear() {
     super.viewWillAppear()
     view.window?.title = ""
   }
-
+  
   override func shouldPerformSegue(withIdentifier identifier: NSStoryboardSegue.Identifier, sender: Any?) -> Bool {
     guard identifier != currentTab else { return false }
     currentTab = identifier
+    highlightedButton?.image = highlightedButton?.image?.tintedImage(with: .gray)
+    highlightedButton = sender as? NSButton
+    highlightedButton?.image = highlightedButton?.image?.tintedImage(with: themeColour)
     return true
   }
   
