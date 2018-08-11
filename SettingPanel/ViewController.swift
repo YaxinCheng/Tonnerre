@@ -10,6 +10,7 @@ import Cocoa
 
 final class ViewController: NSViewController {
 
+  @IBOutlet weak var statusBarView: NSView!
   @IBOutlet weak var contentView: NSView!
   @IBOutlet weak var tabBarView: NSStackView!
   private var currentTab: NSStoryboardSegue.Identifier = .secondTab
@@ -27,14 +28,14 @@ final class ViewController: NSViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    contentView.layer?.backgroundColor = NSColor.clear.cgColor
+    statusBarView.layer?.backgroundColor = .white
+    contentView.layer?.backgroundColor = .clear
     performSegue(withIdentifier: .firstTab, sender: self)
   }
 
-  override var representedObject: Any? {
-    didSet {
-    // Update the view, if already loaded.
-    }
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    view.window?.title = ""
   }
 
   override func shouldPerformSegue(withIdentifier identifier: NSStoryboardSegue.Identifier, sender: Any?) -> Bool {

@@ -25,12 +25,7 @@ final class SettingViewController: NSViewController {
     return nil
   }
   
-  var settingOptions: (left: [ViewController.SettingOption], right: [ViewController.SettingOption])! {
-    didSet {
-      // adjust the height of scroll contentView
-      
-    }
-  }
+  var settingOptions: (left: [ViewController.SettingOption], right: [ViewController.SettingOption])!
   
   @IBOutlet var settingView: SettingView!
   
@@ -38,6 +33,15 @@ final class SettingViewController: NSViewController {
     super.viewDidLoad()
     // Do view setup here.
     reload()
+    settingView.postsBoundsChangedNotifications = true
+    NotificationCenter.default.addObserver(forName: NSView.boundsDidChangeNotification, object: nil, queue: .main) { [unowned self] _ in
+      let yPos = self.settingView.contentView.bounds.origin.y
+      if yPos <= -(self.settingView.titleLabel.frame.height) {
+        self.view.window?.title = self.settingView.titleLabel.stringValue
+      } else {
+        self.view.window?.title = ""
+      }
+    }
   }
   
   private func setupCell(with datasource: ViewController.SettingOption) -> NSView? {
@@ -53,5 +57,6 @@ final class SettingViewController: NSViewController {
     let rightViews = settingOptions.right.compactMap(setupCell)
     leftViews.forEach { settingView.addSubview($0, side: .left) }
     rightViews.forEach { settingView.addSubview($0, side: .right) }
+    settingView.adjustHeight()
   }
 }

@@ -18,6 +18,7 @@
 		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1429AC7D20D4466B00ABBCDE /* toggle_switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 1429AC7C20D4466A00ABBCDE /* toggle_switch.json */; };
+		14398FB6211F6D3100F5AFCA /* DSEnforcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* DSEnforcement.swift */; };
 		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
 		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
@@ -928,6 +929,7 @@
 				14AEB2D120BEECA900D10D44 /* NSImage+Tint.swift in Sources */,
 				14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */,
 				14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */,
+				14398FB6211F6D3100F5AFCA /* DSEnforcement.swift in Sources */,
 				145DA16920DAD70100C1E804 /* BingSearch.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,

@@ -5,7 +5,8 @@
 	<key>firstTab</key>
 	<dict>
 		<key>right</key>
-		<array/>
+		<array>
+		</array>
 		<key>left</key>
 		<array>
 			<dict>

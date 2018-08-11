@@ -91,4 +91,9 @@ final class BaseWindow: NSPanel {
     _ = try? workspace.launchApplication(at: URL(fileURLWithPath: helperLocation), options: .andHide, configuration: [:])
     #endif
   }
+  
+  private func setupSettings() {
+    let settingEnforce = DSEnforcement()
+    settingEnforce.execute()
+  }
 }

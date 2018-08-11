@@ -718,6 +718,18 @@
                             <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="withinWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
                             </visualEffectView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="vQv-oU-xJd">
+                                <rect key="frame" x="0.0" y="540" width="1024" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="r6e-4A-mP9"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.backgroundColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customView>
                             <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEH-u0-Qp6">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
                                 <subviews>
@@ -759,20 +771,24 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="kEH-u0-Qp6" secondAttribute="bottom" id="0eg-dd-eBh"/>
+                            <constraint firstItem="vQv-oU-xJd" firstAttribute="leading" secondItem="pb1-oe-dJ9" secondAttribute="leading" id="3rw-LF-ceQ"/>
                             <constraint firstItem="YRu-Kb-ufR" firstAttribute="leading" secondItem="kEH-u0-Qp6" secondAttribute="leading" id="4OB-Z7-A1P"/>
                             <constraint firstAttribute="bottom" secondItem="KLH-EP-6kB" secondAttribute="bottom" id="5Fs-gA-kPh"/>
                             <constraint firstItem="kEH-u0-Qp6" firstAttribute="leading" secondItem="pb1-oe-dJ9" secondAttribute="leading" id="79C-dt-zwN"/>
                             <constraint firstItem="YRu-Kb-ufR" firstAttribute="top" secondItem="kEH-u0-Qp6" secondAttribute="top" id="8T3-cB-rNo"/>
                             <constraint firstItem="YRu-Kb-ufR" firstAttribute="trailing" secondItem="kEH-u0-Qp6" secondAttribute="trailing" id="J9n-n4-WIN"/>
                             <constraint firstItem="KLH-EP-6kB" firstAttribute="leading" secondItem="pb1-oe-dJ9" secondAttribute="leading" id="LRO-GO-87f"/>
+                            <constraint firstItem="vQv-oU-xJd" firstAttribute="top" secondItem="pb1-oe-dJ9" secondAttribute="top" id="No0-1n-MyK"/>
                             <constraint firstAttribute="trailing" secondItem="KLH-EP-6kB" secondAttribute="trailing" id="Nre-0i-oKU"/>
                             <constraint firstAttribute="trailing" secondItem="kEH-u0-Qp6" secondAttribute="trailing" id="ZyY-LN-jPU"/>
+                            <constraint firstAttribute="trailing" secondItem="vQv-oU-xJd" secondAttribute="trailing" id="ezS-N9-eFb"/>
                             <constraint firstItem="YRu-Kb-ufR" firstAttribute="bottom" secondItem="kEH-u0-Qp6" secondAttribute="bottom" id="uYa-Ex-Svd"/>
                             <constraint firstItem="KLH-EP-6kB" firstAttribute="top" secondItem="pb1-oe-dJ9" secondAttribute="top" id="vB9-0R-Po1"/>
                         </constraints>
                     </customView>
                     <connections>
                         <outlet property="contentView" destination="KLH-EP-6kB" id="xcg-Dd-ODR"/>
+                        <outlet property="statusBarView" destination="vQv-oU-xJd" id="hdw-da-9c5"/>
                         <outlet property="tabBarView" destination="kEH-u0-Qp6" id="DnD-OI-E5C"/>
                     </connections>
                 </viewController>
@@ -785,7 +801,7 @@
             <objects>
                 <customObject id="Vw2-sE-bDl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="wUd-A6-LE0" customClass="SettingViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
-                    <scrollView key="view" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="gNK-bX-mmQ" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
+                    <scrollView key="view" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="gNK-bX-mmQ" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="I5V-5w-M77">
@@ -846,17 +862,18 @@
                             <constraint firstItem="rma-Ff-AJt" firstAttribute="leading" secondItem="gNK-bX-mmQ" secondAttribute="leading" id="Biz-dh-Yhk"/>
                             <constraint firstAttribute="trailing" secondItem="rma-Ff-AJt" secondAttribute="trailing" id="WJJ-m0-rJk"/>
                         </constraints>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Bev-Lt-fKe">
-                            <rect key="frame" x="0.0" y="284" width="450" height="16"/>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Bev-Lt-fKe">
+                            <rect key="frame" x="-100" y="-100" width="450" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Qsw-7d-RbL">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Qsw-7d-RbL">
                             <rect key="frame" x="434" y="0.0" width="16" height="300"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <connections>
                             <outlet property="leftPanel" destination="5JU-SV-3ZT" id="fiS-Q4-KYU"/>
                             <outlet property="rightPanel" destination="eZ5-ah-Amm" id="O22-8j-xou"/>
+                            <outlet property="titleLabel" destination="cbu-9F-PG7" id="wMU-ZP-VX6"/>
                         </connections>
                     </scrollView>
                     <connections>
@@ -871,7 +888,7 @@
             <objects>
                 <customObject id="t1j-MR-mE7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="Xiv-Y5-BSV" customClass="SettingViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
-                    <scrollView key="view" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1qx-Mf-mCX" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
+                    <scrollView key="view" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="1qx-Mf-mCX" customClass="SettingView" customModule="SettingPanel" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="TUP-rO-Hjo">
@@ -932,17 +949,18 @@
                             <constraint firstAttribute="trailing" secondItem="A3G-dr-Njn" secondAttribute="trailing" id="W2S-wN-sXx"/>
                             <constraint firstItem="A3G-dr-Njn" firstAttribute="top" secondItem="1qx-Mf-mCX" secondAttribute="top" id="uA8-Xr-vDU"/>
                         </constraints>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="mMA-v6-Zaf">
-                            <rect key="frame" x="0.0" y="284" width="450" height="16"/>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="mMA-v6-Zaf">
+                            <rect key="frame" x="-100" y="-100" width="450" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="cSU-5c-H9o">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cSU-5c-H9o">
                             <rect key="frame" x="434" y="0.0" width="16" height="300"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <connections>
                             <outlet property="leftPanel" destination="2nE-M9-bzM" id="w08-dQ-Jwa"/>
                             <outlet property="rightPanel" destination="vRz-Jr-pWU" id="N9M-IF-wcm"/>
+                            <outlet property="titleLabel" destination="8Kr-oA-fb7" id="Q9l-Mj-xKV"/>
                         </connections>
                     </scrollView>
                     <connections>
