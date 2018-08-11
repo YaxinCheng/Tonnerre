@@ -11,7 +11,11 @@ import Cocoa
 final class TextCell: NSView, SettingCell {
   @IBOutlet weak var titleLabel: NSTextField!
   @IBOutlet weak var detailLabel: NSTextField!
-  @IBOutlet weak var textField: NSTextField!
+  @IBOutlet weak var textField: NSTextField! {
+    didSet {
+      textField.delegate = self
+    }
+  }
   
   let type: SettingCellType = .text
   var settingKey: String!
@@ -23,6 +27,16 @@ final class TextCell: NSView, SettingCell {
     let text = userDefault.string(forKey: settingKey) ?? ""
     textField.stringValue = text
     window?.makeFirstResponder(nil)
-//    textField.currentEditor()?.selectedRange = NSRange(location: text.count, length: 0)
+  }
+}
+
+extension TextCell: NSTextFieldDelegate {
+  override func controlTextDidEndEditing(_ obj: Notification) {
+    guard let field = obj.object as? NSTextField, field === textField else { return }
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    userDefault.set(field.stringValue, forKey: settingKey)
+    DispatchQueue.main.async {
+      field.currentEditor()?.selectedRange = NSRange(location: field.stringValue.count, length: 0)
+    }
   }
 }

@@ -20,7 +20,6 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   
   private let encode = JSONSerialization.data
   private let asyncSession = TonnerreSession.shared
-  private typealias ExtraContent = (keyword: String, runtime: String?)
   
   // MARK: - Tool
   private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> DisplayProtocol? {
@@ -79,13 +78,12 @@ final class DynamicService: TonnerreService, DynamicProtocol {
         let name = descriptionObj["name"],
         let keyword = descriptionObj["keyword"]
       else { return [] }
-      let pythonRuntime: String? = descriptionObj["runtime"] ?? nil
       let icon: NSImage
       if fileIcon != nil { icon = fileIcon! }
       else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
         icon = iconFromPath
       } else { icon = #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour) }
-      let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: (keyword, pythonRuntime))
+      let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: keyword)
       return [item]
     } catch {
       #if DEBUG
@@ -96,14 +94,14 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   }
   
   required init() {
-    serviceTrie = Trie(values: []) { ($0.extraContent as! ExtraContent).keyword }
+    serviceTrie = Trie(values: []) { $0.extraContent as! String }
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self.prefetch(fileExtension: "tne")
     }
   }
   
   func reload() {
-    serviceTrie = Trie(values: []) { ($0.extraContent as! ExtraContent).keyword }
+    serviceTrie = Trie(values: []) { $0.extraContent as! String }
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
       self.prefetch(fileExtension: "tne")
     }
@@ -135,7 +133,8 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
-    let pythonPath = (script.extraContent as! ExtraContent).runtime ?? "/usr/bin/python"
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let pythonPath = userDefault.string(forKey: "settings:python") ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)
     let (inputPipe, outputPipe) = (Pipe(), Pipe())
     process.standardInput = inputPipe

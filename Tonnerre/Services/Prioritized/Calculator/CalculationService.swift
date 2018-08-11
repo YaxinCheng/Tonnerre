@@ -30,9 +30,6 @@ struct CalculationService: TonnerreService {
     } catch MathError.missingBracket {
       return [DisplayableContainer<Int>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
     } catch {
-      #if DEBUG
-      print(error)
-      #endif
       return []
     }
   }
