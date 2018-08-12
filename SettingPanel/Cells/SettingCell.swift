@@ -11,13 +11,14 @@ import Cocoa
 enum SettingCellType: String {
   case text
   case onOff
+  case gradient
   
   var identifier: String {
     return rawValue
   }
   
   static var types: [SettingCellType] {
-    return [.text, .onOff]
+    return [.text, .onOff, .gradient]
   }
 }
 

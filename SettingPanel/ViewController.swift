@@ -86,7 +86,7 @@ final class ViewController: NSViewController {
   }
   
   private func serviceLoading() -> (left: [SettingOption], right: [SettingOption]) {
-    return ([], [])
+    return ([("service", "a service template", .gradient, "none"), ("service", "a service template", .gradient, "none")], [("service", "a service template", .gradient, "none")])
   }
 }
 
