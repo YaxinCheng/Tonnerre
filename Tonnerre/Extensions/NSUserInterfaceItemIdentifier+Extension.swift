@@ -10,5 +10,4 @@ import Cocoa
 
 extension NSUserInterfaceItemIdentifier {
   static let ServiceCell = NSUserInterfaceItemIdentifier(rawValue: "ServiceCell")
-  static let OnOffCell = NSUserInterfaceItemIdentifier(rawValue: "OnOffCell")
 }

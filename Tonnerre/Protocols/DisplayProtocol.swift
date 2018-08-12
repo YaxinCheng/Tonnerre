@@ -33,10 +33,6 @@ protocol DisplayProtocol {
   */
   var alterIcon: NSImage? { get }
   /**
-   the identifier specifies which type of cell should be used to display itself
-  */
-  var itemIdentifier: NSUserInterfaceItemIdentifier { get }
-  /**
    The placeholder content when for this item shown on the textField
   */
   var placeholder: String { get }
@@ -47,5 +43,4 @@ extension DisplayProtocol {
   var content: String { return "" }
   var alterContent: String? { return nil }
   var alterIcon: NSImage? { return nil }
-  var itemIdentifier: NSUserInterfaceItemIdentifier { return .ServiceCell }
 }

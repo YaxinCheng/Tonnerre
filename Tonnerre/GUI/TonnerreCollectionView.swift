@@ -107,9 +107,6 @@ final class TonnerreCollectionView: NSScrollView {
       let actualIndex = selectedIndex - max(currentIndex, 0) + max(highlightedItemIndex, 0)
       guard actualIndex < datasource.count, case .result(let service, let value) = datasource[actualIndex] else { return }
       delegate?.serve(with: service, target: value, withCmd: false)
-      guard let cell = collectionView.item(at: actualIndex) as? OnOffCell else { datasource = []; return }
-      cell.disabled = !cell.disabled
-      cell.animate()
     case 48:// Tab
       let highlightIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
       guard datasource.count > 0 else { return }
@@ -149,10 +146,7 @@ final class TonnerreCollectionView: NSScrollView {
       !datasource.isEmpty,
       case .result(let service, let value) = datasource[selectIndex]
       else { return nil }
-    if let onoffCell = highlightedItem as? OnOffCell {
-      onoffCell.disabled = !onoffCell.disabled
-      onoffCell.animate()
-    } else if !(service is TonnerreInstantService) { datasource = [] }
+    if !(service is TonnerreInstantService) { datasource = [] }
     return (service, value)
   }
   
@@ -214,10 +208,9 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let data = datasource[indexPath.item]
-    let identifier = data.itemIdentifier
-    let origin = collectionView.makeItem(withIdentifier: identifier, for: indexPath)
+    let origin = collectionView.makeItem(withIdentifier: .ServiceCell, for: indexPath)
     guard let cell = origin as? CellProtocol else { return origin }
+    let data = datasource[indexPath.item]
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
@@ -229,13 +222,6 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
         if let asyncedData = value as? AsyncDisplayable {
           asyncedData.asyncedViewSetup?(servicecell)
         }
-      }
-    } else if let onOffCell = cell as? OnOffCell, case .result(let service, let value) = data {
-      if service is ServicesService {
-        // TODO: Add detection of DynamicServices
-        onOffCell.disabled = type(of: (value as! TonnerreService)).isDisabled
-      } else if service is DefaultService, let serviceOption = value as? TonnerreService {
-        onOffCell.disabled = type(of: serviceOption) != DefaultSearchOption.default.associatedService
       }
     }
     return cell as! NSCollectionViewItem

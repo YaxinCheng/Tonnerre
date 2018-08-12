@@ -9,6 +9,17 @@
 import Cocoa
 import Quartz
 
+fileprivate final class PreviewItem: NSObject, QLPreviewItem {
+  let previewItemTitle: String!
+  let previewItemURL: URL!
+  
+  init(title: String, url: URL) {
+    previewItemURL = url
+    previewItemTitle = title
+    super.init()
+  }
+}
+
 final class ServiceCell: NSCollectionViewItem, CellProtocol {
   
   @IBOutlet weak var iconView: TonnerreIconView!

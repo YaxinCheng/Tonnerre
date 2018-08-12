@@ -66,6 +66,3 @@ extension TonnerreService {
 }
 
 protocol TonnerreInstantService {}
-
-protocol TonnerreInterpreterService: TonnerreService, TonnerreInstantService {
-}

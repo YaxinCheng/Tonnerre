@@ -33,13 +33,6 @@ enum ServiceResult: DisplayProtocol {
     }
   }
   
-  var itemIdentifier: NSUserInterfaceItemIdentifier {
-    switch self {
-    case .service(origin: let value): return value.itemIdentifier
-    case .result(service: let service, value: _): return service.itemIdentifier
-    }
-  }
-  
   var placeholder: String {
     switch self {
     case .service(origin: let value): return value.placeholder
