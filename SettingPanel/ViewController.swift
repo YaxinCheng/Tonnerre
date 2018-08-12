@@ -25,7 +25,6 @@ final class ViewController: NSViewController {
     return settingData
   }()
   
-  private let themeColour = NSColor(calibratedRed: 71/255, green: 163/255, blue: 153/255, alpha: 1)
   private var highlightedButton: NSButton?
   
   override func viewDidLoad() {
@@ -54,9 +53,9 @@ final class ViewController: NSViewController {
   override func shouldPerformSegue(withIdentifier identifier: NSStoryboardSegue.Identifier, sender: Any?) -> Bool {
     guard identifier != currentTab else { return false }
     currentTab = identifier
-    highlightedButton?.image = highlightedButton?.image?.tintedImage(with: .gray)
+    highlightedButton?.image = highlightedButton?.image?.tintedImage(with: .lightGray)
     highlightedButton = sender as? NSButton
-    highlightedButton?.image = highlightedButton?.image?.tintedImage(with: themeColour)
+    highlightedButton?.image = highlightedButton?.image?.tintedImage(with: .white)
     return true
   }
   
@@ -79,7 +78,15 @@ final class ViewController: NSViewController {
       let identifier = segue.identifier,
       let destinationVC = segue.destinationController as? SettingViewController
     else { return }
-    destinationVC.settingOptions = loadSettings(with: identifier)
+    if identifier == .secondTab {
+      destinationVC.settingOptions = serviceLoading()
+    } else {
+      destinationVC.settingOptions = loadSettings(with: identifier)
+    }
+  }
+  
+  private func serviceLoading() -> (left: [SettingOption], right: [SettingOption]) {
+    return ([], [])
   }
 }
 

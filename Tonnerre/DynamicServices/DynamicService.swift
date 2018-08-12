@@ -134,7 +134,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
     let userDefault = UserDefaults(suiteName: "Tonnerre")!
-    let pythonPath = userDefault.string(forKey: "settings:python") ?? "/usr/bin/python"
+    let pythonPath = (userDefault[.python] as? String) ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)
     let (inputPipe, outputPipe) = (Pipe(), Pipe())
     process.standardInput = inputPipe

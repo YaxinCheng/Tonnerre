@@ -715,7 +715,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="KLH-EP-6kB">
                                 <rect key="frame" x="0.0" y="0.0" width="1074" height="560"/>
                             </customView>
-                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="withinWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
+                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="behindWindow" material="ultraDark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
                                 <rect key="frame" x="0.0" y="0.0" width="1074" height="48"/>
                             </visualEffectView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="vQv-oU-xJd">

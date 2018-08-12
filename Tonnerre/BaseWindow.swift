@@ -93,7 +93,6 @@ final class BaseWindow: NSPanel {
   }
   
   private func setupSettings() {
-    let settingEnforce = DSEnforcement()
-    settingEnforce.execute()
+    TonnerreSettings.addDefaultSetting()
   }
 }

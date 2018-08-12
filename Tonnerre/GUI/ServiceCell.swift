@@ -20,7 +20,7 @@ fileprivate final class PreviewItem: NSObject, QLPreviewItem {
   }
 }
 
-final class ServiceCell: NSCollectionViewItem, CellProtocol {
+final class ServiceCell: NSCollectionViewItem {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
@@ -54,6 +54,20 @@ final class ServiceCell: NSCollectionViewItem, CellProtocol {
           return shadow
         }()
       }
+    }
+  }
+  
+  var highlighted: Bool {
+    set {
+      DispatchQueue.main.async { [weak self] in
+        if newValue {
+          self?.view.layer?.backgroundColor = self?.theme.highlightColour.cgColor
+        } else {
+          self?.view.layer?.backgroundColor = .clear
+        }
+      }
+    } get {
+      return view.layer?.backgroundColor == theme.highlightColour.cgColor
     }
   }
   

@@ -11,8 +11,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationWillFinishLaunching(_ notification: Notification) {
-    let defaultSettings = DSEnforcement()
-    defaultSettings.execute()
+    TonnerreSettings.addDefaultSetting()
   }
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {

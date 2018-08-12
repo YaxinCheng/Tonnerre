@@ -19,7 +19,7 @@ protocol TonnerreCollectionViewDelegate: class {
 
 final class TonnerreCollectionView: NSScrollView {
   private let cellHeight: CGFloat = 56
-  private weak var highlightedItem: CellProtocol?
+  private weak var highlightedItem: ServiceCell?
   private var visibleIndex: Int = -1// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
   var lastQuery: String = ""
   private var mouseMonitor: Any? = nil
@@ -96,7 +96,7 @@ final class TonnerreCollectionView: NSScrollView {
   }
 
   override func keyDown(with event: NSEvent) {
-    (highlightedItem as? ServiceCell)?.popoverView.close()
+    highlightedItem?.popoverView.close()
     switch event.keyCode {
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
@@ -112,7 +112,7 @@ final class TonnerreCollectionView: NSScrollView {
       guard datasource.count > 0 else { return }
       delegate?.tabPressed(service: datasource[highlightIndex])
     case 49:
-      (highlightedItem as? ServiceCell)?.preview()
+      highlightedItem?.preview()
     case 36, 76: // Enter keys
       guard event.modifierFlags.contains(.command), let (service, value) = enterPressed() else { break }
       delegate?.serve(with: service, target: value, withCmd: true)
@@ -180,7 +180,7 @@ final class TonnerreCollectionView: NSScrollView {
   
   @objc private func collectionViewDidScroll() {
     let visibleCells = getVisibleCells()
-    for (index, cell) in (visibleCells as? [ServiceCell] ?? []).enumerated() {
+    for (index, cell) in visibleCells.enumerated() {
       cell.cmdLabel.stringValue = "⌘\(index + 1)"
     }
   }
@@ -190,10 +190,10 @@ final class TonnerreCollectionView: NSScrollView {
     return (0...8).map({ topIndex + $0 }).filter { $0 >= 0 && $0 < datasource.count }
   }
   
-  func getVisibleCells() -> [CellProtocol] {
+  func getVisibleCells() -> [ServiceCell] {
     let visibleIndexes = getVisibleIndexes()
     let indexPaths = visibleIndexes.map { IndexPath(item: $0, section: 0) }
-    return indexPaths.compactMap { collectionView.item(at: $0) as? CellProtocol }
+    return indexPaths.compactMap { collectionView.item(at: $0) as? ServiceCell }
   }
 }
 
@@ -209,28 +209,26 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let origin = collectionView.makeItem(withIdentifier: .ServiceCell, for: indexPath)
-    guard let cell = origin as? CellProtocol else { return origin }
+    guard let cell = origin as? ServiceCell else { return origin }
     let data = datasource[indexPath.item]
     cell.iconView.image = data.icon
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
-    if let servicecell = cell as? ServiceCell {
-      servicecell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
-      if case .result(_, let value) = data {
-        servicecell.displayItem = value
-        if let asyncedData = value as? AsyncDisplayable {
-          asyncedData.asyncedViewSetup?(servicecell)
-        }
+    cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
+    if case .result(_, let value) = data {
+      cell.displayItem = value
+      if let asyncedData = value as? AsyncDisplayable {
+        asyncedData.asyncedViewSetup?(cell)
       }
     }
-    return cell as! NSCollectionViewItem
+    return cell
   }
   
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard
       let indexPath = indexPaths.first,
-      let cell = collectionView.item(at: indexPath) as? CellProtocol
+      let cell = collectionView.item(at: indexPath) as? ServiceCell
     else { return }
     if indexPath.item != highlightedItemIndex { highlightedItemIndex = indexPath.item }
     highlightedItem?.highlighted = false
