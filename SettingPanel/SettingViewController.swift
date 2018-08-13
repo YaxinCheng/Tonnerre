@@ -19,7 +19,7 @@ final class SettingViewController: NSViewController {
     for controller in cellArray ?? [] {
       if let validCell = (controller as? NSViewController)?.view as? SettingCell,
         validCell.type == type {
-        NSLayoutConstraint.activate([(validCell as! NSView).widthAnchor.constraint(equalToConstant: 481)])
+        NSLayoutConstraint.activate([(validCell as! NSView).widthAnchor.constraint(equalToConstant: 490)])
         return validCell
       }
     }

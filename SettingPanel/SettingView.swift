@@ -40,17 +40,17 @@ final class SettingView: NSScrollView {
   
   func addSubview(_ view: NSView, side: PanelSide) {
     if side == .left {
-      leftHeight += view.frame.height
+      leftHeight += view.frame.height + 12
       leftPanel.addView(view, in: .top)
     } else if side == .right {
-      rightHeight += view.frame.height
+      rightHeight += view.frame.height + 12
       rightPanel.addView(view, in: .top)
     }
   }
   
   func adjustHeight() {
     let requiredHeight: CGFloat
-    if rightPanel.fittingSize.height > leftPanel.fittingSize.height {
+    if leftHeight < rightHeight {
       requiredHeight = rightHeight + 48 + 37
     } else {
       requiredHeight = leftHeight + 48 + 23 + 57 + 16

@@ -68,6 +68,20 @@ struct TonnerreServiceLoader {
     if ClipboardService.isDisabled == false {
       ClipboardService.monitor.start()
     }
+    saveToPlist(services: normalServices)
+  }
+  
+  private func saveToPlist(services: [TonnerreService.Type]) {
+    let settingURL = Bundle.main.url(forResource: "Settings", withExtension: "plist")!
+    let plistFile = Plist(fileURL: settingURL)
+    var plistContent = plistFile.read()! as! [String: [String: [String: [String: String]]]]
+    for service in services {
+      guard plistContent["secondTab"]!["left"]![service.settingKey] == nil else { continue }
+      let object = service.init()
+      plistContent["secondTab"]!["left"]![service.settingKey] =
+        ["title":  object.name, "detail": object.content, "type": "gradient"]
+    }
+    plistFile.write(plist: plistContent)
   }
   
   /**

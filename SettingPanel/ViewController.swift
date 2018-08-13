@@ -15,15 +15,13 @@ final class ViewController: NSViewController {
   @IBOutlet weak var tabBarView: NSStackView!
   
   private var currentTab: NSStoryboardSegue.Identifier = .secondTab
-  private static let settingOptions: [String: Any] = {
+  private static var settingOptions: [String: Any] {
     guard
       let settingFile = Bundle.main.path(forResource: "Settings", ofType: "plist"),
       let settingData = NSDictionary(contentsOfFile: settingFile) as? [String: Any]
-    else {
-      fatalError("Cannot find settings file")
-    }
+    else { fatalError("Cannot find setting file") }
     return settingData
-  }()
+  }
   
   private var highlightedButton: NSButton?
   
@@ -63,10 +61,10 @@ final class ViewController: NSViewController {
   
   private func loadSettings(with identifier: NSStoryboardSegue.Identifier) -> (left: [SettingOption], right: [SettingOption]) {
     guard
-      let tabData = ViewController.settingOptions[identifier.rawValue] as? [String: [[String: String]]]
+      let tabData = ViewController.settingOptions[identifier.rawValue] as? [String: [String: [String: String]]]
     else { return ([], []) }
-    let constructOption: ([String: String]) -> SettingOption = {
-      ($0["title"]!, $0["detail"]!, SettingCellType(rawValue: $0["type"]!)!, $0["settingKey"] ?? "")
+    let constructOption: (String, [String: String]) -> SettingOption = {
+      ($1["title"]!, $1["detail"]!, SettingCellType(rawValue: $1["type"]!)!, $0)
     }
     let leftOptions = tabData["left"]!.map(constructOption)
     let rightOptions = tabData["right"]!.map(constructOption)
@@ -78,15 +76,7 @@ final class ViewController: NSViewController {
       let identifier = segue.identifier,
       let destinationVC = segue.destinationController as? SettingViewController
     else { return }
-    if identifier == .secondTab {
-      destinationVC.settingOptions = serviceLoading()
-    } else {
-      destinationVC.settingOptions = loadSettings(with: identifier)
-    }
-  }
-  
-  private func serviceLoading() -> (left: [SettingOption], right: [SettingOption]) {
-    return ([("service", "a service template", .gradient, "none"), ("service", "a service template", .gradient, "none")], [("service", "a service template", .gradient, "none")])
+    destinationVC.settingOptions = loadSettings(with: identifier)
   }
 }
 

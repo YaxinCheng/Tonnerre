@@ -4,61 +4,209 @@
 <dict>
 	<key>firstTab</key>
 	<dict>
-		<key>right</key>
-		<array>
-		</array>
 		<key>left</key>
-		<array>
+		<dict>
+			<key>settings:python</key>
 			<dict>
-				<key>settingKey</key>
-				<string>settings:python</string>
-				<key>type</key>
-				<string>text</string>
 				<key>detail</key>
 				<string>The specific Python environment used to run dynamic services</string>
 				<key>title</key>
 				<string>Python Env</string>
-			</dict>
-			<dict>
-				<key>settingKey</key>
-				<string>settings:themeFollowsSystem</string>
 				<key>type</key>
-				<string>onOff</string>
+				<string>text</string>
+			</dict>
+			<key>settings:themeFollowsSystem</key>
+			<dict>
 				<key>detail</key>
 				<string>App theme follows the system wide theme super long super long super long</string>
 				<key>title</key>
 				<string>Theme follows system</string>
+				<key>type</key>
+				<string>onOff</string>
 			</dict>
-		</array>
+		</dict>
+		<key>right</key>
+		<dict/>
 	</dict>
 	<key>secondTab</key>
 	<dict>
-		<key>right</key>
-		<array>
+		<key>left</key>
+		<dict>
+			<key>AmazonSearch+Disabled</key>
 			<dict>
-				<key>settingKey</key>
-				<string></string>
+				<key>detail</key>
+				<string>Shopping  on amazon</string>
 				<key>title</key>
-				<string>test</string>
+				<string>Amazon</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>BingSearch+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search  on bing</string>
+				<key>title</key>
+				<string>Bing</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>ChromeBMService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Quick launch Chrome Bookmarks</string>
+				<key>title</key>
+				<string>Chrome BookMarks</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>DictionarySerivce+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Find definition for word in dictionary</string>
+				<key>title</key>
+				<string>Define words...</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>DuckDuckGoSearch+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search  on DuckDuckGo</string>
+				<key>title</key>
+				<string>DuckDuckGo</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>FileContentSearchService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search file on your mac and open</string>
+				<key>title</key>
+				<string>Search files by content</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>FileNameSearchService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search file on your mac and open</string>
+				<key>title</key>
+				<string>Search files by names</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>GoogleImageSearch+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search  on google image</string>
+				<key>title</key>
+				<string>Google Images</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>GoogleMapService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search  on Google Maps</string>
+				<key>title</key>
+				<string>Google Maps</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>GoogleSearch+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search  on google</string>
+				<key>title</key>
+				<string>Google</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>GoogleTranslateService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Tranlsate your language</string>
+				<key>title</key>
+				<string>Google Translate</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>LockService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Lock your Mac</string>
+				<key>title</key>
+				<string>Lock Screen</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>SafariBMService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Quick launch Safari Bookmarks</string>
+				<key>title</key>
+				<string>Safari BookMarks</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>ScreenSaverService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Lock your Mac &amp; Launch Screen Saver</string>
+				<key>title</key>
+				<string>Screen Saver</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>TerminalService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Click enter to execute it</string>
+				<key>title</key>
+				<string>Run shell commands here</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>TrashEmptyService+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Empty your trash instantly</string>
+				<key>title</key>
+				<string>Empty Trash</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>WikipediaSearch+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Search  on Wikipedia</string>
+				<key>title</key>
+				<string>Wikipedia</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+			<key>YoutubeSearch+Disabled</key>
+			<dict>
+				<key>detail</key>
+				<string>Find  on Youtube</string>
+				<key>title</key>
+				<string>Youtube</string>
+				<key>type</key>
+				<string>gradient</string>
+			</dict>
+		</dict>
+		<key>right</key>
+		<dict>
+			<key>emptyKey</key>
+			<dict>
 				<key>detail</key>
 				<string>Dummy</string>
+				<key>title</key>
+				<string>test</string>
 				<key>type</key>
 				<string>text</string>
 			</dict>
-		</array>
-		<key>left</key>
-		<array>
-			<dict>
-				<key>settingKey</key>
-				<string></string>
-				<key>type</key>
-				<string>onOff</string>
-				<key>detail</key>
-				<string>Test</string>
-				<key>title</key>
-				<string>Dummy</string>
-			</dict>
-		</array>
+		</dict>
 	</dict>
 </dict>
 </plist>

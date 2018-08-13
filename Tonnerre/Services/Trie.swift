@@ -17,7 +17,7 @@ struct Trie<T> {
    Nodes are chained together like a linked list.
    Each of them represents a state where all values share the same beginning characters
   */
-  private class Node {
+  private final class Node {
     /**
      The next nodes based on the next character
     */

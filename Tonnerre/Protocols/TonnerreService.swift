@@ -48,16 +48,17 @@ extension TonnerreService {
   var alterContent: String? { return nil }
   var alterIcon: NSImage? { return nil }
   var argUpperBound: Int { return argLowerBound }
+  static var settingKey: String { return "\(Self.self)+Disabled" }
   /**
    A bool value specifies if the service is disabled. Disabled services cannot be called
   */
   static var isDisabled: Bool {
     get {
-      let userDeafult = UserDefaults.standard
-      return userDeafult.bool(forKey: "\(Self.self)+Disabled")
+      let userDeafult = UserDefaults(suiteName: "Tonnerre")!
+      return userDeafult.bool(forKey: settingKey)
     } set {
-      let userDeafult = UserDefaults.standard
-      userDeafult.set(newValue, forKey: "\(Self.self)+Disabled")
+      let userDeafult = UserDefaults(suiteName: "Tonnerre")!
+      userDeafult.set(newValue, forKey: settingKey)
     }
   }
   var placeholder: String {

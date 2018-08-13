@@ -14,9 +14,14 @@ final class ServiceCell: NSView, SettingCell {
   @IBOutlet weak var titleLabel: NSTextField!
   var settingKey: String!
   private let cellColour: GradientColours.Gradient
-  var disabled: Bool = false {
-    didSet {
+  var disabled: Bool {
+    set {
+      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      userDefault.set(newValue, forKey: settingKey)
       setNeedsDisplay(bounds)
+    } get {
+      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      return userDefault.bool(forKey: settingKey)
     }
   }
   

@@ -21,6 +21,9 @@
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD42120DB3500F5AFCA /* GradientColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD32120DB3500F5AFCA /* GradientColours.swift */; };
+		14398FD8212231ED00F5AFCA /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD7212231ED00F5AFCA /* Plist.swift */; };
+		14398FD92122341400F5AFCA /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD7212231ED00F5AFCA /* Plist.swift */; };
+		14398FDA212234F900F5AFCA /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
 		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
 		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
@@ -207,6 +210,7 @@
 		14398FCE2120D35900F5AFCA /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		14398FD32120DB3500F5AFCA /* GradientColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColours.swift; sourceTree = "<group>"; };
+		14398FD7212231ED00F5AFCA /* Plist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 		143FD19D210567F100E79F7E /* TerminalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalService.swift; sourceTree = "<group>"; };
 		143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLoadingProtocol.swift; sourceTree = "<group>"; };
 		144E0C1120ED2F4300E4F2DA /* ASServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASServices.swift; sourceTree = "<group>"; };
@@ -479,6 +483,7 @@
 				146AAE6420BDD7C2009AC9C6 /* Core */,
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
+				14398FD7212231ED00F5AFCA /* Plist.swift */,
 				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
 				14AEB30620C210EB00D10D44 /* BaseWindowController.swift */,
 				14AEB2D820BEF4A800D10D44 /* GUI */,
@@ -870,6 +875,7 @@
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
 				14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */,
 				1421F285210257D90020480A /* DynamicServiceExec.py in Resources */,
+				14398FDA212234F900F5AFCA /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -970,6 +976,7 @@
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */,
 				144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */,
+				14398FD8212231ED00F5AFCA /* Plist.swift in Sources */,
 				14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* DisplayProtocol.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
@@ -1025,6 +1032,7 @@
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
 				14AFE6E3211E3085002BBBB2 /* TonnerreSettings.swift in Sources */,
 				14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */,
+				14398FD92122341400F5AFCA /* Plist.swift in Sources */,
 				14398FCF2120D35900F5AFCA /* ServiceCell.swift in Sources */,
 				14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */,
 				14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */,
