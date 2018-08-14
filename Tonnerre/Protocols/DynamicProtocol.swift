@@ -65,15 +65,31 @@ extension DynamicProtocol {
     do {
       let contents = try FileManager.default.contentsOfDirectory(at: serviceFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
       let extensions = contents.filter { $0.pathExtension.lowercased() == fileExtension } // Tonnerre Extension File Type
+      
+      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      var settingsDict: SettingDict
+      if let existingDict = userDefault.dictionary(forKey: "tonnerre.settings"), !existingDict.isEmpty {
+        settingsDict = existingDict as! SettingDict
+      } else {
+        let plistFile = Plist(fileURL: Bundle.main.url(forResource: "Settings", withExtension: "plist")!)
+        settingsDict = plistFile.read() as! SettingDict
+      }
       for `extension` in extensions {
         for service in Self.generateService(from: `extension`) {
           serviceTrie.insert(value: service)
+          saveToPlist(service: service, plist: &settingsDict)
         }
       }
+      userDefault.set(settingsDict, forKey: "tonnerre.settings")
     } catch {
       #if DEBUG
       print("Error with loading: ", error)
       #endif
     }
+  }
+  
+  internal func saveToPlist(service: ServiceType, plist: inout SettingDict) {
+    let settingKey = "\(service.extraContent!)_\(service.name)_\(service.content)+isDisabled"
+    plist["secondTab"]!["right"]![settingKey] = ["title": service.name, "detail": service.content, "type": "gradient"]
   }
 }

@@ -98,7 +98,10 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
       possibleServices = cachedServices
     } else {
       cachedKey = queryKey
-      possibleServices = serviceTrie.find(value: queryKey)
+      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      possibleServices = serviceTrie.find(value: queryKey).filter {
+        !userDefault.bool(forKey: "\($0.extraContent!)_\($0.name)_\($0.content)+isDisabled")
+      }
       cachedServices = possibleServices
     }
     if input.count > 1 {

@@ -68,20 +68,27 @@ struct TonnerreServiceLoader {
     if ClipboardService.isDisabled == false {
       ClipboardService.monitor.start()
     }
-    saveToPlist(services: normalServices)
+    saveToPlist(services: normalServices, side: "left")
+    saveToPlist(services: systemServices + [CalculationService.self, CurrencyService.self], side: "right")
   }
   
-  private func saveToPlist(services: [TonnerreService.Type]) {
-    let settingURL = Bundle.main.url(forResource: "Settings", withExtension: "plist")!
-    let plistFile = Plist(fileURL: settingURL)
-    var plistContent = plistFile.read()! as! [String: [String: [String: [String: String]]]]
+  private func saveToPlist(services: [TonnerreService.Type], side: String) {
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let settingStoreKey = "tonnerre.settings"
+    var settingsDict: SettingDict
+    if let existingDict = userDefault.dictionary(forKey: settingStoreKey), !existingDict.isEmpty {
+      settingsDict = existingDict as! SettingDict
+    } else {
+      let settingURL = Bundle.main.url(forResource: "Settings", withExtension: "plist")!
+      let plistFile = Plist(fileURL: settingURL)
+      settingsDict = plistFile.read()! as! SettingDict
+    }
     for service in services {
-      guard plistContent["secondTab"]!["left"]![service.settingKey] == nil else { continue }
       let object = service.init()
-      plistContent["secondTab"]!["left"]![service.settingKey] =
+      settingsDict["secondTab"]![side]![service.settingKey] =
         ["title":  object.name, "detail": object.content, "type": "gradient"]
     }
-    plistFile.write(plist: plistContent)
+    userDefault.set(settingsDict, forKey: "tonnerre.settings")
   }
   
   /**

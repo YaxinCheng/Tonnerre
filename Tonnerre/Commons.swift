@@ -20,3 +20,5 @@ func getContext() -> NSManagedObjectContext {
   let appDelegate = NSApplication.shared.delegate as! AppDelegate
   return appDelegate.persistentContainer.viewContext
 }
+
+typealias SettingDict = [String: [String: [String: [String: String]]]]

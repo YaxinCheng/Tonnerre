@@ -13,6 +13,7 @@ struct ClipboardService: TonnerreService {
   static let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
+  let content: String = "Your records of recnet copies"
   var icon: NSImage {
     return #imageLiteral(resourceName: "clipboard").tintedImage(with: TonnerreTheme.current.imgColour)
   }

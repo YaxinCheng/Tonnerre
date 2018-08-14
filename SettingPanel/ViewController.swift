@@ -16,11 +16,8 @@ final class ViewController: NSViewController {
   
   private var currentTab: NSStoryboardSegue.Identifier = .secondTab
   private static var settingOptions: [String: Any] {
-    guard
-      let settingFile = Bundle.main.path(forResource: "Settings", ofType: "plist"),
-      let settingData = NSDictionary(contentsOfFile: settingFile) as? [String: Any]
-    else { fatalError("Cannot find setting file") }
-    return settingData
+    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    return userDefault.dictionary(forKey: "tonnerre.settings") ?? [:]
   }
   
   private var highlightedButton: NSButton?

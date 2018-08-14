@@ -13,6 +13,7 @@ struct CalculationService: TonnerreService {
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let alterContent: String? = "Copy to clipboard"
+  let content: String = "A quick access to calculator"
   let icon: NSImage = .calculator
   private let tokenizer = MathTokenizer()
   private let parser = MathParser()
