@@ -70,10 +70,11 @@ extension DynamicProtocol {
       var settingsDict: SettingDict
       if let existingDict = userDefault.dictionary(forKey: "tonnerre.settings"), !existingDict.isEmpty {
         settingsDict = existingDict as! SettingDict
-      } else {
-        let plistFile = Plist(fileURL: Bundle.main.url(forResource: "Settings", withExtension: "plist")!)
-        settingsDict = plistFile.read() as! SettingDict
-      }
+      } else if
+        let plistURL = Bundle.main.url(forResource: "Settings", withExtension: "plist"),
+        let plistContent = NSDictionary(contentsOf: plistURL) as? SettingDict {
+        settingsDict = plistContent
+      } else { fatalError("Settings cannot be loaded") }
       for `extension` in extensions {
         for service in Self.generateService(from: `extension`) {
           serviceTrie.insert(value: service)

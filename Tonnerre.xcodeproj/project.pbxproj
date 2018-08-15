@@ -13,6 +13,9 @@
 		1421F285210257D90020480A /* DynamicServiceExec.py in Resources */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
+		143551F12123A44F00D6080E /* SettingPanel.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
+		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
 		14398FB6211F6D3100F5AFCA /* TonnerreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FB8211F968D00F5AFCA /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
@@ -21,8 +24,6 @@
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD42120DB3500F5AFCA /* GradientColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD32120DB3500F5AFCA /* GradientColours.swift */; };
-		14398FD8212231ED00F5AFCA /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD7212231ED00F5AFCA /* Plist.swift */; };
-		14398FD92122341400F5AFCA /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD7212231ED00F5AFCA /* Plist.swift */; };
 		14398FDA212234F900F5AFCA /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
 		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
 		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
@@ -100,7 +101,6 @@
 		14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE69E2112A4F1002BBBB2 /* ViewController.swift */; };
 		14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A22112A4F4002BBBB2 /* Main.storyboard */; };
-		14AFE6AC2114D0BF002BBBB2 /* TonnerreIndexHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */; };
 		14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */; };
 		14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B22118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift */; };
@@ -182,7 +182,8 @@
 			dstPath = Tonnerre.app/Contents/Applications;
 			dstSubfolderSpec = 16;
 			files = (
-				14AFE6AC2114D0BF002BBBB2 /* TonnerreIndexHelper.app in CopyFiles */,
+				143551F12123A44F00D6080E /* SettingPanel.app in CopyFiles */,
+				143551F02123A44A00D6080E /* TonnerreIndexHelper.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,10 +207,10 @@
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		1421F284210257D90020480A /* DynamicServiceExec.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = DynamicServiceExec.py; sourceTree = SOURCE_ROOT; };
 		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
+		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		14398FCE2120D35900F5AFCA /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		14398FD32120DB3500F5AFCA /* GradientColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColours.swift; sourceTree = "<group>"; };
-		14398FD7212231ED00F5AFCA /* Plist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 		143FD19D210567F100E79F7E /* TerminalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalService.swift; sourceTree = "<group>"; };
 		143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLoadingProtocol.swift; sourceTree = "<group>"; };
 		144E0C1120ED2F4300E4F2DA /* ASServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASServices.swift; sourceTree = "<group>"; };
@@ -395,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				1473A55620D848E100C2FC42 /* ReloadService.swift */,
+				143551F22123A49200D6080E /* SettingService.swift */,
 			);
 			path = InterpreterServices;
 			sourceTree = "<group>";
@@ -482,7 +484,6 @@
 				146AAE6420BDD7C2009AC9C6 /* Core */,
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
-				14398FD7212231ED00F5AFCA /* Plist.swift */,
 				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
 				14AEB30620C210EB00D10D44 /* BaseWindowController.swift */,
 				14AEB2D820BEF4A800D10D44 /* GUI */,
@@ -974,7 +975,6 @@
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */,
 				144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */,
-				14398FD8212231ED00F5AFCA /* Plist.swift in Sources */,
 				14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* DisplayProtocol.swift in Sources */,
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
@@ -987,6 +987,7 @@
 				1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14F015D82102314600537160 /* DynamicService.swift in Sources */,
+				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
@@ -1030,7 +1031,6 @@
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
 				14AFE6E3211E3085002BBBB2 /* TonnerreSettings.swift in Sources */,
 				14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */,
-				14398FD92122341400F5AFCA /* Plist.swift in Sources */,
 				14398FCF2120D35900F5AFCA /* ServiceCell.swift in Sources */,
 				14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */,
 				14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */,

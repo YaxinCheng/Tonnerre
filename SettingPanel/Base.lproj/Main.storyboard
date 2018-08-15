@@ -715,7 +715,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="KLH-EP-6kB">
                                 <rect key="frame" x="0.0" y="0.0" width="1074" height="560"/>
                             </customView>
-                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="behindWindow" material="ultraDark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
+                            <visualEffectView wantsLayer="YES" focusRingType="none" blendingMode="withinWindow" material="ultraDark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="YRu-Kb-ufR">
                                 <rect key="frame" x="0.0" y="0.0" width="1074" height="48"/>
                             </visualEffectView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="vQv-oU-xJd">
@@ -916,7 +916,7 @@
                                         <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-M9-bzM">
                                             <rect key="frame" x="23" y="16" width="194" height="187"/>
                                         </stackView>
-                                        <stackView orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vRz-Jr-pWU">
+                                        <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vRz-Jr-pWU">
                                             <rect key="frame" x="234" y="16" width="196" height="235"/>
                                         </stackView>
                                     </subviews>

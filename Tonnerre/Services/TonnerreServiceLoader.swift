@@ -63,26 +63,26 @@ struct TonnerreServiceLoader {
     let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, LockService.self, ScreenSaverService.self, SafariBMService.self, ChromeBMService.self, TerminalService.self]
     let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self, ClipboardService.self]
     
-    normalServiceTrie = Trie(values: normalServices) { $0.keyword }
+    normalServiceTrie = Trie(values: normalServices + [SettingService.self]) { $0.keyword }
     systemServiceTrie = Trie(values: systemServices) { $0.keyword }
     if ClipboardService.isDisabled == false {
       ClipboardService.monitor.start()
     }
-    saveToPlist(services: normalServices, side: "left")
-    saveToPlist(services: systemServices + [CalculationService.self, CurrencyService.self], side: "right")
+    setSettings(services: normalServices, side: "left")
+    setSettings(services: systemServices + [CalculationService.self, CurrencyService.self], side: "right")
   }
   
-  private func saveToPlist(services: [TonnerreService.Type], side: String) {
+  private func setSettings(services: [TonnerreService.Type], side: String) {
     let userDefault = UserDefaults(suiteName: "Tonnerre")!
     let settingStoreKey = "tonnerre.settings"
     var settingsDict: SettingDict
     if let existingDict = userDefault.dictionary(forKey: settingStoreKey), !existingDict.isEmpty {
       settingsDict = existingDict as! SettingDict
-    } else {
-      let settingURL = Bundle.main.url(forResource: "Settings", withExtension: "plist")!
-      let plistFile = Plist(fileURL: settingURL)
-      settingsDict = plistFile.read()! as! SettingDict
-    }
+    } else if
+      let settingURL = Bundle.main.url(forResource: "Settings", withExtension: "plist"),
+      let plistContent = NSDictionary(contentsOf: settingURL) as? SettingDict {
+      settingsDict = plistContent
+    } else { fatalError("Settings cannot be loaded") }
     for service in services {
       let object = service.init()
       settingsDict["secondTab"]![side]![service.settingKey] =
