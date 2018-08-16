@@ -18,6 +18,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationWillTerminate(_ aNotification: Notification) {
     // Insert code here to tear down your application
   }
+  
+  func application(_ application: NSApplication, open urls: [URL]) {
+    var successCount = 0
+    DispatchQueue.global(qos: .userInitiated).sync {
+      let fileManager = FileManager.default
+      guard
+        let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)
+      else {
+        let notification = NSUserNotification()
+        notification.title = "Installation Failed"
+        notification.informativeText = "No application support folder is found. Please try again later"
+        NSUserNotificationCenter.default.deliver(notification)
+        return
+      }
+      let serviceFolderURL = appSupDir.appendingPathComponent("Services")
+      for url in urls {
+        do {
+          try fileManager.copyItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))
+          successCount += 1
+        } catch {
+          let notification = NSUserNotification()
+          notification.title = "\(url.lastPathComponent): Installation Failed"
+          notification.informativeText = "\(error)"
+          NSUserNotificationCenter.default.deliver(notification)
+        }
+      }
+    }
+    TonnerreInterpreter.loader.reload()
+    let notification = NSUserNotification()
+    notification.title = (successCount > 1 ? "Services" : "Service") + " Installed"
+    notification.informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
+    NSUserNotificationCenter.default.deliver(notification)
+  }
 
   // MARK: - Core Data stack
 
