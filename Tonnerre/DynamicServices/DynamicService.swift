@@ -26,7 +26,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     guard
       let rawName = jsonObject["name"]
     else { return nil }
-    let name: String = String(reflecting: rawName)
+    let name: String = rawName as? String ?? String(reflecting: rawName)
     let content = jsonObject["content"] as? String ?? ""
     let innerItem = jsonObject["innerItem"]
     let placeholder = jsonObject["placeholder"] as? String ?? name
@@ -53,7 +53,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     return Dictionary(uniqueKeysWithValues:
       Mirror(reflecting: displayItem).children
       .filter { requiredKeys.contains(($0.label ?? "")) }
-      .map { ($0.label!, String(reflecting: unwrap($0.value))) }
+      .map { ($0.label!, $0.value as? String ?? String(reflecting: unwrap($0.value))) }
     )
   }
   
@@ -131,14 +131,15 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   */
   private func execute(script: ServiceType, runningMode: Mode) throws -> [DisplayProtocol] {
     guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
+    let (inputPipe, outputPipe, errorPipe) = (Pipe(), Pipe(), Pipe())
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
     let userDefault = UserDefaults(suiteName: "Tonnerre")!
     let pythonPath = (userDefault[.python] as? String) ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)
-    let (inputPipe, outputPipe) = (Pipe(), Pipe())
     process.standardInput = inputPipe
     process.standardOutput = outputPipe
+    process.standardError = errorPipe
     switch runningMode {
     case .prepare(input: let input):
       inputPipe.fileHandleForWriting.write(try encode(input, .prettyPrinted))
@@ -148,17 +149,18 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     inputPipe.fileHandleForWriting.closeFile()
     type(of: self).runningProcess = process
     try process.run()
+    let runningError = errorPipe.fileHandleForReading.readDataToEndOfFile()
+    if !runningError.isEmpty,
+      let errorDict = try JSONSerialization.jsonObject(with: runningError, options: .mutableLeaves) as? Dictionary<String, Any>,
+      let error = errorDict["error"],
+      let errorItem = decode(["name": "Error", "content": error, "placeholder": ""], withIcon: script.icon)
+    {
+      return [errorItem]
+    }
     let runningResult = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    guard
-      !runningResult.isEmpty
-    else { return [] }
-    let returned = try JSONSerialization.jsonObject(with: runningResult, options: .mutableLeaves)
-    if let jsonObject = returned as? [Dictionary<String, Any>] {
-      return jsonObject.compactMap { decode($0, withIcon: script.icon, extraInfo: script) }
-    } else if let errorInfo = returned as? Dictionary<String, String> {
-      #if DEBUG
-      print(errorInfo)
-      #endif
+    if !runningResult.isEmpty,
+      let result = try JSONSerialization.jsonObject(with: runningResult, options: .mutableLeaves) as? [Dictionary<String, Any>] {
+      return result.compactMap { decode($0, withIcon: script.icon, extraInfo: script) }
     }
     return []
   }

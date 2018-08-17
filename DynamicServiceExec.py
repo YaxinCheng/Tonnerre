@@ -1,4 +1,3 @@
-#!/usr/bin/python
 from __future__ import print_function
 import importlib, sys, argparse, json, os
 
@@ -6,6 +5,7 @@ parser = argparse.ArgumentParser(description='Run import and run assigned python
 parser.add_argument('-p', '--prepare', metavar='SCRIPT', help='Accepts a list of query commands from stdin, and return a list of displayable items')
 parser.add_argument('-s', '--serve', metavar='SCRIPT', help='Serve the selected item, and do actions')
 args = parser.parse_args()
+
 if not (args.prepare or args.serve):
     print('{"Error": "Missing required arguments"}', end='')
     sys.exit(0)
@@ -39,7 +39,7 @@ with NoPrintsZone():
         error = e
 
 if error:
-    print('{{"Error": "{}"}}'.format(error))
+    print('{{"error": "{}"}}'.format(error), file=sys.stderr)
 elif isinstance(feedback, list):
     print(json.dumps(feedback))
 elif isinstance(feedback, dict):
