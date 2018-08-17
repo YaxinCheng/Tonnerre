@@ -18,14 +18,8 @@ struct VolumeService: TonnerreService {
   let argUpperBound: Int = Int.max
   let argLowerBound: Int = 0
   
-  private func send(notification: NSUserNotification) {
-    let centre = NSUserNotificationCenter.default
-    centre.deliver(notification)
-  }
-  
   func serve(source: DisplayProtocol, withCmd: Bool) {
     let workspace = NSWorkspace.shared
-    let localNotification = NSUserNotification()
     let queue = DispatchQueue.global(qos: .userInitiated)
     if let allVolumes = (source as? DisplayableContainer<[URL]>)?.innerItem {
       queue.async {
@@ -35,32 +29,21 @@ struct VolumeService: TonnerreService {
             try workspace.unmountAndEjectDevice(at: volume)
           } catch {
             errorCount += 1
-            localNotification.title = "Eject Failed"
-            localNotification.informativeText = "Error: \(error)"
-            localNotification.soundName = NSUserNotificationDefaultSoundName
-            self.send(notification: localNotification)
+            NSUserNotification.send(title: "Eject Failed", informativeText: "Error: \(error)", muted: false)
           }
         }
         if errorCount == 0 {
-          localNotification.title = "Eject Successfully"
-          localNotification.informativeText = "Successfully ejected all volumes"
-          localNotification.soundName = nil
-          self.send(notification: localNotification)
+          NSUserNotification.send(title: "Eject Successfully", informativeText: "Successfully ejected all volumes")
         }
       }
     } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
       queue.async {
         do {
           try workspace.unmountAndEjectDevice(at: specificVolume)
-          localNotification.title = "Eject Successfully"
-          localNotification.informativeText = "Ejected: \(specificVolume.lastPathComponent)"
-          localNotification.soundName = nil
+          NSUserNotification.send(title: "Eject Successfully", informativeText: "Ejected: \(specificVolume.lastPathComponent)")
         } catch {
-          localNotification.title = "Eject Failed"
-          localNotification.informativeText = "Error: \(error)"
-          localNotification.soundName = NSUserNotificationDefaultSoundName
+          NSUserNotification.send(title: "Eject Failed", informativeText: "Error: \(error)", muted: false)
         }
-        self.send(notification: localNotification)
       }
     }
   }

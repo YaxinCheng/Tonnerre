@@ -26,10 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       guard
         let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)
       else {
-        let notification = NSUserNotification()
-        notification.title = "Installation Failed"
-        notification.informativeText = "No application support folder is found. Please try again later"
-        NSUserNotificationCenter.default.deliver(notification)
+        NSUserNotification.send(title: "Installation Failed", informativeText: "No application support folder is found. Please try again later")
         return
       }
       let serviceFolderURL = appSupDir.appendingPathComponent("Services")
@@ -38,18 +35,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
           try fileManager.copyItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))
           successCount += 1
         } catch {
-          let notification = NSUserNotification()
-          notification.title = "\(url.lastPathComponent): Installation Failed"
-          notification.informativeText = "\(error)"
-          NSUserNotificationCenter.default.deliver(notification)
+          NSUserNotification.send(title: "\(url.lastPathComponent): Installation Failed", informativeText: "\(error)", muted: false)
         }
       }
     }
     TonnerreInterpreter.loader.reload()
-    let notification = NSUserNotification()
-    notification.title = (successCount > 1 ? "Services" : "Service") + " Installed"
-    notification.informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
-    NSUserNotificationCenter.default.deliver(notification)
+    let title = (successCount > 1 ? "Services" : "Service") + " Installed"
+    let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
+    NSUserNotification.send(title: title, informativeText: informativeText)
   }
 
   // MARK: - Core Data stack

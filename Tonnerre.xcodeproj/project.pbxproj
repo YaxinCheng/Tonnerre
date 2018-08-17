@@ -16,6 +16,7 @@
 		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		143551F12123A44F00D6080E /* SettingPanel.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
 		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
+		143551F5212648CB00D6080E /* NSUserNotification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */; };
 		14398FB6211F6D3100F5AFCA /* TonnerreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FB8211F968D00F5AFCA /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Tint.swift */; };
@@ -208,6 +209,7 @@
 		1421F284210257D90020480A /* DynamicServiceExec.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = DynamicServiceExec.py; sourceTree = SOURCE_ROOT; };
 		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserNotification+Extension.swift"; sourceTree = "<group>"; };
 		14398FCE2120D35900F5AFCA /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		14398FD32120DB3500F5AFCA /* GradientColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColours.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */,
 				14F015CC20FE794700537160 /* LaunchOrder+Extension.swift */,
 				14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */,
+				143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -992,6 +995,7 @@
 				14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
+				143551F5212648CB00D6080E /* NSUserNotification+Extension.swift in Sources */,
 				145DA17420DC243D00C1E804 /* TonnerreSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
