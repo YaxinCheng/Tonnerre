@@ -32,7 +32,7 @@ final class ServiceCell: NSCollectionViewItem {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
-    popoverView.contentSize = NSSize(width: 450, height: 300)
+    popoverView.contentSize = NSSize(width: 500, height: 700)
     popoverView.behavior = .transient
     popoverView.delegate = self
   }
@@ -77,11 +77,12 @@ final class ServiceCell: NSCollectionViewItem {
   
   func preview() {
     guard
-      let url = (displayItem as? DisplayableContainer<URL>)?.innerItem,
-      let name = (displayItem as? DisplayableContainer<URL>)?.name,
-      !popoverView.isShown
+      let container = displayItem as? DisplayableContainer<URL>,
+      let url = container.innerItem,
+      !popoverView.isShown,
+      let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: popoverView.contentSize.width, height: popoverView.contentSize.height), style: .normal)
     else { return }
-    guard let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: 450, height: 600), style: .normal) else { return }
+    let name = container.name
     let viewController = NSViewController()
     qlView.previewItem = PreviewItem(title: name, url: url)
     qlView.shouldCloseWithWindow = true

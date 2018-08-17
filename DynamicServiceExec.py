@@ -7,7 +7,7 @@ parser.add_argument('-s', '--serve', metavar='SCRIPT', help='Serve the selected 
 args = parser.parse_args()
 
 if not (args.prepare or args.serve):
-    print('{"Error": "Missing required arguments"}', end='')
+    print('{"error": "Missing required arguments"}', end='', file=sys.stderr)
     sys.exit(0)
 
 class NoPrintsZone:

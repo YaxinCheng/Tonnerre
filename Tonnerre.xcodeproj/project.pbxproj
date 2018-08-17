@@ -403,13 +403,13 @@
 			path = InterpreterServices;
 			sourceTree = "<group>";
 		};
-		146AAE6420BDD7C2009AC9C6 /* Core */ = {
+		146AAE6420BDD7C2009AC9C6 /* IndexRelated */ = {
 			isa = PBXGroup;
 			children = (
 				144F80C820B712F2006A16BC /* IndexStorage.swift */,
 				1470518420B1DEDF00F6FBE8 /* SearchMode.swift */,
 			);
-			path = Core;
+			path = IndexRelated;
 			sourceTree = "<group>";
 		};
 		146AAE6A20BDE0A4009AC9C6 /* Services */ = {
@@ -483,7 +483,7 @@
 				14AFE6AD21164E74002BBBB2 /* Protocols */,
 				146AAE6A20BDE0A4009AC9C6 /* Services */,
 				14F015D92102315400537160 /* DynamicServices */,
-				146AAE6420BDD7C2009AC9C6 /* Core */,
+				146AAE6420BDD7C2009AC9C6 /* IndexRelated */,
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
 				1470517220B1C29A00F6FBE8 /* Commons.swift */,
 				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
