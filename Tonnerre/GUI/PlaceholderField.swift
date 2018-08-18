@@ -15,7 +15,13 @@ final class PlaceholderField: NSTextField, ThemeProtocol {
   
   private var placeholderColour: NSColor! {
     didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
+      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: font ?? NSFont.systemFont(ofSize: 35)])
+    }
+  }
+  
+  override var placeholderString: String? {
+    didSet {
+      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: font ?? NSFont.systemFont(ofSize: 35)])
     }
   }
   
@@ -24,12 +30,6 @@ final class PlaceholderField: NSTextField, ThemeProtocol {
       placeholderColour = newValue.placeholderColour
     } get {
       return .current
-    }
-  }
-  
-  override var placeholderString: String? {
-    didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: NSFont.systemFont(ofSize: 35)])
     }
   }
   

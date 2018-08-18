@@ -79,7 +79,7 @@ final class ViewController: NSViewController {
   @objc private func asyncContentDidLoad(notification: Notification) {
     DispatchQueue.main.async { [unowned self] in
       guard
-        case .result(let service, _)? = self.collectionView.datasource.first,
+        case .service(let service, _)? = self.collectionView.datasource.first,
         let dataPack = notification.userInfo as? [String: Any],
         let asyncLoader = service as? AsyncLoadingProtocol,
         let content = dataPack["rawElements"] as? [Any]
@@ -195,11 +195,11 @@ extension ViewController: TonnerreCollectionViewDelegate {
     }
   }
   
-  func tabPressed(service: ServiceResult) {
+  func tabPressed(service: ServicePack) {
     switch service {
-    case .service(origin: let service) where !type(of: service).keyword.isEmpty:
+    case .provider(origin: let service) where !type(of: service).keyword.isEmpty:
       textField.autoComplete(cmd: type(of: service).keyword)
-    case .result(service: let service, value: let value) where !value.name.isEmpty:
+    case .service(provider: let service, content: let value) where !value.name.isEmpty:
       if service is DynamicProtocol {
         textField.autoComplete(cmd: value.placeholder)
       } else if let tservice = value as? TonnerreService {
@@ -213,20 +213,20 @@ extension ViewController: TonnerreCollectionViewDelegate {
     textDidChange(value: textField.stringValue)
   }
   
-  func serviceHighlighted(service: ServiceResult?) {
+  func serviceHighlighted(service: ServicePack?) {
     guard service != nil else { refreshIcon(); return }
     switch service! {
-    case .service(origin: let service):
-      iconView.image = service.icon
-    case .result(service: let service, value: let value):
-      iconView.image = service is DynamicService ? value.icon : service.icon
+    case .provider(let provider):
+      iconView.image = provider.icon
+    case .service(provider: let provider, content: let service):
+      iconView.image = provider is DynamicService ? service.icon : provider.icon
       if iconView.image === #imageLiteral(resourceName: "tonnerre") {
         refreshIcon()
       }
     }
   }
   
-  func fillPlaceholder(with service: ServiceResult?) {
+  func fillPlaceholder(with service: ServicePack?) {
     guard let data = service else {
       placeholderField.placeholderString = ""
       return

@@ -49,7 +49,7 @@ extension WebService {
     return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
-  func present(rawElements: [Any]) -> [ServiceResult] {
+  func present(rawElements: [Any]) -> [ServicePack] {
     guard rawElements is [String] else { return [] }
     return (rawElements as! [String]).compactMap {
       let readableContent: String
@@ -62,7 +62,7 @@ extension WebService {
       let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(readableContent)'") : contentTemplate
       return DisplayableContainer(name: readableContent, content: content.capitalized, icon: icon, innerItem: url)
       }.map {
-        ServiceResult(service: self, value: $0)
+        ServicePack(provider: self, service: $0)
      }
   }
   

@@ -36,7 +36,7 @@
 		1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
 		14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14561B8820C35F2C0057B4C1 /* HotKey.framework */; };
 		14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14561B8820C35F2C0057B4C1 /* HotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		14561B8C20C444470057B4C1 /* ServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B8B20C444470057B4C1 /* ServiceResult.swift */; };
+		14561B8C20C444470057B4C1 /* ServicePack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B8B20C444470057B4C1 /* ServicePack.swift */; };
 		14561B8E20C45A650057B4C1 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B8D20C45A650057B4C1 /* WebService.swift */; };
 		14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B9220C4686C0057B4C1 /* GoogleSearch.swift */; };
 		14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B9420C4803A0057B4C1 /* AmazonSearch.swift */; };
@@ -222,7 +222,7 @@
 		144F80C820B712F2006A16BC /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
 		1452251F20B4A794001E0D52 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		14561B8820C35F2C0057B4C1 /* HotKey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HotKey.framework; path = Carthage/Build/Mac/HotKey.framework; sourceTree = "<group>"; };
-		14561B8B20C444470057B4C1 /* ServiceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceResult.swift; sourceTree = "<group>"; };
+		14561B8B20C444470057B4C1 /* ServicePack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePack.swift; sourceTree = "<group>"; };
 		14561B8D20C45A650057B4C1 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		14561B9220C4686C0057B4C1 /* GoogleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearch.swift; sourceTree = "<group>"; };
 		14561B9420C4803A0057B4C1 /* AmazonSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazonSearch.swift; sourceTree = "<group>"; };
@@ -417,7 +417,7 @@
 			children = (
 				146AAE6B20BDEBD9009AC9C6 /* TonnerreInterpreter.swift */,
 				14AEB2FA20BF81CA00D10D44 /* TonnerreServiceLoader.swift */,
-				14561B8B20C444470057B4C1 /* ServiceResult.swift */,
+				14561B8B20C444470057B4C1 /* ServicePack.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
 				145DA16E20DC09BF00C1E804 /* InterpreterServices */,
@@ -937,7 +937,7 @@
 				145DA16920DAD70100C1E804 /* BingSearch.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
-				14561B8C20C444470057B4C1 /* ServiceResult.swift in Sources */,
+				14561B8C20C444470057B4C1 /* ServicePack.swift in Sources */,
 				14F015C720F999E300537160 /* PlaceholderField.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
 				14F015D2210106E200537160 /* SafariBMService.swift in Sources */,

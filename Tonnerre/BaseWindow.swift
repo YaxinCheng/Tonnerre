@@ -37,16 +37,19 @@ final class BaseWindow: NSPanel {
     hotkey.keyDownHandler = { [weak self] in
       self?.isHidden = !(self?.isHidden ?? true)
     }
+    
     isMovableByWindowBackground = true
     isMovable = true
     level = .mainMenu
     isOpaque = false
     backgroundColor = .clear
+    collectionBehavior.insert(.canJoinAllSpaces)
+    DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
+    
     folderChecks()
     setupCache()
     launchHelper()
-    collectionBehavior.insert(.canJoinAllSpaces)
-    DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
+    setupSettings()
   }
   
   private func folderChecks() {

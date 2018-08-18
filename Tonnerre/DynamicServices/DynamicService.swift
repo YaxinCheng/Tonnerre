@@ -240,8 +240,8 @@ extension DynamicService: AsyncLoadingProtocol {
     return .replaced
   }
   
-  func present(rawElements: [Any]) -> [ServiceResult] {
+  func present(rawElements: [Any]) -> [ServicePack] {
     guard rawElements is [DisplayProtocol] else { return [] }
-    return (rawElements as! [DisplayProtocol]).map { ServiceResult(service: self, value: $0) }
+    return (rawElements as! [DisplayProtocol]).map { ServicePack(provider: self, service: $0) }
   }
 }

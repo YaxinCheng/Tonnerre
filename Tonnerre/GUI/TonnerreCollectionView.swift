@@ -10,9 +10,9 @@ import Cocoa
 
 protocol TonnerreCollectionViewDelegate: class {
   func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool)
-  func tabPressed(service: ServiceResult)
-  func serviceHighlighted(service: ServiceResult?)
-  func fillPlaceholder(with service: ServiceResult?)
+  func tabPressed(service: ServicePack)
+  func serviceHighlighted(service: ServicePack?)
+  func fillPlaceholder(with service: ServicePack?)
   func viewIsClicked()
   func retrieveLastQuery()
 }
@@ -59,7 +59,7 @@ final class TonnerreCollectionView: NSScrollView {
   
   private func iconChange() {
     guard datasource.count > 0 else { return }
-    if case .result(_, _) = datasource[0] {
+    if case .service(_, _) = datasource[0] {
       delegate?.serviceHighlighted(service: datasource[0])
     } else {
       delegate?.serviceHighlighted(service: nil)
@@ -84,7 +84,7 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
-  var datasource: [ServiceResult] = [] {
+  var datasource: [ServicePack] = [] {
     didSet {
       collectionViewHeight.constant = cellHeight * CGFloat(min(datasource.count, 9))
       collectionView.reloadData()
@@ -105,7 +105,7 @@ final class TonnerreCollectionView: NSScrollView {
       let selectedIndex = keyCodeMap[event.keyCode]! - 1
       let currentIndex = visibleIndex
       let actualIndex = selectedIndex - max(currentIndex, 0) + max(highlightedItemIndex, 0)
-      guard actualIndex < datasource.count, case .result(let service, let value) = datasource[actualIndex] else { return }
+      guard actualIndex < datasource.count, case .service(let service, let value) = datasource[actualIndex] else { return }
       delegate?.serve(with: service, target: value, withCmd: false)
     case 48:// Tab
       let highlightIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
@@ -144,7 +144,7 @@ final class TonnerreCollectionView: NSScrollView {
     let selectIndex = max(highlightedItemIndex, 0)
     guard
       !datasource.isEmpty,
-      case .result(let service, let value) = datasource[selectIndex]
+      case .service(let service, let value) = datasource[selectIndex]
       else { return nil }
     if !(service is TonnerreInstantService) { datasource = [] }
     return (service, value)
@@ -154,7 +154,7 @@ final class TonnerreCollectionView: NSScrollView {
     guard
       highlightedItemIndex < datasource.count,
       highlightedItemIndex >= 0,
-      case .result(let service, _) = datasource[highlightedItemIndex],
+      case .service(let service, _) = datasource[highlightedItemIndex],
       let item = highlightedItem,
       let alterContent = service.alterContent
     else { return }
@@ -216,7 +216,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
-    if case .result(_, let value) = data {
+    if case .service(_, let value) = data {
       cell.displayItem = value
       if let asyncedData = value as? AsyncDisplayable {
         asyncedData.asyncedViewSetup?(cell)
@@ -247,13 +247,5 @@ private extension NSCollectionView {
   func selectItem(at indexPath: IndexPath, scrollPosition: NSCollectionView.ScrollPosition) {
     selectItems(at: [indexPath], scrollPosition: scrollPosition)
     delegate?.collectionView?(self, didSelectItemsAt: [indexPath])
-  }
-  
-  func highlightItem(at indexPath: IndexPath) -> ServiceCell? {
-    guard
-      let item = item(at: indexPath) as? ServiceCell
-    else { return nil }
-    item.highlighted = true
-    return item
   }
 }

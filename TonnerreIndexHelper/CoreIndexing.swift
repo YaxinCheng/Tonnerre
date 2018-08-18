@@ -10,6 +10,11 @@ import Foundation
 import TonnerreSearch
 
 final class CoreIndexing {
+  
+  deinit {
+    stopListening()
+  }
+  
   // MARK: - Properties
   /**
    A dictionary using file names as keys, and related aliases (if exist) as values

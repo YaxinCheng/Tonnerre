@@ -10,7 +10,9 @@ import Foundation
 import Cocoa
 
 /**
- The base protocol that each service in the system should conforms to
+ The base protocol that each service provider in the system should conforms to
+ 
+ Each service provider should provide services based on user inputs
 */
 protocol TonnerreService: DisplayProtocol {
   /**
@@ -26,15 +28,15 @@ protocol TonnerreService: DisplayProtocol {
   */
   var argUpperBound: Int { get }
   /**
-   The function that accepts the user input, and give certain feedback actions based on the input
+   The function that accepts the user input, and give certain services based on the input
    - parameter input: the user input excluding the keyword
-   - returns: an array of selectable result each represent a specific action
+   - returns: an array of displayable items each represent a specific service
   */
   func prepare(input: [String]) -> [DisplayProtocol]
   /**
-   The function that serves the user with the action it selected
-   - parameter source: the user selected action
-   - parameter withCmd: if the user selected the action with cmd key modifier
+   The function that serves the user with the service it selected
+   - parameter source: the user selected service
+   - parameter withCmd: a flag indicates whether the user selected the service with cmd key modifier
   */
   func serve(source: DisplayProtocol, withCmd: Bool)
   

@@ -8,12 +8,6 @@
 
 import Cocoa
 
-enum CoreDataEntities: String {
-  case IndexingDir
-  case FailedPath
-  case AvailableMode
-}
-
 func getContext() -> NSManagedObjectContext {
   let appDelegate = NSApplication.shared.delegate as! AppDelegate
   return appDelegate.persistentContainer.viewContext

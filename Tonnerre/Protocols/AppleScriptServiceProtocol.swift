@@ -13,7 +13,7 @@ import Foundation
 */
 protocol AppleScriptServiceProtocol: TonnerreService {
   /**
-   The script that provides the action
+   The script that provides the service
   */
   var script: String { get }
   // TODO: support loading apple script protocol from tne

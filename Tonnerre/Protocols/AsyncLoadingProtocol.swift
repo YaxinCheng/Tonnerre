@@ -13,11 +13,11 @@ import Foundation
 */
 enum AsyncLoadingType {
   /**
-   Append: append the asynchronously loaded actions to the existing services
+   Append: append the asynchronously loaded services to the existing ones
   */
   case append
   /**
-   Replaced: cover the existing services with the asynchronously loaded services
+   Replaced: remove the existing services, and refill with the asynchronously loaded ones
   */
   case replaced
 }
@@ -35,5 +35,5 @@ protocol AsyncLoadingProtocol {
    - parameter rawElements: any types of data that is loaded asynchronously from file, web, or anywhere
    - returns: a well structured array of ServiceResult that are ready to be displayed
   */
-  func present(rawElements: [Any]) -> [ServiceResult]
+  func present(rawElements: [Any]) -> [ServicePack]
 }
