@@ -24,10 +24,10 @@ struct ClipboardService: TonnerreService {
   
   static var isDisabled: Bool {
     get {
-      let userDeafult = UserDefaults.standard
+      let userDeafult = UserDefaults.shared
       return userDeafult.bool(forKey: "\(ClipboardService.self)+Disabled")
     } set {
-      let userDeafult = UserDefaults.standard
+      let userDeafult = UserDefaults.shared
       userDeafult.set(newValue, forKey: "\(ClipboardService.self)+Disabled")
       if newValue == true {
         ClipboardService.monitor.start()

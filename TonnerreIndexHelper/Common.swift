@@ -13,7 +13,7 @@ func getContext() -> NSManagedObjectContext {
   return appDelegate.persistentContainer.viewContext
 }
 
-enum StoredKeys: String {// Keys used in UserDefault
+enum StoredKey: String {// Keys used in UserDefault
   case appSupportDir
   case documentInxFinished
   case defaultInxFinished

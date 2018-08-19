@@ -13,7 +13,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   var icon: NSImage {
-    return #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
+    return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   var serviceTrie: Trie<ServiceType>
   private typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
@@ -52,9 +52,9 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
       return image
     } else {// Load from file
       let userDefault = UserDefaults.standard
-      let appSupDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
+      let appSupDir = userDefault.url(forKey: .appSupportDir)!
       let desiredURL = URL(fileURLWithPath: rawURL, relativeTo: appSupDir)
-      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
+      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
     }
   }
   
@@ -98,7 +98,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
       possibleServices = cachedServices
     } else {
       cachedKey = queryKey
-      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      let userDefault = UserDefaults.shared
       possibleServices = serviceTrie.find(value: queryKey).filter {
         !userDefault.bool(forKey: "\($0.extraContent!)_\($0.name)_\($0.content)+isDisabled")
       }

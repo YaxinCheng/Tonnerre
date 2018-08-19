@@ -59,16 +59,16 @@ extension DynamicProtocol {
    Load TNE/json extensions from the Services folder in the App Support
    */
   internal func prefetch(fileExtension: String) {
-    let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
+    let appSupDir = UserDefaults.standard.url(forKey: .appSupportDir)!
     let serviceFolder = appSupDir.appendingPathComponent("Services")
     do {
       let contents = try FileManager.default.contentsOfDirectory(at: serviceFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
       let extensions = contents.filter { $0.pathExtension.lowercased() == fileExtension } // Tonnerre Extension File Types
      
       // Settings loading code
-      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      let userDefault = UserDefaults.shared
       var settingsDict: SettingDict
-      if let existingDict = userDefault.dictionary(forKey: "tonnerre.settings"), !existingDict.isEmpty {
+      if let existingDict = userDefault.dictionary(forKey: .defaultSettingsSet), !existingDict.isEmpty {
         settingsDict = existingDict as! SettingDict
       } else if
         let plistURL = Bundle.main.url(forResource: "Settings", withExtension: "plist"),
@@ -83,7 +83,7 @@ extension DynamicProtocol {
           addToSettings(service: service, settings: &settingsDict)
         }
       }
-      userDefault.set(settingsDict, forKey: "tonnerre.settings")
+      userDefault.set(settingsDict, forKey: .defaultSettingsSet)
     } catch {
       #if DEBUG
       print("Error with loading: ", error)

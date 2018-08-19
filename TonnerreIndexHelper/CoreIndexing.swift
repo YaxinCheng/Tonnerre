@@ -48,23 +48,23 @@ final class CoreIndexing {
   
   var defaultFinished: Bool {
     set {
-      UserDefaults.standard.set(newValue, forKey: StoredKeys.defaultInxFinished.rawValue)
+      UserDefaults.standard.set(newValue, forKey: .defaultInxFinished)
       if newValue == true && documentFinished {
         detector.start()
       }
     } get {
-      return UserDefaults.standard.bool(forKey: StoredKeys.defaultInxFinished.rawValue)
+      return UserDefaults.standard.bool(forKey: .defaultInxFinished)
     }
   }
   
   var documentFinished: Bool {
     set {
-      UserDefaults.standard.set(newValue, forKey: StoredKeys.documentInxFinished.rawValue)
+      UserDefaults.standard.set(newValue, forKey: .documentInxFinished)
       if newValue == true && defaultFinished {
         detector.start()
       }
     } get {
-      return UserDefaults.standard.bool(forKey: StoredKeys.documentInxFinished.rawValue)
+      return UserDefaults.standard.bool(forKey: .documentInxFinished)
     }
   }
   
@@ -153,12 +153,11 @@ final class CoreIndexing {
   }
   
   @objc private func defaultIndexingDidFinish() {
-    UserDefaults.standard.set(true, forKey: StoredKeys.defaultInxFinished.rawValue)
+    UserDefaults.standard.set(true, forKey: .defaultInxFinished)
   }
   
   @objc private func documentIndexingDidFinish() {
-    UserDefaults.standard.set(true, forKey: StoredKeys.documentInxFinished.rawValue)
-//    listenToChanges()
+    UserDefaults.standard.set(true, forKey: .documentInxFinished)
   }
   
   // MARK: - File System Change detection

@@ -22,8 +22,8 @@ enum SearchMode: String {
   }
   
   var indexFileURL: URL {
-    let userDefault = UserDefaults(suiteName: "Tonnerre")!
-    let appSupportDir = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
+    let userDefault = UserDefaults.shared
+    let appSupportDir = userDefault.url(forKey: .appSupportDir)!
     let indecesFolder = appSupportDir.appendingPathComponent("Indices")
     return indecesFolder.appendingPathComponent(self.rawValue + ".tnidx")
   }

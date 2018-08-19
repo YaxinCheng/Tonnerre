@@ -134,7 +134,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     let (inputPipe, outputPipe, errorPipe) = (Pipe(), Pipe(), Pipe())
     let process = Process()
     process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
-    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let userDefault = UserDefaults.shared
     let pythonPath = (userDefault[.python] as? String) ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)
     process.standardInput = inputPipe
@@ -184,7 +184,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
       possibleServices = cachedServices
     } else {
       cachedKey = queryKey
-      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      let userDefault = UserDefaults.shared
       possibleServices = serviceTrie.find(value: queryKey).filter {
         !userDefault.bool(forKey: "\($0.extraContent!)_\($0.name)_\($0.content)+isDisabled")
       }

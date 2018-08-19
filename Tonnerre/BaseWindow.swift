@@ -59,8 +59,8 @@ final class BaseWindow: NSPanel {
       let bundleID = Bundle.main.bundleIdentifier
       else { return }
     let dataFolderPath = appSupportPath.appendingPathComponent(bundleID)
-    let userDefault = UserDefaults(suiteName: "Tonnerre")!
-    userDefault.set(dataFolderPath, forKey: StoredKeys.appSupportDir.rawValue)
+    let userDefault = UserDefaults.shared
+    userDefault.set(dataFolderPath, forKey: .appSupportDir)
     let indexFolder = dataFolderPath.appendingPathComponent("Indices")
     let servicesFolder = dataFolderPath.appendingPathComponent("Services")
     let cacheFolder = dataFolderPath.appendingPathComponent("Cache")
@@ -81,7 +81,7 @@ final class BaseWindow: NSPanel {
   private func setupCache() {
     let cache = URLCache(memoryCapacity: 1024 * 1024 * 5, diskCapacity: 1024 * 1024 * 25, diskPath: {
       let userDefault = UserDefaults.standard
-      let appSupFolder = userDefault.url(forKey: StoredKeys.appSupportDir.rawValue)!
+      let appSupFolder = userDefault.url(forKey: .appSupportDir)!
       return appSupFolder.appendingPathComponent("Cache").path
     }())
     URLCache.shared = cache

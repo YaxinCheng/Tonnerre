@@ -17,16 +17,16 @@ final class BaseWindowController: NSWindowController, NSWindowDelegate {
     #if RELEASE
     let userDefault = UserDefaults.standard
     if
-      let x = userDefault.value(forKey: StoredKeys.designatedX.rawValue) as? Int,
-      let y = userDefault.value(forKey: StoredKeys.designatedY.rawValue) as? Int {
+      let x = userDefault.value(forKey: .designatedX) as? Int,
+      let y = userDefault.value(forKey: .designatedY) as? Int {
       window?.setFrameOrigin(NSPoint(x: max(x, 0), y: max(y, 0)))
     } else {
       guard let screenSize = NSScreen.main?.frame.size, let myWindow = window else { return }
       let x = screenSize.width / 2 - myWindow.frame.width / 2
       let y = screenSize.height * 5 / 6
       myWindow.setFrameOrigin(NSPoint(x: x, y: y))
-      userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
-      userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
+      userDefault.set(x, forKey: .designatedX)
+      userDefault.set(y, forKey: .designatedY)
     }
     #endif 
   }
@@ -39,8 +39,8 @@ final class BaseWindowController: NSWindowController, NSWindowDelegate {
     let userDefault = UserDefaults.standard
     let (x, y) = (window!.frame.origin.x, window!.frame.origin.y)
     #if RELEASE
-    userDefault.set(x, forKey: StoredKeys.designatedX.rawValue)
-    userDefault.set(y, forKey: StoredKeys.designatedY.rawValue)
+    userDefault.set(x, forKey: .designatedX)
+    userDefault.set(y, forKey: .designatedY)
     #endif
   }
 }

@@ -56,10 +56,10 @@ extension TonnerreService {
   */
   static var isDisabled: Bool {
     get {
-      let userDeafult = UserDefaults(suiteName: "Tonnerre")!
+      let userDeafult = UserDefaults.shared
       return userDeafult.bool(forKey: settingKey)
     } set {
-      let userDeafult = UserDefaults(suiteName: "Tonnerre")!
+      let userDeafult = UserDefaults.shared
       userDeafult.set(newValue, forKey: settingKey)
     }
   }

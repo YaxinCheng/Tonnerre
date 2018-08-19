@@ -1,5 +1,5 @@
 //
-//  StoredKeys.swift
+//  Commons.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-05-20.
@@ -9,11 +9,12 @@
 import Foundation
 import Cocoa
 
-enum StoredKeys: String {// Keys used in UserDefault
+enum StoredKey: String {// Keys used in UserDefault
   case appSupportDir
   case designatedX
   case designatedY
   case defaultSearch
+  case defaultSettingsSet = "tonnerre.settings"
 }
 
 func getContext() -> NSManagedObjectContext {
