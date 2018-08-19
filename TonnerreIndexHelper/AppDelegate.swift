@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let centre = NotificationCenter.default
     let notifyAndExit: (Notification) -> Void = { [unowned self] _ in
       if self.indexingManager.documentFinished && self.indexingManager.defaultFinished {
-        DistributedNotificationCenter.default().post(name: .helperAppDidExit, object: nil)
+        DistributedNotificationCenter.default().postNotificationName(.helperAppDidExit, object: nil, deliverImmediately: true)
         exit(0)
       }
     }

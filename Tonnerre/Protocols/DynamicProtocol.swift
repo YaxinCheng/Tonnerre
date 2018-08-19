@@ -57,15 +57,15 @@ extension DynamicProtocol {
   
   /**
    Load TNE/json extensions from the Services folder in the App Support
-   - returns: An array of available services, where as the first value is the keyword, and second is how to display it
    */
   internal func prefetch(fileExtension: String) {
     let appSupDir = UserDefaults.standard.url(forKey: StoredKeys.appSupportDir.rawValue)!
     let serviceFolder = appSupDir.appendingPathComponent("Services")
     do {
       let contents = try FileManager.default.contentsOfDirectory(at: serviceFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
-      let extensions = contents.filter { $0.pathExtension.lowercased() == fileExtension } // Tonnerre Extension File Type
-      
+      let extensions = contents.filter { $0.pathExtension.lowercased() == fileExtension } // Tonnerre Extension File Types
+     
+      // Settings loading code
       let userDefault = UserDefaults(suiteName: "Tonnerre")!
       var settingsDict: SettingDict
       if let existingDict = userDefault.dictionary(forKey: "tonnerre.settings"), !existingDict.isEmpty {
@@ -75,10 +75,12 @@ extension DynamicProtocol {
         let plistContent = NSDictionary(contentsOf: plistURL) as? SettingDict {
         settingsDict = plistContent
       } else { fatalError("Settings cannot be loaded") }
+      // End settings loading code
+      
       for `extension` in extensions {
         for service in Self.generateService(from: `extension`) {
           serviceTrie.insert(value: service)
-          saveToPlist(service: service, plist: &settingsDict)
+          addToSettings(service: service, settings: &settingsDict)
         }
       }
       userDefault.set(settingsDict, forKey: "tonnerre.settings")
@@ -89,8 +91,8 @@ extension DynamicProtocol {
     }
   }
   
-  internal func saveToPlist(service: ServiceType, plist: inout SettingDict) {
+  internal func addToSettings(service: ServiceType, settings: inout SettingDict) {
     let settingKey = "\(service.extraContent!)_\(service.name)_\(service.content)+isDisabled"
-    plist["secondTab"]!["right"]![settingKey] = ["title": service.name, "detail": service.content, "type": "gradient"]
+    settings["secondTab"]!["right"]![settingKey] = ["title": service.name, "detail": service.content, "type": "gradient"]
   }
 }
