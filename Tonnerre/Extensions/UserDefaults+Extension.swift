@@ -36,8 +36,4 @@ extension UserDefaults {
   func dictionary(forKey key: StoredKey) -> [String: Any]? {
     return dictionary(forKey: key.rawValue)
   }
-  
-  static var shared: UserDefaults {
-    return UserDefaults(suiteName: "Tonnerre")!
-  }
 }

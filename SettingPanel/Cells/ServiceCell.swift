@@ -16,11 +16,11 @@ final class ServiceCell: NSView, SettingCell {
   private let cellColour: GradientColours.Gradient
   var disabled: Bool {
     set {
-      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      let userDefault = UserDefaults.shared
       userDefault.set(newValue, forKey: settingKey)
       setNeedsDisplay(bounds)
     } get {
-      let userDefault = UserDefaults(suiteName: "Tonnerre")!
+      let userDefault = UserDefaults.shared
       return userDefault.bool(forKey: settingKey)
     }
   }

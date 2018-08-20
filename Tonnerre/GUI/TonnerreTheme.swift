@@ -38,6 +38,8 @@ enum TonnerreTheme {
   }
   
   static var current: TonnerreTheme {
-    return UserDefaults.standard.value(forKey: "AppleInterfaceStyle") != nil ? .dark : .light
+    let followsSystem = UserDefaults.shared[.themeFollowsSystem] as? Bool ?? true
+    let systemIsLight = UserDefaults.standard.value(forKey: "AppleInterfaceStyle") == nil
+    return systemIsLight && followsSystem ? .light : .dark
   }
 }

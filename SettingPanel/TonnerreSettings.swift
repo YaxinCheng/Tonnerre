@@ -16,12 +16,12 @@ struct TonnerreSettings {
   
   enum SettingKey: String {
     case python
-    case themeFollowSystem
+    case themeFollowsSystem
   }
   
   private static let defaultSettings: [(key: SettingKey, value: Any)] = [
      (.python, "/usr/bin/python")
-    ,(.themeFollowSystem, true)
+    ,(.themeFollowsSystem, true)
   ]
   
   static func addDefaultSetting(reset: Bool = false) {

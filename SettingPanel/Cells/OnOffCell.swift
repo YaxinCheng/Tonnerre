@@ -40,7 +40,7 @@ final class OnOffCell: NSView, SettingCell {
     super.draw(dirtyRect)
     
     NSLayoutConstraint.activate([toggle.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 0)])
-    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let userDefault = UserDefaults.shared
     let state = userDefault.bool(forKey: settingKey)
     if state == false { toggle.state = .off }
     else { toggle.state = .on }
@@ -49,7 +49,7 @@ final class OnOffCell: NSView, SettingCell {
 
 extension OnOffCell: SwitchDelegate {
   func valueChanged(sender: Switch) {
-    let userDefault = UserDefaults(suiteName: "Tonnerre")!
+    let userDefault = UserDefaults.shared
     userDefault.set(sender.state == .on, forKey: settingKey)
   }
 }

@@ -20,7 +20,6 @@
 		14398FB6211F6D3100F5AFCA /* TonnerreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FB8211F968D00F5AFCA /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */; };
-		14398FCD2120D14800F5AFCA /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
 		14398FCF2120D35900F5AFCA /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FCE2120D35900F5AFCA /* ServiceCell.swift */; };
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
@@ -31,6 +30,10 @@
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
 		1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
 		1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
+		1449E572212B6A9500500BF4 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
+		1449E575212B6B1D00500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
+		1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
+		1449E577212B6B3300500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
 		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
 		144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */; };
 		144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */; };
@@ -220,6 +223,7 @@
 		143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLoadingProtocol.swift; sourceTree = "<group>"; };
 		1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedDataProtocol.swift; sourceTree = "<group>"; };
 		1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+shared.swift"; sourceTree = "<group>"; };
 		144E0C1120ED2F4300E4F2DA /* ASServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASServices.swift; sourceTree = "<group>"; };
 		144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptServiceProtocol.swift; sourceTree = "<group>"; };
 		144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitor.swift; sourceTree = "<group>"; };
@@ -602,6 +606,7 @@
 				14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */,
 				143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */,
 				1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */,
+				1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -929,6 +934,7 @@
 				146AD8D920C9C0C600D9E591 /* IndexStorage.swift in Sources */,
 				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,
 				146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */,
+				1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
 				1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */,
 				146AD8E320C9C29300D9E591 /* TonnerreIndexHelper.xcdatamodeld in Sources */,
 			);
@@ -981,6 +987,7 @@
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
+				1449E575212B6B1D00500BF4 /* UserDefault+shared.swift in Sources */,
 				140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */,
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
@@ -1038,11 +1045,12 @@
 				14398FD42120DB3500F5AFCA /* GradientColours.swift in Sources */,
 				14AFE6C7211A7B62002BBBB2 /* OnOffCell.swift in Sources */,
 				14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */,
-				14398FCD2120D14800F5AFCA /* TonnerreTheme.swift in Sources */,
 				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
 				14398FB8211F968D00F5AFCA /* NSImage+Extension.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
+				1449E572212B6A9500500BF4 /* TonnerreTheme.swift in Sources */,
+				1449E577212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
 				14AFE6E3211E3085002BBBB2 /* TonnerreSettings.swift in Sources */,
 				14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */,
 				14398FCF2120D35900F5AFCA /* ServiceCell.swift in Sources */,
