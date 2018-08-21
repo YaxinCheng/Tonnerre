@@ -13,12 +13,22 @@ struct ChromeBMService: BookMarkService {
   let icon: NSImage = #imageLiteral(resourceName: "chrome")
   let name: String = "Chrome BookMarks"
   let content: String = "Quick launch Chrome Bookmarks"
-  let bookmarksFile: URL
+  let bookmarksFile: URL?
+  static var browserURL: URL? {
+    let fileManager = FileManager.default
+    let userDir = fileManager.homeDirectoryForCurrentUser
+    let possibleURL = [URL(fileURLWithPath: "/Applications/Google Chrome.app"), userDir.appendingPathComponent("Applications/Google Chrome.app")]
+    for url in possibleURL where fileManager.fileExists(atPath: url.path) {
+      return url
+    }
+    return nil
+  }
   static let keyword: String = "chrome"
   
   func parseFile() -> [BookMarkService.BookMark] {
     do {
-      let jsonData = try Data(contentsOf: bookmarksFile)
+      guard let bmFile = bookmarksFile else { return [] }
+      let jsonData = try Data(contentsOf: bmFile)
       let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
       guard let bookmarkSource = jsonObject as? Dictionary<String, Any> else { return [] }
       return parse(rawFile: bookmarkSource)
@@ -51,7 +61,11 @@ struct ChromeBMService: BookMarkService {
   }
   
   init() {
-    let appSupDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    bookmarksFile = appSupDir.appendingPathComponent("Google/Chrome/Default/Bookmarks")
+    if ChromeBMService.browserURL != nil {
+      let appSupDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+      bookmarksFile = appSupDir.appendingPathComponent("Google/Chrome/Default/Bookmarks")
+    } else {
+      bookmarksFile = nil
+    }
   }
 }

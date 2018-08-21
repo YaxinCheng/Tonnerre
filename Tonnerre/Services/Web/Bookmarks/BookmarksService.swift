@@ -17,9 +17,13 @@ protocol BookMarkService: TonnerreService {
   */
   typealias BookMark = (title: String, url: URL)
   /**
-   The path to where the bookmark file is located
+   The path to where the bookmark file is located. If the browser is not installed, return nil
   */
-  var bookmarksFile: URL { get }
+  var bookmarksFile: URL? { get }
+  /**
+   URL to the browser. If the browser is not installed, return nil
+   */
+  static var browserURL: URL? { get }
   /**
    Read bookmarks data from the browser's file
    
@@ -32,6 +36,17 @@ extension BookMarkService {
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return Int.max }
   
+  static var isDisabled: Bool {
+    get {
+      guard browserURL != nil else { return true }
+      let userDeafult = UserDefaults.shared
+      return userDeafult.bool(forKey: settingKey)
+    } set {
+      let userDeafult = UserDefaults.shared
+      userDeafult.set(newValue, forKey: settingKey)
+    }
+  }
+  
   func prepare(input: [String]) -> [DisplayProtocol] {
     let bookMarks = parseFile()
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
@@ -42,7 +57,16 @@ extension BookMarkService {
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let innerItem = (source as? DisplayableContainer<URL>)?.innerItem else { return }
-    NSWorkspace.shared.open(innerItem)
+    guard
+      let browserURL = Self.browserURL,
+      let innerItem = (source as? DisplayableContainer<URL>)?.innerItem
+    else { return }
+    do {
+      _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])
+    } catch {
+      #if DEBUG
+      print("Browser open bookmarks:", error)
+      #endif
+    }
   }
 }

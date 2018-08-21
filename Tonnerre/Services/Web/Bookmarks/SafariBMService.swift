@@ -9,7 +9,12 @@
 import Cocoa
 
 struct SafariBMService: BookMarkService {
-  let bookmarksFile: URL
+  static var browserURL: URL? {
+    let safariURL = URL(fileURLWithPath: "/Applications/Safari.app")
+    if FileManager.default.fileExists(atPath: safariURL.path) { return safariURL }
+    else { return nil }
+  }
+  let bookmarksFile: URL?
   let name: String = "Safari BookMarks"
   let content: String = "Quick launch Safari Bookmarks"
   let icon: NSImage = .safari
@@ -17,7 +22,8 @@ struct SafariBMService: BookMarkService {
   
   func parseFile() -> [BookMarkService.BookMark] {
     guard
-      let plist = NSDictionary(contentsOf: bookmarksFile) as? Dictionary<String, Any>
+      let bmFile = bookmarksFile,
+      let plist = NSDictionary(contentsOf: bmFile) as? Dictionary<String, Any>
     else { return [] }
     return parse(plist: plist)
   }
@@ -37,7 +43,9 @@ struct SafariBMService: BookMarkService {
   }
   
   init() {
-    let homeDir = FileManager.default.homeDirectoryForCurrentUser
-    bookmarksFile = homeDir.appendingPathComponent("/Library/Safari/Bookmarks.plist")
+    if SafariBMService.browserURL != nil {
+      let homeDir = FileManager.default.homeDirectoryForCurrentUser
+      bookmarksFile = homeDir.appendingPathComponent("/Library/Safari/Bookmarks.plist")
+    } else { bookmarksFile = nil }
   }
 }
