@@ -17,13 +17,9 @@ protocol BookMarkService: TonnerreService {
   */
   typealias BookMark = (title: String, url: URL)
   /**
-   The path to where the bookmark file is located. If the browser is not installed, return nil
+   The browser which stores the bookmarks
   */
-  var bookmarksFile: URL? { get }
-  /**
-   URL to the browser. If the browser is not installed, return nil
-   */
-  static var browserURL: URL? { get }
+  static var browser: Browser { get }
   /**
    Read bookmarks data from the browser's file
    
@@ -35,10 +31,13 @@ protocol BookMarkService: TonnerreService {
 extension BookMarkService {
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return Int.max }
+  var icon: NSImage {
+    return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   
   static var isDisabled: Bool {
     get {
-      guard browserURL != nil else { return true }
+      guard browser.appURL != nil else { return true }
       let userDeafult = UserDefaults.shared
       return userDeafult.bool(forKey: settingKey)
     } set {
@@ -58,7 +57,7 @@ extension BookMarkService {
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
     guard
-      let browserURL = Self.browserURL,
+      let browserURL = Self.browser.appURL,
       let innerItem = (source as? DisplayableContainer<URL>)?.innerItem
     else { return }
     do {

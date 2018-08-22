@@ -11,12 +11,7 @@ import Cocoa
 struct URLService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 1
-  var icon: NSImage {
-    guard let defaultBrowser = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!) else { return .safari }
-    let defaultIcon = NSWorkspace.shared.icon(forFile: defaultBrowser.path)
-    defaultIcon.size = NSSize(width: 64, height: 64)
-    return defaultIcon
-  }
+  let icon: NSImage = .safari
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     guard let query = input.first, input.count == 1 else { return [] }
@@ -26,13 +21,22 @@ struct URLService: TonnerreService {
     let url: URL
     if query.starts(with: "http") { url = URL(string: query)! }
     else { url = URL(string: "https://\(query)")! }
-    let defaultBrowserName = NSWorkspace.shared.urlForApplication(toOpen: url)?.deletingPathExtension().lastPathComponent ?? "your default browser"
-    let webRequest = DisplayableContainer(name: url.absoluteString, content: "Open URL in \(defaultBrowserName)", icon: .safari, innerItem: url)
-    return [webRequest]
+    let browsers: [Browser] = [.safari, .chrome].filter { $0.appURL != nil }
+    return browsers.map { DisplayableContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, innerItem: url, extraContent: $0.appURL!) }
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
-    NSWorkspace.shared.open(request)
+    guard
+      let service = source as? DisplayableContainer<URL>,
+      let request = service.innerItem,
+      let browser = service.extraContent as? URL
+    else { return }
+    do {
+      _ = try NSWorkspace.shared.open([request], withApplicationAt: browser, options: .default, configuration: [:])
+    } catch {
+      #if DEBUG
+      print("URL Service Error:", error)
+      #endif
+    }
   }
 }
