@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct ChromeBMService: BookMarkService {
+struct ChromeBMService: BookMarkService, DeferedServiceProtocol {
   typealias rawDataType = Dictionary<String, Any>
   let name: String = "Chrome BookMarks"
   let content: String = "Quick launch Chrome Bookmarks"

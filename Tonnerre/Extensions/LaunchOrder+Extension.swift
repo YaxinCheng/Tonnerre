@@ -17,9 +17,9 @@ extension LaunchOrder {
       launchOrder = existing
     } else {
       launchOrder = LaunchOrder(context: context)
-      launchOrder.identifier = identifier
-      launchOrder.time = Date()
     }
+    launchOrder.identifier = identifier
+    launchOrder.time = Date()
     do {
       try context.save()
     } catch {

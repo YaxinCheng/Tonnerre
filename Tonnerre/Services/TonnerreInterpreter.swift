@@ -53,7 +53,9 @@ struct TonnerreInterpreter {
      - Or the service itself, it the number of queries does not match the requirement
   */
   private func prepareService(service: TonnerreService, input: [String]) -> [ServicePack] {
-    let keywordCount = (!type(of: service).keyword.isEmpty).hashValue// Check if the service has keyword
+    let keyword = type(of: service).keyword
+    let keywordCount = (!keyword.isEmpty).hashValue// Check if the service has keyword
+    if service is DeferedServiceProtocol && (input.first?.count ?? 0) < keyword.count { return [] }
     // queries must be greater than the service's lower bound and less than the upper bound
     if input.count >= keywordCount + service.argLowerBound && input.count - keywordCount <= service.argUpperBound {
       return service.prepare(input: Array(input[keywordCount...])).map { queryResult in// strip out the keyword

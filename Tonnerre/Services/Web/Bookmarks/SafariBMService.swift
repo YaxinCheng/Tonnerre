@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct SafariBMService: BookMarkService {
+struct SafariBMService: BookMarkService, DeferedServiceProtocol {
   static let browser: Browser = .safari
   let name: String = "Safari BookMarks"
   let content: String = "Quick launch Safari Bookmarks"

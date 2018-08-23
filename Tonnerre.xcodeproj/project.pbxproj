@@ -35,6 +35,7 @@
 		1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
 		1449E577212B6B3300500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
 		1449E579212E173F00500BF4 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E578212E173F00500BF4 /* Browser.swift */; };
+		1449E57B212E1DC300500BF4 /* DeferedServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */; };
 		144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1120ED2F4300E4F2DA /* ASServices.swift */; };
 		144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */; };
 		144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */; };
@@ -226,6 +227,7 @@
 		1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+shared.swift"; sourceTree = "<group>"; };
 		1449E578212E173F00500BF4 /* Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
+		1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferedServiceProtocol.swift; sourceTree = "<group>"; };
 		144E0C1120ED2F4300E4F2DA /* ASServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASServices.swift; sourceTree = "<group>"; };
 		144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptServiceProtocol.swift; sourceTree = "<group>"; };
 		144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitor.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
 				143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */,
+				1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -986,6 +989,7 @@
 				14F015D421010ABB00537160 /* ChromeBMService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
+				1449E57B212E1DC300500BF4 /* DeferedServiceProtocol.swift in Sources */,
 				144E0C1420ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift in Sources */,
 				143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,

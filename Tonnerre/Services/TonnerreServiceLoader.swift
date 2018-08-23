@@ -60,8 +60,8 @@ struct TonnerreServiceLoader {
   init() {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
     extensionServices = [DynamicService(), DynamicWebService()]
-    let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, LockService.self, ScreenSaverService.self, SafariBMService.self, ChromeBMService.self, TerminalService.self]
-    let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self, ClipboardService.self]
+    let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, LockService.self, ScreenSaverService.self, SafariBMService.self, ChromeBMService.self, TerminalService.self, ClipboardService.self]
+    let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
     
     normalServiceTrie = Trie(values: normalServices + [SettingService.self]) { $0.keyword }
     systemServiceTrie = Trie(values: systemServices) { $0.keyword }

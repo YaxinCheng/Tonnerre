@@ -20,12 +20,6 @@ final class SettingView: NSScrollView {
     case right
   }
   
-  override func draw(_ dirtyRect: NSRect) {
-    super.draw(dirtyRect)
-    
-    // Drawing code here.
-  }
-  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
