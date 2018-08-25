@@ -1,5 +1,5 @@
 //
-//  DynamicService.swift
+//  DynamicScriptService.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-07-20.
@@ -8,21 +8,67 @@
 
 import Cocoa
 
-final class DynamicService: TonnerreService, DynamicProtocol {
-  static let keyword: String = ""
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour)
+enum DynamicScriptMode {
+  case prepare(input: [String])
+  case serve(choice: [String: Any])
+  
+  var argument: String {
+    switch self {
+    case .prepare(input: _): return "--prepare"
+    case .serve(choice: _): return "--serve"
+    }
   }
-  let argLowerBound: Int = 0
-  let argUpperBound: Int = Int.max
+}
+
+protocol DynamicScriptService: TonnerreService, DynamicProtocol, AsyncLoadingProtocol {
+  /**
+   The trie where all services stored
+   */
+  var serviceTrie: Trie<ServiceType> { get set }
+  /**
+   The process which is on executing
+   */
+  static var runningProcess: Process? { get set }
+  /**
+   Cached request key. Used to avoid duplicate writting and requesting from the Trie
+   */
+  var cachedKey: String? { get set }
+  /**
+   Cached services.
+   */
+  var cachedServices: [ServiceType] { get set }
+  /**
+   The extension of a certain script
+  */
+  static var scriptExtension: String { get }
+  /**
+   Parse information in a json file to get the service
+   - parameter url: the url to the TNE script
+   - returns: (keyword, DisplayableContainer with information in the JSON)
+   */
+  static func generateService(from url: URL) -> [ServiceType]
+  /**
+   Run the given script for a specific mode
+   - parameter script: a service that provided with the dynamic script file
+   - parameter runningMode: either `prepare` or `serve`. It determines which function in the script should be called
+   - throws: Error of process running; Error of JSONSerialization
+   - returns: an array of running result, can be empty (if with serve mode)
+   */
+  func execute(script: ServiceType, runningMode: DynamicScriptMode) throws -> [DisplayProtocol]
+}
+
+extension DynamicScriptService {
+  static var keyword: String { return "" }
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
+  var argLowerBound: Int { return 0 }
+  var argUpperBound: Int { return .max }
   
-  var serviceTrie: Trie<ServiceType>
-  
-  private let encode = JSONSerialization.data
-  private let asyncSession = TonnerreSession.shared
+  var asyncSession: TonnerreSession { return .shared }
   
   // MARK: - Tool
-  private func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> DisplayProtocol? {
+  func decode(_ jsonObject: Dictionary<String, Any>, withIcon: NSImage, extraInfo: Any? = nil) -> DisplayProtocol? {
     guard
       let rawName = jsonObject["name"]
     else { return nil }
@@ -40,7 +86,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     }
   }
   
-  private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
+  func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
     let unwrap: (Any) -> Any = {
       let mirror = Mirror(reflecting: $0)
       guard
@@ -58,14 +104,8 @@ final class DynamicService: TonnerreService, DynamicProtocol {
   }
   
   // MARK: - Constructions
-  
-  /**
-   Parse information in a json file to get the service
-   - parameter url: the url to the TNE script
-   - returns: (keyword, DisplayableContainer with information in the JSON)
-  */
   static func generateService(from url: URL) -> [ServiceType] {
-    let script = url.appendingPathComponent("main.py")
+    let script = url.appendingPathComponent("main" + scriptExtension)
     guard FileManager.default.fileExists(atPath: script.path) else { return [] }
     let iconURL = url.appendingPathComponent("icon.png")
     let fileIcon = NSImage(contentsOf: iconURL)
@@ -82,7 +122,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
       if fileIcon != nil { icon = fileIcon! }
       else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
         icon = iconFromPath
-      } else { icon = #imageLiteral(resourceName: "extension").tintedImage(with: TonnerreTheme.current.imgColour) }
+      } else { icon = #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour) }
       let item = DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: keyword)
       return [item]
     } catch {
@@ -93,13 +133,6 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     }
   }
   
-  required init() {
-    serviceTrie = Trie(values: []) { $0.extraContent as! String }
-    DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-      self.prefetch(fileExtension: "tne")
-    }
-  }
-  
   func reload() {
     serviceTrie = Trie(values: []) { $0.extraContent as! String }
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
@@ -107,74 +140,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     }
   }
   
-  // MARK: - Script Execute
-  private enum Mode {
-    case prepare(input: [String])
-    case serve(choice: [String: Any])
-    
-    var argument: String {
-      switch self {
-      case .prepare(input: _): return "--prepare"
-      case .serve(choice: _): return "--serve"
-      }
-    }
-  }
-  
-  private static weak var runningProcess: Process?
-  
-  /**
-   Run the given script for a specific mode
-   - parameter script: a service that describes the python script file
-   - parameter runningMode: either `prepare` or `serve`. It determines which function in the script should be called
-   - throws: Error of process running; Error of JSONSerialization
-   - returns: an array of running result, can be empty (if with serve mode)
-  */
-  private func execute(script: ServiceType, runningMode: Mode) throws -> [DisplayProtocol] {
-    guard let scriptPath = script.innerItem, FileManager.default.fileExists(atPath: scriptPath) else { return [] }
-    let (inputPipe, outputPipe, errorPipe) = (Pipe(), Pipe(), Pipe())
-    let process = Process()
-    process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, runningMode.argument, scriptPath]
-    let userDefault = UserDefaults.shared
-    let pythonPath = (userDefault[.python] as? String) ?? "/usr/bin/python"
-    process.executableURL = URL(fileURLWithPath: pythonPath)
-    process.standardInput = inputPipe
-    process.standardOutput = outputPipe
-    process.standardError = errorPipe
-    switch runningMode {
-    case .prepare(input: let input):
-      inputPipe.fileHandleForWriting.write(try encode(input, .prettyPrinted))
-    case .serve(choice: let choice):
-      inputPipe.fileHandleForWriting.write(try encode(choice, .prettyPrinted))
-    }
-    inputPipe.fileHandleForWriting.closeFile()
-    type(of: self).runningProcess = process
-    try process.run()
-    let runningError = errorPipe.fileHandleForReading.readDataToEndOfFile()
-    if !runningError.isEmpty,
-      let errorDict = try JSONSerialization.jsonObject(with: runningError, options: .mutableLeaves) as? Dictionary<String, Any>,
-      let error = errorDict["error"],
-      let errorItem = decode(["name": "Error", "content": error, "placeholder": ""], withIcon: script.icon)
-    {
-      return [errorItem]
-    }
-    let runningResult = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    if !runningResult.isEmpty,
-      let result = try JSONSerialization.jsonObject(with: runningResult, options: .mutableLeaves) as? [Dictionary<String, Any>] {
-      return result.compactMap { decode($0, withIcon: script.icon, extraInfo: script) }
-    }
-    return []
-  }
-  
   // MARK: - TonnerreService functions
-  
-  /**
-   Cached request key. Used to avoid duplicate writting and requesting from the Trie
-  */
-  private var cachedKey: String?
-  /**
-   Cached services.
-  */
-  private var cachedServices: [DisplayableContainer<String>] = []
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count > 0 else { return [] }
@@ -193,7 +159,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     if input.count > 1 {
       let queryContent = Array(input[1...])
       let task = DispatchWorkItem { [unowned self] in
-        DynamicService.runningProcess?.terminate()
+        Self.runningProcess?.terminate()
         let content = possibleServices.compactMap { try? self.execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
         guard content.count > 0 else { return }
         let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": content])
@@ -214,11 +180,11 @@ final class DynamicService: TonnerreService, DynamicProtocol {
     DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
       let originalService: DisplayableContainer<String>
       if let urlResult = source as? DisplayableContainer<URL>,
-        let service = urlResult.extraContent as? DisplayableContainer<String> {
+        let service = urlResult.extraContent as? ServiceType {
         originalService = service
       } else if
         let anyResult = source as? DisplayableContainer<Any>,
-        let service = anyResult.extraContent as? DisplayableContainer<String> {
+        let service = anyResult.extraContent as? ServiceType {
         originalService = service
       } else { return }
       type(of: self).runningProcess?.terminate()
@@ -233,9 +199,7 @@ final class DynamicService: TonnerreService, DynamicProtocol {
       }
     }
   }
-}
-
-extension DynamicService: AsyncLoadingProtocol {
+  
   var mode: AsyncLoadingType {
     return .replaced
   }

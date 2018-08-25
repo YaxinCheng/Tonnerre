@@ -219,7 +219,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .provider(let provider):
       iconView.image = provider.icon
     case .service(provider: let provider, content: let service):
-      iconView.image = provider is DynamicService ? service.icon : provider.icon
+      iconView.image = provider is DynamicScriptService ? service.icon : provider.icon
       if iconView.image === #imageLiteral(resourceName: "tonnerre") {
         refreshIcon()
       }
