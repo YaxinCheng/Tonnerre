@@ -66,7 +66,11 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
-  @IBOutlet weak var collectionView: NSCollectionView!
+  @IBOutlet weak var collectionView: NSCollectionView! {
+    didSet {
+      collectionView.postsBoundsChangedNotifications = true
+    }
+  }
   var collectionViewHeight: NSLayoutConstraint!
   weak var delegate: TonnerreCollectionViewDelegate?
   
@@ -170,14 +174,7 @@ final class TonnerreCollectionView: NSScrollView {
       }
     }
   }
-  
-  override func draw(_ dirtyRect: NSRect) {
-    super.draw(dirtyRect)
-    
-    // Drawing code here.
-    collectionView.postsBoundsChangedNotifications = true
-  }
-  
+
   @objc private func collectionViewDidScroll() {
     let visibleCells = getVisibleCells()
     for (index, cell) in visibleCells.enumerated() {

@@ -65,7 +65,7 @@ struct CurrencyService: TonnerreService {
       return { cell in
           let key = [fromCurrency, toCurrency].joined(separator: "_")
           let url = URL(string: String(format: self.template, key))!
-          let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 30)
+          let request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 1)
           URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
             guard
               let jsonData = data,
