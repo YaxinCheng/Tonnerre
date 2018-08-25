@@ -86,7 +86,7 @@ extension WebService {
     let session = TonnerreSession.shared
     let suggestionPath = String(format: suggestionTemplate, arguments: [query])
     guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
-    let request = URLRequest(url: suggestionURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 60 * 1)
+    let request = URLRequest(url: suggestionURL, timeoutInterval: 60 * 60)
     let ongoingTask = session.dataTask(request: request) { (data, response, error) in
       if error != nil {
         #if DEBUG

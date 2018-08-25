@@ -35,7 +35,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
   private static func loadImage(rawURL: String) -> NSImage {
     if rawURL.starts(with: "http") || rawURL.starts(with: "https") {// If it's http url, send sync request to load
       let url = URL(string: rawURL)!
-      let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60 * 60 * 24)
+      let request = URLRequest(url: url, timeoutInterval: 60 * 60 * 24)
       var image: NSImage = #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
       let asyncSemaphore = DispatchSemaphore(value: 0)
       URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
