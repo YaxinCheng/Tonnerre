@@ -10,16 +10,6 @@ import Foundation
 import Cocoa
 
 extension NSImage {
-  func tintedImage(with colour: NSColor) -> NSImage {
-    guard let tinted = self.copy() as? NSImage else { return self }
-    tinted.lockFocus()
-    colour.set()
-    let imageRect = NSRect(origin: NSZeroPoint, size: size)
-    NSRect.fill(imageRect)(using: .sourceAtop)
-    tinted.unlockFocus()
-    return tinted
-  }
-  
   static var safari: NSImage {
     return NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns") ?? #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
   }

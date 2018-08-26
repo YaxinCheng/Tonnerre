@@ -12,7 +12,7 @@ import Foundation
  Add default setting values to the UserDefault
 */
 struct TonnerreSettings {
-  private static let userDefault = UserDefaults(suiteName: "Tonnerre")!
+  private static let userDefault = UserDefaults.shared
   
   enum SettingKey: String {
     case python

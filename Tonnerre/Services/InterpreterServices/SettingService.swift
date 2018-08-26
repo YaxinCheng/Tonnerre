@@ -23,8 +23,26 @@ struct SettingService: TonnerreService {
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    let settingLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/SettingPanel.app")
-    let workspace = NSWorkspace.shared
-    _ = try? workspace.launchApplication(at: settingLocation, options: .default, configuration: [:])
+    DispatchQueue(label: "SettingPanelSetup").async {
+      self.makeSettingOptions()
+      let settingLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/SettingPanel.app")
+      let workspace = NSWorkspace.shared
+      _ = try? workspace.launchApplication(at: settingLocation, options: .default, configuration: [:])
+    }
+  }
+  
+  private func makeSettingOptions() {
+    let userDefault = UserDefaults.shared
+    guard var settings = userDefault.dictionary(forKey: .defaultSettingsSet) as? SettingDict,
+      !settings.isEmpty else { fatalError("Setting dict cannot be retrieved") }
+    settings["secondTab"]!["right"] = [:]
+    let allExtensions = TonnerreInterpreter.loader.extensionServices
+      .compactMap { ($0 as? DynamicProtocol)?.serviceTrie.find(value: "") }
+      .reduce([], +)
+    for `extension` in allExtensions {
+      let key = "\(`extension`.extraContent ?? "")_\(`extension`.name)_\(`extension`.content)+isDisabled"
+      settings["secondTab"]!["right"]![key] = ["title": `extension`.name, "detail": `extension`.content, "type": "gradient"]
+    }
+    userDefault.set(settings, forKey: .defaultSettingsSet)
   }
 }

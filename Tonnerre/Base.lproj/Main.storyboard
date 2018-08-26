@@ -781,7 +781,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <constraints>
-                                    <constraint firstAttribute="height" identifier="collectionViewHeightConstraint" id="3So-zL-tkw"/>
+                                    <constraint firstAttribute="height" identifier="collectionViewHeightConstraint" id="a9v-xf-LYm"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="TYx-mj-r3R">
                                     <rect key="frame" x="0.0" y="-16" width="656" height="16"/>
@@ -827,6 +827,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="tonnerre" width="48" height="48"/>
+        <image name="tonnerre" width="128" height="128"/>
     </resources>
 </document>

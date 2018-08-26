@@ -152,7 +152,7 @@ extension DynamicScriptService {
       cachedKey = queryKey
       let userDefault = UserDefaults.shared
       possibleServices = serviceTrie.find(value: queryKey).filter {
-        !userDefault.bool(forKey: "\($0.extraContent!)_\($0.name)_\($0.content)+isDisabled")
+        !userDefault.bool(forKey: "\($0.extraContent ?? "")_\($0.name)_\($0.content)+isDisabled")
       }
       cachedServices = possibleServices
     }

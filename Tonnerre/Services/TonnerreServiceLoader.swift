@@ -24,7 +24,7 @@ struct TonnerreServiceLoader {
   /**
    Extended services are loaded from tne files or json files
    */
-  private let extensionServices: [TonnerreService]
+  let extensionServices: [TonnerreService]
   
   /**
    Indicates the service is normal or system
@@ -68,8 +68,7 @@ struct TonnerreServiceLoader {
     if ClipboardService.isDisabled == false {
       ClipboardService.monitor.start()
     }
-    setSettings(services: normalServices, side: "left")
-    setSettings(services: systemServices + [CalculationService.self, CurrencyService.self], side: "right")
+    setSettings(services: normalServices + systemServices + [CalculationService.self, CurrencyService.self], side: "left")
   }
   
   private func setSettings(services: [TonnerreService.Type], side: String) {

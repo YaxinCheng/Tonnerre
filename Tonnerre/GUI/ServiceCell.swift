@@ -20,6 +20,10 @@ fileprivate final class PreviewItem: NSObject, QLPreviewItem {
   }
 }
 
+protocol ServiceCellDelegate: class {
+  func cellDoubleClicked()
+}
+
 final class ServiceCell: NSCollectionViewItem {
   
   @IBOutlet weak var iconView: TonnerreIconView!
@@ -27,7 +31,8 @@ final class ServiceCell: NSCollectionViewItem {
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
   var displayItem: DisplayProtocol?
-  var popoverView: NSPopover = NSPopover()
+  weak var delegate: ServiceCellDelegate?
+  var popoverView = NSPopover()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -95,6 +100,11 @@ final class ServiceCell: NSCollectionViewItem {
   override func pressureChange(with event: NSEvent) {
     guard event.stage == 2 && !popoverView.isShown else { return }
     preview()
+  }
+  
+  override func mouseUp(with event: NSEvent) {
+    guard event.clickCount == 2 else { super.mouseUp(with: event); return }
+    delegate?.cellDoubleClicked()
   }
 }
 

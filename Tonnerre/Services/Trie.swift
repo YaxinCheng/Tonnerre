@@ -79,6 +79,7 @@ struct Trie<T> {
     var node = rootNode
     let keyword = getKeyword(value)
     var index = keyword.startIndex
+    node.values.append(value) // Always add every value to the root
     while index < keyword.endIndex { // Going through the characters
       let char = keyword[index]
       guard let next = node.children[char] else { break } // Make sure there is existing entry, otherwise break

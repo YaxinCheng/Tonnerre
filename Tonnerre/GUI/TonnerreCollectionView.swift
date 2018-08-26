@@ -71,12 +71,16 @@ final class TonnerreCollectionView: NSScrollView {
       collectionView.postsBoundsChangedNotifications = true
     }
   }
-  var collectionViewHeight: NSLayoutConstraint!
+  
+  private lazy var collectionViewHeight: NSLayoutConstraint = {
+    return constraints.filter { $0.identifier == "collectionViewHeightConstraint" }.first!
+  }()
+  
   weak var delegate: TonnerreCollectionViewDelegate?
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    collectionViewHeight = constraints.filter({ $0.identifier == "collectionViewHeightConstraint"}).first!
+    
     let centre = NotificationCenter.default
     centre.addObserver(self, selector: #selector(collectionViewDidScroll), name: NSView.boundsDidChangeNotification, object: collectionView)
     mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) { [weak self] (event) -> NSEvent? in
@@ -88,6 +92,9 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
+  /**
+   The objects that will be displayed on the collectionView
+  */
   var datasource: [ServicePack] = [] {
     didSet {
       collectionViewHeight.constant = cellHeight * CGFloat(min(datasource.count, 9))
@@ -98,7 +105,11 @@ final class TonnerreCollectionView: NSScrollView {
       }
     }
   }
-
+  
+  /**
+   Reacts when different keys are pressed
+   - parameter event: An event sent to this function when non-modifier keys are pressed
+  */
   override func keyDown(with event: NSEvent) {
     highlightedItem?.popoverView.close()
     switch event.keyCode {
@@ -144,6 +155,10 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
+  /**
+   Reacts when the enter key is pressed or released
+   - returns: The selected service(DisplayProtocol) with its service provider(TonnerreService)
+  */
   func enterPressed() -> (TonnerreService, DisplayProtocol)? {
     let selectIndex = max(highlightedItemIndex, 0)
     guard
@@ -154,6 +169,10 @@ final class TonnerreCollectionView: NSScrollView {
     return (service, value)
   }
   
+  /**
+   Reacts when the cmd key is pressed and released
+   - parameter event: An event sent to this function when cmd key is pressed or released
+  */
   func modifierChanged(with event: NSEvent) {
     guard
       highlightedItemIndex < datasource.count,
@@ -174,7 +193,10 @@ final class TonnerreCollectionView: NSScrollView {
       }
     }
   }
-
+  
+  /**
+   Update the index indicator when collection view scrolls
+  */
   @objc private func collectionViewDidScroll() {
     let visibleCells = getVisibleCells()
     for (index, cell) in visibleCells.enumerated() {
@@ -182,11 +204,19 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
+  /**
+   Manually return the visible (actual visible) cells' indeces
+   - returns: An array of indeces in the datasource, whose object is visible on screen
+  */
   func getVisibleIndexes() -> [Int] {
     let topIndex = highlightedItemIndex - visibleIndex
     return (0...8).map({ topIndex + $0 }).filter { $0 >= 0 && $0 < datasource.count }
   }
   
+  /**
+   Manually return the visible (actual visible) cells
+   - returns: An array of datasource objects that are visible on screen
+   */
   func getVisibleCells() -> [ServiceCell] {
     let visibleIndexes = getVisibleIndexes()
     let indexPaths = visibleIndexes.map { IndexPath(item: $0, section: 0) }
@@ -213,6 +243,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
+    cell.delegate = self
     if case .service(_, let value) = data {
       cell.displayItem = value
       if let asyncedData = value as? AsyncDisplayable {
@@ -244,5 +275,12 @@ private extension NSCollectionView {
   func selectItem(at indexPath: IndexPath, scrollPosition: NSCollectionView.ScrollPosition) {
     selectItems(at: [indexPath], scrollPosition: scrollPosition)
     delegate?.collectionView?(self, didSelectItemsAt: [indexPath])
+  }
+}
+
+extension TonnerreCollectionView: ServiceCellDelegate {
+  func cellDoubleClicked() {
+    guard let (service, value) = enterPressed() else { return }
+    delegate?.serve(with: service, target: value, withCmd: false)
   }
 }

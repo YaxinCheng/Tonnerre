@@ -10,7 +10,10 @@ import Cocoa
 
 final class SettingView: NSScrollView {
   
-  private var contentHeight: NSLayoutConstraint!
+  private lazy var contentHeight: NSLayoutConstraint = {
+    return documentView!.constraints.filter{ $0.identifier == "contentHeight" }.first!
+  }()
+  
   @IBOutlet weak var leftPanel: NSStackView!
   @IBOutlet weak var rightPanel: NSStackView!
   @IBOutlet weak var titleLabel: NSTextField!
@@ -18,15 +21,6 @@ final class SettingView: NSScrollView {
   enum PanelSide {
     case left
     case right
-  }
-  
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    
-    guard
-      let ch = documentView?.constraints.filter({ $0.identifier == "contentHeight" }).first
-    else { fatalError("View should contain a layout constraint with identifier \"contentHeight\"") }
-    contentHeight = ch
   }
   
   private var leftHeight: CGFloat = 0
