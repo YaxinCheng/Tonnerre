@@ -10,9 +10,9 @@ import Cocoa
 
 final class SettingView: NSScrollView {
   
-  private lazy var contentHeight: NSLayoutConstraint = {
+  private weak var contentHeight: NSLayoutConstraint! {
     return documentView!.constraints.filter{ $0.identifier == "contentHeight" }.first!
-  }()
+  }
   
   @IBOutlet weak var leftPanel: NSStackView!
   @IBOutlet weak var rightPanel: NSStackView!

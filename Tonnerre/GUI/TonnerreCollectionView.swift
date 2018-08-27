@@ -8,12 +8,39 @@
 
 import Cocoa
 
+/**
+Delegate for TonnerreCollectionView
+*/
 protocol TonnerreCollectionViewDelegate: class {
+  /**
+  Service is selected with enter key or double click
+  - parameter service: the service provider which provided the service
+  - parameter target: the selected service
+  - parameter withCmd: a flag indicates whether the cmd key is pressed with selection
+  */
   func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool)
+  /**
+  Tab key is pressed, and request for auto completion
+  - parameter service: the highlighted service that needs to be completed
+  */
   func tabPressed(service: ServicePack)
+  /**
+  A service is selected and highlighted
+  - parameter service: the service pack which is selected
+  */
   func serviceHighlighted(service: ServicePack?)
+  /**
+  Request to fill in the placeholder field with given service
+  - parameter service: the service highlighted and needs to be filled in the placeholder field
+  */
   func fillPlaceholder(with service: ServicePack?)
+  /**
+  The cell is clicked. Request to focus on and deselect the textField
+  */
   func viewIsClicked()
+  /**
+  Request to retrieve the last queried content
+  */
   func retrieveLastQuery()
 }
 
@@ -21,37 +48,48 @@ final class TonnerreCollectionView: NSScrollView {
   private let cellHeight: CGFloat = 56
   private weak var highlightedItem: ServiceCell?
   private var visibleIndex: Int = -1// Indicate where the highlight is, range from 0 to 8 (at most 9 options showing)
-  var lastQuery: String = ""
   private var mouseMonitor: Any? = nil
   
   private var highlightedItemIndex = -1 {// Actual index in the datasource array
     didSet {
       if oldValue == highlightedItemIndex {
+        // When the highlighted is 0 or -1, and new datasource is added
         guard oldValue == -1 else { return }
+        // If 0, make it -1
         visibleIndex = -1
+        // Reset icons
         iconChange()
         if datasource.count > 0 {
+          // If datasource exists, scroll to the top
           collectionView.scrollToItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)// Scroll to top
           delegate?.fillPlaceholder(with: datasource[0])
         }
         return
       }
+      // Highlighted cursor moved 
       let moveDown = highlightedItemIndex - oldValue >= 1
       let maxRows = 8
       let scrollPosition: NSCollectionView.ScrollPosition
+      // When the cursor is at the bottom or moved down more than 8 items
       if (visibleIndex == maxRows || highlightedItemIndex - oldValue > 8) && moveDown { scrollPosition = .bottom }
+      // When the curosr is at the top or moved up more than 8 items
       else if (visibleIndex == 0 || oldValue - highlightedItemIndex > 8) && !moveDown { scrollPosition = .top }
+      // Otherwise, do not scroll
       else { scrollPosition = .init(rawValue: 0) }
+      // if move down, visibleIndex += 1, if move up, visibleIndex -= 1 
       visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
-      if oldValue != 0 || moveDown { visibleIndex = max(visibleIndex, 0) }// if it is not move up from 0
+      // if it is not move up from 0
+      if !(oldValue == 0 && !moveDown) { visibleIndex = max(visibleIndex, 0) }
       if highlightedItemIndex >= 0 {
         delegate?.fillPlaceholder(with: datasource[highlightedItemIndex])
         collectionView.selectItem(at: IndexPath(item: highlightedItemIndex, section: 0), scrollPosition: scrollPosition)
       } else {
         iconChange()
+        // highlightedIndex == -1 will remove the highlight cursor
         highlightedItem?.highlighted = false
         highlightedItem = nil
         guard let first = datasource.first else { return }
+        // Fill the placeholder with the first item
         delegate?.fillPlaceholder(with: first)
       }
     }
@@ -68,13 +106,18 @@ final class TonnerreCollectionView: NSScrollView {
   
   @IBOutlet weak var collectionView: NSCollectionView! {
     didSet {
+      // Accepts the scroll notification
       collectionView.postsBoundsChangedNotifications = true
     }
   }
-  
-  private lazy var collectionViewHeight: NSLayoutConstraint = {
+   
+  /**
+  The autolayout constraint for collectionView's height
+  - Warning: the actual constraint is defined in the Storyboard, and this is only a reference to it.
+  */
+  private weak var collectionViewHeight: NSLayoutConstraint! {
     return constraints.filter { $0.identifier == "collectionViewHeightConstraint" }.first!
-  }()
+  }
   
   weak var delegate: TonnerreCollectionViewDelegate?
   
@@ -84,6 +127,7 @@ final class TonnerreCollectionView: NSScrollView {
     let centre = NotificationCenter.default
     centre.addObserver(self, selector: #selector(collectionViewDidScroll), name: NSView.boundsDidChangeNotification, object: collectionView)
     mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) { [weak self] (event) -> NSEvent? in
+      // Listen to the mouse click, and send the requests out
       self?.delegate?.viewIsClicked()
       return event
     }
@@ -92,6 +136,11 @@ final class TonnerreCollectionView: NSScrollView {
     }
   }
   
+  deinit {
+    guard let monitor = mouseMonitor else { return }
+    NSEvent.removeMonitor(monitor)
+    mouseMonitor = nil
+  }
   /**
    The objects that will be displayed on the collectionView
   */
@@ -101,6 +150,8 @@ final class TonnerreCollectionView: NSScrollView {
       collectionView.reloadData()
       guard !datasource.isEmpty else { return }
       DispatchQueue.main.async { [weak self] in
+        // Move the highlighted index to -1. 
+        // Warning: this will affect the placeholder field
         self?.highlightedItemIndex = -1
       }
     }

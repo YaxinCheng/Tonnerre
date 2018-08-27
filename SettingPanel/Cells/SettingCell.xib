@@ -33,7 +33,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="KTY-3L-DlQ"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="left" placeholderString="Text here" drawsBackground="YES" usesSingleLineMode="YES" id="mF4-x1-fab">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="right" placeholderString="Text here" drawsBackground="YES" usesSingleLineMode="YES" id="mF4-x1-fab">
                         <font key="font" metaFont="system" size="17"/>
                         <color key="textColor" red="0.27843137254901962" green="0.63921568627450975" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="backgroundColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
