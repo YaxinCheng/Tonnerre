@@ -28,7 +28,7 @@ protocol DynamicScriptService: TonnerreService, DynamicProtocol, AsyncLoadingPro
   /**
    The process which is on executing
    */
-  static var runningProcess: Process? { get set }
+  static var runningProcesses: [Process] { get set }
   /**
    Cached request key. Used to avoid duplicate writting and requesting from the Trie
    */
@@ -159,7 +159,8 @@ extension DynamicScriptService {
     if input.count > 1 {
       let queryContent = Array(input[1...])
       let task = DispatchWorkItem { [unowned self] in
-        Self.runningProcess?.terminate()
+        Self.runningProcesses.forEach { $0.terminate() }
+        Self.runningProcesses.removeAll(keepingCapacity: true)
         let content = possibleServices.compactMap { try? self.execute(script: $0, runningMode: .prepare(input: queryContent)) }.reduce([], +)
         guard content.count > 0 else { return }
         let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": content])
@@ -187,7 +188,8 @@ extension DynamicScriptService {
         let service = anyResult.extraContent as? ServiceType {
         originalService = service
       } else { return }
-      type(of: self).runningProcess?.terminate()
+      Self.runningProcesses.forEach { $0.terminate() }
+      Self.runningProcesses.removeAll(keepingCapacity: true)
       var dictionarizedChoice = self.dictionarize(source)
       dictionarizedChoice["withCmd"] = withCmd
       do {

@@ -10,7 +10,7 @@ import Foundation
 
 final class PythonService: DynamicScriptService {
   var serviceTrie: Trie<DynamicProtocol.ServiceType>
-  static var runningProcess: Process?
+  static var runningProcesses: [Process] = []
   var cachedKey: String?
   var cachedServices: [DynamicProtocol.ServiceType] = []
   static let scriptExtension: String = ".py"
@@ -40,7 +40,7 @@ final class PythonService: DynamicScriptService {
       inputPipe.fileHandleForWriting.write(try JSONSerialization.data(withJSONObject: choice, options: .prettyPrinted))
     }
     inputPipe.fileHandleForWriting.closeFile()
-    type(of: self).runningProcess = process
+    type(of: self).runningProcesses.append(process)
     try process.run()
     let runningError = errorPipe.fileHandleForReading.readDataToEndOfFile()
     if !runningError.isEmpty,

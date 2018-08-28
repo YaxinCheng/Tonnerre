@@ -9,8 +9,6 @@
 import Foundation
 
 final class AppleScriptService: DynamicScriptService {
-  let argUpperBound: Int = 1
-  
   init() {
     serviceTrie = Trie(values: []) { $0.extraContent as! String }
     DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
@@ -19,7 +17,8 @@ final class AppleScriptService: DynamicScriptService {
   }
   
   var serviceTrie: Trie<DynamicProtocol.ServiceType>
-  static var runningProcess: Process?
+  static var runningProcesses: [Process] = []// Not used at all
+  let argUpperBound: Int = 1
   var cachedKey: String?
   var cachedServices: [DynamicProtocol.ServiceType] = []
   static let scriptExtension: String = ".scpt"
