@@ -135,7 +135,12 @@ final class CoreIndexing {
     for (mode, index) in zip(searchModes, indexes) where mode.canInclude(fileURL: path) {
       _ = try? index.addDocument(atPath: path, additionalNote: getAlias(name: path.lastPathComponent))
     }
-    guard let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil) else { return }
+    // Prevent FileManager from indexing what's inside apps
+    let isPackage = (try! path.resourceValues(forKeys: [.isPackageKey])).isPackage ?? false
+    guard
+      !isPackage,
+      let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
+    else { return }
     for case let fileURL as URL in enumerator {
       for (mode, index) in zip(searchModes, indexes) {
         guard
