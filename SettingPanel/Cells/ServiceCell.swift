@@ -38,6 +38,7 @@ final class ServiceCell: NSView, SettingCell {
     gradient?.draw(in: dirtyRect, angle: 180)
     wantsLayer = true
     layer?.cornerRadius = 25
+    layer?.masksToBounds = true
     super.draw(dirtyRect)
   }
   

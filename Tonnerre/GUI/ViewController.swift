@@ -13,9 +13,13 @@ final class ViewController: NSViewController {
   
   @IBOutlet weak var backgroundView: NSVisualEffectView!
   @IBOutlet weak var iconView: TonnerreIconView!
-  @IBOutlet weak var textField: TonnerreField!
+  @IBOutlet weak var textField: TonnerreField! {
+    didSet { textField.delegate = self }
+  }
   @IBOutlet weak var placeholderField: PlaceholderField!
-  @IBOutlet weak var collectionView: TonnerreCollectionView!
+  @IBOutlet weak var collectionView: TonnerreCollectionView! {
+    didSet { collectionView.delegate = self }
+  }
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
   
@@ -28,8 +32,6 @@ final class ViewController: NSViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    textField.delegate = self
-    collectionView.delegate = self
     NotificationCenter.default.addObserver(self, selector: #selector(asyncContentDidLoad(notification:)), name: .asyncLoadingDidFinish, object: nil)
     view.layer?.masksToBounds = true
     view.layer?.cornerRadius = 7

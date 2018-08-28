@@ -8,10 +8,23 @@
 
 import Cocoa
 
+/**
+Common browsers on mac, with possible URL paths and bookmarks URLs and icons
+*/
 enum Browser {
+  /**
+  Safari browser
+  */
   case safari
+  /**
+  Google Chrome browser
+  */
   case chrome
   
+  /**
+  The URL locates the browser application
+  - Note: the appURL can be nil when the browser is not installed in the system
+  */
   var appURL: URL? {
     switch self {
     case .safari:
@@ -29,6 +42,9 @@ enum Browser {
     }
   }
   
+  /**
+  icon image for this browser
+  */
   var icon: NSImage? {
     guard let url = appURL else { return nil }
     switch self {
@@ -39,6 +55,9 @@ enum Browser {
     }
   }
   
+  /**
+  the URL where the bookmarks file is stored
+  */
   var bookMarksFile: URL? {
     guard appURL != nil else { return nil }
     switch self {
@@ -51,6 +70,9 @@ enum Browser {
     }
   }
   
+  /**
+  The browser name
+  */
   var name: String {
     guard appURL != nil else { return "Not Found" }
     switch self {
