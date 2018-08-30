@@ -204,21 +204,15 @@ final class CoreIndexing {
    FileSystem event detected
   */
   private func detectedChanges(events: [TonnerreFSDetector.event]) {
-    let created = TonnerreFSEvent.created.rawValue
-    let renamed = TonnerreFSEvent.renamed.rawValue
-    let removed = TonnerreFSEvent.removed.rawValue
-    
-    for event in events {
-      let (path, changes) = event
-      let totalEvents = changes.reduce(0, {$0 | $1.rawValue})
+    for (path, flags) in events {
       let pathURL = URL(fileURLWithPath: path)
       let relatedModes = identify(path: pathURL)
-      let relatedIndexes = relatedModes.map({ indexes[$0, true] })
-      if totalEvents & created == created {
+      let relatedIndexes = relatedModes.map { indexes[$0, true] }
+      if flags.contains(.created) {
         for index in relatedIndexes {
           _ = try? index.addDocument(atPath: pathURL)
         }
-      } else if totalEvents & renamed == renamed {
+      } else if flags.contains(.renamed) {
         let fileManager = FileManager.default
         for index in relatedIndexes {
           let exist = fileManager.fileExists(atPath: path)
@@ -228,7 +222,7 @@ final class CoreIndexing {
             _ = try? index.addDocument(atPath: pathURL)
           }
         }
-      } else if totalEvents & removed == removed {
+      } else if flags.contains(.removed) {
         for index in relatedIndexes {
           _ = index.removeDocument(atPath: pathURL)
         }

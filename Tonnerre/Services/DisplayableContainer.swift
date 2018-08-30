@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct DisplayableContainer<T>: DisplayProtocol {
+struct DisplayableContainer<T>: DisplayProtocol, Equatable {
   let name: String
   var content: String
   var icon: NSImage
@@ -27,6 +27,10 @@ struct DisplayableContainer<T>: DisplayProtocol {
     self.innerItem = innerItem
     self._placeholder = placeholder
     self.extraContent = extraContent
+  }
+  
+  static func == (lhs: DisplayableContainer<T>, rhs: DisplayableContainer<T>) -> Bool {
+    return lhs.name == rhs.name && lhs.content == rhs.content && lhs.icon == rhs.icon
   }
 }
 

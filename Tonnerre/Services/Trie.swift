@@ -36,7 +36,7 @@ struct Trie<T> {
   /**
    The node which contains every element in this trie
   */
-  private var rootNode: Node
+  private let rootNode: Node
   /**
    The function how the trie should retrieve a keyword from the given element
   */
@@ -96,3 +96,19 @@ struct Trie<T> {
   }
 }
 
+extension Trie where T: Equatable {
+  mutating func remove(value: T) {
+    let traverseKey = getKeyword(value)
+    guard let firstIndex = rootNode.values.index(of: value) else { return }
+    rootNode.values.remove(at: firstIndex)
+    var node = rootNode
+    for character in traverseKey {
+      guard
+        let next = node.children[character],
+        let index = next.values.index(of: value)
+      else { return }
+      next.values.remove(at: index)
+      node = next
+    }
+  }
+}
