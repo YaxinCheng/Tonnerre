@@ -131,6 +131,8 @@
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
 		14C2DF9F2134DDA800C6A91D /* ExtensionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DF9E2134DDA800C6A91D /* ExtensionHub.swift */; };
+		14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */; };
+		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
 		14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */; };
@@ -329,6 +331,8 @@
 		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSettings.swift; sourceTree = "<group>"; };
 		14C2DF9E2134DDA800C6A91D /* ExtensionHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionHub.swift; sourceTree = "<group>"; };
+		14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScriptError.swift; sourceTree = "<group>"; };
+		14C2DFA42138CC8E00C6A91D /* TNEScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScript.swift; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
@@ -710,6 +714,8 @@
 				1449E5842131D74200500BF4 /* AppleScriptService.swift */,
 				14AFE692210FE196002BBBB2 /* DynamicWebService.swift */,
 				14C2DF9E2134DDA800C6A91D /* ExtensionHub.swift */,
+				14C2DFA42138CC8E00C6A91D /* TNEScript.swift */,
+				14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */,
 			);
 			path = DynamicServices;
 			sourceTree = "<group>";
@@ -989,6 +995,7 @@
 				143FD19E210567F100E79F7E /* TerminalService.swift in Sources */,
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
+				14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
 				14F015CF20FFD25200537160 /* BookmarksService.swift in Sources */,
@@ -1030,6 +1037,7 @@
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14F015D82102314600537160 /* DynamicScriptService.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
+				14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
