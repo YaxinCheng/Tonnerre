@@ -202,7 +202,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .provider(origin: let service) where !type(of: service).keyword.isEmpty:
       textField.autoComplete(cmd: type(of: service).keyword)
     case .service(provider: let service, content: let value) where !value.name.isEmpty:
-      if service is DynamicProtocol {
+      if service is TNEScript || service is DynamicWebService {
         textField.autoComplete(cmd: value.placeholder)
       } else if let tservice = value as? TonnerreService {
         textField.autoComplete(cmd: type(of: tservice).keyword)
@@ -221,7 +221,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
     case .provider(let provider):
       iconView.image = provider.icon
     case .service(provider: let provider, content: let service):
-      iconView.image = provider is DynamicScriptService ? service.icon : provider.icon
+      iconView.image = provider is TNEServices ? service.icon : provider.icon
       if iconView.image === #imageLiteral(resourceName: "tonnerre") {
         refreshIcon()
       }

@@ -14,8 +14,8 @@ final class ExtensionHub {
   private lazy var listener: TonnerreFSDetector = {
     return TonnerreFSDetector(pathes: path.path, callback: filesDidChange)
   }()
-  private var serviceTrie = Trie<DynamicProtocol.ServiceType>(values: []) { $0.extraContent as! String }
-  private var servicesWithPaths: [URL: DynamicProtocol.ServiceType] = [:]
+  private var serviceTrie = Trie<TNEScript>(values: []) { $0.keyword }
+  private var servicesWithPaths: [URL: TNEScript] = [:]
   private static let validExtensions = [".py", ".scpt"]
   
   static let instance = ExtensionHub()
@@ -42,9 +42,18 @@ final class ExtensionHub {
     listener.stop()
   }
   
+  func find(keyword: String) -> [TNEScript] {
+    guard !keyword.isEmpty else { return [] }
+    let userDefault = UserDefaults.standard
+    let possibleScripts = serviceTrie.find(value: keyword)
+      .filter { !userDefault.bool(forKey: "\($0.keyword)_\($0.name)_\($0.content)+isDisabled") }
+    return possibleScripts
+  }
+  
   private func filesDidChange(events: [TonnerreFSDetector.event]) {
     for (path, flags) in events {
       let fileURL = URL(fileURLWithPath: path)
+      guard fileURL.pathExtension == "tne" else { continue }
       if flags.contains(.created) || flags.contains(.modified) {
         guard
           let service = ExtensionHub.generateService(from: fileURL),
@@ -70,7 +79,7 @@ final class ExtensionHub {
 // This extension stores all the helper functions
 extension ExtensionHub {
   // MARK: - Constructions
-  private static func generateService(from url: URL) -> DynamicProtocol.ServiceType? {
+  private static func generateService(from url: URL) -> TNEScript? {
     var script: URL! = nil
     for ext in validExtensions {
       let validPath = url.appendingPathComponent("main" + ext)
@@ -96,7 +105,7 @@ extension ExtensionHub {
       else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
         icon = iconFromPath
       } else { icon = #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour) }
-      return DisplayableContainer(name: name, content: descriptionObj["content"] ?? "", icon: icon, innerItem: script.path, placeholder: descriptionObj["placeholder"] ?? "", extraContent: keyword)
+      return TNEScript(keyword: keyword, name: name, content: descriptionObj["content"] ?? "", icon: icon, scriptPath: script)
     } catch {
       #if DEBUG
       print("Error happened in generate service: ", error)

@@ -36,11 +36,16 @@ struct SettingService: TonnerreService {
     guard var settings = userDefault.dictionary(forKey: .defaultSettingsSet) as? SettingDict,
       !settings.isEmpty else { fatalError("Setting dict cannot be retrieved") }
     settings["secondTab"]!["right"] = [:]
-    let allExtensions = TonnerreInterpreter.loader.extensionServices
-      .compactMap { ($0 as? DynamicProtocol)?.serviceTrie.find(value: "") }
+    let webExtensions = TonnerreInterpreter.loader.extensionServices
+      .compactMap { ($0 as? DynamicWebService)?.serviceTrie.find(value: "") }
       .reduce([], +)
-    for `extension` in allExtensions {
+    let scriptExtensions = ExtensionHub.instance.find(keyword: "")
+    for `extension` in webExtensions {
       let key = "\(`extension`.extraContent ?? "")_\(`extension`.name)_\(`extension`.content)+isDisabled"
+      settings["secondTab"]!["right"]![key] = ["title": `extension`.name, "detail": `extension`.content, "type": "gradient"]
+    }
+    for `extension` in scriptExtensions {
+      let key = "\(`extension`.keyword)_\(`extension`.name)_\(`extension`.content)+isDisabled"
       settings["secondTab"]!["right"]![key] = ["title": `extension`.name, "detail": `extension`.content, "type": "gradient"]
     }
     userDefault.set(settings, forKey: .defaultSettingsSet)

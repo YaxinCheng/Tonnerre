@@ -8,15 +8,47 @@
 
 import Cocoa
 
-final class DynamicWebService: TonnerreService, DynamicProtocol {
+final class DynamicWebService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   var icon: NSImage {
     return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
+  typealias ServiceType = DisplayableContainer<String>
+  
   var serviceTrie: Trie<ServiceType>
   private typealias ExtraContent = (keyword: String, argLowerBound: Int, argUpperBound: Int)
+  
+  private func fill(template: String, withArguments args: [String]) -> String {
+    let placeholderCount = template.components(separatedBy: "%@").count - 1
+    guard placeholderCount <= args.count else { return template }
+    if placeholderCount == args.count {
+      return String(format: template, arguments: args)
+    } else {
+      let lastArg = args[placeholderCount...].joined(separator: " ")
+      let fillInArgs = Array(args[..<placeholderCount]) + [lastArg]
+      return String(format: template, arguments: fillInArgs)
+    }
+  }
+  
+  private func prefetch(fileExtension: String) {
+    let appSupDir = UserDefaults.standard.url(forKey: .appSupportDir)!
+    let serviceFolder = appSupDir.appendingPathComponent("Services")
+    do {
+      let contents = try FileManager.default.contentsOfDirectory(at: serviceFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
+      let extensions = contents.filter { $0.pathExtension.lowercased() == fileExtension } // Tonnerre Extension File Types
+      for `extension` in extensions {
+        for service in type(of: self).generateService(from: `extension`) {
+          serviceTrie.insert(value: service)
+        }
+      }
+    } catch {
+      #if DEBUG
+      print("Error with loading: ", error)
+      #endif
+    }
+  }
   
   func reload() {
     serviceTrie = Trie(values: []) { ($0.extraContent! as! ExtraContent).keyword }
@@ -72,7 +104,7 @@ final class DynamicWebService: TonnerreService, DynamicProtocol {
     return DisplayableContainer(name: name, content: content, icon: icon, innerItem: urlRaw, placeholder: keyword, extraContent: (keyword, argLowerBound, argUpperBound))
   }
   
-  static func generateService(from url: URL) -> [ServiceType] {
+  private static func generateService(from url: URL) -> [ServiceType] {
     guard
       let jsonData = try? Data(contentsOf: url),
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves))

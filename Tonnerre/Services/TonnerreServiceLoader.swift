@@ -59,7 +59,7 @@ struct TonnerreServiceLoader {
   
   init() {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
-    extensionServices = [PythonService(), AppleScriptService(), DynamicWebService()]
+    extensionServices = [TNEServices(), DynamicWebService()]
     let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, LockService.self, ScreenSaverService.self, SafariBMService.self, ChromeBMService.self, TerminalService.self, ClipboardService.self]
     let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
     
@@ -93,6 +93,6 @@ struct TonnerreServiceLoader {
    Reload the dynamic services from file systems
   */
   func reload() {
-    extensionServices.compactMap { $0 as? DynamicProtocol }.forEach { $0.reload() }
+    extensionServices.compactMap { $0 as? DynamicWebService }.forEach { $0.reload() }
   }
 }

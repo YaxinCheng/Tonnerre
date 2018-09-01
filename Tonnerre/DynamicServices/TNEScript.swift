@@ -21,6 +21,13 @@ final class TNEScript: DisplayProtocol {
       }
     }
     
+    var path: URL {
+      switch self {
+      case .python(path: let path),
+           .appleScript(path: let path): return path
+      }
+    }
+    
     fileprivate func execute(mode: DynamicScriptMode) -> Process? {
       do {
         switch self {
@@ -37,18 +44,20 @@ final class TNEScript: DisplayProtocol {
   }
   
   let name: String
-  let content: String
+  var content: String
   let icon: NSImage
   let placeholder: String
+  let keyword: String
   private let script: Script
   var runningScript: Process?
   
-  init?(name: String, content: String, icon: NSImage, scriptPath: URL, placeholder: String? = nil) {
+  init?(keyword: String, name: String, content: String, icon: NSImage, scriptPath: URL, placeholder: String? = nil) {
     guard let script = Script(fileURL: scriptPath) else { return nil }
+    self.keyword = keyword
     self.name = name
     self.content = content
     self.icon = icon
-    self.placeholder = placeholder ?? name
+    self.placeholder = placeholder ?? keyword
     self.script = script
   }
   
@@ -77,7 +86,7 @@ final class TNEScript: DisplayProtocol {
       if let resultData = runningResult,
         !resultData.isEmpty,
         let result = try JSONSerialization.jsonObject(with: resultData, options: .mutableLeaves) as? [Dictionary<String, Any>] {
-        return result.compactMap { decode($0, withIcon: icon, extraInfo: script) }
+        return result.compactMap { decode($0, withIcon: icon, extraInfo: self) }
       }
     } catch {
       #if DEBUG
@@ -106,8 +115,12 @@ final class TNEScript: DisplayProtocol {
   }
 }
 
-// TNEScript.Script functions all stores here
-extension TNEScript.Script {
+// Mark: - TNEScript.Script functions all stores here
+extension TNEScript.Script: Equatable {
+  static func == (lhs: TNEScript.Script, rhs: TNEScript.Script) -> Bool {
+    return lhs.path == rhs.path
+  }
+  
   private func pythonExec(mode: DynamicScriptMode) throws -> Process {
     guard
       case .python(let scriptPath) = self,
@@ -146,5 +159,11 @@ extension TNEScript.Script {
       process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
       return process
     }
+  }
+}
+
+extension TNEScript: Equatable {
+  static func == (lhs: TNEScript, rhs: TNEScript) -> Bool {
+    return lhs.script == rhs.script
   }
 }
