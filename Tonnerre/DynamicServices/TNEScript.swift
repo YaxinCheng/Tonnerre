@@ -49,16 +49,54 @@ final class TNEScript: DisplayProtocol {
   let placeholder: String
   let keyword: String
   private let script: Script
+  var path: URL {
+    return script.path
+  }
   var runningScript: Process?
+  private static let validExtensions = [".py", ".scpt"]
   
-  init?(keyword: String, name: String, content: String, icon: NSImage, scriptPath: URL, placeholder: String? = nil) {
-    guard let script = Script(fileURL: scriptPath) else { return nil }
+  convenience init?(scriptPath: URL) {
+    var validScript: Script! = nil
+    for ext in TNEScript.validExtensions {
+      let exePath = scriptPath.appendingPathComponent("main" + ext)
+      if let script = Script(fileURL: exePath) {
+        validScript = script
+        break
+      }
+    }
+    guard validScript != nil else { return nil }
+    let iconURL = scriptPath.appendingPathComponent("icon.png")
+    let fileIcon = NSImage(contentsOf: iconURL)
+    let jsonURL = scriptPath.appendingPathComponent("description.json")
+    do {
+      let jsonData = try Data(contentsOf: jsonURL)
+      let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? Dictionary<String, String>
+      guard
+        let descriptionObj = jsonObject,
+        let name = descriptionObj["name"],
+        let keyword = descriptionObj["keyword"]
+        else { return nil }
+      let icon: NSImage
+      if fileIcon != nil { icon = fileIcon! }
+      else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
+        icon = iconFromPath
+      } else { icon = #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour) }
+      self.init(keyword: keyword, name: name, content: descriptionObj["content"] ?? "", icon: icon, script: validScript)
+    } catch {
+      #if DEBUG
+      print("Error happened in script constructor: ", error)
+      #endif
+      return nil
+    }
+  }
+  
+  init(keyword: String, name: String, content: String, icon: NSImage, script: Script, placeholder: String? = nil) {
+    self.script = script
     self.keyword = keyword
     self.name = name
     self.content = content
     self.icon = icon
     self.placeholder = placeholder ?? keyword
-    self.script = script
   }
   
   func execute(mode: DynamicScriptMode) -> [DisplayProtocol] {

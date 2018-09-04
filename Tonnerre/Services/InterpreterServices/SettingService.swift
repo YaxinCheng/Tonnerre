@@ -39,13 +39,13 @@ struct SettingService: TonnerreService {
     let webExtensions = TonnerreInterpreter.loader.extensionServices
       .compactMap { ($0 as? DynamicWebService)?.serviceTrie.find(value: "") }
       .reduce([], +)
-    let scriptExtensions = ExtensionHub.instance.find(keyword: "")
+    let scriptExtensions = TNEHub.default.find(keyword: "")
     for `extension` in webExtensions {
       let key = "\(`extension`.extraContent ?? "")_\(`extension`.name)_\(`extension`.content)+isDisabled"
       settings["secondTab"]!["right"]![key] = ["title": `extension`.name, "detail": `extension`.content, "type": "gradient"]
     }
     for `extension` in scriptExtensions {
-      let key = "\(`extension`.keyword)_\(`extension`.name)_\(`extension`.content)+isDisabled"
+      let key = "\(`extension`.path)+isDisabled"
       settings["secondTab"]!["right"]![key] = ["title": `extension`.name, "detail": `extension`.content, "type": "gradient"]
     }
     userDefault.set(settings, forKey: .defaultSettingsSet)

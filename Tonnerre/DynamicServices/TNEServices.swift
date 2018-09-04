@@ -64,7 +64,7 @@ final class TNEServices: TonnerreService {
       possibleServices = cachedServices
     } else {
       cachedKey = queryKey
-      possibleServices = ExtensionHub.instance.find(keyword: queryKey)
+      possibleServices = TNEHub.default.find(keyword: queryKey)
       cachedServices = possibleServices
     }
     if input.count > 1 {

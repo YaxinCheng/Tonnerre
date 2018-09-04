@@ -127,7 +127,7 @@
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
-		14C2DF9F2134DDA800C6A91D /* ExtensionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DF9E2134DDA800C6A91D /* ExtensionHub.swift */; };
+		14C2DF9F2134DDA800C6A91D /* TNEHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DF9E2134DDA800C6A91D /* TNEHub.swift */; };
 		14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */; };
 		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
@@ -325,7 +325,7 @@
 		14AFE6D5211BC6C8002BBBB2 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSettings.swift; sourceTree = "<group>"; };
-		14C2DF9E2134DDA800C6A91D /* ExtensionHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionHub.swift; sourceTree = "<group>"; };
+		14C2DF9E2134DDA800C6A91D /* TNEHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEHub.swift; sourceTree = "<group>"; };
 		14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScriptError.swift; sourceTree = "<group>"; };
 		14C2DFA42138CC8E00C6A91D /* TNEScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScript.swift; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
@@ -705,7 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				14AFE692210FE196002BBBB2 /* DynamicWebService.swift */,
-				14C2DF9E2134DDA800C6A91D /* ExtensionHub.swift */,
+				14C2DF9E2134DDA800C6A91D /* TNEHub.swift */,
 				14F230222139F94200B7A0FB /* TNEServices.swift */,
 				14C2DFA42138CC8E00C6A91D /* TNEScript.swift */,
 				14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */,
@@ -968,7 +968,7 @@
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
 				14561B8C20C444470057B4C1 /* ServicePack.swift in Sources */,
 				14F015C720F999E300537160 /* PlaceholderField.swift in Sources */,
-				14C2DF9F2134DDA800C6A91D /* ExtensionHub.swift in Sources */,
+				14C2DF9F2134DDA800C6A91D /* TNEHub.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
 				14F015D2210106E200537160 /* SafariBMService.swift in Sources */,
 				1484148320C63A1A008FD68E /* MapService.swift in Sources */,
