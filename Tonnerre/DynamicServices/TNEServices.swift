@@ -12,7 +12,9 @@ final class TNEServices: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = .max
-  let icon: NSImage = #imageLiteral(resourceName: "tonnerre_extension")
+  var icon: NSImage {
+    return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
   private let asyncSession: TonnerreSession = .shared
   
   private var cachedKey: String?
@@ -59,14 +61,11 @@ final class TNEServices: TonnerreService {
   func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count > 0 else { return [] }
     let queryKey = input.first!.lowercased()
-    let possibleServices: [TNEScript]
-    if let cache = cachedKey, cache == queryKey {
-      possibleServices = cachedServices
-    } else {
+    if cachedKey != queryKey {
       cachedKey = queryKey
-      possibleServices = TNEHub.default.find(keyword: queryKey)
-      cachedServices = possibleServices
+      cachedServices = TNEHub.default.find(keyword: queryKey)
     }
+    let possibleServices = cachedServices
     if input.count > 1 {
       let queryContent = Array(input[1...])
       let task = DispatchWorkItem { [unowned self] in

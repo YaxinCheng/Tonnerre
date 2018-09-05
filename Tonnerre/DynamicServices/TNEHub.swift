@@ -20,9 +20,8 @@ final class TNEHub {
   static let `default` = TNEHub()
   
   private init() {
-    listener = TonnerreFSDetector(pathes: path.path, callback: filesDidChange)
     listener.start()
-    DispatchQueue(label: "Tonnerre.ExtensionHub").async { [unowned self] in
+    DispatchQueue(label: "Tonnerre.TNEHub").async { [unowned self] in
       do {
         let contents = try FileManager.default.contentsOfDirectory(at: self.path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
         for fileURL in contents where fileURL.pathExtension == "tne" {

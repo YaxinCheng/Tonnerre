@@ -9,6 +9,18 @@
 import Cocoa
 
 final class TNEScript: DisplayProtocol {
+  enum runningMode {
+    case prepare(input: [String])
+    case serve(choice: [String: Any])
+    
+    var argument: String {
+      switch self {
+      case .prepare(input: _): return "--prepare"
+      case .serve(choice: _): return "--serve"
+      }
+    }
+  }
+  
   enum Script {
     case python(path: URL)
     case appleScript(path: URL)
@@ -28,7 +40,7 @@ final class TNEScript: DisplayProtocol {
       }
     }
     
-    fileprivate func execute(mode: DynamicScriptMode) -> Process? {
+    fileprivate func execute(mode: runningMode) -> Process? {
       do {
         switch self {
         case .python(path: _): return try pythonExec(mode: mode)
@@ -99,7 +111,7 @@ final class TNEScript: DisplayProtocol {
     self.placeholder = placeholder ?? keyword
   }
   
-  func execute(mode: DynamicScriptMode) -> [DisplayProtocol] {
+  func execute(mode: runningMode) -> [DisplayProtocol] {
     let process = script.execute(mode: mode)
     runningScript?.terminate()
     runningScript = process
@@ -159,7 +171,7 @@ extension TNEScript.Script: Equatable {
     return lhs.path == rhs.path
   }
   
-  private func pythonExec(mode: DynamicScriptMode) throws -> Process {
+  private func pythonExec(mode: TNEScript.runningMode) throws -> Process {
     guard
       case .python(let scriptPath) = self,
       FileManager.default.fileExists(atPath: scriptPath.path)
@@ -184,7 +196,7 @@ extension TNEScript.Script: Equatable {
     return process
   }
   
-  private func ASExec(mode: DynamicScriptMode) throws -> Process? {
+  private func ASExec(mode: TNEScript.runningMode) throws -> Process? {
     guard
       case .appleScript(let scriptPath) = self,
       FileManager.default.fileExists(atPath: scriptPath.path)
