@@ -54,17 +54,32 @@ final class TNEHub {
     for (path, flags) in events {
       let fileURL = URL(fileURLWithPath: path)
       guard fileURL.pathExtension == "tne" else { continue }
-      if flags.contains(.created) || flags.contains(.modified) {
+      
+      let add: (URL)->Void = { [unowned self] in
         guard
-          pathWithService[path] == nil,
-          let service = TNEScript(scriptPath: fileURL)
+          self.pathWithService[$0.path] == nil,
+          let service = TNEScript(scriptPath: $0)
         else { return }
-        pathWithService[path] = service
-        serviceTrie.insert(value: service)
-      } else if flags.contains(.removed) || flags.contains(.renamed) {
-        guard let service = pathWithService[path] else { return }
-        pathWithService[path] = nil
-        serviceTrie.remove(value: service)
+        self.pathWithService[$0.path] = service
+        self.serviceTrie.insert(value: service)
+      }
+      
+      let remove: (URL)->Void = {
+        guard let service = self.pathWithService[$0.path] else { return }
+        self.pathWithService[$0.path] = nil
+        self.serviceTrie.remove(value: service)
+      }
+      
+      if flags.contains(.created) || flags.contains(.modified) {
+        add(fileURL)
+      } else if flags.contains(.removed) {
+        remove(fileURL)
+      } else if flags.contains(.renamed) {
+        if pathWithService[path] == nil {
+          add(fileURL)
+        } else {
+          remove(fileURL)
+        }
       }
     }
   }
