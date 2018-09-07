@@ -217,3 +217,9 @@ extension TNEScript: Equatable {
     return lhs.script == rhs.script
   }
 }
+
+extension TNEScript: NSCopying {
+  func copy(with zone: NSZone? = nil) -> Any {
+    return TNEScript(keyword: keyword, name: name, content: content, icon: icon, script: script, placeholder: placeholder)
+  }
+}

@@ -16,27 +16,6 @@ final class WebExtService: TonnerreService {
     return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   
-  /**
-   Fill in parameters into the given string template
-   - parameter template: a template string with one ore multiple %@ as the placeholder
-   - parameter args: arguments used to replace the placeholders
-   - returns: a new string with the placeholders replaced by the arguments.
-   
-   - If the number of arguments is more than the number of placeholders, then the last a few arguments will be joined to one to fill one placeholder.
-   - If the number of arguments is less than the number of placeholders, then the template will be returned without filling.
-   */
-  private func fill(template: String, withArguments args: [String]) -> String {
-    let placeholderCount = template.components(separatedBy: "%@").count - 1
-    guard placeholderCount <= args.count else { return template }
-    if placeholderCount == args.count {
-      return String(format: template, arguments: args)
-    } else {
-      let lastArg = args[placeholderCount...].joined(separator: " ")
-      let fillInArgs = Array(args[..<placeholderCount]) + [lastArg]
-      return String(format: template, arguments: fillInArgs)
-    }
-  }
-  
   private var cachedKey: String?
   private var cachedService: [WebExt] = []
   
@@ -51,10 +30,12 @@ final class WebExtService: TonnerreService {
     let possibleService = cachedService
     if input.count > 1 {
       let queryContent = Array(input[1...])
-      let inRangedServices = possibleService.filter { $0.argLowerBound <= input.count && $0.argUpperBound >= input.count }
+      let inRangedServices = possibleService
+          .filter { $0.argLowerBound <= input.count && $0.argUpperBound >= input.count }
+          .map { $0.copy() as! WebExt }
       for service in inRangedServices {
-        service.content = fill(template: service.content, withArguments: queryContent)
-        service.url = URL(string: fill(template: service.url.absoluteString, withArguments: queryContent))!
+        service.content = service.content.filled(withArguments: queryContent)
+        service.url = URL(string: service.url.absoluteString.filled(withArguments: queryContent))!
       }
       return inRangedServices
     }

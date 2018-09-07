@@ -20,27 +20,6 @@ final class TNEServices: TonnerreService {
   private var cachedKey: String?
   private var cachedServices: [TNEScript] = []
   
-  /**
-   Fill in parameters into the given string template
-   - parameter template: a template string with one ore multiple %@ as the placeholder
-   - parameter args: arguments used to replace the placeholders
-   - returns: a new string with the placeholders replaced by the arguments.
-   
-   - If the number of arguments is more than the number of placeholders, then the last a few arguments will be joined to one to fill one placeholder.
-   - If the number of arguments is less than the number of placeholders, then the template will be returned without filling.
-   */
-  private func fill(template: String, withArguments args: [String]) -> String {
-    let placeholderCount = template.components(separatedBy: "%@").count - 1
-    guard placeholderCount <= args.count else { return template }
-    if placeholderCount == args.count {
-      return String(format: template, arguments: args)
-    } else {
-      let lastArg = args[placeholderCount...].joined(separator: " ")
-      let fillInArgs = Array(args[..<placeholderCount]) + [lastArg]
-      return String(format: template, arguments: fillInArgs)
-    }
-  }
-  
   private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
     let unwrap: (Any) -> Any = {
       let mirror = Mirror(reflecting: $0)
@@ -75,9 +54,11 @@ final class TNEServices: TonnerreService {
         NotificationCenter.default.post(notification)
       }
       asyncSession.send(request: task)
-      for service in possibleServices {
-        service.content = fill(template: service.content, withArguments: queryContent)
+      let services = possibleServices.map { $0.copy() as! TNEScript }
+      for service in services {
+        service.content = service.content.filled(withArguments: queryContent)
       }
+      return services
     }
     return possibleServices
   }

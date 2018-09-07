@@ -16,12 +16,13 @@ final class TNEHub {
   }()
   private var serviceTrie = Trie<TNEScript>(values: []) { $0.keyword }
   private var pathWithService = Dictionary<String, TNEScript>()
+  private let queue = DispatchQueue(label: "Tonnerre.TNEHub")
   
   static let `default` = TNEHub()
   
   private init() {
     listener.start()
-    DispatchQueue(label: "Tonnerre.TNEHub").async { [unowned self] in
+    queue.async { [unowned self] in
       do {
         let contents = try FileManager.default.contentsOfDirectory(at: self.path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
         for fileURL in contents where fileURL.pathExtension == "tne" {
@@ -63,20 +64,23 @@ final class TNEHub {
       guard let service = self.pathWithService[$0.path] else { return }
       self.pathWithService[$0.path] = nil
       self.serviceTrie.remove(value: service)
+      UserDefaults.shared.removeObject(forKey: "\(service.path)+isDisabled")
     }
     
-    for (path, flags) in events {
-      let fileURL = URL(fileURLWithPath: path)
-      guard fileURL.pathExtension == "tne" else { continue }
-      if flags.contains(.created) || flags.contains(.modified) {
-        add(fileURL)
-      } else if flags.contains(.removed) {
-        remove(fileURL)
-      } else if flags.contains(.renamed) {
-        if pathWithService[path] == nil {
+    queue.async { [unowned self] in
+      for (path, flags) in events {
+        let fileURL = URL(fileURLWithPath: path)
+        guard fileURL.pathExtension == "tne" else { continue }
+        if flags.contains(.created) || flags.contains(.modified) {
           add(fileURL)
-        } else {
+        } else if flags.contains(.removed) {
           remove(fileURL)
+        } else if flags.contains(.renamed) {
+          if self.pathWithService[path] == nil {
+            add(fileURL)
+          } else {
+            remove(fileURL)
+          }
         }
       }
     }

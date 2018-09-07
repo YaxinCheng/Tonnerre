@@ -103,3 +103,9 @@ extension WebExt: Hashable {
     return lhs.id == rhs.id
   }
 }
+
+extension WebExt: NSCopying {
+  func copy(with zone: NSZone? = nil) -> Any {
+    return WebExt(keyword: keyword, name: name, content: content, icon: icon, url: url, path: path, attrName: attrName, lowerBound: argLowerBound, upperBound: argUpperBound, placeholder: placeholder)
+  }
+}
