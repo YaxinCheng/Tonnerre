@@ -93,3 +93,13 @@ final class WebExt: DisplayProtocol {
     }
   }
 }
+
+extension WebExt: Hashable {
+  var hashValue: Int {
+    return id.hashValue
+  }
+  
+  static func == (lhs: WebExt, rhs: WebExt) -> Bool {
+    return lhs.id == rhs.id
+  }
+}

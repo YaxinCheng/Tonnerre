@@ -111,4 +111,40 @@ extension Trie where T: Equatable {
       node = next
     }
   }
+  
+  mutating func removeAll<S: Collection>(values: S) where S.Element == T {
+    let orderedKeys = values.map(getKeyword).sorted { $0.count < $1.count }
+    var groupedKeys = [Character: [String]]()
+    
+    let matchAndReplace: ([String], String) -> Bool = {
+      for (index, eachKey) in $0.enumerated() {
+        if $1.starts(with: eachKey) {
+          groupedKeys[$1.first!]?.remove(at: index)
+          groupedKeys[$1.first!]?.append($1)
+          return true
+        }
+      }
+      return false
+    }
+    
+    for key in orderedKeys {
+      guard !key.isEmpty else { continue }
+      let existingKeys = groupedKeys[key.first!] ?? []
+      if !existingKeys.isEmpty {
+        if matchAndReplace(existingKeys, key) { continue }
+      }
+      groupedKeys[key.first!] = existingKeys + [key]
+    }
+
+    var node = rootNode
+    for traverseKey in groupedKeys.values.reduce([], +) {
+      for char in traverseKey {
+        guard
+          let next = node.children[char]
+        else { break }
+        next.values = next.values.filter { values.contains($0) }
+        node = next
+      }
+    }
+  }
 }

@@ -50,25 +50,24 @@ final class TNEHub {
   }
   
   private func filesDidChange(events: [TonnerreFSDetector.event]) {
+    let add: (URL)->Void = { [unowned self] in
+      guard
+        self.pathWithService[$0.path] == nil,
+        let service = TNEScript(scriptPath: $0)
+        else { return }
+      self.pathWithService[$0.path] = service
+      self.serviceTrie.insert(value: service)
+    }
+    
+    let remove: (URL)->Void = {
+      guard let service = self.pathWithService[$0.path] else { return }
+      self.pathWithService[$0.path] = nil
+      self.serviceTrie.remove(value: service)
+    }
+    
     for (path, flags) in events {
       let fileURL = URL(fileURLWithPath: path)
       guard fileURL.pathExtension == "tne" else { continue }
-      
-      let add: (URL)->Void = { [unowned self] in
-        guard
-          self.pathWithService[$0.path] == nil,
-          let service = TNEScript(scriptPath: $0)
-        else { return }
-        self.pathWithService[$0.path] = service
-        self.serviceTrie.insert(value: service)
-      }
-      
-      let remove: (URL)->Void = {
-        guard let service = self.pathWithService[$0.path] else { return }
-        self.pathWithService[$0.path] = nil
-        self.serviceTrie.remove(value: service)
-      }
-      
       if flags.contains(.created) || flags.contains(.modified) {
         add(fileURL)
       } else if flags.contains(.removed) {
