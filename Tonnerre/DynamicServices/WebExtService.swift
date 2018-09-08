@@ -30,12 +30,12 @@ final class WebExtService: TonnerreService {
     let possibleService = cachedService
     if input.count > 1 {
       let queryContent = Array(input[1...])
-      let inRangedServices = possibleService
-          .filter { $0.argLowerBound <= input.count && $0.argUpperBound >= input.count }
-          .map { $0.copy() as! WebExt }
-      for service in inRangedServices {
+      var inRangedServices = possibleService
+          .filter { $0.argLowerBound <= queryContent.count && $0.argUpperBound >= queryContent.count }
+      for (index, var service) in inRangedServices.enumerated() {
         service.content = service.content.filled(withArguments: queryContent)
-        service.url = URL(string: service.url.absoluteString.filled(withArguments: queryContent))!
+        service.rawURL = service.rawURL.filled(withArguments: queryContent)
+        inRangedServices[index] = service
       }
       return inRangedServices
     }
@@ -43,8 +43,11 @@ final class WebExtService: TonnerreService {
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let webExt = source as? WebExt else { return }
+    guard
+      let webExt = source as? WebExt,
+      let url = URL(string: webExt.rawURL)
+    else { return }
     let workspace = NSWorkspace.shared
-    workspace.open(webExt.url)
+    workspace.open(url)
   }
 }

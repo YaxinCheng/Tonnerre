@@ -8,8 +8,8 @@
 
 import Cocoa
 
-final class TNEScript: DisplayProtocol {
-  enum runningMode {
+struct TNEScript: DisplayProtocol {
+  enum TNEArgument {
     case prepare(input: [String])
     case serve(choice: [String: Any])
     
@@ -40,11 +40,11 @@ final class TNEScript: DisplayProtocol {
       }
     }
     
-    fileprivate func execute(mode: runningMode) -> Process? {
+    fileprivate func execute(args: TNEArgument) -> Process? {
       do {
         switch self {
-        case .python(path: _): return try pythonExec(mode: mode)
-        case .appleScript(path: _): return try ASExec(mode: mode)
+        case .python(path: _): return try pythonExec(mode: args)
+        case .appleScript(path: _): return try ASExec(mode: args)
         }
       } catch {
         #if DEBUG
@@ -55,6 +55,8 @@ final class TNEScript: DisplayProtocol {
     }
   }
   
+  private static var processManager: [String: Process] = [:]
+  
   let name: String
   var content: String
   let icon: NSImage
@@ -64,10 +66,12 @@ final class TNEScript: DisplayProtocol {
   var path: URL {
     return script.path
   }
-  var runningScript: Process?
+  var id: String {
+    return path.path
+  }
   private static let validExtensions = [".py", ".scpt"]
   
-  convenience init?(scriptPath: URL) {
+  init?(scriptPath: URL) {
     var validScript: Script! = nil
     for ext in TNEScript.validExtensions {
       let exePath = scriptPath.appendingPathComponent("main" + ext)
@@ -111,10 +115,10 @@ final class TNEScript: DisplayProtocol {
     self.placeholder = placeholder ?? keyword
   }
   
-  func execute(mode: runningMode) -> [DisplayProtocol] {
-    let process = script.execute(mode: mode)
-    runningScript?.terminate()
-    runningScript = process
+  func execute(args: TNEArgument) -> [DisplayProtocol] {
+    let process = script.execute(args: args)
+    type(of: self).processManager[id]?.terminate()
+    type(of: self).processManager[id] = process
     do {
       switch script {
       case .python(path: _):
@@ -171,7 +175,7 @@ extension TNEScript.Script: Equatable {
     return lhs.path == rhs.path
   }
   
-  private func pythonExec(mode: TNEScript.runningMode) throws -> Process {
+  private func pythonExec(mode: TNEScript.TNEArgument) throws -> Process {
     guard
       case .python(let scriptPath) = self,
       FileManager.default.fileExists(atPath: scriptPath.path)
@@ -196,7 +200,7 @@ extension TNEScript.Script: Equatable {
     return process
   }
   
-  private func ASExec(mode: TNEScript.runningMode) throws -> Process? {
+  private func ASExec(mode: TNEScript.TNEArgument) throws -> Process? {
     guard
       case .appleScript(let scriptPath) = self,
       FileManager.default.fileExists(atPath: scriptPath.path)
@@ -215,11 +219,5 @@ extension TNEScript.Script: Equatable {
 extension TNEScript: Equatable {
   static func == (lhs: TNEScript, rhs: TNEScript) -> Bool {
     return lhs.script == rhs.script
-  }
-}
-
-extension TNEScript: NSCopying {
-  func copy(with zone: NSZone? = nil) -> Any {
-    return TNEScript(keyword: keyword, name: name, content: content, icon: icon, script: script, placeholder: placeholder)
   }
 }

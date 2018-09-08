@@ -86,7 +86,6 @@
 		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
 		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1473A55620D848E100C2FC42 /* ReloadService.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* ApplicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* ApplicationService.swift */; };
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
@@ -104,7 +103,6 @@
 		14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FC20BF824E00D10D44 /* LaunchService.swift */; };
 		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
 		14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30620C210EB00D10D44 /* BaseWindowController.swift */; };
-		14AFE693210FE196002BBBB2 /* DynamicWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE692210FE196002BBBB2 /* DynamicWebService.swift */; };
 		14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */; };
 		14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE69E2112A4F1002BBBB2 /* ViewController.swift */; };
 		14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
@@ -283,7 +281,6 @@
 		1470518420B1DEDF00F6FBE8 /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
 		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
-		1473A55620D848E100C2FC42 /* ReloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadService.swift; sourceTree = "<group>"; };
 		1484148220C63A1A008FD68E /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		1484148420C70263008FD68E /* ApplicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationService.swift; sourceTree = "<group>"; };
 		1484148F20C84589008FD68E /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
@@ -302,7 +299,6 @@
 		14AEB2FE20BF84D100D10D44 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
 		14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypeControl.swift; sourceTree = "<group>"; };
 		14AEB30620C210EB00D10D44 /* BaseWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindowController.swift; sourceTree = "<group>"; };
-		14AFE692210FE196002BBBB2 /* DynamicWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicWebService.swift; sourceTree = "<group>"; };
 		14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SettingPanel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14AFE69E2112A4F1002BBBB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -419,13 +415,12 @@
 			name = TranslationRelated;
 			sourceTree = "<group>";
 		};
-		145DA16E20DC09BF00C1E804 /* InterpreterServices */ = {
+		145DA16E20DC09BF00C1E804 /* Tonnere */ = {
 			isa = PBXGroup;
 			children = (
-				1473A55620D848E100C2FC42 /* ReloadService.swift */,
 				143551F22123A49200D6080E /* SettingService.swift */,
 			);
-			path = InterpreterServices;
+			path = Tonnere;
 			sourceTree = "<group>";
 		};
 		146AAE6420BDD7C2009AC9C6 /* IndexRelated */ = {
@@ -445,7 +440,7 @@
 				14561B8B20C444470057B4C1 /* ServicePack.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
-				145DA16E20DC09BF00C1E804 /* InterpreterServices */,
+				145DA16E20DC09BF00C1E804 /* Tonnere */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
 				1484148A20C7032E008FD68E /* Web */,
@@ -711,7 +706,6 @@
 		14F015D92102315400537160 /* DynamicServices */ = {
 			isa = PBXGroup;
 			children = (
-				14AFE692210FE196002BBBB2 /* DynamicWebService.swift */,
 				14F230262140927000B7A0FB /* WebExtHub.swift */,
 				14F2302A21409E4700B7A0FB /* WebExtService.swift */,
 				14F230282140969000B7A0FB /* WebExt.swift */,
@@ -984,7 +978,6 @@
 				1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */,
 				1484148520C70263008FD68E /* ApplicationService.swift in Sources */,
 				14AEB2FB20BF81CA00D10D44 /* TonnerreServiceLoader.swift in Sources */,
-				14AFE693210FE196002BBBB2 /* DynamicWebService.swift in Sources */,
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
@@ -1023,7 +1016,6 @@
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
-				1473A55720D848E100C2FC42 /* ReloadService.swift in Sources */,
 				14F230232139F94200B7A0FB /* TNEServices.swift in Sources */,
 				144E0C1220ED2F4300E4F2DA /* ASServices.swift in Sources */,
 				1449E5882133521A00500BF4 /* NSImage+Tint.swift in Sources */,

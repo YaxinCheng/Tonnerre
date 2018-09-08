@@ -8,13 +8,13 @@
 
 import Cocoa
 
-final class WebExt: DisplayProtocol {
+struct WebExt: DisplayProtocol {
   let name: String
   var content: String
   let icon: NSImage
   var placeholder: String
   let keyword: String
-  var url: URL
+  var rawURL: String
   let argLowerBound: Int
   let argUpperBound: Int
   private let path: URL
@@ -23,14 +23,14 @@ final class WebExt: DisplayProtocol {
     return path.path + "//" + attrName
   }
   
-  init(keyword: String, name: String, content: String, icon: NSImage, url: URL, path: URL, attrName: String, lowerBound: Int, upperBound: Int, placeholder: String? = nil) {
+  init(keyword: String, name: String, content: String, icon: NSImage, rawURL: String, path: URL, attrName: String, lowerBound: Int, upperBound: Int, placeholder: String? = nil) {
     self.keyword = keyword
     self.name = name
     self.content = content
     self.icon = icon
     self.path = path
     self.attrName = attrName
-    self.url = url
+    self.rawURL = rawURL
     self.argLowerBound = lowerBound
     self.argUpperBound = upperBound
     self.placeholder = placeholder ?? keyword
@@ -73,14 +73,13 @@ final class WebExt: DisplayProtocol {
           guard
             let name = jsonContent["name"] as? String,
             let keyword = jsonContent["keyword"] as? String,
-            let rawURL = jsonContent["url"] as? String,
-            let url = URL(string: rawURL)
+            let rawURL = jsonContent["url"] as? String
           else { continue }
           let content = jsonContent["content"] as? String ?? ""
           let argLowerBound = jsonContent["argLowerBound"] as? Int ?? 1
           let argUpperBound = jsonContent["argUpperBound"] as? Int ?? argLowerBound
           let icon = jsonContent["icon"] is String ? loadImage(rawURL: jsonContent["icon"] as! String) : #imageLiteral(resourceName: "notFound")
-          let loadedExt = WebExt(keyword: keyword, name: name, content: content, icon: icon, url: url, path: url, attrName: attrName, lowerBound: argLowerBound, upperBound: argUpperBound)
+          let loadedExt = WebExt(keyword: keyword, name: name, content: content, icon: icon, rawURL: rawURL, path: url, attrName: attrName, lowerBound: argLowerBound, upperBound: argUpperBound)
           validExts.append(loadedExt)
         }
         return validExts
@@ -101,11 +100,5 @@ extension WebExt: Hashable {
   
   static func == (lhs: WebExt, rhs: WebExt) -> Bool {
     return lhs.id == rhs.id
-  }
-}
-
-extension WebExt: NSCopying {
-  func copy(with zone: NSZone? = nil) -> Any {
-    return WebExt(keyword: keyword, name: name, content: content, icon: icon, url: url, path: path, attrName: attrName, lowerBound: argLowerBound, upperBound: argUpperBound, placeholder: placeholder)
   }
 }

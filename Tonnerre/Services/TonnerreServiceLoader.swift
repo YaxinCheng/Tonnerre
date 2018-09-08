@@ -46,7 +46,6 @@ struct TonnerreServiceLoader {
    - parameter type: the type of service to load
   */
   func load(keyword: String, type: serviceType = .normal) -> [TonnerreService] {
-    if keyword.starts(with: "@") { return [ReloadService.init()] }// @ is a special modifier only for reload
     if type == .normal {
       let fetchedServices = normalServiceTrie.find(value: keyword)
         .filter { !$0.isDisabled }
@@ -59,7 +58,7 @@ struct TonnerreServiceLoader {
   
   init() {
     prioritizedServices = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
-    extensionServices = [TNEServices(), DynamicWebService()]
+    extensionServices = [TNEServices(), WebExtService()]
     let normalServices: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, TrashEmptyService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, LockService.self, ScreenSaverService.self, SafariBMService.self, ChromeBMService.self, TerminalService.self, ClipboardService.self]
     let systemServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
     
@@ -87,12 +86,5 @@ struct TonnerreServiceLoader {
         ["title":  object.name, "detail": object.content, "type": "gradient"]
     }
     userDefault.set(settingsDict, forKey: .defaultSettingsSet)
-  }
-  
-  /**
-   Reload the dynamic services from file systems
-  */
-  func reload() {
-    extensionServices.compactMap { $0 as? DynamicWebService }.forEach { $0.reload() }
   }
 }

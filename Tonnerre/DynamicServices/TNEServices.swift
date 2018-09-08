@@ -44,23 +44,23 @@ final class TNEServices: TonnerreService {
       cachedKey = queryKey
       cachedServices = TNEHub.default.find(keyword: queryKey)
     }
-    let possibleServices = cachedServices
-    if input.count > 1 {
+    if input.count == 1 { return cachedServices }
+    else {
+      var possibleServices = cachedServices
       let queryContent = Array(input[1...])
       let task = DispatchWorkItem { [unowned self] in
-        let content = possibleServices.compactMap { $0.execute(mode: .prepare(input: queryContent)) }.reduce([], +)
+        let content = possibleServices.compactMap { $0.execute(args: .prepare(input: queryContent)) }.reduce([], +)
         guard content.count > 0 else { return }
         let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": content])
         NotificationCenter.default.post(notification)
       }
       asyncSession.send(request: task)
-      let services = possibleServices.map { $0.copy() as! TNEScript }
-      for service in services {
+      for (index, var service) in possibleServices.enumerated() {
         service.content = service.content.filled(withArguments: queryContent)
+        possibleServices[index] = service
       }
-      return services
+      return possibleServices
     }
-    return possibleServices
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
@@ -76,7 +76,7 @@ final class TNEServices: TonnerreService {
       } else { return }
       var dictionarizedChoice = self.dictionarize(source)
       dictionarizedChoice["withCmd"] = withCmd
-      _ = originalService.execute(mode: .serve(choice: dictionarizedChoice))
+      _ = originalService.execute(args: .serve(choice: dictionarizedChoice))
     }
   }
 }
@@ -88,5 +88,4 @@ extension TNEServices: AsyncLoadingProtocol {
   }
   
   var mode: AsyncLoadingType { return .replaced }
-  
 }
