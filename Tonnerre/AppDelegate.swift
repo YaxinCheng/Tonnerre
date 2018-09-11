@@ -39,7 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
       }
     }
-    TonnerreInterpreter.loader.reload()
     let title = (successCount > 1 ? "Services" : "Service") + " Installed"
     let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
     NSUserNotification.send(title: title, informativeText: informativeText)

@@ -21,7 +21,7 @@ final class WebExtHub {
   private init() {
     listener.start()
     queue.async { [unowned self] in
-      for service in WebExt.constrruct(fromURL: self.path) {
+      for service in WebExt.construct(fromURL: self.path) {
         self.serviceTrie.insert(value: service)
       }
     }

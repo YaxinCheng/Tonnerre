@@ -14,12 +14,14 @@ enum StoredKey: String {// Keys used in UserDefault
   case designatedX
   case designatedY
   case defaultSearch
-  case defaultSettingsSet = "tonnerre.settings"
+  case defaultSettingsSet = "tonnerre.builtin"
+  /**
+   This is true when built-in services are not set for settings
+  */
+  case builtinServiceSet
 }
 
 func getContext() -> NSManagedObjectContext {
   let appDelegate = NSApplication.shared.delegate as! AppDelegate
   return appDelegate.persistentContainer.viewContext
 }
-
-typealias SettingDict = [String: [String: [String: [String: String]]]]

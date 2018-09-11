@@ -72,19 +72,10 @@ struct TonnerreServiceLoader {
   
   private func setSettings(services: [TonnerreService.Type], side: String) {
     let userDefault = UserDefaults.shared
-    var settingsDict: SettingDict
-    if let existingDict = userDefault.dictionary(forKey: .defaultSettingsSet), !existingDict.isEmpty {
-      settingsDict = existingDict as! SettingDict
-    } else if
-      let settingURL = Bundle.main.url(forResource: "Settings", withExtension: "plist"),
-      let plistContent = NSDictionary(contentsOf: settingURL) as? SettingDict {
-      settingsDict = plistContent
-    } else { fatalError("Settings cannot be loaded") }
-    for service in services {
-      let object = service.init()
-      settingsDict["secondTab"]![side]![service.settingKey] =
-        ["title":  object.name, "detail": object.content, "type": "gradient"]
-    }
-    userDefault.set(settingsDict, forKey: .defaultSettingsSet)
+    guard !userDefault.bool(forKey: .builtinServiceSet) else { return }
+    let settings = services.map { $0.init() }
+      .map { [$0.name, $0.content, type(of: $0).settingKey] }
+    userDefault.set(settings, forKey: .defaultSettingsSet)
+    userDefault.set(true, forKey: .builtinServiceSet)
   }
 }

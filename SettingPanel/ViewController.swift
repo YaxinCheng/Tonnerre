@@ -15,10 +15,6 @@ final class ViewController: NSViewController {
   @IBOutlet weak var tabBarView: NSStackView!
   
   private var currentTab: NSStoryboardSegue.Identifier = .secondTab
-  private static var settingOptions: [String: Any] {
-    let userDefault = UserDefaults(suiteName: "Tonnerre")!
-    return userDefault.dictionary(forKey: "tonnerre.settings") ?? [:]
-  }
   
   private var highlightedButton: NSButton?
   
@@ -57,15 +53,24 @@ final class ViewController: NSViewController {
   typealias SettingOption = (title: String, detail: String, type: SettingCellType, settingKey: String)
   
   private func loadSettings(with identifier: NSStoryboardSegue.Identifier) -> (left: [SettingOption], right: [SettingOption]) {
-    guard
-      let tabData = ViewController.settingOptions[identifier.rawValue] as? [String: [String: [String: String]]]
-    else { return ([], []) }
-    let constructOption: (String, [String: String]) -> SettingOption = {
-      ($1["title"]!, $1["detail"]!, SettingCellType(rawValue: $1["type"]!)!, $0)
-    }
-    let leftOptions = tabData["left"]!.map(constructOption)
-    let rightOptions = tabData["right"]!.map(constructOption)
-    return (leftOptions, rightOptions)
+    if identifier == .firstTab {
+      guard
+        let settingsFile = Bundle.main.url(forResource: "Settings", withExtension: "plist"),
+      let settings = NSDictionary(contentsOf: settingsFile) as? [String: [String: [String: String]]]
+      else { return ([], []) }
+      let extract: ((key: String, value: [String: String]))->SettingOption = {
+        ($0.value["title"]!, $0.value["detail"]!, SettingCellType(rawValue: $0.value["type"]!)!, $0.key)
+      }
+      let leftData = settings["left"]?.map(extract) ?? []
+      let rightData = settings["right"]?.map(extract) ?? []
+      return (leftData, rightData)
+    } else if identifier == .secondTab {
+      let userDefault = UserDefaults.shared
+      let builtinServices = userDefault.array(forKey: "tonnerre.builtin") as? [[String]] ?? []
+      let leftData: [SettingOption] = builtinServices.map { ($0[0], $0[1], .gradient, $0[2]) }
+      let rightData = readInTNEs() + readInWebex()
+      return (leftData, rightData)
+    } else { return ([], []) }
   }
   
   override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -74,6 +79,56 @@ final class ViewController: NSViewController {
       let destinationVC = segue.destinationController as? SettingViewController
     else { return }
     destinationVC.settingOptions = loadSettings(with: identifier)
+  }
+  
+  private func readInTNEs() -> [SettingOption] {
+    do {
+      let path = UserDefaults.shared.url(forKey: "appSupportDir")!.appendingPathComponent("Services")
+      let contents = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
+      var options: [SettingOption] = []
+      for fileURL in contents where fileURL.pathExtension == "tne" {
+        let jsonPath = fileURL.appendingPathComponent("description.json")
+        let jsonData = try Data(contentsOf: jsonPath)
+        guard
+          let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? [String: String],
+          let name = jsonObject["name"],
+          let content = jsonObject["content"]
+        else { continue }
+        options.append((name, content, .gradient, "\(fileURL)+isDisabled"))
+      }
+      return options
+    } catch {
+      #if DEBUG
+      print("setting error with tne loading", error)
+      #endif
+      return []
+    }
+  }
+  
+  private func readInWebex() -> [SettingOption] {
+    let path = UserDefaults.shared.url(forKey: "appSupportDir")!.appendingPathComponent("Services/web.json")
+    do {
+      let jsonData = try Data(contentsOf: path)
+      guard
+        let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
+        as? Dictionary<String, [String: Any]>
+      else { return [] }
+      var options: [SettingOption] = []
+      for (attrName, objectContent) in jsonObject {
+        guard
+          let name = objectContent["name"] as? String,
+          let detail = objectContent["content"] as? String
+        else { continue }
+        options.append((name, detail, .gradient, "\(attrName)+isDisabled"))
+      }
+      return options
+    } catch {
+      #if DEBUG
+      print("setting error with webex loading", error)
+      #endif
+      return []
+    }
+    return []
   }
 }
 

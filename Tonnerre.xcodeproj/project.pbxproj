@@ -22,7 +22,6 @@
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD42120DB3500F5AFCA /* GradientColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD32120DB3500F5AFCA /* GradientColours.swift */; };
-		14398FDA212234F900F5AFCA /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
 		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
 		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
@@ -143,6 +142,7 @@
 		14F230292140969000B7A0FB /* WebExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F230282140969000B7A0FB /* WebExt.swift */; };
 		14F2302B21409E4700B7A0FB /* WebExtService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302A21409E4700B7A0FB /* WebExtService.swift */; };
 		14F2302D214206F100B7A0FB /* String+fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302C214206F100B7A0FB /* String+fill.swift */; };
+		14F230302147467C00B7A0FB /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 /* End PBXBuildFile section */
 
@@ -519,7 +519,6 @@
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
 				1421F284210257D90020480A /* DynamicServiceExec.py */,
 				14AFE6B62118FD99002BBBB2 /* tonnerre.icns */,
-				14AFE6DA211CDDCC002BBBB2 /* Settings.plist */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -634,6 +633,7 @@
 				14AFE69E2112A4F1002BBBB2 /* ViewController.swift */,
 				14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */,
 				14AFE6BA2119F031002BBBB2 /* SettingView.swift */,
+				14AFE6DA211CDDCC002BBBB2 /* Settings.plist */,
 				14AFE6D9211BD64D002BBBB2 /* Segue */,
 				14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */,
 				14AFE6D8211BD61F002BBBB2 /* Cells */,
@@ -858,6 +858,9 @@
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
 							};
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
 						};
 					};
 				};
@@ -909,7 +912,6 @@
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
 				14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */,
 				1421F285210257D90020480A /* DynamicServiceExec.py in Resources */,
-				14398FDA212234F900F5AFCA /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -935,6 +937,7 @@
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
 				14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
+				14F230302147467C00B7A0FB /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

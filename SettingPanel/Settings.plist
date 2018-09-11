@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>firstTab</key>
-	<dict>
 		<key>left</key>
 		<dict>
 			<key>settings:python</key>
@@ -27,14 +25,5 @@
 		</dict>
 		<key>right</key>
 		<dict/>
-	</dict>
-	<key>secondTab</key>
-	<dict>
-		<key>left</key>
-    <dict>
-		</dict>
-		<key>right</key>
-		<dict/>
-	</dict>
 </dict>
 </plist>
