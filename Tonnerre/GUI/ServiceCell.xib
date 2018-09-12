@@ -63,7 +63,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
         </customView>
-        <collectionViewItem nibName="ServiceCell" id="eZD-gZ-6Dv" userLabel="Service Cell" customClass="GradientCell" customModule="Tonnerre" customModuleProvider="target">
+        <collectionViewItem nibName="ServiceCell" id="eZD-gZ-6Dv" userLabel="Service Cell" customClass="ServiceCell" customModule="Tonnerre" customModuleProvider="target">
             <connections>
                 <outlet property="cmdLabel" destination="eSm-bB-rbb" id="cfc-cY-VBu"/>
                 <outlet property="iconView" destination="zIt-L7-Ohv" id="TRC-bp-DY1"/>
@@ -74,6 +74,6 @@
         </collectionViewItem>
     </objects>
     <resources>
-        <image name="tonnerre" width="48" height="48"/>
+        <image name="tonnerre" width="128" height="128"/>
     </resources>
 </document>

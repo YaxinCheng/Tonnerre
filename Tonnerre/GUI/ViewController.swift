@@ -159,7 +159,7 @@ extension ViewController: NSTextFieldDelegate {
   private func adjustEditing(withString string: String) {
     let cellSize = calculateSize(value: string)
     let minSize = calculateSize(value: "Tonnerre")
-    let width = string.isEmpty ? minSize.width : cellSize.width
+    let width = min(string.isEmpty ? minSize.width : cellSize.width, 610)
     textFieldWidth.constant = width
     placeholderWidth.constant = 610 - width
     guard let position = textField.currentEditor()?.selectedRange.location else { return }
