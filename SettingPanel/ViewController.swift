@@ -50,7 +50,7 @@ final class ViewController: NSViewController {
     return true
   }
   
-  typealias SettingOption = (title: String, detail: String, type: SettingCellType, settingKey: String)
+  typealias SettingOption = (title: String, detail: String, type: SettingCellType, settingKey: String, url: URL?)
   
   private func loadSettings(with identifier: NSStoryboardSegue.Identifier) -> (left: [SettingOption], right: [SettingOption]) {
     if identifier == .firstTab {
@@ -59,7 +59,7 @@ final class ViewController: NSViewController {
       let settings = NSDictionary(contentsOf: settingsFile) as? [String: [String: [String: String]]]
       else { return ([], []) }
       let extract: ((key: String, value: [String: String]))->SettingOption = {
-        ($0.value["title"]!, $0.value["detail"]!, SettingCellType(rawValue: $0.value["type"]!)!, $0.key)
+        ($0.value["title"]!, $0.value["detail"]!, SettingCellType(rawValue: $0.value["type"]!)!, $0.key, nil)
       }
       let leftData = settings["left"]?.map(extract) ?? []
       let rightData = settings["right"]?.map(extract) ?? []
@@ -67,7 +67,7 @@ final class ViewController: NSViewController {
     } else if identifier == .secondTab {
       let userDefault = UserDefaults.shared
       let builtinServices = userDefault.array(forKey: "tonnerre.builtin") as? [[String]] ?? []
-      let leftData: [SettingOption] = builtinServices.map { ($0[0], $0[1], .gradient, $0[2]) }
+      let leftData: [SettingOption] = builtinServices.map { ($0[0], $0[1], .gradient, $0[2], nil) }
       let rightData = readInTNEs() + readInWebex()
       return (leftData, rightData)
     } else { return ([], []) }
@@ -94,7 +94,7 @@ final class ViewController: NSViewController {
           let name = jsonObject["name"],
           let content = jsonObject["content"]
         else { continue }
-        options.append((name, content, .gradient, "\(fileURL)+isDisabled"))
+        options.append((name, content, .gradient, "\(fileURL)+isDisabled", fileURL))
       }
       return options
     } catch {
@@ -119,7 +119,7 @@ final class ViewController: NSViewController {
           let name = objectContent["name"] as? String,
           let detail = objectContent["content"] as? String
         else { continue }
-        options.append((name, detail, .gradient, "\(attrName)+isDisabled"))
+        options.append((name, detail, .gradient, "\(attrName)+isDisabled", nil))
       }
       return options
     } catch {
@@ -128,7 +128,6 @@ final class ViewController: NSViewController {
       #endif
       return []
     }
-    return []
   }
 }
 

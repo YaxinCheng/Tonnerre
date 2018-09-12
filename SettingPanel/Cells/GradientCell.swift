@@ -8,11 +8,19 @@
 
 import Cocoa
 
-final class ServiceCell: NSView, SettingCell {
+final class GradientCell: NSView, SettingCell {
   let type: SettingCellType = .gradient
   @IBOutlet weak var detailLabel: NSTextField!
   @IBOutlet weak var titleLabel: NSTextField!
   var settingKey: String!
+  var url: URL? {
+    didSet {
+      menu = NSMenu(title: "")
+      menu?.addItem(.init(title: "Remove", action: #selector(removeItem(_:)), keyEquivalent: ""))
+    }
+  }
+  weak var viewController: SettingViewController?
+  
   private let cellColour: GradientColours.Gradient
   var disabled: Bool {
     set {
@@ -44,5 +52,15 @@ final class ServiceCell: NSView, SettingCell {
   
   override func mouseUp(with event: NSEvent) {
     disabled = !disabled
+  }
+  
+  @objc private func removeItem(_ sender: Any) {
+    guard let fileURL = url else { return }
+    do {
+      try FileManager.default.removeItem(at: fileURL)
+      viewController?.remove(cell: self)
+    } catch {
+      
+    }
   }
 }

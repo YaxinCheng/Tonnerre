@@ -120,7 +120,7 @@
                 <outlet property="view" destination="pfq-m9-fdI" id="BH1-O4-mTP"/>
             </connections>
         </viewController>
-        <customView id="pHF-96-vVh" customClass="ServiceCell" customModule="SettingPanel" customModuleProvider="target">
+        <customView id="pHF-96-vVh" customClass="GradientCell" customModule="SettingPanel" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="481" height="69"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>

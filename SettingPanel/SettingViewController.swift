@@ -46,10 +46,15 @@ final class SettingViewController: NSViewController {
   }
   
   private func setupCell(with datasource: ViewController.SettingOption) -> NSView? {
+    if datasource.url != nil && !FileManager.default.fileExists(atPath: datasource.url!.path) { return nil }
     let cell = instantiateCell(withType: datasource.type)
     cell?.titleLabel.stringValue = datasource.title
     cell?.detailLabel.stringValue = datasource.detail
     cell?.settingKey = datasource.settingKey
+    if let url = datasource.url, datasource.type == .gradient {
+      (cell as? GradientCell)?.url = url
+      (cell as? GradientCell)?.viewController = self
+    }
     return cell as? NSView
   }
   
@@ -59,5 +64,12 @@ final class SettingViewController: NSViewController {
     leftViews.forEach { settingView.addSubview($0, side: .left) }
     rightViews.forEach { settingView.addSubview($0, side: .right) }
     settingView.adjustHeight()
+  }
+  
+  func remove(cell: GradientCell) {
+    guard
+      let index = settingView.rightPanel.subviews.index(of: cell)
+    else { return }
+    settingView.rightPanel.subviews.remove(at: index)
   }
 }
