@@ -80,7 +80,7 @@ final class BaseWindow: NSPanel {
   
   private func setupCache() {
     let cache = URLCache(memoryCapacity: 1024 * 1024 * 5, diskCapacity: 1024 * 1024 * 25, diskPath: {
-      let userDefault = UserDefaults.standard
+      let userDefault = UserDefaults.shared
       let appSupFolder = userDefault.url(forKey: .appSupportDir)!
       return appSupFolder.appendingPathComponent("Cache").path
     }())
