@@ -46,8 +46,8 @@ final class TNEServices: TonnerreService {
     }
     if input.count == 1 { return cachedServices }
     else {
-      var possibleServices = cachedServices
       let queryContent = Array(input[1...])
+      var possibleServices = cachedServices.filter { $0.lowerBound <= queryContent.count + 1 && $0.upperBound >= queryContent.count }
       let task = DispatchWorkItem { [unowned self] in
         let content = possibleServices.compactMap { $0.execute(args: .prepare(input: queryContent)) }.reduce([], +)
         guard content.count > 0 else { return }

@@ -69,6 +69,8 @@ struct TNEScript: DisplayProtocol {
   var id: String {
     return path.path
   }
+  let lowerBound: Int
+  let upperBound: Int
   private static let validExtensions = [".py", ".scpt"]
   
   init?(scriptPath: URL) {
@@ -86,18 +88,21 @@ struct TNEScript: DisplayProtocol {
     let jsonURL = scriptPath.appendingPathComponent("description.json")
     do {
       let jsonData = try Data(contentsOf: jsonURL)
-      let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? Dictionary<String, String>
+      let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? Dictionary<String, Any>
       guard
         let descriptionObj = jsonObject,
-        let name = descriptionObj["name"],
-        let keyword = descriptionObj["keyword"]
+        let name = descriptionObj["name"] as? String,
+        let keyword = descriptionObj["keyword"] as? String
         else { return nil }
       let icon: NSImage
       if fileIcon != nil { icon = fileIcon! }
-      else if let iconPath = descriptionObj["icon"], let iconFromPath = NSImage(contentsOfFile: iconPath) {
+      else if let iconPath = descriptionObj["icon"] as? String, let iconFromPath = NSImage(contentsOfFile: iconPath) {
         icon = iconFromPath
       } else { icon = #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour) }
-      self.init(keyword: keyword, name: name, content: descriptionObj["content"] ?? "", icon: icon, script: validScript)
+      let placeholder = descriptionObj["placeholder"] as? String
+      let lowerBound = descriptionObj["lowerBound"] as? Int ?? 1
+      let upperBound = descriptionObj["upperBound"] as? Int ?? .max
+      self.init(keyword: keyword, name: name, content: descriptionObj["content"] as? String ?? "", icon: icon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound)
     } catch {
       #if DEBUG
       print("Error happened in script constructor: ", error)
@@ -106,13 +111,15 @@ struct TNEScript: DisplayProtocol {
     }
   }
   
-  init(keyword: String, name: String, content: String, icon: NSImage, script: Script, placeholder: String? = nil) {
+  init(keyword: String, name: String, content: String, icon: NSImage, script: Script, placeholder: String? = nil, lowerBound: Int, upperBound: Int) {
     self.script = script
     self.keyword = keyword
     self.name = name
     self.content = content
     self.icon = icon
     self.placeholder = placeholder ?? keyword
+    self.lowerBound = lowerBound
+    self.upperBound = upperBound
   }
   
   func execute(args: TNEArgument) -> [DisplayProtocol] {
