@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Interpreter provides TNE script services
+ */
 struct TNEInterpreter: Interpreter {
   typealias LoaderType = TNEHub
   let loader: TNEHub = .default

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Interpreter provides all services that require no keyword
+ */
 struct PrioriInterpreter: Interpreter {
   typealias LoaderType = PrioriLoader
   let loader = PrioriLoader()

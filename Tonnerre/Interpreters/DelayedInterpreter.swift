@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+ Interpreter provides delayed services.
+ 
+ This is requested when no other interpreter can offer at least one service
+ */
 struct DelayedInterpreter: Interpreter {
   typealias LoaderType = DelayedServiceLoader
   let loader = DelayedServiceLoader()

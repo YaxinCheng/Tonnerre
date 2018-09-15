@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Interpreter provides general built-in services 
+ */
 struct GeneralInterpreter: Interpreter {
   let loader = GeneralLoader()
   func wrap(_ rawData: [TonnerreService], withTokens tokens: [String]) -> [ServicePack] {
