@@ -13,22 +13,21 @@ final class BaseWindowController: NSWindowController, NSWindowDelegate {
   override func windowDidLoad() {
     super.windowDidLoad()
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     #if RELEASE
     let userDefault = UserDefaults.standard
     if
-      let x = userDefault.value(forKey: .designatedX) as? Int,
-      let y = userDefault.value(forKey: .designatedY) as? Int {
+      let x = userDefault.value(forKey: .designatedX) as? CGFloat,
+      let y = userDefault.value(forKey: .designatedY) as? CGFloat {
       window?.setFrameOrigin(NSPoint(x: max(x, 0), y: max(y, 0)))
     } else {
       guard let screenSize = NSScreen.main?.frame.size, let myWindow = window else { return }
       let x = screenSize.width / 2 - myWindow.frame.width / 2
       let y = screenSize.height * 5 / 6
+      userDefault.set(screenSize.width, forKey: "screenWidth")
+      userDefault.set(screenSize.height, forKey: "screenHeight")
       myWindow.setFrameOrigin(NSPoint(x: x, y: y))
-      userDefault.set(x, forKey: .designatedX)
-      userDefault.set(y, forKey: .designatedY)
     }
-    #endif 
+    #endif
   }
   
   func windowDidResignKey(_ notification: Notification) {

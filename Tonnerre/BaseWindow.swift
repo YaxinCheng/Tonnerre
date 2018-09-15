@@ -22,6 +22,7 @@ final class BaseWindow: NSPanel {
         NotificationCenter.default.post(notification)
         orderOut(self)
       } else {
+        resetWindownLocation()
         makeKeyAndOrderFront(self)
         orderFrontRegardless()
       }
@@ -29,7 +30,31 @@ final class BaseWindow: NSPanel {
     }
   }
   
+  /**
+   Works in multi-display environment. This function puts the window to the main screen (with a window currently accepting keyboard events) at a similar location like in the previous screen
+  */
+  private func resetWindownLocation() {
+    #if RELEASE
+    let userDefault = UserDefaults.standard
+    guard
+      let screenWidth = userDefault.value(forKey: "screenWidth") as? CGFloat,
+      let screenHeight = userDefault.value(forKey: "screenHeight") as? CGFloat,
+      let currScreen = NSScreen.main
+    else { return }
+    let (currScreenWidth, currScreenHeight) = (currScreen.frame.width, currScreen.frame.height)
+    let (x, y) = (frame.origin.x, frame.origin.y)
+    let (ratioX, ratioY) = (x / screenWidth * currScreenWidth, y / screenHeight * currScreenHeight)
+    setFrameOrigin(NSPoint(x: ratioX, y: ratioY))
+    #endif
+  }
+  
   let hotkey: HotKey
+  
+  override func setFrameOrigin(_ point: NSPoint) {
+    super.setFrameOrigin(point)
+    UserDefaults.standard.set(point.x, forKey: .designatedX)
+    UserDefaults.standard.set(point.y, forKey: .designatedY)
+  }
   
   override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
     hotkey = HotKey(key: .space, modifiers: [.option])
