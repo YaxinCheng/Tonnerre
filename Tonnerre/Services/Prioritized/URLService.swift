@@ -12,6 +12,7 @@ struct URLService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 1
   let icon: NSImage = .safari
+  let content: String = "Open typed URL in a browser"
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     guard let query = input.first, input.count == 1 else { return [] }

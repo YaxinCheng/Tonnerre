@@ -53,7 +53,6 @@ final class SettingViewController: NSViewController {
     cell?.settingKey = datasource.settingKey
     if let url = datasource.url, datasource.type == .gradient {
       (cell as? GradientCell)?.url = url
-      (cell as? GradientCell)?.viewController = self
     }
     return cell as? NSView
   }

@@ -18,7 +18,6 @@ final class TNEServices: TonnerreService {
   var icon: NSImage {
     return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
-  private let asyncSession: TonnerreSession = .shared
   
   private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
     let unwrap: (Any) -> Any = {

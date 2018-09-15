@@ -19,7 +19,6 @@ final class GradientCell: NSView, SettingCell {
       menu?.addItem(.init(title: "Remove", action: #selector(removeItem(_:)), keyEquivalent: ""))
     }
   }
-  weak var viewController: SettingViewController?
   
   private let cellColour: GradientColours.Gradient
   var disabled: Bool {
@@ -58,9 +57,12 @@ final class GradientCell: NSView, SettingCell {
     guard let fileURL = url else { return }
     do {
       try FileManager.default.removeItem(at: fileURL)
-      viewController?.remove(cell: self)
+      removeFromSuperview()
     } catch {
-      
+      #if DEBUG
+      print("remove error", error)
+      print("at url", url)
+      #endif
     }
   }
 }

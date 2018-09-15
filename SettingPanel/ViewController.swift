@@ -66,7 +66,8 @@ final class ViewController: NSViewController {
       return (leftData, rightData)
     } else if identifier == .secondTab {
       let userDefault = UserDefaults.shared
-      let builtinServices = userDefault.array(forKey: "tonnerre.builtin") as? [[String]] ?? []
+      let keys = ["generalProviders", "delayedProviders", "prioriProviders"]
+      let builtinServices = keys.compactMap { userDefault.array(forKey: $0) as? [[String]] ?? [] }.reduce([], +)
       let leftData: [SettingOption] = builtinServices.map { ($0[0], $0[1], .gradient, $0[2], nil) }
       let rightData = readInTNEs() + readInWebex()
       return (leftData, rightData)
@@ -90,9 +91,9 @@ final class ViewController: NSViewController {
         let jsonPath = fileURL.appendingPathComponent("description.json")
         let jsonData = try Data(contentsOf: jsonPath)
         guard
-          let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? [String: String],
-          let name = jsonObject["name"],
-          let content = jsonObject["content"]
+          let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? [String: Any],
+          let name = jsonObject["name"] as? String,
+          let content = jsonObject["content"] as? String
         else { continue }
         options.append((name, content, .gradient, "\(fileURL)+isDisabled", fileURL))
       }
