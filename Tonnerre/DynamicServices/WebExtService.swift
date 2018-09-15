@@ -8,6 +8,9 @@
 
 import Cocoa
 
+/**
+ Wrapper class for WebExts
+*/
 final class WebExtService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 0
@@ -16,30 +19,9 @@ final class WebExtService: TonnerreService {
     return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   
-  private var cachedKey: String?
-  private var cachedService: [WebExt] = []
-  
+  @available(*, deprecated: 6.0, message: "Prepare is replaced by functions in WebExtInterpreter")
   func prepare(input: [String]) -> [DisplayProtocol] {
-    guard input.count > 0 else { return [] }
-    let queryKey = input.first!.lowercased()
-    if queryKey != cachedKey {
-      cachedKey = queryKey
-      cachedService = WebExtHub.default.find(keyword: queryKey)
-        .filter { !UserDefaults.shared.bool(forKey: "\($0.id)+isDisabled") }
-    }
-    let possibleService = cachedService
-    if input.count > 1 {
-      let queryContent = Array(input[1...])
-      var inRangedServices = possibleService
-          .filter { $0.argLowerBound <= queryContent.count && $0.argUpperBound >= queryContent.count }
-      for (index, var service) in inRangedServices.enumerated() {
-        service.content = service.content.filled(withArguments: queryContent)
-        service.rawURL = service.rawURL.filled(withArguments: queryContent)
-        inRangedServices[index] = service
-      }
-      return inRangedServices
-    }
-    return possibleService
+    fatalError("Prepare is replaced by functions in WebExtInterpreter")
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {

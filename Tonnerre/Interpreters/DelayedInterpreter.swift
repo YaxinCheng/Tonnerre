@@ -8,17 +8,13 @@
 
 import Foundation
 
-final class DelayedInterpreter: InterpreterProtocol {
+struct DelayedInterpreter: Interpreter {
   typealias LoaderType = DelayedServiceLoader
-  typealias TargetType = ServicePack
-  
-  var cachedKey: String = ""
-  var cachedProviders: Array<TonnerreService> = []
   let loader = DelayedServiceLoader()
   
   func wrap(_ rawData: [TonnerreService], withTokens tokens: [String]) -> [ServicePack] {
     return rawData.map { provider in
-      if tokens.count - 1 >= provider.argLowerBound && tokens.count <= provider.argUpperBound {
+      if tokens.count - 1 >= provider.argLowerBound && tokens.count - 1 <= provider.argUpperBound {
         return provider.prepare(input: Array(tokens[1...])).map {
           ServicePack(provider: provider, service: $0)
         }

@@ -8,19 +8,17 @@
 
 import Foundation
 
-struct GeneralLoader: LoaderProtocol {
-  typealias DataType = TonnerreService
+final class GeneralLoader: ServiceLoader {
+  var cachedKey: String = ""
+  var cachedProviders: Array<TonnerreService> = []
+  
+  typealias ServiceType = TonnerreService
   /**
-   A trie that contains all normal services (initialized after selection)
+   A trie that contains all general services
   */
   private let providerTrie: Trie<TonnerreService.Type>
   
-  /**
-   load services based on the input key and specified type
-   - parameter keyword: the keyword user typed in the TonnerreField (first word). All services is located based on their keywords
-   - parameter type: the type of service to load
-  */
-  func find(keyword: String) -> [TonnerreService] {
+  func _find(keyword: String) -> [TonnerreService] {
     let fetchedServices = providerTrie.find(value: keyword)
       .filter { !$0.isDisabled }
       .map { $0.init() }

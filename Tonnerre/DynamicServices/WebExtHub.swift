@@ -9,7 +9,11 @@
 import Foundation
 import TonnerreSearch
 
-final class WebExtHub {
+final class WebExtHub: ServiceLoader {
+  typealias ServiceType = WebExt
+  var cachedKey: String = ""
+  var cachedProviders: Array<WebExt> = []
+  
   static let `default` = WebExtHub()
   private let path = UserDefaults.shared.url(forKey: .appSupportDir)!.appendingPathComponent("Services/web.json")
   private lazy var listener: TonnerreFSDetector = {
@@ -31,7 +35,7 @@ final class WebExtHub {
     listener.stop()
   }
   
-  func find(keyword: String) -> [WebExt] {
+  func _find(keyword: String) -> [WebExt] {
     guard !keyword.isEmpty else { return [] }
     let userDefault = UserDefaults.shared
     return serviceTrie.find(value: keyword)

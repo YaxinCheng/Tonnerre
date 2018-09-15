@@ -11,9 +11,11 @@ import Foundation
 /**
  All service providers is loaded when general service providers cannot be loaded
 */
-struct DelayedServiceLoader: LoaderProtocol {
-  typealias DataType = TonnerreService
+final class DelayedServiceLoader: ServiceLoader {
+  typealias ServiceType = TonnerreService
   private var providerTrie: Trie<TonnerreService.Type>
+  var cachedKey: String = ""
+  var cachedProviders: Array<TonnerreService> = []
   
   init() {
     let DelayedServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
@@ -31,7 +33,7 @@ struct DelayedServiceLoader: LoaderProtocol {
     providerTrie = Trie(values: DelayedServices) { $0.keyword }
   }
   
-  func find(keyword: String) -> [TonnerreService] {
+  func _find(keyword: String) -> [TonnerreService] {
     return providerTrie.find(value: keyword)
       .filter { !$0.isDisabled }
       .map { $0.init() }

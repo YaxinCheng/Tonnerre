@@ -8,11 +8,13 @@
 
 import Foundation
 
-struct PrioriLoader: LoaderProtocol {
-  typealias DataType = TonnerreService
+final class PrioriLoader: ServiceLoader {
+  typealias ServiceType = TonnerreService
   private let providers: [TonnerreService]
+  var cachedKey: String = ""
+  var cachedProviders: Array<TonnerreService> = []
   
-  func find(keyword: String) -> [TonnerreService] {
+  func _find(keyword: String) -> [TonnerreService] {
     return providers
   }
   

@@ -37,9 +37,8 @@ protocol TonnerreService: DisplayProtocol {
    The function that serves the user with the service it selected
    - parameter source: the user selected service
    - parameter withCmd: a flag indicates whether the user selected the service with cmd key modifier
-  */
+   */
   func serve(source: DisplayProtocol, withCmd: Bool)
-  
   /**
    Constructor.
    - Note: no parameter should be given for TonnerreService constructors

@@ -124,6 +124,8 @@
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
+		14C25511214D661E0011A38E /* TonnerreInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C25510214D661E0011A38E /* TonnerreInterpreter.swift */; };
+		14C25515214DB37B0011A38E /* WebExtInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C25514214DB37B0011A38E /* WebExtInterpreter.swift */; };
 		14C2DF9F2134DDA800C6A91D /* TNEHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DF9E2134DDA800C6A91D /* TNEHub.swift */; };
 		14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */; };
 		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
@@ -143,12 +145,13 @@
 		14F2302B21409E4700B7A0FB /* WebExtService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302A21409E4700B7A0FB /* WebExtService.swift */; };
 		14F2302D214206F100B7A0FB /* String+fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302C214206F100B7A0FB /* String+fill.swift */; };
 		14F230302147467C00B7A0FB /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
-		14F23032214B220300B7A0FB /* InterpreterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23031214B220300B7A0FB /* InterpreterProtocol.swift */; };
-		14F23034214B230100B7A0FB /* LoaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23033214B230100B7A0FB /* LoaderProtocol.swift */; };
+		14F23032214B220300B7A0FB /* Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23031214B220300B7A0FB /* Interpreter.swift */; };
+		14F23034214B230100B7A0FB /* ServiceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23033214B230100B7A0FB /* ServiceLoader.swift */; };
 		14F23037214B37DA00B7A0FB /* DelayedServiceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23036214B37DA00B7A0FB /* DelayedServiceLoader.swift */; };
 		14F23039214B394A00B7A0FB /* PrioriLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23038214B394A00B7A0FB /* PrioriLoader.swift */; };
 		14F2303B214B39D200B7A0FB /* DelayedInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2303A214B39D200B7A0FB /* DelayedInterpreter.swift */; };
 		14F2303D214B3A9600B7A0FB /* PrioriInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2303C214B3A9600B7A0FB /* PrioriInterpreter.swift */; };
+		14F23041214B437600B7A0FB /* TNEInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23040214B437600B7A0FB /* TNEInterpreter.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 /* End PBXBuildFile section */
 
@@ -330,6 +333,8 @@
 		14AFE6D5211BC6C8002BBBB2 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSettings.swift; sourceTree = "<group>"; };
+		14C25510214D661E0011A38E /* TonnerreInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreInterpreter.swift; sourceTree = "<group>"; };
+		14C25514214DB37B0011A38E /* WebExtInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtInterpreter.swift; sourceTree = "<group>"; };
 		14C2DF9E2134DDA800C6A91D /* TNEHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEHub.swift; sourceTree = "<group>"; };
 		14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScriptError.swift; sourceTree = "<group>"; };
 		14C2DFA42138CC8E00C6A91D /* TNEScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScript.swift; sourceTree = "<group>"; };
@@ -348,12 +353,13 @@
 		14F230282140969000B7A0FB /* WebExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExt.swift; sourceTree = "<group>"; };
 		14F2302A21409E4700B7A0FB /* WebExtService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtService.swift; sourceTree = "<group>"; };
 		14F2302C214206F100B7A0FB /* String+fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+fill.swift"; sourceTree = "<group>"; };
-		14F23031214B220300B7A0FB /* InterpreterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpreterProtocol.swift; sourceTree = "<group>"; };
-		14F23033214B230100B7A0FB /* LoaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderProtocol.swift; sourceTree = "<group>"; };
+		14F23031214B220300B7A0FB /* Interpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interpreter.swift; sourceTree = "<group>"; };
+		14F23033214B230100B7A0FB /* ServiceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLoader.swift; sourceTree = "<group>"; };
 		14F23036214B37DA00B7A0FB /* DelayedServiceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedServiceLoader.swift; sourceTree = "<group>"; };
 		14F23038214B394A00B7A0FB /* PrioriLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioriLoader.swift; sourceTree = "<group>"; };
 		14F2303A214B39D200B7A0FB /* DelayedInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedInterpreter.swift; sourceTree = "<group>"; };
 		14F2303C214B3A9600B7A0FB /* PrioriInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioriInterpreter.swift; sourceTree = "<group>"; };
+		14F23040214B437600B7A0FB /* TNEInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEInterpreter.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -660,8 +666,8 @@
 		14AFE6AD21164E74002BBBB2 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				14F23031214B220300B7A0FB /* InterpreterProtocol.swift */,
-				14F23033214B230100B7A0FB /* LoaderProtocol.swift */,
+				14F23031214B220300B7A0FB /* Interpreter.swift */,
+				14F23033214B230100B7A0FB /* ServiceLoader.swift */,
 				146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */,
 				144E0C1320ED30CB00E4F2DA /* AppleScriptServiceProtocol.swift */,
 				14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */,
@@ -733,12 +739,15 @@
 		14F23035214B324000B7A0FB /* Interpreters */ = {
 			isa = PBXGroup;
 			children = (
+				14C25510214D661E0011A38E /* TonnerreInterpreter.swift */,
 				146AAE6B20BDEBD9009AC9C6 /* GeneralInterpreter.swift */,
 				14AEB2FA20BF81CA00D10D44 /* GeneralLoader.swift */,
 				14F2303A214B39D200B7A0FB /* DelayedInterpreter.swift */,
 				14F23036214B37DA00B7A0FB /* DelayedServiceLoader.swift */,
 				14F2303C214B3A9600B7A0FB /* PrioriInterpreter.swift */,
 				14F23038214B394A00B7A0FB /* PrioriLoader.swift */,
+				14F23040214B437600B7A0FB /* TNEInterpreter.swift */,
+				14C25514214DB37B0011A38E /* WebExtInterpreter.swift */,
 			);
 			path = Interpreters;
 			sourceTree = "<group>";
@@ -1002,7 +1011,7 @@
 				14F015C720F999E300537160 /* PlaceholderField.swift in Sources */,
 				14C2DF9F2134DDA800C6A91D /* TNEHub.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* TonnerreService.swift in Sources */,
-				14F23032214B220300B7A0FB /* InterpreterProtocol.swift in Sources */,
+				14F23032214B220300B7A0FB /* Interpreter.swift in Sources */,
 				14F015D2210106E200537160 /* SafariBMService.swift in Sources */,
 				1484148320C63A1A008FD68E /* MapService.swift in Sources */,
 				1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */,
@@ -1021,7 +1030,7 @@
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
 				143FD19E210567F100E79F7E /* TerminalService.swift in Sources */,
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
-				14F23034214B230100B7A0FB /* LoaderProtocol.swift in Sources */,
+				14F23034214B230100B7A0FB /* ServiceLoader.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				14F230272140927000B7A0FB /* WebExtHub.swift in Sources */,
 				14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */,
@@ -1057,15 +1066,18 @@
 				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				14F2302D214206F100B7A0FB /* String+fill.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
+				14C25515214DB37B0011A38E /* WebExtInterpreter.swift in Sources */,
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,
 				14F23037214B37DA00B7A0FB /* DelayedServiceLoader.swift in Sources */,
+				14F23041214B437600B7A0FB /* TNEInterpreter.swift in Sources */,
 				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,
 				14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */,
 				145D056020CE1FDD0027F8DF /* CurrencyService.swift in Sources */,
 				14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */,
 				14F2303B214B39D200B7A0FB /* DelayedInterpreter.swift in Sources */,
 				1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */,
+				14C25511214D661E0011A38E /* TonnerreInterpreter.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */,

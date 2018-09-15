@@ -8,6 +8,9 @@
 
 import Cocoa
 
+/**
+ Wraper class for TNE scripts
+ */
 final class TNEServices: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 0
@@ -16,9 +19,6 @@ final class TNEServices: TonnerreService {
     return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   private let asyncSession: TonnerreSession = .shared
-  
-  private var cachedKey: String?
-  private var cachedServices: [TNEScript] = []
   
   private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
     let unwrap: (Any) -> Any = {
@@ -37,30 +37,9 @@ final class TNEServices: TonnerreService {
     )
   }
   
+  @available(*, deprecated: 6.0, message: "Prepare is replaced by functions in TNEInterpreter")
   func prepare(input: [String]) -> [DisplayProtocol] {
-    guard input.count > 0 else { return [] }
-    let queryKey = input.first!.lowercased()
-    if cachedKey != queryKey {
-      cachedKey = queryKey
-      cachedServices = TNEHub.default.find(keyword: queryKey)
-    }
-    if input.count == 1 { return cachedServices }
-    else {
-      let queryContent = Array(input[1...])
-      var possibleServices = cachedServices.filter { $0.lowerBound <= queryContent.count + 1 && $0.upperBound >= queryContent.count }
-      let task = DispatchWorkItem { [unowned self] in
-        let content = possibleServices.compactMap { $0.execute(args: .prepare(input: queryContent)) }.reduce([], +)
-        guard content.count > 0 else { return }
-        let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": content])
-        NotificationCenter.default.post(notification)
-      }
-      asyncSession.send(request: task)
-      for (index, var service) in possibleServices.enumerated() {
-        service.content = service.content.filled(withArguments: queryContent)
-        possibleServices[index] = service
-      }
-      return possibleServices
-    }
+    fatalError("Prepare is replaced by functions in TNEInterpreter")
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
@@ -82,10 +61,11 @@ final class TNEServices: TonnerreService {
 }
 
 extension TNEServices: AsyncLoadingProtocol {
-  func present(rawElements: [Any]) -> [ServicePack] {
-    guard rawElements is [DisplayProtocol] else { return [] }
-    return (rawElements as! [DisplayProtocol]).map { ServicePack(provider: self, service: $0) }
-  }
-  
   var mode: AsyncLoadingType { return .replaced }
+  
+  func present(rawElements: [Any]) -> [ServicePack] {
+    guard let sources = rawElements as? [DisplayProtocol] else { return [] }
+    return sources.map { ServicePack(provider: self, service: $0) }
+  }
 }
+

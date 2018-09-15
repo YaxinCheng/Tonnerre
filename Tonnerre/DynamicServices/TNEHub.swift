@@ -9,7 +9,11 @@
 import Foundation
 import TonnerreSearch
 
-final class TNEHub {
+final class TNEHub: ServiceLoader {
+  typealias ServiceType = TNEScript
+  var cachedKey: String = ""
+  var cachedProviders: Array<TNEScript> = []
+  
   private let path = UserDefaults.shared.url(forKey: .appSupportDir)!.appendingPathComponent("Services")
   private lazy var listener: TonnerreFSDetector = {
     return TonnerreFSDetector(pathes: path.path, callback: filesDidChange)
@@ -42,7 +46,7 @@ final class TNEHub {
     listener.stop()
   }
   
-  func find(keyword: String) -> [TNEScript] {
+  func _find(keyword: String) -> [TNEScript] {
     guard !keyword.isEmpty else { return [] }
     let userDefault = UserDefaults.shared
     let possibleScripts = serviceTrie.find(value: keyword)
