@@ -13,8 +13,7 @@ final class TonnerreIconView: NSImageView , ThemeProtocol {
   var theme: TonnerreTheme {
     get {
       return TonnerreTheme.current
-    }
-    set {
+    } set {
       guard let image = self.image else { return }
       self.image = image.tintedImage(with: newValue.imgColour)
     }

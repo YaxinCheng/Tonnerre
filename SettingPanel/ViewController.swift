@@ -50,7 +50,7 @@ final class ViewController: NSViewController {
     return true
   }
   
-  typealias SettingOption = (title: String, detail: String, type: SettingCellType, settingKey: String, url: URL?)
+  typealias SettingOption = (keyword: String?, title: String, detail: String, type: SettingCellType, settingKey: String, url: URL?)
   
   private func loadSettings(with identifier: NSStoryboardSegue.Identifier) -> (left: [SettingOption], right: [SettingOption]) {
     if identifier == .firstTab {
@@ -59,7 +59,7 @@ final class ViewController: NSViewController {
       let settings = NSDictionary(contentsOf: settingsFile) as? [String: [String: [String: String]]]
       else { return ([], []) }
       let extract: ((key: String, value: [String: String]))->SettingOption = {
-        ($0.value["title"]!, $0.value["detail"]!, SettingCellType(rawValue: $0.value["type"]!)!, $0.key, nil)
+        ($0.value["keyword"], $0.value["title"]!, $0.value["detail"]!, SettingCellType(rawValue: $0.value["type"]!)!, $0.key, nil)
       }
       let leftData = settings["left"]?.map(extract) ?? []
       let rightData = settings["right"]?.map(extract) ?? []
@@ -68,7 +68,7 @@ final class ViewController: NSViewController {
       let userDefault = UserDefaults.shared
       let keys = ["generalProviders", "delayedProviders", "prioriProviders"]
       let builtinServices = keys.compactMap { userDefault.array(forKey: $0) as? [[String]] ?? [] }.reduce([], +)
-      let leftData: [SettingOption] = builtinServices.map { ($0[0], $0[1], .gradient, $0[2], nil) }
+      let leftData: [SettingOption] = builtinServices.map { ($0[0], $0[1], $0[2], .gradient, $0[3], nil) }
       let rightData = readInTNEs() + readInWebex()
       return (leftData, rightData)
     } else { return ([], []) }
@@ -92,10 +92,11 @@ final class ViewController: NSViewController {
         let jsonData = try Data(contentsOf: jsonPath)
         guard
           let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? [String: Any],
+          let keyword = jsonObject["keyword"] as? String,
           let name = jsonObject["name"] as? String,
           let content = jsonObject["content"] as? String
         else { continue }
-        options.append((name, content, .gradient, "\(fileURL)+isDisabled", fileURL))
+        options.append((keyword, name, content, .gradient, "\(fileURL)+isDisabled", fileURL))
       }
       return options
     } catch {
@@ -117,10 +118,11 @@ final class ViewController: NSViewController {
       var options: [SettingOption] = []
       for (attrName, objectContent) in jsonObject {
         guard
+          let keyword = objectContent["keyword"] as? String,
           let name = objectContent["name"] as? String,
           let detail = objectContent["content"] as? String
         else { continue }
-        options.append((name, detail, .gradient, "\(attrName)+isDisabled", nil))
+        options.append((keyword, name, detail, .gradient, "\(attrName)+isDisabled", nil))
       }
       return options
     } catch {

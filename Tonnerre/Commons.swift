@@ -13,11 +13,6 @@ enum StoredKey: String {// Keys used in UserDefault
   case appSupportDir
   case designatedX
   case designatedY
-  case defaultSearch
-  /**
-   This is true when built-in services are not set for settings
-  */
-  case builtinServiceSet
   
   case generalProviders
   case delayedProviders

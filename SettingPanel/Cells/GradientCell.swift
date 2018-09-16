@@ -12,11 +12,19 @@ final class GradientCell: NSView, SettingCell {
   let type: SettingCellType = .gradient
   @IBOutlet weak var detailLabel: NSTextField!
   @IBOutlet weak var titleLabel: NSTextField!
+  @IBOutlet weak var keywordLabel: NSTextField!
   var settingKey: String!
   var url: URL? {
     didSet {
       menu = NSMenu(title: "")
       menu?.addItem(.init(title: "Remove", action: #selector(removeItem(_:)), keyEquivalent: ""))
+    }
+  }
+  var keyword: String {
+    get {
+      return keywordLabel.stringValue
+    } set {
+      keywordLabel.stringValue = newValue
     }
   }
   

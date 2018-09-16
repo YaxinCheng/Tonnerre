@@ -20,13 +20,13 @@ final class PrioriLoader: ServiceLoader {
   
   init() {
     providers  = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
-    let saveToSettings: ([TonnerreService]) -> () = { providers in
+    let saveToSettings: (ArraySlice<TonnerreService>) -> () = { providers in
       DispatchQueue.global(qos: .background).async {
         let userDefault = UserDefaults.shared
-        let settings = providers[1...].map { [$0.name, $0.content, type(of: $0).settingKey] }
+        let settings = providers.map { [type(of: $0).keyword, $0.name, $0.content, type(of: $0).settingKey] }
         userDefault.set(settings, forKey: .prioriProviders)
       }
     }
-    saveToSettings(providers)
+    saveToSettings(providers[1...])
   }
 }

@@ -51,8 +51,9 @@ final class SettingViewController: NSViewController {
     cell?.titleLabel.stringValue = datasource.title
     cell?.detailLabel.stringValue = datasource.detail
     cell?.settingKey = datasource.settingKey
-    if let url = datasource.url, datasource.type == .gradient {
-      (cell as? GradientCell)?.url = url
+    if let gradientCell = cell as? GradientCell, datasource.type == .gradient {
+      gradientCell.url = datasource.url
+      gradientCell.keyword = (datasource.keyword ?? "").isEmpty ? "" : "[\(datasource.keyword!)]"
     }
     return cell as? NSView
   }

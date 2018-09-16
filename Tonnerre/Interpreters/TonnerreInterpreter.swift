@@ -17,9 +17,9 @@ struct TonnerreInterpreter {
   private let generalInterpreter = GeneralInterpreter(loader: GeneralLoader())
   private let delayedInterpreter = GeneralInterpreter(loader: DelayedServiceLoader())
   private let prioritInterpreter = InstantInterpreter(loader: PrioriLoader())
+  private let defaultInterpreter = InstantInterpreter(loader: DefaultLoader())
   private let tneInterpreter     = TNEInterpreter()
   private let webExtInterpreter  = WebExtInterpreter()
-  private let defaultInterpreter = InstantInterpreter(loader: DefaultLoader())
   
   /**
    Interpret user input into ServicePacks

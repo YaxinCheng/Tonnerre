@@ -98,7 +98,7 @@ final class ViewController: NSViewController {
   private func textDidChange(value: String) {
     collectionView.datasource = interpreter.interpret(input: value)
     guard value.isEmpty else { return }
-    interpreter.clearCache()
+    interpreter.clearCache()// Essential to prevent showing unnecessary placeholders
     refreshIcon()
   }
 }

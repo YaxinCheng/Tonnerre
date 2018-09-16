@@ -24,7 +24,7 @@ final class DelayedServiceLoader: ServiceLoader {
       DispatchQueue.global(qos: .background).async {
         let userDefault = UserDefaults.shared
         let settings = providers.map { $0.init() }
-          .map { [$0.name, $0.content, type(of: $0).settingKey] }
+          .map { [type(of: $0).keyword, $0.name, $0.content, type(of: $0).settingKey] }
         userDefault.set(settings, forKey: .delayedProviders)
       }
     }

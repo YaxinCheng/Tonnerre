@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner"/>
@@ -124,8 +125,8 @@
             <rect key="frame" x="0.0" y="0.0" width="481" height="69"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S93-yt-Vdi">
-                    <rect key="frame" x="10" y="31" width="465" height="28"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S93-yt-Vdi">
+                    <rect key="frame" x="10" y="31" width="52" height="28"/>
                     <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" title="Title" id="foj-B2-1f1">
                         <font key="font" metaFont="systemBold" size="23"/>
                         <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
@@ -133,25 +134,36 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CMO-2u-VfM">
-                    <rect key="frame" x="10" y="8" width="465" height="19"/>
+                    <rect key="frame" x="10" y="8" width="457" height="19"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="bJg-m8-1Lk">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                     </textFieldCell>
                 </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="grd-EE-aqB">
+                    <rect key="frame" x="66" y="27" width="401" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Keyword" id="lL6-C1-Nnp">
+                        <font key="font" metaFont="systemSemibold" size="15"/>
+                        <color key="textColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="CMO-2u-VfM" firstAttribute="leading" secondItem="S93-yt-Vdi" secondAttribute="leading" id="2nG-VQ-Wma"/>
-                <constraint firstAttribute="trailing" secondItem="S93-yt-Vdi" secondAttribute="trailing" constant="8" id="D77-mV-bpB"/>
                 <constraint firstAttribute="bottom" secondItem="CMO-2u-VfM" secondAttribute="bottom" constant="8" id="F4m-KX-SKM"/>
-                <constraint firstItem="CMO-2u-VfM" firstAttribute="trailing" secondItem="S93-yt-Vdi" secondAttribute="trailing" id="KS2-tE-Bvi"/>
                 <constraint firstItem="CMO-2u-VfM" firstAttribute="top" secondItem="S93-yt-Vdi" secondAttribute="bottom" constant="4" id="Kwi-dy-HVb"/>
+                <constraint firstItem="grd-EE-aqB" firstAttribute="bottom" secondItem="S93-yt-Vdi" secondAttribute="bottom" constant="4" id="XGf-ky-B6m"/>
                 <constraint firstItem="S93-yt-Vdi" firstAttribute="top" secondItem="pHF-96-vVh" secondAttribute="top" constant="10" id="Zg4-bn-gZO"/>
+                <constraint firstAttribute="trailing" secondItem="grd-EE-aqB" secondAttribute="trailing" constant="16" id="d8b-yq-CQP"/>
+                <constraint firstItem="grd-EE-aqB" firstAttribute="leading" secondItem="S93-yt-Vdi" secondAttribute="trailing" constant="8" id="ftz-FU-D2U"/>
                 <constraint firstItem="S93-yt-Vdi" firstAttribute="leading" secondItem="pHF-96-vVh" secondAttribute="leading" constant="12" id="w8T-QK-Uu6"/>
+                <constraint firstItem="CMO-2u-VfM" firstAttribute="trailing" secondItem="grd-EE-aqB" secondAttribute="trailing" id="ycD-Zj-XUN"/>
+                <constraint firstItem="CMO-2u-VfM" firstAttribute="leading" secondItem="S93-yt-Vdi" secondAttribute="leading" id="z1q-Us-oGu"/>
             </constraints>
             <connections>
                 <outlet property="detailLabel" destination="CMO-2u-VfM" id="tWt-mX-pec"/>
+                <outlet property="keywordLabel" destination="grd-EE-aqB" id="o92-9I-mlu"/>
                 <outlet property="titleLabel" destination="S93-yt-Vdi" id="rtJ-d1-NXS"/>
             </connections>
             <point key="canvasLocation" x="22.5" y="798.5"/>
