@@ -11,8 +11,9 @@ import Foundation
 /**
  Interpreter provides general built-in services 
  */
-struct GeneralInterpreter: Interpreter {
-  let loader = GeneralLoader()
+struct GeneralInterpreter<T: ServiceLoader>: Interpreter where T.ServiceType == TonnerreService {
+  typealias LoaderType = T
+  let loader: T
   func wrap(_ rawData: [TonnerreService], withTokens tokens: [String]) -> [ServicePack] {
     return rawData.map { provider in
       let keyword = type(of: provider).keyword
@@ -25,5 +26,9 @@ struct GeneralInterpreter: Interpreter {
         return [ServicePack(provider: provider)]
       } else { return [] }
     }.reduce([], +)
+  }
+  
+  init(loader: T) {
+    self.loader = loader
   }
 }

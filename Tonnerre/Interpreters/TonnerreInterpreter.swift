@@ -14,11 +14,12 @@ import Foundation
  It encapsulates different interpreters and the logics of using them
  */
 struct TonnerreInterpreter {
-  private let generalInterpreter = GeneralInterpreter()
-  private let delayedInterpreter = DelayedInterpreter()
-  private let prioritInterpreter = PrioriInterpreter()
+  private let generalInterpreter = GeneralInterpreter(loader: GeneralLoader())
+  private let delayedInterpreter = GeneralInterpreter(loader: DelayedServiceLoader())
+  private let prioritInterpreter = InstantInterpreter(loader: PrioriLoader())
   private let tneInterpreter     = TNEInterpreter()
   private let webExtInterpreter  = WebExtInterpreter()
+  private let defaultInterpreter = InstantInterpreter(loader: DefaultLoader())
   
   /**
    Interpret user input into ServicePacks
@@ -34,6 +35,13 @@ struct TonnerreInterpreter {
     if providedServices.isEmpty {
       providedServices += delayedInterpreter.interpret(input: input)
     }
+    if providedServices.isEmpty {
+      providedServices += defaultInterpreter.interpret(input: input)
+    }
     return providedServices
+  }
+  
+  func clearCache() {
+    prioritInterpreter.clearCache()
   }
 }

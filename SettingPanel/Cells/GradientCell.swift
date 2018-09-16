@@ -60,8 +60,7 @@ final class GradientCell: NSView, SettingCell {
       removeFromSuperview()
     } catch {
       #if DEBUG
-      print("remove error", error)
-      print("at url", url)
+      print("remove error", error, "at path:", fileURL)
       #endif
     }
   }

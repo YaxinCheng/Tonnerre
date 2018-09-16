@@ -12,7 +12,6 @@ import Foundation
  Interpreter provides WebExt services
  */
 struct WebExtInterpreter: Interpreter {
-  typealias LoaderType = WebExtHub
   let loader: WebExtHub = .default
   
   func wrap(_ rawData: [WebExt], withTokens tokens: [String]) -> [ServicePack] {
