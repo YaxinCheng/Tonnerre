@@ -21,7 +21,7 @@ extension WebService {
     return .append
   }
   
-  var localeInTemplate: Bool {
+  private var localeInTemplate: Bool {
     let numOfFomatters = template.components(separatedBy: "%@").count - 1
     return numOfFomatters - argLowerBound == 1
   }
@@ -31,29 +31,27 @@ extension WebService {
     return String(format: contentTemplate, "")
   }
   
-  func fillInTemplate(input: [String]) -> URL? {
-    let requestingTemplate: String
+  private func fillInTemplate(input: [String]) -> URL? {
+    let fillParameters: [String]
     if localeInTemplate {
-      let locale = Locale.current
-      let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
-      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: argLowerBound)
-      requestingTemplate = String(format: template, arguments: parameters)
+      let locale: Locale = .current
+      let regionCode = (locale.regionCode == "US" ? "com" : locale.regionCode) ?? "com"
+      fillParameters = [regionCode] + input
     } else {
-      requestingTemplate = template
+      fillParameters = input
     }
-    guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
-    let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
-    guard urlEncoded.count >= input.count else { return nil }
-    let parameters = Array(urlEncoded[0 ..< argLowerBound - 1]) +
-      [urlEncoded[(argLowerBound - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
-    return URL(string: String(format: requestingTemplate, arguments: parameters))
+    let urlEcnoded = fillParameters.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) }
+    let rawURL = template.filled(withArguments: urlEcnoded)
+    return URL(string: rawURL)
   }
   
   func present(rawElements: [Any]) -> [ServicePack] {
     guard rawElements is [String] else { return [] }
     return (rawElements as! [String]).compactMap {
       let readableContent: String
-      if $0.contains("&#"), let decodedData = $0.data(using: .utf8) {
+      let htmlEncodeDetect = try! NSRegularExpression(pattern: "(&#\\d+;)+")
+      let isHTMLEncoded = htmlEncodeDetect.numberOfMatches(in: $0, range: NSRange(location: 0, length: $0.count)) > 0
+      if isHTMLEncoded, let decodedData = $0.data(using: .utf8) {
         readableContent = (try? NSAttributedString(data: decodedData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil))?.string ?? $0
       } else {
         readableContent = $0.removingPercentEncoding ?? $0

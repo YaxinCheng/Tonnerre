@@ -1,5 +1,5 @@
 //
-//  GradientCell.swift
+//  ServiceCell.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2018-05-30.
