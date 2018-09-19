@@ -36,4 +36,8 @@ extension UserDefaults {
   func dictionary(forKey key: StoredKey) -> [String: Any]? {
     return dictionary(forKey: key.rawValue)
   }
+  
+  func array<T>(forKey key: StoredKey) -> [T]? {
+    return array(forKey: key.rawValue) as? [T]
+  }
 }

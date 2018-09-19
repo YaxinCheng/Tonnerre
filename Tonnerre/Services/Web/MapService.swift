@@ -11,9 +11,8 @@ import Cocoa
 struct GoogleMapService: WebService {
   let template: String = "https://maps.google.%@/?q=%@"
   let suggestionTemplate: String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=AIzaSyBErLf0zbtiML5B_b1HdqAmLE2Um5xB6Aw"
-  let loadSuggestion: Bool = true
   let alterContent: String? = "Open in Apple Maps"
-  let argUpperBound: Int = Int.max
+  let argUpperBound: Int = .max
   
   func parse(suggestionData: Data?) -> [String : Any] {
     guard

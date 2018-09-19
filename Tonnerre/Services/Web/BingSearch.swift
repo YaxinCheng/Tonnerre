@@ -14,9 +14,8 @@ struct BingSearch: WebService {
   let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"// May not be stable
   let contentTemplate: String = "Search %@ on bing"
   static let keyword: String = "bing"
-  let loadSuggestion: Bool = true
   let argLowerBound: Int = 1
-  let argUpperBound: Int = Int.max
+  let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "bing")
   
   func parse(suggestionData: Data?) -> [String : Any] {

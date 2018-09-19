@@ -12,11 +12,14 @@ protocol WebService: TonnerreService, AsyncLoadingProtocol {
   var template: String { get }
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
-  var loadSuggestion: Bool { get }
   func parse(suggestionData: Data?) -> [String: Any]
 }
 
 extension WebService {
+  private var session: TonnerreSession {
+    return .shared
+  }
+  
   var mode: AsyncLoadingType {
     return .append
   }
@@ -75,15 +78,13 @@ extension WebService {
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ").capitalized
     let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
-    guard argLowerBound != 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
+    guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
-    guard !suggestionTemplate.isEmpty, loadSuggestion else { return [originalSearch] }
-    guard let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-      return [originalSearch]
-    }
-    let session = TonnerreSession.shared
-    let suggestionPath = String(format: suggestionTemplate, arguments: [query])
-    guard let suggestionURL = URL(string: suggestionPath) else { return [originalSearch] }
+    guard
+      !suggestionTemplate.isEmpty,
+      let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+      let suggestionURL = URL(string: suggestionTemplate.filled(withArguments: [query]))
+    else { return [originalSearch] }
     let request = URLRequest(url: suggestionURL, timeoutInterval: 60 * 60)
     let ongoingTask = session.dataTask(request: request) { (data, response, error) in
       if error != nil {

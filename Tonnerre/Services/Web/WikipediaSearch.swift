@@ -16,16 +16,7 @@ struct WikipediaSearch: WebService {
   let contentTemplate: String = "Search %@ on Wikipedia"
   static let keyword: String = "wiki"
   let argLowerBound: Int = 1
-  let argUpperBound: Int = Int.max
-  let loadSuggestion: Bool
-  
-  init() {
-    loadSuggestion = true
-  }
-  
-  init(suggestion: Bool) {
-    loadSuggestion = suggestion
-  }
+  let argUpperBound: Int = .max
   
   func parse(suggestionData: Data?) -> [String : Any] {
     guard

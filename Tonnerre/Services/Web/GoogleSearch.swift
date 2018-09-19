@@ -17,8 +17,7 @@ extension Google {
     return "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
   }
   var argLowerBound: Int { return 1 }
-  var loadSuggestion: Bool { return true }
-  var argUpperBound: Int { return Int.max }
+  var argUpperBound: Int { return .max }
   
   func parse(suggestionData: Data?) -> [String: Any] {
     guard
@@ -37,13 +36,6 @@ struct GoogleSearch: Google {
   let contentTemplate: String = "Search %@ on google"
   let template: String = "https://google.%@/search?q=%@"
   static let keyword: String = "google"
-  let loadSuggestion: Bool
-  init() {
-    loadSuggestion = true
-  }
-  init(suggestion: Bool) {
-    loadSuggestion = suggestion
-  }
 }
 
 struct GoogleImageSearch: Google {

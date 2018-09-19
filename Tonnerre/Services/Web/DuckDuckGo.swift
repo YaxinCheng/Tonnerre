@@ -15,8 +15,7 @@ struct DuckDuckGoSearch: WebService {
   let suggestionTemplate: String = "https://duckduckgo.com/ac/?&q=%@"
   let contentTemplate: String = "Search %@ on DuckDuckGo"
   let argLowerBound: Int = 1
-  let argUpperBound: Int = Int.max
-  let loadSuggestion: Bool = true
+  let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "duck")
   
   func parse(suggestionData: Data?) -> [String : Any] {

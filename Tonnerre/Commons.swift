@@ -17,6 +17,8 @@ enum StoredKey: String {// Keys used in UserDefault
   case generalProviders
   case delayedProviders
   case prioriProviders
+  
+  case defaultServices
 }
 
 func getContext() -> NSManagedObjectContext {

@@ -16,16 +16,7 @@ struct AmazonSearch: WebService {
   let contentTemplate: String = "Shopping %@ on amazon"
   static let keyword: String = "amazon"
   let argLowerBound: Int = 1
-  let argUpperBound: Int = Int.max
-  let loadSuggestion: Bool
-  
-  init() {
-    loadSuggestion = true
-  }
-  
-  init(suggestion: Bool) {
-    loadSuggestion = suggestion
-  }
+  let argUpperBound: Int = .max
 
   func parse(suggestionData: Data?) -> [String : Any] {
     guard
