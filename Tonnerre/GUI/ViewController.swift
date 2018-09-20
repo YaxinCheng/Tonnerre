@@ -104,7 +104,7 @@ final class ViewController: NSViewController {
 }
 
 extension ViewController: NSTextFieldDelegate {
-  override func controlTextDidChange(_ obj: Notification) {
+  func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
     let current = objTextField.stringValue// Capture the current value
     let trimmedValue = current.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
@@ -126,14 +126,14 @@ extension ViewController: NSTextFieldDelegate {
     textDidChange(value: trimmedValue)
   }
   
-  override func controlTextDidEndEditing(_ obj: Notification) {
+  func controlTextDidEndEditing(_ obj: Notification) {
     if (obj.object as? NSTextField)?.stringValue.isEmpty ?? true { adjustEditing(withString: "") }
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
     guard let (service, value) = collectionView.enterPressed() else { return }
     serve(with: service, target: value, withCmd: false)
   }
   
-  override func controlTextDidBeginEditing(_ obj: Notification) {
+  func controlTextDidBeginEditing(_ obj: Notification) {
     fullEditing()
   }
   

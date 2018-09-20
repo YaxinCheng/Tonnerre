@@ -9,6 +9,6 @@
 import Cocoa
 
 extension NSStoryboardSegue.Identifier {
-  static let firstTab = NSStoryboardSegue.Identifier(rawValue: "firstTab")
-  static let secondTab = NSStoryboardSegue.Identifier(rawValue: "secondTab")
+  static let firstTab = "firstTab"
+  static let secondTab = "secondTab"
 }

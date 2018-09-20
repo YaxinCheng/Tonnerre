@@ -858,6 +858,7 @@
 				TargetAttributes = {
 					146AD8C320C9C09300D9E591 = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -881,14 +882,17 @@
 					};
 					1470515420B1BEFB00F6FBE8 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 1470513F20B1BEF900F6FBE8;
 					};
 					1470515F20B1BEFB00F6FBE8 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 1470513F20B1BEF900F6FBE8;
 					};
 					14AFE6992112A4F1002BBBB2 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -1191,7 +1195,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreIndexHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1213,7 +1217,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreIndexHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1354,7 +1358,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1382,7 +1386,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1401,7 +1405,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tonnerre.app/Contents/MacOS/Tonnerre";
 			};
 			name = Debug;
@@ -1421,7 +1425,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tonnerre.app/Contents/MacOS/Tonnerre";
 			};
 			name = Release;
@@ -1440,7 +1444,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Tonnerre;
 			};
 			name = Debug;
@@ -1459,7 +1463,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Tonnerre;
 			};
 			name = Release;
@@ -1482,7 +1486,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.SettingPanel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1504,7 +1508,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.SettingPanel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

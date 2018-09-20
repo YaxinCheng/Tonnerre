@@ -9,5 +9,5 @@
 import Cocoa
 
 extension NSNib.Name {
-  static let settingCell = NSNib.Name("SettingCell")
+  static let settingCell = "SettingCell"
 }

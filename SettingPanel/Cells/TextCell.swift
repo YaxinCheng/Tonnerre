@@ -31,7 +31,7 @@ final class TextCell: NSView, SettingCell {
 }
 
 extension TextCell: NSTextFieldDelegate {
-  override func controlTextDidEndEditing(_ obj: Notification) {
+  func controlTextDidEndEditing(_ obj: Notification) {
     guard let field = obj.object as? NSTextField, field === textField else { return }
     let userDefault = UserDefaults.shared
     userDefault.set(field.stringValue, forKey: settingKey)

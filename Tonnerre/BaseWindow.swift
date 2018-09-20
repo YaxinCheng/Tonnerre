@@ -18,9 +18,9 @@ final class BaseWindow: NSPanel {
     didSet {
       #if RELEASE
       if isHidden {
+        orderOut(self)
         let notification = Notification(name: .windowIsHiding)
         NotificationCenter.default.post(notification)
-        orderOut(self)
       } else {
         resetWindownLocation()
         makeKeyAndOrderFront(self)
