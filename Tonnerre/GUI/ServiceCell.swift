@@ -81,17 +81,21 @@ final class ServiceCell: NSCollectionViewItem {
   }
   
   func preview() {
-    guard
-      let container = displayItem as? DisplayableContainer<URL>,
+    guard !popoverView.isShown else { return }
+    let viewController: NSViewController
+    if let container = displayItem as? DisplayableContainer<URL>,
       let url = container.innerItem,
-      !popoverView.isShown,
       let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: popoverView.contentSize.width, height: popoverView.contentSize.height), style: .normal)
-    else { return }
-    let name = container.name
-    let viewController = NSViewController()
-    qlView.previewItem = PreviewItem(title: name, url: url)
-    qlView.shouldCloseWithWindow = true
-    viewController.view = qlView
+    {
+      qlView.previewItem = PreviewItem(title: container.name, url: url)
+      qlView.shouldCloseWithWindow = true
+      viewController = NSViewController()
+      viewController.view = qlView
+    } else if let container = displayItem as? DisplayableContainer<NSViewController>,
+      let vc = container.innerItem {
+      viewController = vc
+    } else { return }
+    
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)
     popoverView.contentViewController = viewController
     popoverView.show(relativeTo: cellRect, of: view, preferredEdge: .maxX)

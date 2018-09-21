@@ -77,7 +77,7 @@ final class TonnerreCollectionView: NSScrollView {
       // Otherwise, do not scroll
       else { scrollPosition = .init(rawValue: 0) }
       // if move down, visibleIndex += 1, if move up, visibleIndex -= 1 
-      visibleIndex = min(maxRows, visibleIndex + 2 * moveDown.hashValue - 1)
+      visibleIndex = min(maxRows, visibleIndex + (moveDown ? 1 : -1))
       // if it is not move up from 0
       if !(oldValue == 0 && !moveDown) { visibleIndex = max(visibleIndex, 0) }
       if highlightedItemIndex >= 0 {
@@ -194,7 +194,7 @@ final class TonnerreCollectionView: NSScrollView {
           self?.collectionView.scrollToItems(at: [indexPath], scrollPosition: scrollPosition)// Scroll to bottom or top
         }
       } else {
-        let movement = 2 * (event.keyCode == 125).hashValue - 1// if key == 125, 1, else -1
+        let movement = event.keyCode == 125 ? 1 : -1// if key == 125, 1, else -1
         if datasource.count == 0 && movement == -1 {
           delegate?.retrieveLastQuery()
         } else {

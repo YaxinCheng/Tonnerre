@@ -92,6 +92,8 @@
 		148414A720C8675F008FD68E /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A620C8675F008FD68E /* URLService.swift */; };
 		1484246A214EC1A50074C582 /* DefaultLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14842469214EC1A50074C582 /* DefaultLoader.swift */; };
 		148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */; };
+		148E53832154793500343928 /* FlightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148E53822154793500343928 /* FlightService.swift */; };
+		148E538621547BFB00343928 /* FlightUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148E538521547BFB00343928 /* FlightUtilities.framework */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */; };
 		14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
@@ -297,6 +299,11 @@
 		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
 		14842469214EC1A50074C582 /* DefaultLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoader.swift; sourceTree = "<group>"; };
 		148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateService.swift; sourceTree = "<group>"; };
+		148E52772154661300343928 /* FlightUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlightUtilities.framework; sourceTree = "<group>"; };
+		148E537B215472CF00343928 /* FlightUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlightUtilities.h; sourceTree = "<group>"; };
+		148E537C215472FA00343928 /* Tonnerre-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tonnerre-Bridging-Header.h"; sourceTree = "<group>"; };
+		148E53822154793500343928 /* FlightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightService.swift; sourceTree = "<group>"; };
+		148E538521547BFB00343928 /* FlightUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlightUtilities.framework; path = ../../../../../System/Library/PrivateFrameworks/FlightUtilities.framework; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTheme.swift; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
@@ -376,6 +383,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				148E538621547BFB00343928 /* FlightUtilities.framework in Frameworks */,
 				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
 				1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */,
 				1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */,
@@ -456,6 +464,7 @@
 				14561B8B20C444470057B4C1 /* ServicePack.swift */,
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
+				148E528321546D5E00343928 /* Flight */,
 				145DA16E20DC09BF00C1E804 /* Tonnere */,
 				140A62CD20CB0C7000B759A4 /* Dictionary */,
 				1484148920C7031E008FD68E /* File */,
@@ -497,6 +506,7 @@
 				146AD8C520C9C09300D9E591 /* TonnerreIndexHelper */,
 				14AFE69B2112A4F1002BBBB2 /* SettingPanel */,
 				1470514120B1BEF900F6FBE8 /* Products */,
+				148E52762154661200343928 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -604,6 +614,25 @@
 				148414A620C8675F008FD68E /* URLService.swift */,
 			);
 			path = Prioritized;
+			sourceTree = "<group>";
+		};
+		148E52762154661200343928 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				148E538521547BFB00343928 /* FlightUtilities.framework */,
+				148E52772154661300343928 /* FlightUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		148E528321546D5E00343928 /* Flight */ = {
+			isa = PBXGroup;
+			children = (
+				148E537B215472CF00343928 /* FlightUtilities.h */,
+				148E537C215472FA00343928 /* Tonnerre-Bridging-Header.h */,
+				148E53822154793500343928 /* FlightService.swift */,
+			);
+			path = Flight;
 			sourceTree = "<group>";
 		};
 		14AEB2D820BEF4A800D10D44 /* GUI */ = {
@@ -870,7 +899,7 @@
 					};
 					1470513F20B1BEF900F6FBE8 = {
 						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -1083,6 +1112,7 @@
 				1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */,
 				14C25511214D661E0011A38E /* TonnerreInterpreter.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
+				148E53832154793500343928 /* FlightService.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
@@ -1356,9 +1386,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tonnerre/Services/Flight/Tonnerre-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Debug;
 		};
@@ -1385,8 +1419,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tonnerre/Services/Flight/Tonnerre-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Release;
 		};
