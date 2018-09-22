@@ -51,6 +51,8 @@ final class TNEServices: TonnerreService {
         let anyResult = source as? DisplayableContainer<Any>,
         let service = anyResult.extraContent as? TNEScript {
         originalService = service
+      } else if let appleScript = source as? TNEScript {
+        originalService = appleScript
       } else { return }
       var dictionarizedChoice = self.dictionarize(source)
       dictionarizedChoice["withCmd"] = withCmd

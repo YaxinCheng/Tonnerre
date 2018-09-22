@@ -26,6 +26,7 @@ struct TNEScript: DisplayProtocol {
     case appleScript(path: URL)
     
     init?(fileURL: URL) {
+      guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
       switch fileURL.pathExtension {
       case "py":   self = .python(path: fileURL)
       case "scpt": self = .appleScript(path: fileURL)

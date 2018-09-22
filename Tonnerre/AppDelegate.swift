@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     DispatchQueue.global(qos: .userInitiated).sync {
       let fileManager = FileManager.default
       guard
-        let appSupDir = UserDefaults.standard.url(forKey: .appSupportDir)
+        let appSupDir = UserDefaults.shared.url(forKey: .appSupportDir)
       else {
         NSUserNotification.send(title: "Installation Failed", informativeText: "No application support folder is found. Please try again later")
         return
@@ -39,6 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
       }
     }
+    guard successCount > 0 else { return }
     let title = (successCount > 1 ? "Services" : "Service") + " Installed"
     let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
     NSUserNotification.send(title: title, informativeText: informativeText)
