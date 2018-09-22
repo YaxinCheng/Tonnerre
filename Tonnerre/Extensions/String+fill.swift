@@ -23,8 +23,8 @@ extension String {
     if placeholderCount == args.count {
       return String(format: self, arguments: args)
     } else {
-      let lastArg = args[placeholderCount...].joined(separator: " ")
-      let fillInArgs = Array(args[..<placeholderCount]) + [lastArg]
+      let lastArg = args[(placeholderCount - 1)...].joined(separator: " ")
+      let fillInArgs = Array(args[..<(placeholderCount - 1)]) + [lastArg]
       return String(format: self, arguments: fillInArgs)
     }
   }

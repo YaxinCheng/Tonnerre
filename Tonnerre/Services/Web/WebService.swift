@@ -35,17 +35,21 @@ extension WebService {
   }
   
   private func fillInTemplate(input: [String]) -> URL? {
-    let fillParameters: [String]
+    let requestingTemplate: String
     if localeInTemplate {
-      let locale: Locale = .current
-      let regionCode = (locale.regionCode == "US" ? "com" : locale.regionCode) ?? "com"
-      fillParameters = [regionCode] + input
+      let locale = Locale.current
+      let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
+      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: argLowerBound)
+      requestingTemplate = String(format: template, arguments: parameters)
     } else {
-      fillParameters = input
+      requestingTemplate = template
     }
-    let urlEcnoded = fillParameters.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) }
-    let rawURL = template.filled(withArguments: urlEcnoded)
-    return URL(string: rawURL)
+    guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
+    let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
+    guard urlEncoded.count >= input.count else { return nil }
+    let parameters = Array(urlEncoded[0 ..< argLowerBound - 1]) +
+      [urlEncoded[(argLowerBound - 1)...].filter { !$0.isEmpty }.joined(separator: "+")]
+    return URL(string: String(format: requestingTemplate, arguments: parameters))
   }
   
   func present(rawElements: [Any]) -> [ServicePack] {
@@ -60,7 +64,7 @@ extension WebService {
         readableContent = $0.removingPercentEncoding ?? $0
       }
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
-      let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(readableContent)'") : contentTemplate
+      let content = contentTemplate.contains("%@") ? contentTemplate.filled(withArguments: ["'\(readableContent)'"]) : contentTemplate
       return DisplayableContainer(name: readableContent, content: content.capitalized, icon: icon, innerItem: url)
       }.map {
         ServicePack(provider: self, service: $0)
@@ -77,7 +81,7 @@ extension WebService {
     let queryURL = fillInTemplate(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ").capitalized
-    let content = contentTemplate.contains("%@") ? String(format: contentTemplate, "'\(queryContent)'") : contentTemplate
+    let content = contentTemplate.contains("%@") ? contentTemplate.filled(withArguments: ["'\(queryContent)'"]) : contentTemplate
     guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     guard

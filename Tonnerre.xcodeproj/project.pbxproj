@@ -299,7 +299,6 @@
 		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
 		14842469214EC1A50074C582 /* DefaultLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoader.swift; sourceTree = "<group>"; };
 		148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateService.swift; sourceTree = "<group>"; };
-		148E52772154661300343928 /* FlightUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlightUtilities.framework; sourceTree = "<group>"; };
 		148E537B215472CF00343928 /* FlightUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlightUtilities.h; sourceTree = "<group>"; };
 		148E537C215472FA00343928 /* Tonnerre-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tonnerre-Bridging-Header.h"; sourceTree = "<group>"; };
 		148E53822154793500343928 /* FlightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightService.swift; sourceTree = "<group>"; };
@@ -620,7 +619,6 @@
 			isa = PBXGroup;
 			children = (
 				148E538521547BFB00343928 /* FlightUtilities.framework */,
-				148E52772154661300343928 /* FlightUtilities.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
