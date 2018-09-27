@@ -28,6 +28,12 @@ extension AppleScriptServiceProtocol {
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let script = NSAppleScript(source: script) else { return }
-    script.executeAndReturnError(nil)
+    var error: NSDictionary? = nil
+    script.executeAndReturnError(&error)
+    #if DEBUG
+    if error != nil {
+      print(error!)
+    }
+    #endif
   }
 }

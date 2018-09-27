@@ -18,7 +18,8 @@ struct GeneralInterpreter<T: ServiceLoader>: Interpreter where T.ServiceType == 
     return rawData.map { provider in
       let keyword = type(of: provider).keyword
       if provider is DeferedServiceProtocol && keyword != tokens.first { return [] }
-      if tokens.count - 1 >= provider.argLowerBound && tokens.count - 1 <= provider.argUpperBound {
+      if tokens.count - 1 > provider.argUpperBound { return [] }
+      else if tokens.count - 1 >= provider.argLowerBound  {
         return provider.prepare(input: Array(tokens[1...])).map {
           ServicePack(provider: provider, service: $0)
         }
