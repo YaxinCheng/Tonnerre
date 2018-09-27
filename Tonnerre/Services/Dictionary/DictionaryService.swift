@@ -7,7 +7,7 @@
 //
 
 import CoreServices
-import Cocoa
+import Foundation
 
 struct DictionarySerivce: TonnerreService, HistoryProtocol {
   let icon: NSImage = .dictionary

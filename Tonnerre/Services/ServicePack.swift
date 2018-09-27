@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 /**
  Service pack is a data structure represents a service provider or a service bounded with its provider

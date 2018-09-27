@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Cocoa
 
 /**
  The base protocol that each service provider in the system should conforms to

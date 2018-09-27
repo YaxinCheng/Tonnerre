@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Cocoa
 
 extension NSImage {
   static var safari: NSImage {
@@ -32,5 +31,17 @@ extension NSImage {
   
   static var calculator: NSImage {
     return NSImage(contentsOfFile: "/Applications/Calculator.app/Contents/Resources/AppIcon.icns") ?? #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
+  }
+  
+  static var trash: NSImage {
+    let isDark = TonnerreTheme.current == .dark
+    let baseURL = URL(fileURLWithPath: "/System/Library/CoreServices/Dock.app/Contents/Resources/")
+    var fileName = "trash%@@2x.png"
+    switch isDark {
+    case true:  fileName = String(format: fileName, "full2")
+    case false: fileName = String(format: fileName, "full")
+    }
+    let imageURL = baseURL.appendingPathComponent(fileName)
+    return NSImage(contentsOf: imageURL) ?? #imageLiteral(resourceName: "notFound@2x.png").tintedImage(with: TonnerreTheme.current.imgColour)
   }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Cocoa
 
 protocol FileSearchService: TonnerreService {
   var associatedMode: SearchMode { get }

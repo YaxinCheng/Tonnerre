@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 struct LockService: AppleScriptServiceProtocol {
   static let keyword: String = "lock"
@@ -22,7 +22,7 @@ struct TrashEmptyService: AppleScriptServiceProtocol {// Clean transh bin
   let name: String = "Empty Trash"
   static let keyword: String = "empty"
   let content: String = "Empty your trash instantly"
-  let icon: NSImage = #imageLiteral(resourceName: "trash")
+  let icon: NSImage = .trash
   let script: String = """
     tell application "Finder"
     if length of (items in the trash as string) is 0 then return

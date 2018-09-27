@@ -13,6 +13,7 @@
 		1421F285210257D90020480A /* DynamicServiceExec.py in Resources */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		142C5941215C64F700D819F2 /* String+match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C5940215C64F700D819F2 /* String+match.swift */; };
 		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		143551F12123A44F00D6080E /* SettingPanel.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
 		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
@@ -230,6 +231,7 @@
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		1421F284210257D90020480A /* DynamicServiceExec.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = DynamicServiceExec.py; sourceTree = SOURCE_ROOT; };
 		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
+		142C5940215C64F700D819F2 /* String+match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+match.swift"; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserNotification+Extension.swift"; sourceTree = "<group>"; };
 		14398FCE2120D35900F5AFCA /* GradientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCell.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 				1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */,
 				1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */,
 				14F2302C214206F100B7A0FB /* String+fill.swift */,
+				142C5940215C64F700D819F2 /* String+match.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1101,6 +1104,7 @@
 				14C25515214DB37B0011A38E /* WebExtInterpreter.swift in Sources */,
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,
+				142C5941215C64F700D819F2 /* String+match.swift in Sources */,
 				14F23037214B37DA00B7A0FB /* DelayedServiceLoader.swift in Sources */,
 				14F23041214B437600B7A0FB /* TNEInterpreter.swift in Sources */,
 				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,

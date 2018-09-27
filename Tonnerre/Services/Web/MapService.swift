@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 struct GoogleMapService: WebService {
   let template: String = "https://maps.google.%@/?q=%@"
