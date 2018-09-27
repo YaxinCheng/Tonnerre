@@ -23,11 +23,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main, using: notifyAndExit)
     centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main, using: notifyAndExit)
-    indexingManager.check()
+    UpgradeHandler().handle()
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
+    indexingManager.check()
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
