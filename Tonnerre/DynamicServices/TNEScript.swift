@@ -60,7 +60,15 @@ struct TNEScript: DisplayProtocol {
   
   let name: String
   var content: String
-  let icon: NSImage
+  var icon: NSImage {
+    let theme = TonnerreTheme.current
+    switch theme {
+    case .light: return iconLight ?? #imageLiteral(resourceName: "notFound").tintedImage(with: theme.imgColour)
+    case .dark: return iconDark ?? iconLight ?? #imageLiteral(resourceName: "notFound")
+    }
+  }
+  private let iconLight: NSImage?
+  private let iconDark: NSImage?
   let placeholder: String
   let keyword: String
   private let script: Script
@@ -84,8 +92,10 @@ struct TNEScript: DisplayProtocol {
       }
     }
     guard validScript != nil else { return nil }
-    let iconURL = scriptPath.appendingPathComponent("icon.png")
-    let fileIcon = NSImage(contentsOf: iconURL)
+    let lightIconURL = scriptPath.appendingPathComponent("icon.png")
+    let darkIconURL = scriptPath.appendingPathComponent("icon_dark.png")
+    let lightFileIcon = NSImage(contentsOf: lightIconURL)
+    let darkFileIcon = NSImage(contentsOf: darkIconURL)
     let jsonURL = scriptPath.appendingPathComponent("description.json")
     do {
       let jsonData = try Data(contentsOf: jsonURL)
@@ -94,16 +104,19 @@ struct TNEScript: DisplayProtocol {
         let descriptionObj = jsonObject,
         let name = descriptionObj["name"] as? String,
         let keyword = descriptionObj["keyword"] as? String
-        else { return nil }
-      let icon: NSImage
-      if fileIcon != nil { icon = fileIcon! }
-      else if let iconPath = descriptionObj["icon"] as? String, let iconFromPath = NSImage(contentsOfFile: iconPath) {
-        icon = iconFromPath
-      } else { icon = #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour) }
+      else { return nil }
+      let getIcon: (String, NSImage?) -> NSImage? = {
+        if let icon = $1 { return icon }
+        else if let iconPath = descriptionObj[$0] as? String {
+          return NSImage(contentsOfFile: iconPath)
+        } else { return nil }
+      }
+      let lightIcon = getIcon("icon", lightFileIcon)
+      let darkIcon = getIcon("icon_dark", darkFileIcon)
       let placeholder = descriptionObj["placeholder"] as? String
       let lowerBound = descriptionObj["lowerBound"] as? Int ?? 1
       let upperBound = descriptionObj["upperBound"] as? Int ?? .max
-      self.init(keyword: keyword, name: name, content: descriptionObj["content"] as? String ?? "", icon: icon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound)
+      self.init(keyword: keyword, name: name, content: descriptionObj["content"] as? String ?? "", lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound)
     } catch {
       #if DEBUG
       print("Error happened in script constructor: ", error)
@@ -112,12 +125,13 @@ struct TNEScript: DisplayProtocol {
     }
   }
   
-  init(keyword: String, name: String, content: String, icon: NSImage, script: Script, placeholder: String? = nil, lowerBound: Int, upperBound: Int) {
+  init(keyword: String, name: String, content: String, lightIcon: NSImage?, darkIcon: NSImage?, script: Script, placeholder: String? = nil, lowerBound: Int, upperBound: Int) {
     self.script = script
     self.keyword = keyword
     self.name = name
     self.content = content
-    self.icon = icon
+    self.iconLight = lightIcon
+    self.iconDark = darkIcon
     self.placeholder = placeholder ?? keyword
     self.lowerBound = lowerBound
     self.upperBound = upperBound

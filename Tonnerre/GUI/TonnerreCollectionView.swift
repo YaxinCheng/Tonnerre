@@ -177,7 +177,7 @@ final class TonnerreCollectionView: NSScrollView {
       let highlightIndex = highlightedItemIndex >= 0 ? highlightedItemIndex : 0
       guard datasource.count > 0 else { return }
       delegate?.tabPressed(service: datasource[highlightIndex])
-    case 49:
+    case 49:// Space
       highlightedItem?.preview()
     case 36, 76: // Enter keys
       guard event.modifierFlags.contains(.command), let (service, value) = enterPressed() else { break }
