@@ -710,7 +710,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView appearanceType="vibrantLight" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
+                            <visualEffectView blendingMode="withinWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
                                 <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
                             </visualEffectView>
                             <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5FM-BE-sWa">
@@ -784,11 +784,11 @@
                                 <constraints>
                                     <constraint firstAttribute="height" identifier="collectionViewHeightConstraint" id="a9v-xf-LYm"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="TYx-mj-r3R">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TYx-mj-r3R">
                                     <rect key="frame" x="0.0" y="-16" width="656" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hR9-g7-SjZ">
                                     <rect key="frame" x="654" y="0.0" width="16" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

@@ -20,7 +20,7 @@ extension String {
    */
   func filled(withArguments args: [String], separator: String = " ") -> String {
     let placeholderCount = components(separatedBy: "%@").count - 1
-    guard placeholderCount <= args.count || placeholderCount == 0 else { return self }
+    guard placeholderCount <= args.count, placeholderCount > 0 else { return self }
     if placeholderCount == args.count {
       return String(format: self, arguments: args)
     } else {

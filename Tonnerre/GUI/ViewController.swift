@@ -38,11 +38,6 @@ final class ViewController: NSViewController {
   }
   
   override func viewWillAppear() {
-    if TonnerreTheme.current == .dark {
-      backgroundView.material = .dark
-    } else {
-      backgroundView.material = .mediumLight
-    }
     iconView.theme = .current
     textField.theme = .current
     placeholderField.theme = .current
