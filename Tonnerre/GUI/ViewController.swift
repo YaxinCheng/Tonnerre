@@ -10,8 +10,7 @@ import Cocoa
 
 final class ViewController: NSViewController {
   var interpreter = TonnerreInterpreter()
-  
-  @IBOutlet weak var backgroundView: NSVisualEffectView!
+
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var textField: TonnerreField! {
     didSet { textField.delegate = self }
@@ -25,6 +24,7 @@ final class ViewController: NSViewController {
   
   private var keyboardMonitor: Any? = nil
   private var flagsMonitor: Any? = nil
+  
   private var lastQuery: String = ""
   private let asyncSession = TonnerreSession.shared
   
@@ -196,8 +196,8 @@ extension ViewController: TonnerreCollectionViewDelegate {
     switch service {
     case .provider(origin: let service) where !type(of: service).keyword.isEmpty:
       textField.autoComplete(cmd: type(of: service).keyword)
-    case .service(provider: let service, content: let value) where !value.name.isEmpty:
-      if service is TNEScript || service is WebExt {
+    case .service(provider: _, content: let value) where !value.name.isEmpty:
+      if value is TNEScript || value is WebExt {
         textField.autoComplete(cmd: value.placeholder)
       } else if let tservice = value as? TonnerreService {
         textField.autoComplete(cmd: type(of: tservice).keyword)

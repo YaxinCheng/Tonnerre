@@ -813,7 +813,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backgroundView" destination="hZT-aK-YhT" id="mCU-K0-Zcd"/>
                         <outlet property="collectionView" destination="2vM-ry-4Bc" id="Zcm-Nf-KK6"/>
                         <outlet property="iconView" destination="INu-6D-MeR" id="RKf-CR-kGB"/>
                         <outlet property="placeholderField" destination="5eP-PP-XxY" id="jHZ-0I-mRH"/>
