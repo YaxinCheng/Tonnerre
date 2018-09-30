@@ -710,7 +710,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView blendingMode="withinWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
+                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-aK-YhT">
                                 <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
                             </visualEffectView>
                             <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5FM-BE-sWa">
