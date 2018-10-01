@@ -97,24 +97,23 @@ final class ServiceCell: NSCollectionViewItem {
   
   func preview() {
     guard !popoverView.isShown else { return }
-    let viewController: NSViewController
-    let constructViewController: (URL, String) -> NSViewController = { [unowned self] in
+    let viewController = NSViewController()
+    let constructView: (URL, String) -> NSView = { [unowned self] in
       let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: self.popoverView.contentSize.width, height: self.popoverView.contentSize.height), style: .normal)!
       qlView.previewItem = PreviewItem(title: $1, url: $0)
       qlView.shouldCloseWithWindow = true
-      let viewController = NSViewController()
-      viewController.view = qlView
-      return viewController
+      return qlView
     }
     if let container = displayItem as? DisplayableContainer<URL>,
       let url = container.innerItem {
-      viewController = constructViewController(url, container.name)
+      if let buildInVC = container.extraContent as? NSViewController {
+        viewController.view = buildInVC.view
+      } else {
+        viewController.view = constructView(url, container.name)
+      }
     } else if let container = displayItem as? WebExt,
       let url = URL(string: container.rawURL) {
-      viewController = constructViewController(url, container.name)
-    } else if let container = displayItem as? DisplayableContainer<NSViewController>,
-      let vc = container.innerItem {
-      viewController = vc
+      viewController.view = constructView(url, container.name)
     } else { return }
     
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)

@@ -21,8 +21,8 @@ struct WebExtInterpreter: Interpreter {
     var inRangedServices = rawData
       .filter { $0.argLowerBound <= queryContent.count && $0.argUpperBound >= queryContent.count }
     for (index, var service) in inRangedServices.enumerated() {
-      service.content = service.content.filled(withArguments: queryContent)
-      service.rawURL = service.rawURL.filled(withArguments: queryContent)
+      service.content = service.content.filled(arguments: queryContent)
+      service.rawURL = service.rawURL.filled(arguments: queryContent)
       inRangedServices[index] = service
     }
     return inRangedServices.map { ServicePack(provider: webExtService, service: $0) }

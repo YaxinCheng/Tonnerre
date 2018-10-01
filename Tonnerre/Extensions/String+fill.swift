@@ -18,7 +18,7 @@ extension String {
    - If the number of arguments is more than the number of placeholders, then the last a few arguments will be joined to one to fill one placeholder.
    - If the number of arguments is less than the number of placeholders, then the template will be returned without filling.
    */
-  func filled(withArguments args: [String], separator: String = " ") -> String {
+  func filled(arguments args: [String], separator: String = " ") -> String {
     let placeholderCount = components(separatedBy: "%@").count - 1
     guard placeholderCount <= args.count, placeholderCount > 0 else { return self }
     if placeholderCount == args.count {

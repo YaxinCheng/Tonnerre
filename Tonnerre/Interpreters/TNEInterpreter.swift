@@ -30,7 +30,7 @@ struct TNEInterpreter: Interpreter {
     }
     asyncSession.send(request: task)
     for (index, var service) in filteredScripts.enumerated() {
-      service.content = service.content.filled(withArguments: queryContent)
+      service.content = service.content.filled(arguments: queryContent)
       filteredScripts[index] = service
     }
     return filteredScripts.map { ServicePack(provider: tneProvider, service: $0) }
