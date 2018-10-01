@@ -24,22 +24,37 @@ protocol ServiceCellDelegate: class {
   func cellDoubleClicked()
 }
 
+private extension NSPopover {
+  convenience init(withDelegate delegate: NSPopoverDelegate) {
+    self.init()
+    self.contentSize = NSSize(width: 500, height: 700)
+    self.behavior = .transient
+    self.delegate = delegate
+  }
+}
+
 final class ServiceCell: NSCollectionViewItem {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
-  var displayItem: DisplayProtocol?
+  var displayItem: DisplayProtocol? = nil
   weak var delegate: ServiceCellDelegate?
-  var popoverView = NSPopover()
+  var popoverView: NSPopover!
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    displayItem = nil
+    delegate = nil
+    popoverView = NSPopover(withDelegate: self)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
-    popoverView.contentSize = NSSize(width: 500, height: 700)
-    popoverView.behavior = .transient
-    popoverView.delegate = self
+    popoverView = NSPopover(withDelegate: self)
   }
   
   var theme: TonnerreTheme {
@@ -92,14 +107,12 @@ final class ServiceCell: NSCollectionViewItem {
       return viewController
     }
     if let container = displayItem as? DisplayableContainer<URL>,
-      let url = container.innerItem
-    {
+      let url = container.innerItem {
       viewController = constructViewController(url, container.name)
     } else if let container = displayItem as? WebExt,
       let url = URL(string: container.rawURL) {
       viewController = constructViewController(url, container.name)
-    }
-    else if let container = displayItem as? DisplayableContainer<NSViewController>,
+    } else if let container = displayItem as? DisplayableContainer<NSViewController>,
       let vc = container.innerItem {
       viewController = vc
     } else { return }
