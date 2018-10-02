@@ -26,7 +26,7 @@ final class GeneralLoader: ServiceLoader {
   }
   
   init() {
-    let GeneralProviders: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, SafariBMService.self, ChromeBMService.self, TerminalService.self, ClipboardService.self, FlightService.self]
+    let GeneralProviders: [TonnerreService.Type] = [FileNameSearchService.self, FileContentSearchService.self, GoogleSearch.self, AmazonSearch.self, WikipediaSearch.self, GoogleImageSearch.self, YoutubeSearch.self, GoogleMapService.self, DictionarySerivce.self, GoogleTranslateService.self, BingSearch.self, DuckDuckGoSearch.self, SafariBMService.self, ChromeBMService.self, TerminalService.self, ClipboardService.self]
     
     let saveToSettings: ([TonnerreService.Type]) -> () = { providers in
       DispatchQueue.global(qos: .background).async {

@@ -10,8 +10,8 @@ import Foundation
 import Cocoa
 
 struct FlightService: TonnerreService {
-  static let keyword: String = "flight"
-  let argLowerBound: Int = 1
+  static let keyword: String = ""
+  let argLowerBound: Int = 0
   let argUpperBound: Int = 2// Do not why there will be a space
   let icon: NSImage = #imageLiteral(resourceName: "flight")
   let name: String = "Flight Checker"
