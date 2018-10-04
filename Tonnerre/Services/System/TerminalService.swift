@@ -19,7 +19,7 @@ struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingPro
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     let cmd = input.joined(separator: " ")
-    return [DisplayableContainer(name: cmd, content: "Run \(cmd) in terminal", icon: icon, innerItem: input)]
+    return [DisplayableContainer(name: cmd, content: "Run \(cmd) in terminal", icon: icon, priority: priority, innerItem: input)]
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
@@ -34,11 +34,11 @@ struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingPro
         try process.run()
         let returnedData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         guard let resultString = String(data: returnedData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        let result = resultString.components(separatedBy: "\n").map { DisplayableContainer(name: $0, content: "Result of \"\(cmd.joined(separator: " "))\"", icon: self.icon, innerItem: $0) }
+        let result = resultString.components(separatedBy: "\n").map { DisplayableContainer(name: $0, content: "Result of \"\(cmd.joined(separator: " "))\"", icon: self.icon, priority: self.priority, innerItem: $0) }
         let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": result])
         NotificationCenter.default.post(notification)
       } catch {
-        let errorInfo = DisplayableContainer(name: "\(error)", content: "Error happened when running \(cmd.joined(separator: " "))", icon: self.icon, innerItem: error.localizedDescription)
+        let errorInfo = DisplayableContainer(name: "\(error)", content: "Error happened when running \(cmd.joined(separator: " "))", icon: self.icon, priority: self.priority, innerItem: error.localizedDescription)
         let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": errorInfo])
         NotificationCenter.default.post(notification)
       }

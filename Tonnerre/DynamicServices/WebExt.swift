@@ -17,12 +17,13 @@ struct WebExt: DisplayProtocol {
   var rawURL: String
   let argLowerBound: Int
   let argUpperBound: Int
+  let priority: DisplayPriority
   private let attrName: String
   var id: String {
     return attrName
   }
   
-  init(keyword: String, name: String, content: String, icon: NSImage, rawURL: String, attrName: String, lowerBound: Int, upperBound: Int, placeholder: String? = nil) {
+  init(keyword: String, name: String, content: String, icon: NSImage, rawURL: String, attrName: String, lowerBound: Int, upperBound: Int, placeholder: String? = nil, priority: DisplayPriority = .normal) {
     self.keyword = keyword
     self.name = name
     self.content = content
@@ -32,6 +33,7 @@ struct WebExt: DisplayProtocol {
     self.argLowerBound = lowerBound
     self.argUpperBound = upperBound
     self.placeholder = placeholder ?? keyword
+    self.priority = priority
   }
   
   private static func loadImage(rawURL: String) -> NSImage {

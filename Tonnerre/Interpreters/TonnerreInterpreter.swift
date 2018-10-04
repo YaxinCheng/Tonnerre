@@ -21,6 +21,13 @@ struct TonnerreInterpreter {
   private let tneInterpreter     = TNEInterpreter()
   private let webExtInterpreter  = WebExtInterpreter()
   
+  private func isEmpty(_ pack: PrioritizedPack) -> Bool {
+    return pack.0.isEmpty && pack.1.isEmpty && pack.2.isEmpty
+  }
+  
+  private func sum(_ pack: PrioritizedPack) -> [ServicePack] {
+    return pack.2 + pack.1 + pack.0
+  }
   /**
    Interpret user input into ServicePacks
    - parameter input: user input
@@ -32,16 +39,23 @@ struct TonnerreInterpreter {
     providedServices += webExtInterpreter.interpret(input: input)
     providedServices += generalInterpreter.interpret(input: input)
     providedServices += prioritInterpreter.interpret(input: input)
-    if providedServices.isEmpty {
+    if isEmpty(providedServices) {
       providedServices += delayedInterpreter.interpret(input: input)
     }
-    if providedServices.isEmpty {
+    if isEmpty(providedServices) {
       providedServices += defaultInterpreter.interpret(input: input)
     }
-    return providedServices
+    return sum(providedServices)
   }
   
   func clearCache() {
     prioritInterpreter.clearCache()
   }
+}
+
+fileprivate typealias PrioritizedPack = ([ServicePack], [ServicePack], [ServicePack])
+fileprivate func += (lhs: inout PrioritizedPack, rhs: PrioritizedPack) {
+  lhs.0 += rhs.0
+  lhs.1 += rhs.1
+  lhs.2 += rhs.2
 }

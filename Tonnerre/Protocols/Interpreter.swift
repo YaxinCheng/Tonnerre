@@ -53,9 +53,18 @@ extension Interpreter {
    - parameter input: user input
    - returns: A list of ServicePacks
   */
-  func interpret(input: String) -> [ServicePack] {
+  func interpret(input: String) -> ([ServicePack], [ServicePack], [ServicePack]) {
     let tokens = tokenize(input: input)
-    guard let keyword = tokens.first else { return [] }
+    guard let keyword = tokens.first else { return ([], [], []) }
     return wrap(loader.load(keyword: keyword), withTokens: tokens)
+      .reduce(([], [], [])) {
+        if $1.priority == .low {
+          return ($0.0 + [$1], $0.1, $0.2)
+        } else if $1.priority == .normal {
+          return ($0.0, $0.1 + [$1], $0.2)
+        } else {
+          return ($0.0, $0.1, $0.2 + [$1])
+        }
+    }
   }
 }

@@ -147,7 +147,7 @@ struct TNEScript: DisplayProtocol {
         try process?.run()
       case .appleScript(path: _):
         if let asProc = process { try asProc.run() }
-        else { return [DisplayableContainer<Any>(name: name, content: content, icon: icon)] }
+        else { return [DisplayableContainer<Any>(name: name, content: content, icon: icon, priority: priority)] }
       }
       let runningError = (process?.standardError as? Pipe)?.fileHandleForReading.readDataToEndOfFile()
       if let errorData = runningError,
@@ -184,9 +184,9 @@ struct TNEScript: DisplayProtocol {
       let stringItem = innerItem as? String,
       let urlItem = URL(string: stringItem),
       let _ = NSWorkspace.shared.urlForApplication(toOpen: urlItem) {
-      return DisplayableContainer(name: name, content: content, icon: withIcon, innerItem: urlItem, placeholder: placeholder, extraContent: extraInfo)
+      return DisplayableContainer(name: name, content: content, icon: withIcon, priority: priority, innerItem: urlItem, placeholder: placeholder, extraContent: extraInfo)
     } else {
-      return DisplayableContainer<Any>(name: name, content: content, icon: withIcon, innerItem: innerItem, placeholder: placeholder, extraContent: extraInfo)
+      return DisplayableContainer<Any>(name: name, content: content, icon: withIcon, priority: priority, innerItem: innerItem, placeholder: placeholder, extraContent: extraInfo)
     }
   }
 }

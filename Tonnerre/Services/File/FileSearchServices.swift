@@ -25,7 +25,7 @@ extension FileSearchService {
     let indexStorage = IndexStorage()
     let index = indexStorage[associatedMode]
     return index.search(query: query, limit: 5 * 9, options: .default).map {
-      DisplayableContainer(name: $0.deletingPathExtension().lastPathComponent, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0, placeholder: $0.deletingPathExtension().lastPathComponent)
+      DisplayableContainer(name: $0.deletingPathExtension().lastPathComponent, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), priority: priority, innerItem: $0, placeholder: $0.deletingPathExtension().lastPathComponent)
     }
   }
   

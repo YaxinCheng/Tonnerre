@@ -26,11 +26,11 @@ struct DictionarySerivce: TonnerreService, HistoryProtocol {
     }
     let query = input.joined(separator: " ")
     guard let (foundTerm, definition) = define(query) else {
-      return [DisplayableContainer<URL>(name: query, content: "\"\(query)\" is not found", icon: icon)]
+      return [DisplayableContainer<URL>(name: query, content: "\"\(query)\" is not found", icon: icon, priority: priority)]
     }
     let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? foundTerm
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    return [DisplayableContainer(name: foundTerm, content: definition as String, icon: icon, innerItem: dictURL)]
+    return [DisplayableContainer(name: foundTerm, content: definition as String, icon: icon, priority: priority, innerItem: dictURL)]
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
@@ -44,7 +44,7 @@ struct DictionarySerivce: TonnerreService, HistoryProtocol {
     return termsAndDefs.map {
       let urlEncoded = $0.0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? $0.0
       let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-      return DisplayableContainer(name: $0.0, content: $0.1, icon: icon, innerItem: dictURL)
+      return DisplayableContainer(name: $0.0, content: $0.1, icon: icon, priority: priority, innerItem: dictURL)
     }
   }
   

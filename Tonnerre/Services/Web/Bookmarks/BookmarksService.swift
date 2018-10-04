@@ -52,7 +52,7 @@ extension BookMarkService {
     let filteredBMs = bookMarks.filter {
       regex.numberOfMatches(in: $0.title, options: .withoutAnchoringBounds, range: NSRange($0.title.startIndex..<$0.title.endIndex, in: $0.title)) >= 1
     }
-    return filteredBMs.map { DisplayableContainer(name: $0.title, content: $0.url.absoluteString, icon: icon, innerItem: $0.url, placeholder: $0.title) }
+    return filteredBMs.map { DisplayableContainer(name: $0.title, content: $0.url.absoluteString, icon: icon, priority: priority, innerItem: $0.url, placeholder: $0.title) }
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {

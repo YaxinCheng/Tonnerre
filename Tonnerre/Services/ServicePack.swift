@@ -49,6 +49,13 @@ enum ServicePack: DisplayProtocol {
     }
   }
   
+  var priority: DisplayPriority {
+    switch self {
+    case .provider(let provider): return provider.priority
+    case .service(provider: _, content: let value): return value.priority
+    }
+  }
+  
   /**
    Constructor of ServicePack
    - parameter provider: the service provider needs to be represented

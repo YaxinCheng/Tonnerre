@@ -43,7 +43,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
       let text = query.isEmpty ? "..." : query
-      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query) ]
+      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, priority: priority, innerItem: query) ]
       if !query.isEmpty {
         fetchRequest.predicate = NSPredicate(format: "value CONTAINS[cd] %@", query)
       }
@@ -57,14 +57,14 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let url = URL(string: $0.value!)!
           let content = url.path
           let icon = NSWorkspace.shared.icon(forFile: url.path)
-          return DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)
+          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)
         } else {
           let name = $0.value!
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
           let content = "Copied at \(dateFmt.string(from: $0.time!))"
           let icon = self.icon
-          return DisplayableContainer(name: name, content: content, icon: icon, innerItem: $0.value!)
+          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: $0.value!)
         }
       })
     } catch {

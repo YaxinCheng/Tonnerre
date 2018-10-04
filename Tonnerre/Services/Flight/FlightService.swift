@@ -30,8 +30,8 @@ struct FlightService: TonnerreService {
       let flightCode  = UInt(flightCodeString),
       let viewController = FUFlightViewController(flightCode: flightCode, airlineCode: airlineCode),
       let url = URL(string: rawURL.filled(arguments: [airlineCode, String(flightCodeString)]))
-    else { return [self] }
-    return [DisplayableContainer<URL>(name: "Flight check for \"\(rawFlightCode)\"", content: "Press space or force touch to preview", icon: icon, innerItem: url, extraContent: viewController)]
+    else { return [] }
+    return [DisplayableContainer<URL>(name: "Flight check for \"\(rawFlightCode)\"", content: "Press space or force touch to preview", icon: icon, priority: priority, innerItem: url, extraContent: viewController)]
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {

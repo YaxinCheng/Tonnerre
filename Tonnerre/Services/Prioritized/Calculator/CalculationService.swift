@@ -23,13 +23,13 @@ struct CalculationService: TonnerreService {
     do {
       let tokens = try tokenizer.tokenize(expression: rawExpression)
       let calculationResult = try parser.parse(tokens: tokens)
-      return [DisplayableContainer<Int>(name: "\(calculationResult.value)", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayableContainer<Int>(name: "\(calculationResult.value)", content: rawExpression, icon: icon, priority: priority, placeholder: "")]
     } catch MathError.zeroDivision {
-      return [DisplayableContainer<Int>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayableContainer<Int>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, priority: priority, placeholder: "")]
     } catch MathError.unclosedBracket {
-      return [DisplayableContainer<Int>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayableContainer<Int>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, priority: priority, placeholder: "")]
     } catch MathError.missingBracket {
-      return [DisplayableContainer<Int>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayableContainer<Int>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, priority: priority, placeholder: "")]
     } catch {
       return []
     }
