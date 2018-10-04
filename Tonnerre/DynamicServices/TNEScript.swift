@@ -72,6 +72,7 @@ struct TNEScript: DisplayProtocol {
   let placeholder: String
   let keyword: String
   private let script: Script
+  let priority: DisplayPriority
   var path: URL {
     return script.path
   }
@@ -116,7 +117,9 @@ struct TNEScript: DisplayProtocol {
       let placeholder = descriptionObj["placeholder"] as? String
       let lowerBound = descriptionObj["lowerBound"] as? Int ?? 1
       let upperBound = descriptionObj["upperBound"] as? Int ?? .max
-      self.init(keyword: keyword, name: name, content: descriptionObj["content"] as? String ?? "", lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound)
+      let priorityStr = descriptionObj["priority"] as? String
+      let priority = DisplayPriority(rawValue: priorityStr ?? "") ?? .normal
+      self.init(keyword: keyword, name: name, content: descriptionObj["content"] as? String ?? "", lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound, priority: priority)
     } catch {
       #if DEBUG
       print("Error happened in script constructor: ", error)
@@ -125,7 +128,7 @@ struct TNEScript: DisplayProtocol {
     }
   }
   
-  init(keyword: String, name: String, content: String, lightIcon: NSImage?, darkIcon: NSImage?, script: Script, placeholder: String? = nil, lowerBound: Int, upperBound: Int) {
+  init(keyword: String, name: String, content: String, lightIcon: NSImage?, darkIcon: NSImage?, script: Script, placeholder: String? = nil, lowerBound: Int, upperBound: Int, priority: DisplayPriority = .normal) {
     self.script = script
     self.keyword = keyword
     self.name = name
@@ -135,6 +138,7 @@ struct TNEScript: DisplayProtocol {
     self.placeholder = placeholder ?? keyword
     self.lowerBound = lowerBound
     self.upperBound = upperBound
+    self.priority = priority
   }
   
   func execute(args: TNEArgument) -> [DisplayProtocol] {

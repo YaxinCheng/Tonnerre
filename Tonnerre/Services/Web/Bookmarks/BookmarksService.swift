@@ -31,6 +31,7 @@ protocol BookMarkService: TonnerreService {
 extension BookMarkService {
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return Int.max }
+  var priority: DisplayPriority { return .low }
   var icon: NSImage {
     return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
   }

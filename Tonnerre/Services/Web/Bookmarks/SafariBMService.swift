@@ -8,6 +8,7 @@
 
 import Cocoa
 
+#warning("With Safari12, this is broken due to the permission restriction")
 struct SafariBMService: BookMarkService, DeferedServiceProtocol {
   static let browser: Browser = .safari
   let name: String = "Safari BookMarks"

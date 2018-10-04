@@ -12,4 +12,13 @@ enum DisplayPriority {
   case high
   case normal
   case low
+  
+  init?(rawValue: String) {
+    switch rawValue.lowercased() {
+    case "high":   self = .high
+    case "normal": self = .normal
+    case "low":    self = .low
+    default: return nil
+    }
+  }
 }
