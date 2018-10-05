@@ -49,7 +49,7 @@ final class TonnerreField: NSTextField, ThemeProtocol {
     return true
   }
   
-  func autoComplete(cmd: String) {
+  func autoComplete(cmd: String, appendingSpace: Bool) {
     let tokens = stringValue.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
     guard !tokens.isEmpty else { return }
     if tokens.count > 1 {
@@ -58,7 +58,7 @@ final class TonnerreField: NSTextField, ThemeProtocol {
       let surplusPart = String(cmd[commonPart.endIndex...])
       stringValue = (tokens.first! + " " + commonPart + surplusPart).lowercased()
     } else {
-      stringValue = "\(cmd) ".lowercased()
+      stringValue = cmd.lowercased() + (appendingSpace ? " " : "")
     }
     window?.makeFirstResponder(nil)
   }

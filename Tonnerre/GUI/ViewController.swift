@@ -195,14 +195,16 @@ extension ViewController: TonnerreCollectionViewDelegate {
   func tabPressed(service: ServicePack) {
     switch service {
     case .provider(origin: let service) where !type(of: service).keyword.isEmpty:
-      textField.autoComplete(cmd: type(of: service).keyword)
+      textField.autoComplete(cmd: type(of: service).keyword, appendingSpace: true)
     case .service(provider: _, content: let value) where !value.placeholder.isEmpty:
-      if value is TNEScript || value is WebExt {
-        textField.autoComplete(cmd: value.placeholder)
+      if let tneService = value as? TNEScript {
+        textField.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0)
+      } else if let webExt = value as? WebExt {
+        textField.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0)
       } else if let tservice = value as? TonnerreService {
-        textField.autoComplete(cmd: type(of: tservice).keyword)
+        textField.autoComplete(cmd: type(of: tservice).keyword, appendingSpace: tservice.argLowerBound > 0)
       } else {
-        textField.autoComplete(cmd: value.name)
+        textField.autoComplete(cmd: value.name, appendingSpace: false)
       }
     default: return
     }
