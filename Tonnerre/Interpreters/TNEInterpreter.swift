@@ -17,11 +17,12 @@ struct TNEInterpreter: Interpreter {
   
   func wrap(_ rawData: [TNEScript], withTokens tokens: [String]) -> [ServicePack] {
     let tneProvider = TNEServices()
-    if tokens.count == 1 {
-      return rawData.map { ServicePack(provider: tneProvider, service: $0) }
-    }
     let queryContent = Array(tokens[1...])
-    var filteredScripts = rawData.filter { $0.lowerBound <= tokens.count - 1 && queryContent.count - 1 <= $0.upperBound }
+    var filteredScripts = rawData.filter { queryContent.count <= $0.upperBound }
+    if tokens.count == 1 {
+      return filteredScripts.map { ServicePack(provider: tneProvider, service: $0) }
+    }
+    filteredScripts.removeAll { $0.lowerBound > queryContent.count }
     let task = DispatchWorkItem {
       let content = filteredScripts.compactMap { $0.execute(args: .prepare(input: queryContent)) }.reduce([], +)
       guard content.count > 0 else { return }
