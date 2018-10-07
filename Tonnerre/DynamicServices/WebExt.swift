@@ -77,7 +77,7 @@ struct WebExt: DisplayProtocol {
           else { continue }
           let content = jsonContent["content"] as? String ?? ""
           let argLowerBound = jsonContent["argLowerBound"] as? Int ?? 1
-          let argUpperBound = jsonContent["argUpperBound"] as? Int ?? argLowerBound
+          let argUpperBound = jsonContent["argUpperBound"] as? Int ?? .max
           let priorityStr = jsonContent["priority"] as? String
           let priority = DisplayPriority(rawValue: priorityStr ?? "") ?? .normal
           let icon = jsonContent["icon"] is String ? loadImage(rawURL: jsonContent["icon"] as! String) : #imageLiteral(resourceName: "notFound")
