@@ -7,16 +7,26 @@
 //
 
 import Cocoa
+import UserNotifications
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
-    NSUserNotificationCenter.default.delegate = self
-  }
-
-  func applicationWillTerminate(_ aNotification: Notification) {
-    // Insert code here to tear down your application
+    if #available(OSX 10.14, *) {
+      let centre = UNUserNotificationCenter.current()
+      centre.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+        #if DEBUG
+        print("permission granted:", granted)
+        if let errorInfo = error {
+          print("error:", errorInfo)
+        }
+        #endif
+      }
+    } else {
+      // Fallback on earlier versions
+      NSUserNotificationCenter.default.delegate = self
+    }
   }
   
   func application(_ application: NSApplication, open urls: [URL]) {
@@ -26,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       guard
         let appSupDir = UserDefaults.shared.url(forKey: .appSupportDir)
       else {
-        NSUserNotification.send(title: "Installation Failed", informativeText: "No application support folder is found. Please try again later")
+        LocalNotification.send(title: "Installation Failed", content: "No application support folder is found. Please try again later")
         return
       }
       let serviceFolderURL = appSupDir.appendingPathComponent("Services")
@@ -35,14 +45,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
           try fileManager.moveItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))
           successCount += 1
         } catch {
-          NSUserNotification.send(title: "\(url.lastPathComponent): Installation Failed", informativeText: "\(error)", muted: false)
+          LocalNotification.send(title: "\(url.lastPathComponent): Installation Failed", content: "\(error)", muted: false)
         }
       }
     }
     guard successCount > 0 else { return }
     let title = (successCount > 1 ? "Services" : "Service") + " Installed"
     let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
-    NSUserNotification.send(title: title, informativeText: informativeText)
+    LocalNotification.send(title: title, content: informativeText)
   }
 
   // MARK: - Core Data stack
@@ -144,6 +154,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 }
 
+@available(OSX, obsoleted: 10.14)
 extension AppDelegate: NSUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
     return true

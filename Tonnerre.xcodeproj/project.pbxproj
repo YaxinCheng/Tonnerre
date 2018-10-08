@@ -12,6 +12,7 @@
 		140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A62CB20CB078500B759A4 /* DictionaryService.swift */; };
 		1421F285210257D90020480A /* DynamicServiceExec.py in Resources */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14257A092166F550008BE752 /* ExitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14257A082166F550008BE752 /* ExitService.swift */; };
+		14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14257A0A216BD775008BE752 /* LocalNotification.swift */; };
 		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
 		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		142C5941215C64F700D819F2 /* String+match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C5940215C64F700D819F2 /* String+match.swift */; };
@@ -19,7 +20,6 @@
 		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		143551F12123A44F00D6080E /* SettingPanel.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
 		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
-		143551F5212648CB00D6080E /* NSUserNotification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FCF2120D35900F5AFCA /* GradientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FCE2120D35900F5AFCA /* GradientCell.swift */; };
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
@@ -232,11 +232,11 @@
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		1421F284210257D90020480A /* DynamicServiceExec.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = DynamicServiceExec.py; sourceTree = SOURCE_ROOT; };
 		14257A082166F550008BE752 /* ExitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitService.swift; sourceTree = "<group>"; };
+		14257A0A216BD775008BE752 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
 		142C5940215C64F700D819F2 /* String+match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+match.swift"; sourceTree = "<group>"; };
 		142C5942215D842800D819F2 /* UpgradeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHandler.swift; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
-		143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserNotification+Extension.swift"; sourceTree = "<group>"; };
 		14398FCE2120D35900F5AFCA /* GradientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCell.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		14398FD32120DB3500F5AFCA /* GradientColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColours.swift; sourceTree = "<group>"; };
@@ -666,11 +666,11 @@
 				14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */,
 				14F015CC20FE794700537160 /* LaunchOrder+Extension.swift */,
 				14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */,
-				143551F4212648CB00D6080E /* NSUserNotification+Extension.swift */,
 				1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */,
 				1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */,
 				14F2302C214206F100B7A0FB /* String+fill.swift */,
 				142C5940215C64F700D819F2 /* String+match.swift */,
+				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1122,10 +1122,10 @@
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
+				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,
 				14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
-				143551F5212648CB00D6080E /* NSUserNotification+Extension.swift in Sources */,
 				145DA17420DC243D00C1E804 /* TonnerreSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

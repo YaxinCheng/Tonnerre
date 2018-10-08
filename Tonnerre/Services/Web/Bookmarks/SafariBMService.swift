@@ -8,7 +8,6 @@
 
 import Cocoa
 
-#warning("With Safari12, this is broken due to the permission restriction")
 struct SafariBMService: BookMarkService, DeferedServiceProtocol {
   static let browser: Browser = .safari
   let name: String = "Safari BookMarks"
@@ -19,7 +18,18 @@ struct SafariBMService: BookMarkService, DeferedServiceProtocol {
     guard
       let bookmarkFile = type(of: self).browser.bookMarksFile,
       let plist = NSDictionary(contentsOf: bookmarkFile) as? Dictionary<String, Any>
-    else { return [] }
+    else {
+      let errorTitle = "Error Loading Safari Bookmarks"
+      let errorDescr = """
+Failed to load Safari Bookmarks due to: Denied of Permission
+
+Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access
+
+After restarting the app, the bookmarks should be loaded
+"""
+      LocalNotification.send(title: errorTitle, content: errorDescr)
+      return []
+    }
     return parse(plist: plist)
   }
   

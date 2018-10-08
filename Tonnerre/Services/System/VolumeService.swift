@@ -29,20 +29,20 @@ struct VolumeService: TonnerreService {
             try workspace.unmountAndEjectDevice(at: volume)
           } catch {
             errorCount += 1
-            NSUserNotification.send(title: "Eject Failed", informativeText: "Error: \(error)", muted: false)
+            LocalNotification.send(title: "Eject Failed", content: "Error: \(error)", muted: false)
           }
         }
         if errorCount == 0 {
-          NSUserNotification.send(title: "Eject Successfully", informativeText: "Successfully ejected all volumes")
+          LocalNotification.send(title: "Eject Successfully", content: "Successfully ejected all volumes")
         }
       }
     } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
       queue.async {
         do {
           try workspace.unmountAndEjectDevice(at: specificVolume)
-          NSUserNotification.send(title: "Eject Successfully", informativeText: "Ejected: \(specificVolume.lastPathComponent)")
+          LocalNotification.send(title: "Eject Successfully", content: "Ejected: \(specificVolume.lastPathComponent)")
         } catch {
-          NSUserNotification.send(title: "Eject Failed", informativeText: "Error: \(error)", muted: false)
+          LocalNotification.send(title: "Eject Failed", content: "Error: \(error)", muted: false)
         }
       }
     }
