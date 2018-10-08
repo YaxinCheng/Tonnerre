@@ -35,11 +35,12 @@ final class BaseWindow: NSPanel {
   */
   private func resetWindownLocation() {
     #if RELEASE
+    let mouseLocation = NSEvent.mouseLocation
     let userDefault = UserDefaults.standard
     guard
       let screenWidth = userDefault.value(forKey: "screenWidth") as? CGFloat,
       let screenHeight = userDefault.value(forKey: "screenHeight") as? CGFloat,
-      let currScreen = NSScreen.main
+      let currScreen = NSScreen.screens.first(where: { NSMouseInRect(mouseLocation, $0.frame, false) })
     else { return }
     let (currScreenWidth, currScreenHeight) = (currScreen.frame.width, currScreen.frame.height)
     let (x, y) = (frame.origin.x, frame.origin.y)

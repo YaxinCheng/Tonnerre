@@ -20,7 +20,10 @@ final class BaseWindowController: NSWindowController, NSWindowDelegate {
       let y = userDefault.value(forKey: .designatedY) as? CGFloat {
       window?.setFrameOrigin(NSPoint(x: max(x, 0), y: max(y, 0)))
     } else {
-      guard let screenSize = NSScreen.main?.frame.size, let myWindow = window else { return }
+      guard
+        let screenSize = NSScreen.screens.first(where: { NSMouseInRect(NSEvent.mouseLocation, $0.frame, false) })?.frame.size,
+        let myWindow = window
+      else { return }
       let x = screenSize.width / 2 - myWindow.frame.width / 2
       let y = screenSize.height * 5 / 6
       userDefault.set(screenSize.width, forKey: "screenWidth")
