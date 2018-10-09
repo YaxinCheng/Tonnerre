@@ -58,6 +58,16 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let content = url.path
           let icon = NSWorkspace.shared.icon(forFile: url.path)
           return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)
+        } else if ($0.value?.lowercased().starts(with: "http://") ?? false)
+          || ($0.value?.lowercased().starts(with: "https://") ?? false) {
+          let name = $0.value!
+          let url = URL(string: $0.value!)!
+          let dateFmt = DateFormatter()
+          dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
+          let content = "Copied at \(dateFmt.string(from: $0.time!))"
+          let browserURL = NSWorkspace.shared.urlForApplication(toOpen: url)
+          let icon = NSWorkspace.shared.icon(forFile: browserURL?.path ?? "/Applications/Safari.app")
+          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)
         } else {
           let name = $0.value!
           let dateFmt = DateFormatter()
@@ -75,12 +85,12 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
   func serve(source: DisplayProtocol, withCmd: Bool) {
     NSPasteboard.general.clearContents()
     if let item = source as? DisplayableContainer<URL>, let url = item.innerItem {
-      if withCmd {
+      if FileManager.default.fileExists(atPath: url.path) && withCmd {
         NSWorkspace.shared.activateFileViewerSelecting([url])
-      } else if FileManager.default.fileExists(atPath: url.path) {
-        NSPasteboard.general.setString(url.absoluteString, forType: .fileURL)
+      } else if withCmd {
+        NSWorkspace.shared.open(url)
       } else {
-        NSPasteboard.general.setString(url.path, forType: .string)
+        NSPasteboard.general.setString(url.absoluteString, forType: .string)
       }
     } else if let item = source as? DisplayableContainer<String>, let string = item.innerItem {
       NSPasteboard.general.setString(string, forType: .string)
