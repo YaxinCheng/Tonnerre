@@ -14,22 +14,11 @@ struct SafariBMService: BookMarkService, DeferedServiceProtocol {
   let content: String = "Quick launch Safari Bookmarks"
   static let keyword: String = "safari"
   
-  func parseFile() -> [BookMarkService.BookMark] {
-    guard
-      let bookmarkFile = type(of: self).browser.bookMarksFile,
-      let plist = NSDictionary(contentsOf: bookmarkFile) as? Dictionary<String, Any>
-    else {
-      let errorTitle = "Error Loading Safari Bookmarks"
-      let errorDescr = """
-Failed to load Safari Bookmarks due to: Denied of Permission
-
-Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access
-
-After restarting the app, the bookmarks should be loaded
-"""
-      LocalNotification.send(title: errorTitle, content: errorDescr)
-      return []
-    }
+  func parseFile() throws -> [BookMarkService.BookMark] {
+    guard let bookmarkFile = type(of: self).browser.bookMarksFile else { return [] }
+    let bookmarkData = try Data(contentsOf: bookmarkFile)
+    let plistObject = try PropertyListSerialization.propertyList(from: bookmarkData, options: .mutableContainersAndLeaves, format: nil)
+    guard let plist = plistObject as? Dictionary<String, Any> else { return [] }
     return parse(plist: plist)
   }
   

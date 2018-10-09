@@ -25,7 +25,7 @@ protocol BookMarkService: TonnerreService {
    
    - returns: an array of bookmarks without grouping
   */
-  func parseFile() -> [BookMark]
+  func parseFile() throws -> [BookMark]
 }
 
 extension BookMarkService {
@@ -48,7 +48,15 @@ extension BookMarkService {
   }
   
   func prepare(input: [String]) -> [DisplayProtocol] {
-    let bookMarks = parseFile()
+    let bookMarks: [BookMark]
+    do {
+      bookMarks = try parseFile()
+    } catch {
+      let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
+      let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
+      let error = DisplayableContainer<Int>(name: errorTitle, content: errorContent, icon: icon, priority: .low, placeholder: "")
+      return [error]
+    }
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
     let filteredBMs = bookMarks.filter {
       regex.numberOfMatches(in: $0.title, options: .withoutAnchoringBounds, range: NSRange($0.title.startIndex..<$0.title.endIndex, in: $0.title)) >= 1

@@ -15,19 +15,12 @@ struct ChromeBMService: BookMarkService, DeferedServiceProtocol {
   static let keyword: String = "chrome"
   static let browser: Browser = .chrome
   
-  func parseFile() -> [BookMarkService.BookMark] {
-    do {
-      guard let bmFile = type(of: self).browser.bookMarksFile else { return [] }
-      let jsonData = try Data(contentsOf: bmFile)
-      let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
-      guard let bookmarkSource = jsonObject as? Dictionary<String, Any> else { return [] }
-      return parse(rawFile: bookmarkSource)
-    } catch {
-      #if DEBUG
-      print(error)
-      #endif
-      return []
-    }
+  func parseFile() throws -> [BookMarkService.BookMark] {
+    guard let bmFile = type(of: self).browser.bookMarksFile else { return [] }
+    let jsonData = try Data(contentsOf: bmFile)
+    let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
+    guard let bookmarkSource = jsonObject as? Dictionary<String, Any> else { return [] }
+    return parse(rawFile: bookmarkSource)
   }
   
   private func parse(rawFile: Dictionary<String, Any>) -> [BookMarkService.BookMark] {
