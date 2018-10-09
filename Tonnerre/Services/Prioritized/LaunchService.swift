@@ -29,7 +29,18 @@ struct LaunchService: TonnerreService {
       let fileName: String = $0.deletingPathExtension().lastPathComponent
       let name: String
       if $0.pathExtension == "prefPane" {
-        name = LaunchService.aliasDict[$0.lastPathComponent] ?? fileName
+        name = LaunchService.aliasDict[fileName, default: fileName.unicodeScalars.reduce("") {
+          if CharacterSet.uppercaseLetters.contains($1) {
+            if $0.isEmpty { return String($1) }
+            else if CharacterSet.uppercaseLetters.contains($0.unicodeScalars.last!) {
+              return $0 + String($1)
+            } else {
+              return $0 + " " + String($1)
+            }
+          } else {
+            return $0 + String($1)
+          }
+        }]
       } else { name = fileName }
       return DisplayableContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), priority: priority, innerItem: $0)
     }.sorted {
