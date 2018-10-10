@@ -6,6 +6,14 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
+/*
+ TextField & PlaceholderField changing may influence the display of cells
+ E.g.: the cells might not show up after pasting a long URL in the field
+ It is due to the order of expanding the collectionView and refresh the cells
+ The order is messed up by the placeholder expansion/shrink
+ Will fix this after building my own CollectionView
+ */
+
 import Cocoa
 
 final class ViewController: NSViewController {

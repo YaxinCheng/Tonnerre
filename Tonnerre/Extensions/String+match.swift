@@ -11,7 +11,7 @@ import Foundation
 extension String {
   func match(regex: NSRegularExpression) -> Substring? {
     guard
-      let firstMatch = regex.firstMatch(in: self, options: .withoutAnchoringBounds, range: NSRange(location: 0, length: self.count))
+      let firstMatch = regex.firstMatch(in: self, options: .anchored, range: NSRange(location: 0, length: self.count))
     else { return nil }
     return self[Range(firstMatch.range, in: self)!]
   }

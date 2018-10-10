@@ -21,12 +21,12 @@ struct FlightService: TonnerreService {
   func prepare(input: [String]) -> [DisplayProtocol] {
     guard let rawFlightCode = input.first else { return [] }
     if input.count == 2 && !input[1].isEmpty { return [] }
-    let airlineCodePattern = try! NSRegularExpression(pattern: "[A-Za-z]{2,5}")
-    let flightCodePattern  = try! NSRegularExpression(pattern: "\\d+")
+    let airlineCodePattern = try! NSRegularExpression(pattern: "^[A-Za-z]{2}")
+    let flightCodePattern  = try! NSRegularExpression(pattern: "^\\d{2,4}$")
     guard
       let airlineCodeSub = rawFlightCode.match(regex: airlineCodePattern),
       let airlineCode = Optional.some(String(airlineCodeSub)),
-      let flightCodeString = rawFlightCode.match(regex: flightCodePattern),
+      let flightCodeString = String(rawFlightCode[airlineCodeSub.endIndex...]).match(regex: flightCodePattern),
       let flightCode  = UInt(flightCodeString),
       let viewController = FUFlightViewController(flightCode: flightCode, airlineCode: airlineCode),
       let url = URL(string: rawURL.filled(arguments: [airlineCode, String(flightCodeString)]))
