@@ -184,22 +184,11 @@ final class TonnerreCollectionView: NSScrollView {
       delegate?.serve(with: service, target: value, withCmd: true)
     case 123, 124: break // Ignore left/right arrow
     case 125, 126:// Up/down arrow
-      if event.modifierFlags.contains(.command) {
-        visibleIndex = event.keyCode == 125 ? 7 : 1
-        highlightedItemIndex = event.keyCode == 125 ? datasource.count - 1 : 0
-        DispatchQueue.main.async { [weak self] in
-          guard let index = self?.highlightedItemIndex else { return }
-          let indexPath = IndexPath(item: index, section: 0)
-          let scrollPosition: NSCollectionView.ScrollPosition = event.keyCode == 125 ? .top : .bottom
-          self?.collectionView.scrollToItems(at: [indexPath], scrollPosition: scrollPosition)// Scroll to bottom or top
-        }
+      let movement = event.keyCode == 125 ? 1 : -1// if key == 125, 1, else -1
+      if datasource.count == 0 && movement == -1 {
+        delegate?.retrieveLastQuery()
       } else {
-        let movement = event.keyCode == 125 ? 1 : -1// if key == 125, 1, else -1
-        if datasource.count == 0 && movement == -1 {
-          delegate?.retrieveLastQuery()
-        } else {
-          highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
-        }
+        highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
       }
     default:
       highlightedItemIndex = -1

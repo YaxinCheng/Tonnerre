@@ -31,9 +31,18 @@ struct ApplicationService: TonnerreService {
     if input.isEmpty || (input.first?.isEmpty ?? false) {
       return runningApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, priority: priority, innerItem: $0) }
     } else {
-      let filteredApps = runningApps.filter { $0.localizedName!.lowercased().contains(input.joined(separator: " ")) }
+      let filteredApps = runningApps.filter { match(appName: $0.localizedName!, query: input) }
       return filteredApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, priority: priority, innerItem: $0) }
     }
+  }
+  
+  private func match(appName: String, query: [String]) -> Bool {
+    guard query.count > 0 else { return true }
+    let initials = String(appName.lowercased().components(separatedBy: " ").compactMap { $0.first })
+    if initials == query.first!.lowercased() { return true }
+    let matchPatternString = ".*?\\s*?" + query.joined(separator: ".*?\\s*?") + "\\s*?.*?"
+    let pattern = try! NSRegularExpression(pattern: matchPatternString, options: .caseInsensitive)
+    return appName.match(regex: pattern) != nil
   }
 }
 

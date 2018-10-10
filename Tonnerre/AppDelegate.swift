@@ -45,14 +45,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
           try fileManager.moveItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))
           successCount += 1
         } catch {
-          LocalNotification.send(title: "\(url.lastPathComponent): Installation Failed", content: "\(error)", muted: false)
+          LocalNotification.send(title: "\(url.lastPathComponent): Installation Failed", content: "\(error)")
         }
       }
     }
     guard successCount > 0 else { return }
     let title = (successCount > 1 ? "Services" : "Service") + " Installed"
     let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
-    LocalNotification.send(title: title, content: informativeText)
+    LocalNotification.send(title: title, content: informativeText, muted: true)
   }
 
   // MARK: - Core Data stack

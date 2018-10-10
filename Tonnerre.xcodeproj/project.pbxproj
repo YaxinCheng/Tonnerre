@@ -542,6 +542,7 @@
 				146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */,
 				14AEB30620C210EB00D10D44 /* BaseWindowController.swift */,
 				14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */,
+				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 				14AEB2D820BEF4A800D10D44 /* GUI */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
 				1470514C20B1BEFB00F6FBE8 /* Main.storyboard */,
@@ -670,7 +671,6 @@
 				1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */,
 				14F2302C214206F100B7A0FB /* String+fill.swift */,
 				142C5940215C64F700D819F2 /* String+match.swift */,
-				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
