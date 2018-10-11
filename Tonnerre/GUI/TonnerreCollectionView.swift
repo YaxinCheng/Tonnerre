@@ -214,7 +214,8 @@ final class TonnerreCollectionView: NSScrollView {
    - parameter event: An event sent to this function when cmd key is pressed or released
   */
   func modifierChanged(with event: NSEvent) {
-    let source = datasource[max(highlightedItemIndex, 0)]
+    guard highlightedItemIndex >= 0, highlightedItemIndex < datasource.count else { return }
+    let source = datasource[highlightedItemIndex]
     if event.modifierFlags.contains(.command) {
       highlightedItem?.introLabel.stringValue = source.alterContent ?? source.content
       highlightedItem?.iconView.image = source.alterIcon ?? source.icon
