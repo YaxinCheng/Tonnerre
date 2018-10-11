@@ -73,7 +73,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
           let content = "Copied at \(dateFmt.string(from: $0.time!))"
-          let icon = self.icon
+          let icon: NSImage = .notes ?? self.icon
           return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: $0.value!)
         }
       })
@@ -83,17 +83,24 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    NSPasteboard.general.clearContents()
+    let pasteboard = NSPasteboard.general
+    pasteboard.clearContents()
     if let item = source as? DisplayableContainer<URL>, let url = item.innerItem {
-      if FileManager.default.fileExists(atPath: url.path) && withCmd {
-        NSWorkspace.shared.activateFileViewerSelecting([url])
-      } else if withCmd {
-        NSWorkspace.shared.open(url)
+      if FileManager.default.fileExists(atPath: url.path) {
+        if withCmd {
+          NSWorkspace.shared.activateFileViewerSelecting([url])
+        } else {
+          pasteboard.writeObjects([url as NSURL])
+        }
       } else {
-        NSPasteboard.general.setString(url.absoluteString, forType: .string)
+        if withCmd {
+          NSWorkspace.shared.open(url)
+        } else {
+          pasteboard.setString(url.absoluteString, forType: .string)
+        }
       }
     } else if let item = source as? DisplayableContainer<String>, let string = item.innerItem {
-      NSPasteboard.general.setString(string, forType: .string)
+      pasteboard.setString(string, forType: .string)
     }
   }
   

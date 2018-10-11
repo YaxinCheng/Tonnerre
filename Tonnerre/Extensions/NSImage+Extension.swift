@@ -28,4 +28,8 @@ extension NSImage {
   static var calculator: NSImage {
     return NSImage(contentsOfFile: "/Applications/Calculator.app/Contents/Resources/AppIcon.icns") ?? #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
   }
+  
+  static var notes: NSImage? {
+    return NSImage(contentsOfFile: "/Applications/Notes.app/Contents/Resources/AppIcon.icns")
+  }
 }
