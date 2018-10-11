@@ -56,6 +56,20 @@ enum ServicePack: DisplayProtocol {
     }
   }
   
+  var alterContent: String? {
+    switch self {
+    case .provider(let provider): return provider.alterContent
+    case .service(provider: let provider, content: let value): return value.alterContent ?? provider.alterContent
+    }
+  }
+  
+  var alterIcon: NSImage? {
+    switch self {
+    case .provider(let provider): return provider.alterIcon
+    case .service(provider: let provider, content: let value): return value.alterIcon ?? provider.alterIcon
+    }
+  }
+  
   /**
    Constructor of ServicePack
    - parameter provider: the service provider needs to be represented

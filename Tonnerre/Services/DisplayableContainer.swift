@@ -19,8 +19,10 @@ struct DisplayableContainer<T>: DisplayProtocol {
   }
   var extraContent: Any? = nil
   let priority: DisplayPriority
+  let alterContent: String?
+  let alterIcon: NSImage?
   
-  init(name: String, content: String, icon: NSImage, priority: DisplayPriority, innerItem: T? = nil, placeholder: String? = nil, extraContent: Any? = nil) {
+  init(name: String, content: String, icon: NSImage, priority: DisplayPriority, alterContent: String? = nil, alterIcon: NSImage? = nil, innerItem: T? = nil, placeholder: String? = nil, extraContent: Any? = nil) {
     self.name = name
     self.content = content
     self.icon = icon
@@ -29,6 +31,8 @@ struct DisplayableContainer<T>: DisplayProtocol {
     self.innerItem = innerItem
     self._placeholder = placeholder
     self.extraContent = extraContent
+    self.alterContent = alterContent
+    self.alterIcon = alterIcon
   }
 }
 

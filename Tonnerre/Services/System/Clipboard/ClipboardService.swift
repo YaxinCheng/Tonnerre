@@ -56,8 +56,9 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let name = $0.value!.components(separatedBy: "/").last ?? ""
           let url = URL(string: $0.value!)!
           let content = url.path
+          let alterContent = "Show file in Finder"
           let icon = NSWorkspace.shared.icon(forFile: url.path)
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)
+          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
         } else if ($0.value?.lowercased().starts(with: "http://") ?? false)
           || ($0.value?.lowercased().starts(with: "https://") ?? false) {
           let name = $0.value!
@@ -65,9 +66,10 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
           let content = "Copied at \(dateFmt.string(from: $0.time!))"
+          let alterContent = "Open copied URL in default browser"
           let browserURL = NSWorkspace.shared.urlForApplication(toOpen: url)
           let icon = NSWorkspace.shared.icon(forFile: browserURL?.path ?? "/Applications/Safari.app")
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)
+          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
         } else {
           let name = $0.value!
           let dateFmt = DateFormatter()

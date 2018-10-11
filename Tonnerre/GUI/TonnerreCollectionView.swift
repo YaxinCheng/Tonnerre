@@ -214,23 +214,13 @@ final class TonnerreCollectionView: NSScrollView {
    - parameter event: An event sent to this function when cmd key is pressed or released
   */
   func modifierChanged(with event: NSEvent) {
-    guard
-      highlightedItemIndex < datasource.count,
-      highlightedItemIndex >= 0,
-      case .service(let service, _) = datasource[highlightedItemIndex],
-      let item = highlightedItem,
-      let alterContent = service.alterContent
-    else { return }
+    let source = datasource[max(highlightedItemIndex, 0)]
     if event.modifierFlags.contains(.command) {
-      item.introLabel.stringValue = alterContent
-      if service.alterIcon != nil {
-        item.iconView.image = service.alterIcon
-      }
+      highlightedItem?.introLabel.stringValue = source.alterContent ?? source.content
+      highlightedItem?.iconView.image = source.alterIcon ?? source.icon
     } else if event.modifierFlags.contains(.init(rawValue: 256)) {// Released key
-      item.introLabel.stringValue = datasource[highlightedItemIndex].content
-      if service.alterIcon != nil {
-        item.iconView.image = service.icon
-      }
+      highlightedItem?.introLabel.stringValue = source.content
+      highlightedItem?.iconView.image = source.icon
     }
   }
   

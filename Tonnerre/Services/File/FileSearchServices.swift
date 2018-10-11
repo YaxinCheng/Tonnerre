@@ -15,7 +15,7 @@ protocol FileSearchService: TonnerreService {
 extension FileSearchService {
   var icon: NSImage { return .finder }
   var content: String { return "Search file on your mac and open" }
-  var alterContent: String? { return "Show in Finder" }
+  var alterContent: String? { return "Show file in Finder" }
   var argUpperBound: Int { return Int.max }
   var argLowerBound: Int { return 1 }
   

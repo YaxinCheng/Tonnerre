@@ -55,13 +55,13 @@ extension BookMarkService {
       let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
       let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
       let navigationScript =
-"""
-tell application "System Preferences"
-set securityPane to pane id "com.apple.preference.security"
-tell securityPane to reveal anchor "Privacy_Accessibility"
-activate
-end tell
-"""
+      """
+      tell application "System Preferences"
+      set securityPane to pane id "com.apple.preference.security"
+      tell securityPane to reveal anchor "Privacy_Accessibility"
+      activate
+      end tell
+      """
       let error = DisplayableContainer<String>(name: errorTitle, content: errorContent, icon: icon, priority: .low, innerItem: navigationScript, placeholder: "")
       return [error]
     }
