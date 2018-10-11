@@ -54,7 +54,15 @@ extension BookMarkService {
     } catch {
       let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
       let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
-      let error = DisplayableContainer<Int>(name: errorTitle, content: errorContent, icon: icon, priority: .low, placeholder: "")
+      let navigationScript =
+"""
+tell application "System Preferences"
+set securityPane to pane id "com.apple.preference.security"
+tell securityPane to reveal anchor "Privacy_Accessibility"
+activate
+end tell
+"""
+      let error = DisplayableContainer<String>(name: errorTitle, content: errorContent, icon: icon, priority: .low, innerItem: navigationScript, placeholder: "")
       return [error]
     }
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
@@ -65,16 +73,18 @@ extension BookMarkService {
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard
-      let browserURL = Self.browser.appURL,
-      let innerItem = (source as? DisplayableContainer<URL>)?.innerItem
-    else { return }
-    do {
-      _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])
-    } catch {
-      #if DEBUG
-      print("Browser open bookmarks:", error)
-      #endif
+    if let browserURL = Self.browser.appURL,
+    let innerItem = (source as? DisplayableContainer<URL>)?.innerItem {
+      do {
+        _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])
+      } catch {
+        #if DEBUG
+        print("Browser open bookmarks:", error)
+        #endif
+      }
+    } else if let scriptRaw = (source as? DisplayableContainer<String>)?.innerItem {
+      let script = NSAppleScript(source: scriptRaw)!
+      script.executeAndReturnError(nil)
     }
   }
 }
