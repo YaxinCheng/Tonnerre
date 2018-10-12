@@ -91,10 +91,6 @@ final class ServiceCell: NSCollectionViewItem {
     }
   }
   
-  override func viewWillAppear() {
-    theme = .current
-  }
-  
   func preview() {
     guard !popoverView.isShown else { return }
     let viewController = NSViewController()

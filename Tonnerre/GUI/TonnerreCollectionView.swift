@@ -270,6 +270,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     guard let cell = origin as? ServiceCell else { return origin }
     let data = datasource[indexPath.item]
     cell.iconView.image = data.icon
+    cell.theme = .current
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
     cell.highlighted = false
