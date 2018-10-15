@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 extension LaunchOrder {
-  static func saveOrder(for identifier: String) {
+  static func save(with identifier: String) {
     let context = getContext()
     let launchOrder: LaunchOrder
     if let existing = find(identifier: identifier) {

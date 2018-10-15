@@ -16,7 +16,12 @@ struct DictionarySerivce: TonnerreService {
   static let keyword: String = "define"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  private let spellChecker = NSSpellChecker.shared
+  private let spellChecker: NSSpellChecker
+  
+  init() {
+    spellChecker = .shared
+    spellChecker.automaticallyIdentifiesLanguages = true
+  }
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     guard input.count > 0, !input[0].isEmpty else { return [self] }

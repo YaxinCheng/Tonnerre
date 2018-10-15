@@ -52,7 +52,7 @@ struct LaunchService: TonnerreService {
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
     guard let appURL = (source as? DisplayableContainer<URL>)?.innerItem else { return }
-    LaunchOrder.saveOrder(for: appURL.absoluteString)
+    LaunchOrder.save(with: appURL.absoluteString)
     let workspace = NSWorkspace.shared
     if withCmd {
       workspace.activateFileViewerSelecting([appURL])

@@ -16,6 +16,7 @@ struct ExitService: TonnerreService {
     return #imageLiteral(resourceName: "tonnerre.icns").tintedImage(with: TonnerreTheme.current.imgColour)
   }
   let argLowerBound: Int = 0
+  var priority: DisplayPriority = .low
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     return [self]

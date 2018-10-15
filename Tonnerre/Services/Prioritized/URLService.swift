@@ -35,7 +35,7 @@ struct URLService: TonnerreService {
       let browser = service.extraContent as? Browser,
       let browserURL = browser.appURL
     else { return }
-    LaunchOrder.saveOrder(for: browser.name)
+    LaunchOrder.save(with: browser.name)
     do {
       _ = try NSWorkspace.shared.open([request], withApplicationAt: browserURL, options: .default, configuration: [:])
     } catch {
