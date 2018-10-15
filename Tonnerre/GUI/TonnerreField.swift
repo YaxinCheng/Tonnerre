@@ -64,7 +64,7 @@ final class TonnerreField: NSTextField, ThemeProtocol {
   }
   
   override var intrinsicContentSize: NSSize {
-    let value = stringValue.isEmpty ? "Tonnerre" : stringValue
+    let value = stringValue ?? "Tonnerre"
     let cell = NSTextFieldCell(textCell: value)
     let attributedString: NSAttributedString
     if stringValue.isEmpty {

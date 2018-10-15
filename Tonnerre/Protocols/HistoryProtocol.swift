@@ -33,12 +33,6 @@ protocol HistoryProtocol {
    - returns: An array of history records string
   */
   func histories() -> [String]
-  /**
-   An optional function which converts the stored history to displayble objects
-   - parameter history: history data retrieved from db
-   - returns: an array of displayable objects
-  */
-  func reuse(history: [String]) -> [DisplayProtocol]
 }
 
 extension HistoryProtocol {

@@ -86,8 +86,4 @@ struct GoogleTranslateService: TonnerreService, HistoryProtocol {
     let localizedToLangue = NSLocale(localeIdentifier: toLangue).displayName(forKey: .identifier, value: toLangue) ?? "..."
     return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, priority: priority, innerItem: url, extraContent: "\(fromLangue)/\(toLangue)")
   }
-  
-  func reuse(history: [String]) -> [DisplayProtocol] {
-    return []
-  }
 }

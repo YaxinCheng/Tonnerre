@@ -30,6 +30,6 @@ final class DefaultLoader: ServiceLoader {
       let serviceKeys: [String] = userDefault.array(forKey: .defaultServices)
     else { return [GoogleSearch()] }
     let loadedServices = serviceKeys.compactMap { defaultServices[$0] }.map { $0.init() }
-    return loadedServices.isEmpty ? [GoogleSearch()] : loadedServices
+    return loadedServices ?? [GoogleSearch()]
   }
 }

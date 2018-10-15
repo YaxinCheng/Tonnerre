@@ -48,7 +48,7 @@ struct AsyncedDisplayableContainer<T>: DisplayProtocol, AsyncDisplayable {
   let asyncedViewSetup: ((ServiceCell)->Void)?
   let _placeholder: String
   var placeholder: String {
-    return _placeholder.isEmpty ? (innerItem as? DisplayProtocol)?.placeholder ?? "" : _placeholder
+    return _placeholder ?? (innerItem as? DisplayProtocol)?.placeholder ?? ""
   }
   
   init(name: String, content: String, icon: NSImage, innerItem: T? = nil, placeholder: String = "", viewSetup: ((ServiceCell)->Void)? = nil) {

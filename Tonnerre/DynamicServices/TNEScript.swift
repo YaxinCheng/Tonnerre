@@ -208,7 +208,8 @@ extension TNEScript.Script: Equatable {
     else { throw TNEScriptError.fileNotFound }
     let (inputPipe, outputPipe, errorPipe) = (Pipe(), Pipe(), Pipe())
     let process = Process()
-    process.arguments = [Bundle.main.url(forResource: "DynamicServiceExec", withExtension: "py")!.path, mode.argument, scriptPath.path]
+    let dynamicServiceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/Scripts/DynamicServiceExec.py")
+    process.arguments = [dynamicServiceURL.path, mode.argument, scriptPath.path]
     let userDefault = UserDefaults.shared
     let pythonPath = (userDefault[.python] as? String) ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)

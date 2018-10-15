@@ -42,7 +42,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
-      let text = query.isEmpty ? "..." : query
+      let text = query ?? "..."
       copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, priority: priority, innerItem: query) ]
       if !query.isEmpty {
         fetchRequest.predicate = NSPredicate(format: "value CONTAINS[cd] %@", query)
@@ -71,7 +71,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let icon = NSWorkspace.shared.icon(forFile: browserURL?.path ?? "/Applications/Safari.app")
           return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
         } else {
-          let name = $0.value!
+          let name = $0.value!.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression)
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
           let content = "Copied at \(dateFmt.string(from: $0.time!))"

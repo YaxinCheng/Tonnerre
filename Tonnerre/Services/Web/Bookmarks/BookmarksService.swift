@@ -54,15 +54,7 @@ extension BookMarkService {
     } catch {
       let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
       let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
-      let navigationScript =
-      """
-      tell application "System Preferences"
-      set securityPane to pane id "com.apple.preference.security"
-      tell securityPane to reveal anchor "Privacy_Accessibility"
-      activate
-      end tell
-      """
-      let error = DisplayableContainer<String>(name: errorTitle, content: errorContent, icon: icon, priority: .low, innerItem: navigationScript, placeholder: "")
+      let error = DisplayableContainer<Int>(name: errorTitle, content: errorContent, icon: icon, priority: .low, placeholder: "")
       return [error]
     }
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
@@ -82,9 +74,10 @@ extension BookMarkService {
         print("Browser open bookmarks:", error)
         #endif
       }
-    } else if let scriptRaw = (source as? DisplayableContainer<String>)?.innerItem {
-      let script = NSAppleScript(source: scriptRaw)!
-      script.executeAndReturnError(nil)
+    } else if source is DisplayableContainer<Int> {
+      let url = Bundle.main.bundleURL.appendingPathComponent("Contents/Scripts/OpenPref.scpt")
+      let script = try! NSUserAppleScriptTask(url: url)
+      script.execute()
     }
   }
 }

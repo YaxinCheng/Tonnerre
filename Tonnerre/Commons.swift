@@ -25,3 +25,7 @@ func getContext() -> NSManagedObjectContext {
   let appDelegate = NSApplication.shared.delegate as! AppDelegate
   return appDelegate.persistentContainer.viewContext
 }
+
+func ??<T: Collection> (lhs: T, rhs: T) -> T {
+  return lhs.isEmpty ? rhs : lhs
+}

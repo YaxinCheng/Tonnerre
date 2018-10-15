@@ -27,8 +27,14 @@ struct DictionarySerivce: TonnerreService {
     guard input.count > 0, !input[0].isEmpty else { return [self] }
     let text = input.joined(separator: " ")
     let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
-    let wrappedSuggestions = (suggestions + [text]).compactMap(wrap)
-    return wrappedSuggestions
+    let wrappedSuggestions = ([text] + suggestions).compactMap(wrap)
+    if !wrappedSuggestions.isEmpty {
+      return wrappedSuggestions
+    } else {
+      let url = URL(string: String(format: "dict://%@", text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? text))!
+      let definition = DisplayableContainer(name: text, content: "Cannot find definition for \"\(text)\"", icon: icon, priority: priority, innerItem: url)
+      return [definition]
+    }
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
