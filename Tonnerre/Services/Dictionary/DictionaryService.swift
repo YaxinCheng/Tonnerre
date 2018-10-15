@@ -58,6 +58,17 @@ struct DictionarySerivce: TonnerreService {
     guard let (foundTerm, definition) = define(query) else { return nil }
     let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? foundTerm
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, priority: priority, innerItem: dictURL)
+    let viewController = buildView(with: definition)
+    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, priority: priority, innerItem: dictURL, extraContent: viewController)
+  }
+  
+  private func buildView(with definition: String) -> NSViewController {
+    let textView = NSTextView()
+    textView.string = definition
+    textView.isEditable = false
+    textView.font = NSFont.systemFont(ofSize: 17)
+    let viewController = NSViewController()
+    viewController.view = textView
+    return viewController
   }
 }
