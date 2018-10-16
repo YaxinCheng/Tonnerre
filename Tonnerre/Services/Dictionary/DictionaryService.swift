@@ -63,12 +63,20 @@ struct DictionarySerivce: TonnerreService {
   }
   
   private func buildView(with definition: String) -> NSViewController {
-    let textView = NSTextView()
+    let targetView: NSView
+    let textView: NSTextView
+    if #available(OSX 10.14, *) {
+      targetView = NSTextView.scrollableTextView()
+      textView = (targetView as! NSScrollView).documentView as! NSTextView
+    } else {
+      textView = NSTextView()
+      targetView = textView
+    }
     textView.string = definition
     textView.isEditable = false
     textView.font = NSFont.systemFont(ofSize: 17)
     let viewController = NSViewController()
-    viewController.view = textView
+    viewController.view = targetView
     return viewController
   }
 }

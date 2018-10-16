@@ -134,7 +134,6 @@
 		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
 		14D5A37921658AF200DBB188 /* DisplayPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5A37821658AF200DBB188 /* DisplayPriority.swift */; };
 		14E70DFD2170115F00413C13 /* TTTDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E70DFC2170115F00413C13 /* TTTDictionary.m */; };
-		14E70E0421753C2500413C13 /* OpenPref.scpt in Scripts copy */ = {isa = PBXBuildFile; fileRef = 14E70E0121753AF300413C13 /* OpenPref.scpt */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
@@ -233,7 +232,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 				14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */,
-				14E70E0421753C2500413C13 /* OpenPref.scpt in Scripts copy */,
 			);
 			name = "Scripts copy";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,7 +365,6 @@
 		14E70DFA2170115F00413C13 /* DictionaryKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryKit.h; sourceTree = "<group>"; };
 		14E70DFB2170115F00413C13 /* TTTDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTDictionary.h; sourceTree = "<group>"; };
 		14E70DFC2170115F00413C13 /* TTTDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTDictionary.m; sourceTree = "<group>"; };
-		14E70E0121753AF300413C13 /* OpenPref.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenPref.scpt; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
@@ -574,7 +571,6 @@
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
 				1421F284210257D90020480A /* DynamicServiceExec.py */,
-				14E70E0121753AF300413C13 /* OpenPref.scpt */,
 				14AFE6B62118FD99002BBBB2 /* tonnerre.icns */,
 			);
 			path = Tonnerre;

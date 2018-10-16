@@ -190,6 +190,7 @@ final class TonnerreCollectionView: NSScrollView {
       } else {
         highlightedItemIndex = min(max(highlightedItemIndex + movement, -1), datasource.count - 1)
       }
+    case 53: break// ESC. So the highlight won't be pointed back to the top
     default:
       highlightedItemIndex = -1
     }

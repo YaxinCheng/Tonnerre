@@ -75,9 +75,10 @@ extension BookMarkService {
         #endif
       }
     } else if source is DisplayableContainer<Int> {
-      let url = Bundle.main.bundleURL.appendingPathComponent("Contents/Scripts/OpenPref.scpt")
-      let script = try! NSUserAppleScriptTask(url: url)
-      script.execute()
+      guard
+        let settingPanelURL = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")
+      else { return }
+      NSWorkspace.shared.open(settingPanelURL)
     }
   }
 }

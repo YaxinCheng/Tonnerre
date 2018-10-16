@@ -75,13 +75,14 @@ final class CoreIndexing {
       fullIndex(modes: .default)
     }
     if documentFinished == false || lostIndexes.contains(.name) || lostIndexes.contains(.content) {
-      documentFinished = false
       if lostIndexes.contains(.content) && lostIndexes.contains(.name) {
         fullIndex(modes: .name, .content)
       } else if lostIndexes.contains(.name) {
         fullIndex(modes: .name)
       } else if lostIndexes.contains(.content) {
         fullIndex(modes: .content)
+      } else {
+        fullIndex(modes: .name, .content)
       }
     }
     if defaultFinished == true && documentFinished == true && lostIndexes.count == 0 {
