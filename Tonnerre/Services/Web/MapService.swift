@@ -40,7 +40,7 @@ struct GoogleMapService: WebService {
     guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
-      let appleMapURL = request.absoluteString.replacingOccurrences(of: "maps.google", with: "maps.apple")
+      let appleMapURL = request.absoluteString.replacingOccurrences(of: "maps\\.google\\.\\w+?\\/", with: "maps.apple.com/", options: .regularExpression)
       workspace.open(URL(string: appleMapURL)!)
     } else {
       workspace.open(request)

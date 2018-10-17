@@ -117,7 +117,7 @@ extension ViewController: NSTextFieldDelegate {
         guard let now = self?.textField.stringValue else { return } // Test the current value (after 1 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
           self?.fullEditing()// Keep the length to max
-        } else if !now.isEmpty {// If user is deleting the text or not editing anymore
+        } else if !now.trimmingCharacters(in: .whitespaces).isEmpty {// If user is deleting the text or not editing anymore
           self?.adjustEditing(withString: now)// Adjust the size
         }
       }

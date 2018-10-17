@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1405334420F66D2E00C289CF /* ClipboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1405334320F66D2E00C289CF /* ClipboardService.swift */; };
 		1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1405334520F66F7400C289CF /* CBRecord+Extension.swift */; };
+		1405CB8421777C3200FC7044 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
+		1405CB8521777C3200FC7044 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A62CB20CB078500B759A4 /* DictionaryService.swift */; };
 		14257A092166F550008BE752 /* ExitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14257A082166F550008BE752 /* ExitService.swift */; };
 		14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14257A0A216BD775008BE752 /* LocalNotification.swift */; };
@@ -65,14 +67,12 @@
 		146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
 		146AD8D820C9C0C400D9E591 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
 		146AD8D920C9C0C600D9E591 /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
-		146AD8DA20C9C0D300D9E591 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
 		146AD8DC20C9C10200D9E591 /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8DB20C9C10200D9E591 /* Notification+Names.swift */; };
 		146AD8DE20C9C12A00D9E591 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8DD20C9C12A00D9E591 /* Common.swift */; };
 		146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
 		146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
 		146AD8E320C9C29300D9E591 /* TonnerreIndexHelper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8C820C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodeld */; };
 		146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
-		146AD8E620C9C83700D9E591 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		146AD8EE20CA12C200D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
@@ -83,8 +83,6 @@
 		1470516520B1BEFB00F6FBE8 /* TonnerreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */; };
 		1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470517220B1C29A00F6FBE8 /* Commons.swift */; };
 		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
-		1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; };
-		1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* ApplicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* ApplicationService.swift */; };
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
@@ -133,8 +131,9 @@
 		14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */; };
 		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
 		14D5A37921658AF200DBB188 /* DisplayPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5A37821658AF200DBB188 /* DisplayPriority.swift */; };
-		14E70DFD2170115F00413C13 /* TTTDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E70DFC2170115F00413C13 /* TTTDictionary.m */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
+		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
+		14E72EAC2176A01600FA41F8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */; };
 		14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */; };
@@ -184,7 +183,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				146AD8E620C9C83700D9E591 /* TonnerreSearch.framework in Embed Frameworks */,
+				1405CB8521777C3200FC7044 /* TonnerreSearch.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,8 +194,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				14E72EAC2176A01600FA41F8 /* TonnerreSearch.framework in Embed Frameworks */,
 				14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */,
-				1470518720B1EA6000F6FBE8 /* TonnerreSearch.framework in Embed Frameworks */,
 				1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -304,7 +303,6 @@
 		1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreUITests.swift; sourceTree = "<group>"; };
 		1470516620B1BEFB00F6FBE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1470517220B1C29A00F6FBE8 /* Commons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commons.swift; sourceTree = "<group>"; };
-		1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TonnerreSearch.framework; sourceTree = "<group>"; };
 		1470518420B1DEDF00F6FBE8 /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
 		1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreIndexing.swift; sourceTree = "<group>"; };
 		1470518B20B1FE8100F6FBE8 /* alias.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = alias.plist; sourceTree = "<group>"; };
@@ -362,9 +360,7 @@
 		14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScriptError.swift; sourceTree = "<group>"; };
 		14C2DFA42138CC8E00C6A91D /* TNEScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScript.swift; sourceTree = "<group>"; };
 		14D5A37821658AF200DBB188 /* DisplayPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPriority.swift; sourceTree = "<group>"; };
-		14E70DFA2170115F00413C13 /* DictionaryKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryKit.h; sourceTree = "<group>"; };
-		14E70DFB2170115F00413C13 /* TTTDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTDictionary.h; sourceTree = "<group>"; };
-		14E70DFC2170115F00413C13 /* TTTDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTDictionary.m; sourceTree = "<group>"; };
+		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
@@ -394,7 +390,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				146AD8DA20C9C0D300D9E591 /* TonnerreSearch.framework in Frameworks */,
+				1405CB8421777C3200FC7044 /* TonnerreSearch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,8 +400,8 @@
 			files = (
 				148E538621547BFB00343928 /* FlightUtilities.framework in Frameworks */,
 				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
-				1470518620B1EA6000F6FBE8 /* TonnerreSearch.framework in Frameworks */,
 				1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */,
+				14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,9 +442,6 @@
 		140A62CD20CB0C7000B759A4 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
-				14E70DFA2170115F00413C13 /* DictionaryKit.h */,
-				14E70DFB2170115F00413C13 /* TTTDictionary.h */,
-				14E70DFC2170115F00413C13 /* TTTDictionary.m */,
 				140A62CB20CB078500B759A4 /* DictionaryService.swift */,
 			);
 			path = Dictionary;
@@ -521,9 +514,9 @@
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
+				14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */,
 				1429AC7920D4427B00ABBCDE /* Lottie.framework */,
 				14561B8820C35F2C0057B4C1 /* HotKey.framework */,
-				1470518020B1CA4000F6FBE8 /* TonnerreSearch.framework */,
 				1470514220B1BEF900F6FBE8 /* Tonnerre */,
 				1470515820B1BEFB00F6FBE8 /* TonnerreTests */,
 				1470516320B1BEFB00F6FBE8 /* TonnerreUITests */,
@@ -1138,7 +1131,6 @@
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				148E53832154793500343928 /* FlightService.swift in Sources */,
 				14257A092166F550008BE752 /* ExitService.swift in Sources */,
-				14E70DFD2170115F00413C13 /* TTTDictionary.m in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
@@ -1245,6 +1237,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = TonnerreIndexHelper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1270,6 +1263,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = TonnerreIndexHelper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
