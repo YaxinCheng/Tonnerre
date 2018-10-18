@@ -31,15 +31,9 @@ struct DictionarySerivce: TonnerreService {
     if text == suggestions.first {
       wrappedSuggestions = suggestions.compactMap(wrap)
     } else {
-      wrappedSuggestions = ([text] + suggestions).compactMap(wrap)
+      wrappedSuggestions = [wrapQuery(text)] + suggestions.compactMap(wrap)
     }
-    if !wrappedSuggestions.isEmpty {
-      return wrappedSuggestions
-    } else {
-      let url = URL(string: String(format: "dict://%@", text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? text))!
-      let definition = DisplayableContainer(name: text, content: "Cannot find definition for \"\(text)\"", icon: icon, priority: priority, innerItem: url)
-      return [definition]
-    }
+    return wrappedSuggestions
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
@@ -57,6 +51,23 @@ struct DictionarySerivce: TonnerreService {
     let endIndex = query.index(startIndex, offsetBy: termRange.length)
     let foundTerm = String(query[startIndex ..< endIndex])
     return (foundTerm, String(definition))
+  }
+  
+  private func wrapQuery(_ query: String) -> DisplayableContainer<URL> {
+    let (headWord, content): (String, String)
+    let viewController: NSViewController?
+    if let (foundTerm, definition) = define(query) {
+      headWord = foundTerm
+      content = definition
+      viewController = buildView(with: definition)
+    } else {
+      headWord = query
+      content = "Cannot find definition for \"\(query)\""
+      viewController = nil
+    }
+    let urlEncoded = headWord.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? headWord
+    let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
+    return DisplayableContainer(name: headWord, content: content, icon: icon, priority: priority, innerItem: dictURL, placeholder: "", extraContent: viewController)
   }
   
   private func wrap(_ query: String) -> DisplayableContainer<URL>? {
