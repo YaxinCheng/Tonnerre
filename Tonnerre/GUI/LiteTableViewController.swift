@@ -12,14 +12,18 @@ class LiteTableViewController: NSViewController {
   
   var datasource: [ServicePack] = [] {
     didSet {
+      HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
       (view as! LiteTableView).reload()
     }
   }
   let CellHeight: CGFloat = 56
+  var HeightConstraint: NSLayoutConstraint!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
+    HeightConstraint = view.heightAnchor.constraint(equalToConstant: 0)
+    NSLayoutConstraint.activate([HeightConstraint])
     
     if let tableView = view as? LiteTableView {
       tableView.liteDelegate   = self

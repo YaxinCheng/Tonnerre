@@ -28,9 +28,6 @@ final class ViewController: NSViewController {
     let storyboard = NSStoryboard.main
     return storyboard?.instantiateController(withIdentifier: "tableView") as! LiteTableViewController
   }()
-  private lazy var tableViewHeight: NSLayoutConstraint = {
-    return tableVC.view.heightAnchor.constraint(equalToConstant: 0)
-  }()
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
   
@@ -59,8 +56,7 @@ final class ViewController: NSViewController {
       tableVC.view.leftAnchor.constraint(equalTo: view.leftAnchor),
       tableVC.view.rightAnchor.constraint(equalTo: view.rightAnchor),
       tableVC.view.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 8),
-      tableVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-      tableViewHeight
+      tableVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ])
   }
   
@@ -102,24 +98,23 @@ final class ViewController: NSViewController {
   
   @objc private func asyncContentDidLoad(notification: Notification) {
     DispatchQueue.main.async { [unowned self] in
-//      guard
-//        case .service(let service, _)? = self.collectionView.datasource.first,
-//        let dataPack = notification.userInfo as? [String: Any],
-//        let asyncLoader = service as? AsyncLoadingProtocol,
-//        let content = dataPack["rawElements"] as? [Any]
-//      else { return }
-//      let processedData = asyncLoader.present(rawElements: content)
-//      if asyncLoader.mode == .append {
-//        self.collectionView.datasource += processedData
-//      } else if asyncLoader.mode == .replaced {
-//        self.collectionView.datasource = processedData
-//      }
+      guard
+        case .service(let service, _)? = self.tableVC.datasource.first,
+        let dataPack = notification.userInfo as? [String: Any],
+        let asyncLoader = service as? AsyncLoadingProtocol,
+        let content = dataPack["rawElements"] as? [Any]
+      else { return }
+      let processedData = asyncLoader.present(rawElements: content)
+      if asyncLoader.mode == .append {
+        self.tableVC.datasource += processedData
+      } else if asyncLoader.mode == .replaced {
+        self.tableVC.datasource = processedData
+      }
     }
   }
   
   private func textDidChange(value: String) {
     tableVC.datasource = interpreter.interpret(input: value)
-    tableViewHeight.constant = tableVC.CellHeight * CGFloat(min(9, tableVC.datasource.count))
     guard value.isEmpty else { return }
     interpreter.clearCache()// Essential to prevent showing unnecessary placeholders
     refreshIcon()

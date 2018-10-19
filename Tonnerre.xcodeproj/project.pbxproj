@@ -130,6 +130,12 @@
 		14C2DF9F2134DDA800C6A91D /* TNEHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DF9E2134DDA800C6A91D /* TNEHub.swift */; };
 		14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */; };
 		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
+		14CC56CC21792E970015540A /* LiteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56C721792E970015540A /* LiteTableCell.swift */; };
+		14CC56CD21792E970015540A /* Deque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56C821792E970015540A /* Deque.swift */; };
+		14CC56CE21792E970015540A /* DequeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56C921792E970015540A /* DequeIterator.swift */; };
+		14CC56CF21792E970015540A /* LiteTableProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56CA21792E970015540A /* LiteTableProtocols.swift */; };
+		14CC56D021792E970015540A /* LiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56CB21792E970015540A /* LiteTableView.swift */; };
+		14CC56D3217930510015540A /* LiteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56D1217930510015540A /* LiteTableViewController.swift */; };
 		14D5A37921658AF200DBB188 /* DisplayPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5A37821658AF200DBB188 /* DisplayPriority.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -359,6 +365,12 @@
 		14C2DF9E2134DDA800C6A91D /* TNEHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEHub.swift; sourceTree = "<group>"; };
 		14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScriptError.swift; sourceTree = "<group>"; };
 		14C2DFA42138CC8E00C6A91D /* TNEScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScript.swift; sourceTree = "<group>"; };
+		14CC56C721792E970015540A /* LiteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LiteTableCell.swift; path = Tonnerre/GUI/LiteTable/LiteTableCell.swift; sourceTree = SOURCE_ROOT; };
+		14CC56C821792E970015540A /* Deque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Deque.swift; path = Tonnerre/GUI/LiteTable/Deque.swift; sourceTree = SOURCE_ROOT; };
+		14CC56C921792E970015540A /* DequeIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DequeIterator.swift; path = Tonnerre/GUI/LiteTable/DequeIterator.swift; sourceTree = SOURCE_ROOT; };
+		14CC56CA21792E970015540A /* LiteTableProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LiteTableProtocols.swift; path = Tonnerre/GUI/LiteTable/LiteTableProtocols.swift; sourceTree = SOURCE_ROOT; };
+		14CC56CB21792E970015540A /* LiteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LiteTableView.swift; path = Tonnerre/GUI/LiteTable/LiteTableView.swift; sourceTree = SOURCE_ROOT; };
+		14CC56D1217930510015540A /* LiteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTableViewController.swift; sourceTree = "<group>"; };
 		14D5A37821658AF200DBB188 /* DisplayPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPriority.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
@@ -654,7 +666,9 @@
 		14AEB2D820BEF4A800D10D44 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				14CC56C621792E800015540A /* LiteTableView */,
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
+				14CC56D1217930510015540A /* LiteTableViewController.swift */,
 				14AEB2D220BEECEF00D10D44 /* TonnerreTheme.swift */,
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
@@ -743,6 +757,18 @@
 				14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */,
 			);
 			path = Segue;
+			sourceTree = "<group>";
+		};
+		14CC56C621792E800015540A /* LiteTableView */ = {
+			isa = PBXGroup;
+			children = (
+				14CC56C821792E970015540A /* Deque.swift */,
+				14CC56C921792E970015540A /* DequeIterator.swift */,
+				14CC56C721792E970015540A /* LiteTableCell.swift */,
+				14CC56CA21792E970015540A /* LiteTableProtocols.swift */,
+				14CC56CB21792E970015540A /* LiteTableView.swift */,
+			);
+			path = LiteTableView;
 			sourceTree = "<group>";
 		};
 		14E9AD5F20CDEC7600F3EEC8 /* Calculator */ = {
@@ -1051,6 +1077,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14CC56CE21792E970015540A /* DequeIterator.swift in Sources */,
 				14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */,
 				14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */,
 				14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */,
@@ -1083,12 +1110,14 @@
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
 				14F23034214B230100B7A0FB /* ServiceLoader.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
+				14CC56D021792E970015540A /* LiteTableView.swift in Sources */,
 				14F230272140927000B7A0FB /* WebExtHub.swift in Sources */,
 				14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
 				1484246A214EC1A50074C582 /* DefaultLoader.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
 				14F015CF20FFD25200537160 /* BookmarksService.swift in Sources */,
+				14CC56CD21792E970015540A /* Deque.swift in Sources */,
 				14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */,
 				14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */,
 				14F2303D214B3A9600B7A0FB /* InstantInterpreter.swift in Sources */,
@@ -1107,6 +1136,7 @@
 				14AEB2D320BEECF000D10D44 /* TonnerreTheme.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */,
+				14CC56CF21792E970015540A /* LiteTableProtocols.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				14F230232139F94200B7A0FB /* TNEServices.swift in Sources */,
 				1449E5882133521A00500BF4 /* NSImage+Tint.swift in Sources */,
@@ -1132,6 +1162,7 @@
 				148E53832154793500343928 /* FlightService.swift in Sources */,
 				14257A092166F550008BE752 /* ExitService.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
+				14CC56CC21792E970015540A /* LiteTableCell.swift in Sources */,
 				14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,
@@ -1139,6 +1170,7 @@
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
 				145DA17420DC243D00C1E804 /* TonnerreSession.swift in Sources */,
+				14CC56D3217930510015540A /* LiteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
