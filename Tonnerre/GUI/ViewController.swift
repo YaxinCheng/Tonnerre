@@ -24,9 +24,13 @@ final class ViewController: NSViewController {
     didSet { textField.delegate = self }
   }
   @IBOutlet weak var placeholderField: PlaceholderField!
-  @IBOutlet weak var collectionView: TonnerreCollectionView! {
-    didSet { collectionView.delegate = self }
-  }
+  private lazy var tableVC: LiteTableViewController = {
+    let storyboard = NSStoryboard.main
+    return storyboard?.instantiateController(withIdentifier: "tableView") as! LiteTableViewController
+  }()
+  private lazy var tableViewHeight: NSLayoutConstraint = {
+    return tableVC.view.heightAnchor.constraint(equalToConstant: 0)
+  }()
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
   
@@ -43,6 +47,21 @@ final class ViewController: NSViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(asyncContentDidLoad(notification:)), name: .asyncLoadingDidFinish, object: nil)
     view.layer?.masksToBounds = true
     view.layer?.cornerRadius = 7
+    loadTableView()
+  }
+  
+  private func loadTableView() {
+    #if DEBUG
+    UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+    #endif
+    view.addSubview(tableVC.view)
+    NSLayoutConstraint.activate([
+      tableVC.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+      tableVC.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+      tableVC.view.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 8),
+      tableVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      tableViewHeight
+    ])
   }
   
   override func viewWillAppear() {
@@ -50,14 +69,14 @@ final class ViewController: NSViewController {
     textField.theme = .current
     placeholderField.theme = .current
     if keyboardMonitor == nil {
-      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] in
-        self?.collectionView.keyDown(with: $0)
-        return $0
-      }
-      flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] in
-        self?.collectionView.modifierChanged(with: $0)
-        return $0
-      }
+//      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyUp) { [weak self] in
+//        self?.collectionView.keyUp(with: $0)
+//        return $0
+//      }
+//      flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] in
+//        self?.collectionView.modifierChanged(with: $0)
+//        return $0
+//      }
     }
   }
   
@@ -83,23 +102,24 @@ final class ViewController: NSViewController {
   
   @objc private func asyncContentDidLoad(notification: Notification) {
     DispatchQueue.main.async { [unowned self] in
-      guard
-        case .service(let service, _)? = self.collectionView.datasource.first,
-        let dataPack = notification.userInfo as? [String: Any],
-        let asyncLoader = service as? AsyncLoadingProtocol,
-        let content = dataPack["rawElements"] as? [Any]
-      else { return }
-      let processedData = asyncLoader.present(rawElements: content)
-      if asyncLoader.mode == .append {
-        self.collectionView.datasource += processedData
-      } else if asyncLoader.mode == .replaced {
-        self.collectionView.datasource = processedData
-      }
+//      guard
+//        case .service(let service, _)? = self.collectionView.datasource.first,
+//        let dataPack = notification.userInfo as? [String: Any],
+//        let asyncLoader = service as? AsyncLoadingProtocol,
+//        let content = dataPack["rawElements"] as? [Any]
+//      else { return }
+//      let processedData = asyncLoader.present(rawElements: content)
+//      if asyncLoader.mode == .append {
+//        self.collectionView.datasource += processedData
+//      } else if asyncLoader.mode == .replaced {
+//        self.collectionView.datasource = processedData
+//      }
     }
   }
   
   private func textDidChange(value: String) {
-    collectionView.datasource = interpreter.interpret(input: value)
+    tableVC.datasource = interpreter.interpret(input: value)
+    tableViewHeight.constant = tableVC.CellHeight * CGFloat(min(9, tableVC.datasource.count))
     guard value.isEmpty else { return }
     interpreter.clearCache()// Essential to prevent showing unnecessary placeholders
     refreshIcon()
@@ -132,8 +152,8 @@ extension ViewController: NSTextFieldDelegate {
   func controlTextDidEndEditing(_ obj: Notification) {
     if (obj.object as? NSTextField)?.stringValue.isEmpty ?? true { adjustEditing(withString: "") }
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
-    guard let (service, value) = collectionView.enterPressed() else { return }
-    serve(with: service, target: value, withCmd: false)
+//    guard let (service, value) = collectionView.enterPressed() else { return }
+//    serve(with: service, target: value, withCmd: false)
   }
   
   func controlTextDidBeginEditing(_ obj: Notification) {

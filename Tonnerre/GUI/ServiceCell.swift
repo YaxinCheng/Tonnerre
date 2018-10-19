@@ -33,7 +33,7 @@ private extension NSPopover {
   }
 }
 
-final class ServiceCell: NSCollectionViewItem {
+final class ServiceCell: LiteTableCell {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
@@ -77,18 +77,8 @@ final class ServiceCell: NSCollectionViewItem {
     }
   }
   
-  var highlighted: Bool {
-    set {
-      DispatchQueue.main.async { [weak self] in
-        if newValue {
-          self?.view.layer?.backgroundColor = self?.theme.highlightColour.cgColor
-        } else {
-          self?.view.layer?.backgroundColor = .clear
-        }
-      }
-    } get {
-      return view.layer?.backgroundColor == theme.highlightColour.cgColor
-    }
+  override var highlightedColour: NSColor {
+    return theme.highlightColour
   }
   
   func preview() {

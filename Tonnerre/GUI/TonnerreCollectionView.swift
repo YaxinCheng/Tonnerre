@@ -86,7 +86,7 @@ final class TonnerreCollectionView: NSScrollView {
       } else {
         iconChange()
         // highlightedIndex == -1 will remove the highlight cursor
-        highlightedItem?.highlighted = false
+//        highlightedItem?.highlighted = false
         highlightedItem = nil
         guard let first = datasource.first else { return }
         // Fill the placeholder with the first item
@@ -274,7 +274,7 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
     cell.theme = .current
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
-    cell.highlighted = false
+//    cell.highlighted = false
     cell.cmdLabel.stringValue = "⌘\(indexPath.item % 9 + 1)"
     cell.delegate = self
     if case .service(_, let value) = data {
@@ -292,9 +292,9 @@ extension TonnerreCollectionView: NSCollectionViewDelegate, NSCollectionViewData
       let cell = collectionView.item(at: indexPath) as? ServiceCell
     else { return }
     if indexPath.item != highlightedItemIndex { highlightedItemIndex = indexPath.item }
-    highlightedItem?.highlighted = false
+//    highlightedItem?.highlighted = false
     highlightedItem = cell
-    highlightedItem?.highlighted = true
+//    highlightedItem?.highlighted = true
     delegate?.serviceHighlighted(service: datasource[indexPath.item])
   }
   
