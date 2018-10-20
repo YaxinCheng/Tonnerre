@@ -38,10 +38,14 @@ class LiteTableViewController: NSViewController {
     HeightConstraint = view.heightAnchor.constraint(equalToConstant: 0)
     NSLayoutConstraint.activate([HeightConstraint])
     
+    NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
+      self?.datasource.removeAll()
+    }
+    
     tableView.liteDelegate   = self
     tableView.liteDataSource = self
     tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
-    let allowedKeys: [UInt16] = [48, 36, 76]
+    let allowedKeys: [UInt16] = [48, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
   }
   
@@ -108,6 +112,19 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
     case 36, 76: // enter
       guard event.modifierFlags.contains(.command), let servicePack = retrieveHighlighted() else { break }
       delegate?.serve(servicePack, withCmd: true)
+    case 49:
+      (tableView.highlightedCell as? ServiceCell)?.preview()
+    case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
+      guard event.modifierFlags.contains(.command) else { return }
+      let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
+                                       83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
+      let selectedIndex = keyCodeMap[event.keyCode]! - 1
+      guard
+        selectedIndex < tableView.visibleCells.count,
+        let cell = tableView.visibleCells[selectedIndex] as? ServiceCell,
+        let servicePack = cell.displayItem
+      else { return }
+      delegate?.serve(servicePack, withCmd: false)
     default:
       break
     }
@@ -132,6 +149,12 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
     cell.cmdLabel.stringValue = "⌘\(index % 9 + 1)"
+    cell.displayItem = data
+    if case .service(_, let value) = data {
+      if let asyncedData = value as? AsyncDisplayable {
+        asyncedData.asyncedViewSetup?(cell)
+      }
+    }
     return cell
   }
 }

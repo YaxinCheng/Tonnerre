@@ -39,7 +39,7 @@ final class ServiceCell: LiteTableCell {
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
-  var displayItem: DisplayProtocol? = nil
+  var displayItem: ServicePack? = nil
   weak var delegate: ServiceCellDelegate?
   var popoverView: NSPopover!
   
@@ -90,14 +90,15 @@ final class ServiceCell: LiteTableCell {
       qlView.shouldCloseWithWindow = true
       return qlView
     }
-    if let container = displayItem as? DisplayableContainer<URL>,
+    guard case .service(_, let service)? = displayItem else { return }
+    if let container = service as? DisplayableContainer<URL>,
       let url = container.innerItem {
       if let buildInVC = container.extraContent as? NSViewController {
         viewController.view = buildInVC.view
       } else {
         viewController.view = constructView(url, container.name)
       }
-    } else if let container = displayItem as? WebExt,
+    } else if let container = service as? WebExt,
       let url = URL(string: container.rawURL) {
       viewController.view = constructView(url, container.name)
     } else { return }

@@ -98,7 +98,6 @@
 		14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */; };
 		14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */; };
 		14AEB2E220BF0F3400D10D44 /* DisplayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */; };
-		14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */; };
 		14AEB2FB20BF81CA00D10D44 /* GeneralLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FA20BF81CA00D10D44 /* GeneralLoader.swift */; };
 		14AEB2FD20BF824E00D10D44 /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FC20BF824E00D10D44 /* LaunchService.swift */; };
 		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
@@ -330,7 +329,6 @@
 		14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceCell.xib; sourceTree = "<group>"; };
 		14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayProtocol.swift; sourceTree = "<group>"; };
-		14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreCollectionView.swift; sourceTree = "<group>"; };
 		14AEB2FA20BF81CA00D10D44 /* GeneralLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralLoader.swift; sourceTree = "<group>"; };
 		14AEB2FC20BF824E00D10D44 /* LaunchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchService.swift; sourceTree = "<group>"; };
 		14AEB2FE20BF84D100D10D44 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
@@ -676,7 +674,6 @@
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
 				14F015C620F999E200537160 /* PlaceholderField.swift */,
-				14AEB2F320BF58EA00D10D44 /* TonnerreCollectionView.swift */,
 				14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */,
 				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
 			);
@@ -1099,7 +1096,6 @@
 				14AEB2FB20BF81CA00D10D44 /* GeneralLoader.swift in Sources */,
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
-				14AEB2F420BF58EB00D10D44 /* TonnerreCollectionView.swift in Sources */,
 				144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */,
 				14F230292140969000B7A0FB /* WebExt.swift in Sources */,
 				1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */,
