@@ -442,6 +442,7 @@
 		140A62CD20CB0C7000B759A4 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
+				148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */,
 				140A62CB20CB078500B759A4 /* DictionaryService.swift */,
 			);
 			path = Dictionary;
@@ -602,7 +603,6 @@
 				14561B8D20C45A650057B4C1 /* WebService.swift */,
 				1484148220C63A1A008FD68E /* MapService.swift */,
 				14561B9220C4686C0057B4C1 /* GoogleSearch.swift */,
-				148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */,
 				14561B9420C4803A0057B4C1 /* AmazonSearch.swift */,
 				14561B9620C4892D0057B4C1 /* WikipediaSearch.swift */,
 				145DA16820DAD70100C1E804 /* BingSearch.swift */,

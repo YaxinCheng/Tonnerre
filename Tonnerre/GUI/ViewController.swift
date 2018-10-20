@@ -113,7 +113,7 @@ extension ViewController: NSTextFieldDelegate {
     let trimmedValue = current.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
       .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)// Trim current
     if !current.isEmpty {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in// dispatch after 1 second
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in// dispatch after 1 second
         guard let now = self?.textField.stringValue else { return } // Test the current value (after 1 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
           self?.fullEditing()// Keep the length to max
@@ -244,7 +244,7 @@ extension ViewController: TonnerreCollectionViewDelegate {
       placeholderField.placeholderString = ""
       return
     }
-    let placeholder = String(serviceValue[stringValue.endIndex...])
+    let placeholder = String(data.placeholder[stringValue.endIndex...])
     placeholderField.placeholderString = placeholder
   }
 }

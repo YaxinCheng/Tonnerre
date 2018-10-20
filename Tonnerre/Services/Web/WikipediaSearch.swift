@@ -18,12 +18,12 @@ struct WikipediaSearch: WebService {
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   
-  func parse(suggestionData: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
       let suggestions = jsonObject[1] as? [String]
-      else { return [:] }
-    return ["rawElements": suggestions]
+      else { return [] }
+    return suggestions
   }
 }

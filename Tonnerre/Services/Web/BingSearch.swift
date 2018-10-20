@@ -18,17 +18,16 @@ struct BingSearch: WebService {
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "bing")
   
-  func parse(suggestionData: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String] {
     guard
       let htmlData = suggestionData,
       let html = String(data: htmlData, encoding: .utf8)
-    else { return [:] }
+    else { return [] }
     let keywordExtractor = try! NSRegularExpression(pattern: "\\/search\\?q=(.*?)&", options: .caseInsensitive)
     let matches = keywordExtractor.matches(in: html, options: .withoutAnchoringBounds, range: NSRange(location: 0, length: html.count))
     let ranges = matches.map { $0.range(at: 1) }
-    let suggestions = ranges.compactMap { Range($0, in: html) }
+    return ranges.compactMap { Range($0, in: html) }
       .map { String(html[$0]) }.map { $0.replacingOccurrences(of: "+", with: " ") }
       .compactMap { $0.removingPercentEncoding }
-    return ["rawElements": suggestions]
   }
 }

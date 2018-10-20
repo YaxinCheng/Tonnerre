@@ -18,12 +18,11 @@ struct DuckDuckGoSearch: WebService {
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "duck")
   
-  func parse(suggestionData: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
       let jsonObj = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [[String: String]]
-    else { return [:] }
-    let suggestions = jsonObj.compactMap { $0["phrase"] }
-    return ["rawElements": suggestions]
+    else { return [] }
+    return jsonObj.compactMap { $0["phrase"] }
   }
 }

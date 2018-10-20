@@ -12,7 +12,7 @@ protocol WebService: TonnerreService, AsyncLoadingProtocol {
   var template: String { get }
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
-  func parse(suggestionData: Data?) -> [String: Any]
+  func parse(suggestionData: Data?) -> [String]
 }
 
 extension WebService {
@@ -96,8 +96,9 @@ extension WebService {
         #endif
         return
       }
-      let processedData = self.parse(suggestionData: data)
-      let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: processedData)
+      let lowerQuery = queryContent.lowercased()
+      let processedData = self.parse(suggestionData: data).filter { $0.lowercased() != lowerQuery }
+      let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": processedData])
       NotificationCenter.default.post(notification)
     }
     session.send(request: ongoingTask)

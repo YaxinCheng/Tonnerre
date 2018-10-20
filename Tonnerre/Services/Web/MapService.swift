@@ -14,15 +14,14 @@ struct GoogleMapService: WebService {
   let alterContent: String? = "Open in Apple Maps"
   let argUpperBound: Int = .max
   
-  func parse(suggestionData: Data?) -> [String : Any] {
+  func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
       let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [String: Any],
       (jsonObject["status"] as? String) == "OK",
       let predictions = jsonObject["predictions"] as? [[String: Any]]
-    else { return [:] }
-    let matchedTerms = predictions.compactMap { $0["description"] as? String }
-    return ["rawElements": matchedTerms]
+    else { return [] }
+    return predictions.compactMap { $0["description"] as? String }
   }
   static let keyword: String = "map"
   let argLowerBound: Int = 1

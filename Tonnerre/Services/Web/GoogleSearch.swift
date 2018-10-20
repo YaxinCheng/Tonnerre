@@ -19,15 +19,14 @@ extension Google {
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return .max }
   
-  func parse(suggestionData: Data?) -> [String: Any] {
+  func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
       let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
       json.count > 2,
       let availableOptions = json[1] as? [NSArray]
-      else { return [:] }
-    let suggestions = availableOptions.compactMap { $0[0] as? String }
-    return ["rawElements": suggestions]
+      else { return [] }
+    return availableOptions.compactMap { $0[0] as? String }
   }
 }
 
