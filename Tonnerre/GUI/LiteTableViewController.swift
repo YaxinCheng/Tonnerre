@@ -13,11 +13,21 @@ class LiteTableViewController: NSViewController {
   var datasource: [ServicePack] = [] {
     didSet {
       HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
+      highlightedIndex = -1
       (view as! LiteTableView).reload()
+      if case .service(_, _)? = datasource.first {
+        delegate?.serviceHighlighted(service: datasource.first)
+      } else {
+        delegate?.serviceHighlighted(service: nil)
+      }
+      delegate?.updatePlaceholder(service: datasource.first)
     }
   }
+  private var highlightedIndex = -1
+  weak var delegate: LiteTableVCDelegate?
+  
   let CellHeight: CGFloat = 56
-  var HeightConstraint: NSLayoutConstraint!
+  private var HeightConstraint: NSLayoutConstraint!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,7 +39,8 @@ class LiteTableViewController: NSViewController {
       tableView.liteDelegate   = self
       tableView.liteDataSource = self
       tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
-      let allowedKeys: [UInt16] = []
+      let allowedKeys: [UInt16] = [48]
+      tableView.allowedKeyCodes.formUnion(allowedKeys)
     }
   }
   
@@ -39,6 +50,25 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func viewDidScroll(_ tableView: LiteTableView) {
     for (index, cell) in tableView.visibleCells.enumerated() {
       (cell as? ServiceCell)?.cmdLabel.stringValue = "⌘\(index + 1)"
+    }
+  }
+  
+  func keyPressed(_ event: NSEvent) {
+    switch event.keyCode {
+    case 125, 126: // move down/up
+      if datasource.count == 0 && event.keyCode == 126 {
+        delegate?.retrieveLastQuery()
+      }
+      guard datasource.count > 0 else { return }
+      highlightedIndex += event.keyCode == 125 ? 1 : -1
+      let selectedService = datasource[max(highlightedIndex, 0)]
+      delegate?.serviceHighlighted(service: selectedService)
+      delegate?.updatePlaceholder(service: selectedService)
+    case 48: // tab
+      let selectedService = datasource[max(highlightedIndex, 0)]
+      delegate?.tabPressed(service: selectedService)
+    default:
+      break
     }
   }
   

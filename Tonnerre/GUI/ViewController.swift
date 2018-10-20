@@ -26,13 +26,12 @@ final class ViewController: NSViewController {
   @IBOutlet weak var placeholderField: PlaceholderField!
   private lazy var tableVC: LiteTableViewController = {
     let storyboard = NSStoryboard.main
-    return storyboard?.instantiateController(withIdentifier: "tableView") as! LiteTableViewController
+    let liteTableVC = storyboard?.instantiateController(withIdentifier: "tableView") as! LiteTableViewController
+    liteTableVC.delegate = self
+    return liteTableVC
   }()
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
-  
-  private var keyboardMonitor: Any? = nil
-  private var flagsMonitor: Any? = nil
   
   private var lastQuery: String = ""
   private let asyncSession = TonnerreSession.shared
@@ -64,16 +63,6 @@ final class ViewController: NSViewController {
     iconView.theme = .current
     textField.theme = .current
     placeholderField.theme = .current
-    if keyboardMonitor == nil {
-//      keyboardMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyUp) { [weak self] in
-//        self?.collectionView.keyUp(with: $0)
-//        return $0
-//      }
-//      flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] in
-//        self?.collectionView.modifierChanged(with: $0)
-//        return $0
-//      }
-    }
   }
   
   override func viewDidAppear() {
@@ -81,12 +70,6 @@ final class ViewController: NSViewController {
   }
   
   override func viewWillDisappear() {
-    guard let kmonitor = keyboardMonitor else { return }
-    NSEvent.removeMonitor(kmonitor)
-    keyboardMonitor = nil
-    guard let fmonitor = flagsMonitor else { return }
-    NSEvent.removeMonitor(fmonitor)
-    flagsMonitor = nil
     adjustEditing(withString: "")
     textField.window?.makeFirstResponder(nil)
   }
@@ -187,17 +170,10 @@ extension ViewController: NSTextFieldDelegate {
   }
 }
 
-extension ViewController: TonnerreCollectionViewDelegate {
+extension ViewController {
   func viewIsClicked() {
     textField.becomeFirstResponder()
     textField.currentEditor()?.selectedRange = NSRange(location: textField.stringValue.count, length: 0)
-  }
-  
-  func retrieveLastQuery() {
-    textField.stringValue = lastQuery
-    textDidChange(value: textField.stringValue)
-    adjustEditing(withString: lastQuery)
-    textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
   }
   
   func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool) {
@@ -213,6 +189,39 @@ extension ViewController: TonnerreCollectionViewDelegate {
       self.lastQuery = queryValue
       service.serve(source: target, withCmd: withCmd)
     }
+  }
+}
+
+extension ViewController: LiteTableVCDelegate {
+  func serviceHighlighted(service: ServicePack?) {
+    guard service != nil else {
+      refreshIcon()
+      return
+    }
+    switch service! {
+    case .provider(let provider):
+      iconView.image = provider.icon
+    case .service(provider: let provider, content: let service):
+      iconView.image = provider is TNEServices ? service.icon : provider.icon
+      if iconView.image === #imageLiteral(resourceName: "tonnerre") {
+        refreshIcon()
+      }
+    }
+  }
+  
+  func updatePlaceholder(service: ServicePack?) {
+    guard service != nil else {
+      placeholderField.placeholderString = ""
+      return
+    }
+    let stringValue = (textField.stringValue.components(separatedBy: .whitespaces).last
+      ?? textField.stringValue).lowercased()
+    let serviceValue = service!.placeholder.lowercased()
+    guard !stringValue.isEmpty, serviceValue.starts(with: stringValue) else {
+      placeholderField.placeholderString = ""
+      return
+    }
+    placeholderField.placeholderString = String(service!.placeholder[stringValue.endIndex...])
   }
   
   func tabPressed(service: ServicePack) {
@@ -232,35 +241,14 @@ extension ViewController: TonnerreCollectionViewDelegate {
     default: return
     }
     fullEditing()
+    textField.becomeFirstResponder()
     textDidChange(value: textField.stringValue)
   }
   
-  func serviceHighlighted(service: ServicePack?) {
-    guard service != nil else { refreshIcon(); return }
-    switch service! {
-    case .provider(let provider):
-      iconView.image = provider.icon
-    case .service(provider: let provider, content: let service):
-      iconView.image = provider is TNEServices ? service.icon : provider.icon
-      if iconView.image === #imageLiteral(resourceName: "tonnerre") {
-        refreshIcon()
-      }
-    }
-  }
-  
-  func fillPlaceholder(with service: ServicePack?) {
-    guard let data = service else {
-      placeholderField.placeholderString = ""
-      return
-    }
-    let stringValue = textField.stringValue.components(separatedBy: .whitespaces).last?.lowercased() ?? textField.stringValue
-    let serviceValue = data.placeholder.lowercased()
-    guard !stringValue.isEmpty, serviceValue.starts(with: stringValue) else {
-      placeholderField.placeholderString = ""
-      return
-    }
-    let placeholder = String(serviceValue[stringValue.endIndex...])
-    placeholderField.placeholderString = placeholder
+  func retrieveLastQuery() {
+    textField.stringValue = lastQuery
+    textDidChange(value: textField.stringValue)
+    adjustEditing(withString: lastQuery)
+    textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
   }
 }
-
