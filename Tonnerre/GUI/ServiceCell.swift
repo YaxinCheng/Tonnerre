@@ -8,6 +8,7 @@
 
 import Cocoa
 import Quartz
+import LiteTableView
 
 fileprivate final class PreviewItem: NSObject, QLPreviewItem {
   let previewItemTitle: String!

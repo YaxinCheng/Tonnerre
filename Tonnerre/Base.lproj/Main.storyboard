@@ -787,7 +787,7 @@
         <scene sceneID="wCv-ra-dLi">
             <objects>
                 <viewController storyboardIdentifier="tableView" id="irL-gd-kQ7" customClass="LiteTableViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
-                    <stackView key="view" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="W6o-Zf-2hz" customClass="LiteTableView" customModule="Tonnerre" customModuleProvider="target">
+                    <stackView key="view" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="W6o-Zf-2hz" customClass="LiteTableView" customModule="LiteTableView">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </stackView>
