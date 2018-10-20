@@ -40,9 +40,6 @@ final class ViewController: NSViewController {
   }
   
   private func loadTableView() {
-    #if DEBUG
-    UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
-    #endif
     view.addSubview(tableVC.view)
     NSLayoutConstraint.activate([
       tableVC.view.leftAnchor.constraint(equalTo: view.leftAnchor),
