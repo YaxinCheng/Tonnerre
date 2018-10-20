@@ -8,6 +8,7 @@
 
 import Cocoa
 import Quartz
+import LiteTableView
 
 fileprivate final class PreviewItem: NSObject, QLPreviewItem {
   let previewItemTitle: String!
@@ -33,13 +34,13 @@ private extension NSPopover {
   }
 }
 
-final class ServiceCell: NSCollectionViewItem {
+final class ServiceCell: LiteTableCell {
   
   @IBOutlet weak var iconView: TonnerreIconView!
   @IBOutlet weak var serviceLabel: NSTextField!
   @IBOutlet weak var cmdLabel: NSTextField!
   @IBOutlet weak var introLabel: NSTextField!
-  var displayItem: DisplayProtocol? = nil
+  var displayItem: ServicePack? = nil
   weak var delegate: ServiceCellDelegate?
   var popoverView: NSPopover!
   
@@ -77,18 +78,8 @@ final class ServiceCell: NSCollectionViewItem {
     }
   }
   
-  var highlighted: Bool {
-    set {
-      DispatchQueue.main.async { [weak self] in
-        if newValue {
-          self?.view.layer?.backgroundColor = self?.theme.highlightColour.cgColor
-        } else {
-          self?.view.layer?.backgroundColor = .clear
-        }
-      }
-    } get {
-      return view.layer?.backgroundColor == theme.highlightColour.cgColor
-    }
+  override var highlightedColour: NSColor {
+    return theme.highlightColour
   }
   
   func preview() {
@@ -100,14 +91,15 @@ final class ServiceCell: NSCollectionViewItem {
       qlView.shouldCloseWithWindow = true
       return qlView
     }
-    if let container = displayItem as? DisplayableContainer<URL>,
+    guard case .service(_, let service)? = displayItem else { return }
+    if let container = service as? DisplayableContainer<URL>,
       let url = container.innerItem {
       if let buildInVC = container.extraContent as? NSViewController {
         viewController.view = buildInVC.view
       } else {
         viewController.view = constructView(url, container.name)
       }
-    } else if let container = displayItem as? WebExt,
+    } else if let container = service as? WebExt,
       let url = URL(string: container.rawURL) {
       viewController.view = constructView(url, container.name)
     } else { return }
