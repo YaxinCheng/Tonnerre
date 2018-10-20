@@ -130,8 +130,8 @@ extension ViewController: NSTextFieldDelegate {
   func controlTextDidEndEditing(_ obj: Notification) {
     if (obj.object as? NSTextField)?.stringValue.isEmpty ?? true { adjustEditing(withString: "") }
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
-//    guard let (service, value) = collectionView.enterPressed() else { return }
-//    serve(with: service, target: value, withCmd: false)
+    guard let servicePack = tableVC.retrieveHighlighted() else { return }
+    serve(servicePack, withCmd: false)
   }
   
   func controlTextDidBeginEditing(_ obj: Notification) {
@@ -174,21 +174,6 @@ extension ViewController {
   func viewIsClicked() {
     textField.becomeFirstResponder()
     textField.currentEditor()?.selectedRange = NSRange(location: textField.stringValue.count, length: 0)
-  }
-  
-  func serve(with service: TonnerreService, target: DisplayProtocol, withCmd: Bool) {
-    DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
-      guard !(service is TonnerreInstantService && withCmd == false) else { return }
-      (self?.view.window as? BaseWindow)?.isHidden = true
-      self?.refreshIcon()
-      self?.textField.stringValue = ""
-    }
-    let queue = DispatchQueue.global(qos: .userInitiated)
-    let queryValue = textField.stringValue
-    queue.async { [unowned self] in
-      self.lastQuery = queryValue
-      service.serve(source: target, withCmd: withCmd)
-    }
   }
 }
 
@@ -250,5 +235,21 @@ extension ViewController: LiteTableVCDelegate {
     textDidChange(value: textField.stringValue)
     adjustEditing(withString: lastQuery)
     textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
+  }
+  
+  func serve(_ servicePack: ServicePack, withCmd: Bool) {
+    guard case .service(let provider, let service) = servicePack else { return }
+    DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
+      guard !(provider is TonnerreInstantService && withCmd == false) else { return }
+      (self?.view.window as? BaseWindow)?.isHidden = true
+      self?.refreshIcon()
+      self?.textField.stringValue = ""
+    }
+    let queue = DispatchQueue.global(qos: .userInitiated)
+    let queryValue = textField.stringValue
+    queue.async { [unowned self] in
+      self.lastQuery = queryValue
+      provider.serve(source: service, withCmd: withCmd)
+    }
   }
 }

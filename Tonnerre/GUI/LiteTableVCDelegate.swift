@@ -28,4 +28,10 @@ protocol LiteTableVCDelegate: class {
    Request to retrieve the last queried content
    */
   func retrieveLastQuery()
+  /**
+   Service is selected with enter key or double click
+   - parameter servicePack: the service with its provider
+   - parameter withCmd: a flag indicates whether the cmd key is pressed with selection
+   */
+  func serve(_ servicePack: ServicePack, withCmd: Bool)
 }
