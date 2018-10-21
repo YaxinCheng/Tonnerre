@@ -111,8 +111,13 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       let selectedService = datasource[max(highlightedIndex, 0)]
       delegate?.tabPressed(service: selectedService)
     case 36, 76: // enter
-      guard event.modifierFlags.contains(.command), let servicePack = retrieveHighlighted() else { break }
-      delegate?.serve(servicePack, withCmd: true)
+      let highlightedCell = tableView.highlightedCell as? ServiceCell
+      let withCmd = event.modifierFlags.contains(.command)
+      guard
+        withCmd || highlightedCell?.popoverView.isShown == true ,
+        let servicePack = retrieveHighlighted()
+      else { break }
+      delegate?.serve(servicePack, withCmd: withCmd)
     case 49:
       (tableView.highlightedCell as? ServiceCell)?.preview()
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
