@@ -58,28 +58,12 @@ final class ServiceCell: LiteTableCell {
     popoverView = NSPopover(withDelegate: self)
   }
   
-  var theme: TonnerreTheme {
-    get {
-      return .current
-    } set {
-      serviceLabel.textColor = newValue.imgColour
-      cmdLabel.textColor = newValue.imgColour
-      introLabel.textColor = newValue.imgColour
-      switch newValue {
-      case .dark: iconView.shadow = nil
-      case .light: iconView.shadow = {
-          let shadow = NSShadow()
-          shadow.shadowColor = NSColor(calibratedRed: 0, green: 0, blue: 0, alpha: 0.5)
-          shadow.shadowBlurRadius = 1
-          shadow.shadowOffset = NSSize(width: 2, height: 3)
-          return shadow
-        }()
-      }
-    }
-  }
-  
   override var highlightedColour: NSColor {
-    return theme.highlightColour
+    if #available(OSX 10.14, *) {
+      return NSColor.controlAccentColor.withAlphaComponent(0.8)
+    } else {
+      return super.highlightedColour.withAlphaComponent(0.8)
+    }
   }
   
   func preview() {

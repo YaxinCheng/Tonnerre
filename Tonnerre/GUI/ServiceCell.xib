@@ -33,7 +33,7 @@
                     <rect key="frame" x="178" y="13" width="474" height="30"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="⌘+#" id="MhO-Va-LEs">
                         <font key="font" metaFont="system" size="25"/>
-                        <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>

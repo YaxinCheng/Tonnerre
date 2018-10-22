@@ -53,12 +53,12 @@ final class TonnerreField: NSTextField, ThemeProtocol {
     let tokens = stringValue.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
     guard !tokens.isEmpty else { return }
     if tokens.count > 1 {
-      let toBeCompletedString = tokens[1 ..< tokens.count-1].joined(separator: " ")
+      let toBeCompletedString = tokens[1...].joined(separator: " ")
       let commonPart = String(zip(toBeCompletedString, cmd).map { $0.0 })
       let surplusPart = String(cmd[commonPart.endIndex...])
       stringValue = (tokens.first! + " " + commonPart + surplusPart).lowercased()
     } else {
-      stringValue = cmd.lowercased() + (appendingSpace ? " " : "")
+      stringValue = cmd + (appendingSpace ? " " : "")
     }
     window?.makeFirstResponder(nil)
   }

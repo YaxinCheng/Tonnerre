@@ -104,7 +104,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       }
       guard datasource.count > 0 else { return }
       highlightedIndex += event.keyCode == 125 ? 1 : -1
-      let selectedService = datasource[max(highlightedIndex, 0)]
+      let selectedService = datasource[min(max(highlightedIndex, 0), datasource.count - 1)]
       delegate?.serviceHighlighted(service: selectedService)
       delegate?.updatePlaceholder(service: selectedService)
     case 48: // tab

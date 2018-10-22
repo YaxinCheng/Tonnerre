@@ -27,13 +27,8 @@ struct DictionarySerivce: TonnerreService {
     guard input.count > 0, !input[0].isEmpty else { return [self] }
     let text = input.joined(separator: " ")
     let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
-    let wrappedSuggestions: [DisplayableContainer<URL>]
-    if text == suggestions.first {
-      wrappedSuggestions = suggestions.compactMap(wrap)
-    } else {
-      wrappedSuggestions = [wrapQuery(text)] + suggestions.compactMap(wrap)
-    }
-    return wrappedSuggestions
+    let filteredSuggestiosn = suggestions.filter { $0.lowercased() != text }
+    return [wrapQuery(text)] + filteredSuggestiosn.compactMap(wrap)
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
