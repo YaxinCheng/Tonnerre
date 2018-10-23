@@ -13,10 +13,8 @@ struct ApplicationService: TonnerreService {
   let content: String = "Find and quite a running program"
   let alterContent: String? = "Force quit program"
   static let keyword: String = "quit"
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "close").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
-  let argUpperBound: Int = Int.max
+  let icon: NSImage = #imageLiteral(resourceName: "close")
+  let argUpperBound: Int = .max
   let argLowerBound: Int = 0
   
   func serve(source: DisplayProtocol, withCmd: Bool) {

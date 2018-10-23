@@ -15,9 +15,7 @@ final class TNEServices: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = .max
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
+  let icon: NSImage = #imageLiteral(resourceName: "tonnerre_extension")
   
   private func dictionarize(_ displayItem: DisplayProtocol) -> Dictionary<String, Any> {
     let unwrap: (Any) -> Any = {

@@ -12,10 +12,8 @@ struct VolumeService: TonnerreService {
   let name: String = "Eject Volumes"
   let content: String = "Eject selected volumes"
   static let keyword: String = "eject"
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "eject").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
-  let argUpperBound: Int = Int.max
+  let icon: NSImage = #imageLiteral(resourceName: "eject")
+  let argUpperBound: Int = .max
   let argLowerBound: Int = 0
   
   func serve(source: DisplayProtocol, withCmd: Bool) {

@@ -40,7 +40,7 @@ struct WebExt: DisplayProtocol {
     if rawURL.starts(with: "https://") {// If it's http url, send sync request to load
       let url = URL(string: rawURL)!
       let request = URLRequest(url: url, timeoutInterval: 60 * 60 * 24)
-      var image: NSImage = #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
+      var image: NSImage = #imageLiteral(resourceName: "notFound")
       let asyncSemaphore = DispatchSemaphore(value: 0)
       URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
         defer { asyncSemaphore.signal() }
@@ -58,7 +58,7 @@ struct WebExt: DisplayProtocol {
       let userDefault = UserDefaults.standard
       let appSupDir = userDefault.url(forKey: .appSupportDir)!
       let desiredURL = URL(fileURLWithPath: rawURL, relativeTo: appSupDir)
-      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
+      return NSImage(contentsOf: desiredURL) ?? #imageLiteral(resourceName: "tonnerre_extension")
     }
   }
   

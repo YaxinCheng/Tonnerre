@@ -50,9 +50,7 @@ final class ViewController: NSViewController {
   }
   
   override func viewWillAppear() {
-    iconView.theme = .current
-    textField.theme = .current
-    placeholderField.theme = .current
+    iconView.image = #imageLiteral(resourceName: "tonnerre")
   }
   
   override func viewDidAppear() {
@@ -62,11 +60,6 @@ final class ViewController: NSViewController {
   override func viewWillDisappear() {
     adjustEditing(withString: "")
     textField.window?.makeFirstResponder(nil)
-  }
-
-  private func refreshIcon() {
-    iconView.image = #imageLiteral(resourceName: "tonnerre")
-    iconView.theme = .current
   }
   
   @objc private func asyncContentDidLoad(notification: Notification) {
@@ -90,7 +83,7 @@ final class ViewController: NSViewController {
     tableVC.datasource = interpreter.interpret(input: value)
     guard value.isEmpty else { return }
     interpreter.clearCache()// Essential to prevent showing unnecessary placeholders
-    refreshIcon()
+    iconView.image = #imageLiteral(resourceName: "tonnerre")
   }
 }
 
@@ -163,7 +156,7 @@ extension ViewController: NSTextFieldDelegate {
 extension ViewController: LiteTableVCDelegate {
   func serviceHighlighted(service: ServicePack?) {
     guard service != nil else {
-      refreshIcon()
+      iconView.image = #imageLiteral(resourceName: "tonnerre")
       return
     }
     switch service! {
@@ -172,7 +165,7 @@ extension ViewController: LiteTableVCDelegate {
     case .service(provider: let provider, content: let service):
       iconView.image = provider is TNEServices ? service.icon : provider.icon
       if iconView.image === #imageLiteral(resourceName: "tonnerre") {
-        refreshIcon()
+        iconView.image = #imageLiteral(resourceName: "tonnerre")
       }
     }
   }
@@ -225,7 +218,6 @@ extension ViewController: LiteTableVCDelegate {
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
       guard !(provider is TonnerreInstantService && withCmd == false) else { return }
       (self?.view.window as? BaseWindow)?.isHidden = true
-      self?.refreshIcon()
       self?.textField.stringValue = ""
     }
     let queue = DispatchQueue.global(qos: .userInitiated)

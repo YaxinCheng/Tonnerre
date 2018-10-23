@@ -8,28 +8,13 @@
 
 import Cocoa
 
-final class TonnerreField: NSTextField, ThemeProtocol {
+final class TonnerreField: NSTextField {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
     NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
       self?.stringValue = ""
-    }
-  }
-  
-  private var placeholderColour: NSColor! {
-    didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "Tonnerre", attributes: [.foregroundColor: placeholderColour, .font: font ?? NSFont.systemFont(ofSize: 35)])
-    }
-  }
-  
-  var theme: TonnerreTheme {
-    set {
-      textColor = newValue.imgColour
-      placeholderColour = newValue.placeholderColour
-    } get {
-      return .current
     }
   }
   

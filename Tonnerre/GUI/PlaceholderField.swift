@@ -8,29 +8,9 @@
 
 import Cocoa
 
-final class PlaceholderField: NSTextField, ThemeProtocol {
+final class PlaceholderField: NSTextField {
   override var mouseDownCanMoveWindow: Bool {
     return true
-  }
-  
-  private var placeholderColour: NSColor! {
-    didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: font ?? NSFont.systemFont(ofSize: 35)])
-    }
-  }
-  
-  override var placeholderString: String? {
-    didSet {
-      placeholderAttributedString = NSAttributedString(string: placeholderString ?? "", attributes: [.foregroundColor: placeholderColour, .font: font ?? NSFont.systemFont(ofSize: 35)])
-    }
-  }
-  
-  var theme: TonnerreTheme {
-    set {
-      placeholderColour = newValue.placeholderColour
-    } get {
-      return .current
-    }
   }
   
   override func mouseUp(with event: NSEvent) {

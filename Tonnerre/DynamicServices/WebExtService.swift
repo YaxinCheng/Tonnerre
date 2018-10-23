@@ -15,9 +15,7 @@ final class WebExtService: TonnerreService {
   static let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = .max
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "tonnerre_extension").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
+  let icon: NSImage = #imageLiteral(resourceName: "tonnerre_extension")
   
   @available(*, deprecated: 6.0, message: "Prepare is replaced by functions in WebExtInterpreter")
   func prepare(input: [String]) -> [DisplayProtocol] {

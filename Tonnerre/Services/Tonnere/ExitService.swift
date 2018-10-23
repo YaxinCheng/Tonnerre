@@ -12,9 +12,7 @@ struct ExitService: TonnerreService {
   static let keyword: String = "exit"
   let name: String = "Quit Tonnerre"
   let content: String = "Quit Tonnerre program properly"
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "tonnerre.icns").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
+  let icon: NSImage = #imageLiteral(resourceName: "tonnerre.icns")
   let argLowerBound: Int = 0
   var priority: DisplayPriority = .low
   

@@ -14,9 +14,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let content: String = "Your records of recnet copies"
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "clipboard").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
+  let icon: NSImage = #imageLiteral(resourceName: "clipboard")
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
     CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)

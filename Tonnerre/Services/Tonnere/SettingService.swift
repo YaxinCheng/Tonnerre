@@ -14,9 +14,7 @@ struct SettingService: TonnerreService {
   let content: String = "Open Tonnerre setting panels"
   let argLowerBound: Int = 0
   let argUpperBound: Int = 1
-  var icon: NSImage {
-    return #imageLiteral(resourceName: "settings").tintedImage(with: TonnerreTheme.current.imgColour)
-  }
+  let icon: NSImage = #imageLiteral(resourceName: "settings")
   
   func prepare(input: [String]) -> [DisplayProtocol] {
     return [self]

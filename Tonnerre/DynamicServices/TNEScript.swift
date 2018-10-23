@@ -61,9 +61,8 @@ struct TNEScript: DisplayProtocol {
   let name: String
   var content: String
   var icon: NSImage {
-    let theme = TonnerreTheme.current
-    switch theme {
-    case .light: return iconLight ?? #imageLiteral(resourceName: "notFound").tintedImage(with: theme.imgColour)
+    switch SystemTheme.current {
+    case .light: return iconLight ?? #imageLiteral(resourceName: "notFound")
     case .dark: return iconDark ?? iconLight ?? #imageLiteral(resourceName: "notFound")
     }
   }

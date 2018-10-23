@@ -33,7 +33,7 @@ extension BookMarkService {
   var argUpperBound: Int { return Int.max }
   var priority: DisplayPriority { return .low }
   var icon: NSImage {
-    return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound").tintedImage(with: TonnerreTheme.current.imgColour)
+    return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound")
   }
   
   static var isDisabled: Bool {

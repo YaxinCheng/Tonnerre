@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       let centre = UNUserNotificationCenter.current()
       centre.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
         #if DEBUG
-        print("permission granted:", granted)
+        print("Notification permission granted:", granted)
         if let errorInfo = error {
           print("error:", errorInfo)
         }

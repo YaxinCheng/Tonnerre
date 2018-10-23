@@ -8,30 +8,23 @@
 
 import Cocoa
 
-final class TonnerreIconView: NSImageView , ThemeProtocol {
-  
-  var theme: TonnerreTheme {
-    get {
-      return TonnerreTheme.current
-    } set {
-      guard let image = self.image else { return }
-      self.image = image.tintedImage(with: newValue.imgColour)
-    }
-  }
+final class TonnerreIconView: NSImageView {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
     NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
       self?.image = #imageLiteral(resourceName: "tonnerre")
-      self?.theme = .current
     }
   }
   
+  private static let imagesWithTheme: Set<NSImage> = [#imageLiteral(resourceName: "tonnerre_extension"), #imageLiteral(resourceName: "tonnerre.icns"), #imageLiteral(resourceName: "tonnerre"), #imageLiteral(resourceName: "close"), #imageLiteral(resourceName: "eject"), #imageLiteral(resourceName: "settings"), #imageLiteral(resourceName: "clipboard")]
+  
   override func draw(_ dirtyRect: NSRect) {
+    if image != nil && type(of: self).imagesWithTheme.contains(image!) {
+      image = image?.tintedImage(with: .labelColor)
+    }
     super.draw(dirtyRect)
-    
-    // Drawing code here.
   }
   
   override var mouseDownCanMoveWindow: Bool {
