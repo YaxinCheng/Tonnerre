@@ -83,6 +83,9 @@ final class ServiceCell: LiteTableCell {
       } else {
         viewController.view = constructView(url, container.name)
       }
+    } else if let container = service as? AsyncedDisplayableContainer<URL>,
+      let url = container.innerItem {
+      viewController.view = constructView(url, container.name)
     } else if let container = service as? WebExt,
       let url = URL(string: container.rawURL) {
       viewController.view = constructView(url, container.name)

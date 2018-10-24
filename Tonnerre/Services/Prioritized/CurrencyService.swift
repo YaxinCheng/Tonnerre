@@ -83,15 +83,14 @@ struct CurrencyService: TonnerreService {
     }
     let populars = popularCurrencies.filter { $0 != fromCurrency && $0 != toCurrency }
     return ([toCurrency] + populars).map {
+      let googleURL = URL(string: "https://google.com/search?q=\(amount)+\(fromCurrency)+\(toCurrency)")!
       let asyncViewSetup = viewSetupGenerator(fromCurrency, $0, label + $0)
-      return AsyncedDisplayableContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: [fromCurrency, $0], viewSetup: asyncViewSetup)
+      return AsyncedDisplayableContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: googleURL, viewSetup: asyncViewSetup)
     }
   }
   
   func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let innerItem = (source as? AsyncedDisplayableContainer<[String]>)?.innerItem else { return }
-    let encoded = innerItem.joined(separator: "+")
-    let url = URL(string: "https://google.com/search?q=\(encoded)")!
-    NSWorkspace.shared.open(url)
+    guard let innerItem = (source as? AsyncedDisplayableContainer<URL>)?.innerItem else { return }
+    NSWorkspace.shared.open(innerItem)
   }
 }

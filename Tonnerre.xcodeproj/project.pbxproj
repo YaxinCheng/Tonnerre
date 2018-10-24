@@ -93,7 +93,6 @@
 		148E53832154793500343928 /* FlightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148E53822154793500343928 /* FlightService.swift */; };
 		148E538621547BFB00343928 /* FlightUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148E538521547BFB00343928 /* FlightUtilities.framework */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */; };
-		14AEB2D320BEECF000D10D44 /* SystemTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D220BEECEF00D10D44 /* SystemTheme.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
 		14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */; };
 		14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */; };
@@ -322,7 +321,6 @@
 		148E53822154793500343928 /* FlightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightService.swift; sourceTree = "<group>"; };
 		148E538521547BFB00343928 /* FlightUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlightUtilities.framework; path = ../../../../../System/Library/PrivateFrameworks/FlightUtilities.framework; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
-		14AEB2D220BEECEF00D10D44 /* SystemTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTheme.swift; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
 		14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		14AEB2DA20BEFDA900D10D44 /* ServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceCell.xib; sourceTree = "<group>"; };
@@ -665,7 +663,6 @@
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
 				14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */,
 				14CC56D1217930510015540A /* LiteTableViewController.swift */,
-				14AEB2D220BEECEF00D10D44 /* SystemTheme.swift */,
 				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
 				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
 				14F015C620F999E200537160 /* PlaceholderField.swift */,
@@ -1112,7 +1109,6 @@
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,
 				1449E575212B6B1D00500BF4 /* UserDefault+shared.swift in Sources */,
 				140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */,
-				14AEB2D320BEECF000D10D44 /* SystemTheme.swift in Sources */,
 				148414A720C8675F008FD68E /* URLService.swift in Sources */,
 				14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */,
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,

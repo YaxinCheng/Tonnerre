@@ -61,9 +61,10 @@ struct TNEScript: DisplayProtocol {
   let name: String
   var content: String
   var icon: NSImage {
-    switch SystemTheme.current {
-    case .light: return iconLight ?? #imageLiteral(resourceName: "notFound")
-    case .dark: return iconDark ?? iconLight ?? #imageLiteral(resourceName: "notFound")
+    if UserDefaults.standard.value(forKey: "AppleInterfaceStyle") == nil {
+      return iconLight ?? #imageLiteral(resourceName: "notFound")
+    } else {
+      return iconDark ?? iconLight ?? #imageLiteral(resourceName: "notFound")
     }
   }
   private let iconLight: NSImage?

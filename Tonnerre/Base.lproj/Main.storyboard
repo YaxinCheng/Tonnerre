@@ -730,7 +730,7 @@
                                             <constraint firstAttribute="width" constant="614" id="el2-u3-rnd"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" usesSingleLineMode="YES" id="VxW-E4-dLH">
-                                            <font key="font" metaFont="system" size="35"/>
+                                            <font key="font" metaFont="system" size="33.5"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         </textFieldCell>
@@ -741,7 +741,7 @@
                                             <constraint firstAttribute="width" id="lBk-XE-177"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="ve2-ne-lqC">
-                                            <font key="font" metaFont="system" size="35"/>
+                                            <font key="font" metaFont="system" size="33.5"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
