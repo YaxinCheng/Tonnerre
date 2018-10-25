@@ -62,10 +62,10 @@ struct CurrencyService: TonnerreService {
     let label = "\(amount) \(fromCurrency) = %@ "
     let viewSetupGenerator: (String, String, String) -> ((ServiceCell) -> Void)? = { fromCurrency, toCurrency, label in
       if !self.currencyCodes.contains(fromCurrency) || !self.currencyCodes.contains(toCurrency) { return nil }
+      let key = [fromCurrency, toCurrency].joined(separator: "_")
+      let url = URL(string: String(format: self.template, key))!
+      let request = URLRequest(url: url, timeoutInterval: 60 * 2)
       return { cell in
-          let key = [fromCurrency, toCurrency].joined(separator: "_")
-          let url = URL(string: String(format: self.template, key))!
-          let request = URLRequest(url: url, timeoutInterval: 60 * 2)
           URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
             #if DEBUG
             if let errorInfo = error { print(errorInfo) }
@@ -76,6 +76,10 @@ struct CurrencyService: TonnerreService {
               let rate = jsonObj[key]
             else { return }
             DispatchQueue.main.async {
+              guard
+                case .service(_, let item)? = cell.displayItem,
+                item is AsyncDisplayable
+              else { return }
               cell.serviceLabel.stringValue = String(format: label, "\(rate * amount)")
             }
           }.resume()

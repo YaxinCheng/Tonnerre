@@ -158,7 +158,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
     cell.displayItem = data
     if case .service(_, let value) = data {
       if let asyncedData = value as? AsyncDisplayable {
-        asyncedData.asyncedViewSetup?(cell)
+        asyncedData.asyncUpdate?(cell)
       }
     }
     return cell
