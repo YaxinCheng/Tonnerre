@@ -22,7 +22,6 @@
 		143551F12123A44F00D6080E /* SettingPanel.app in Apps copy */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
 		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
-		14398FCF2120D35900F5AFCA /* GradientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FCE2120D35900F5AFCA /* GradientCell.swift */; };
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD42120DB3500F5AFCA /* GradientColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD32120DB3500F5AFCA /* GradientColours.swift */; };
@@ -102,32 +101,27 @@
 		14AEB2FF20BF84D100D10D44 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2FE20BF84D100D10D44 /* Trie.swift */; };
 		14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30620C210EB00D10D44 /* BaseWindowController.swift */; };
 		14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */; };
-		14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE69E2112A4F1002BBBB2 /* ViewController.swift */; };
 		14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A22112A4F4002BBBB2 /* Main.storyboard */; };
 		14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */; };
 		14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */; };
 		14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B22118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift */; };
 		14AFE6B72118FD99002BBBB2 /* tonnerre.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tonnerre.icns */; };
-		14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */; };
-		14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BA2119F031002BBBB2 /* SettingView.swift */; };
-		14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */; };
 		14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */; };
-		14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C0211A016E002BBBB2 /* SettingCell.swift */; };
-		14AFE6C3211A03A5002BBBB2 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C2211A03A5002BBBB2 /* TextCell.swift */; };
 		14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C4211A7093002BBBB2 /* VolumeService.swift */; };
-		14AFE6C7211A7B62002BBBB2 /* OnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */; };
 		14AFE6CA211A7E97002BBBB2 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
 		14AFE6CB211A7E97002BBBB2 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6CD211A8F5B002BBBB2 /* Switch.json */; };
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
-		14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D5211BC6C8002BBBB2 /* Switch.swift */; };
 		14C25511214D661E0011A38E /* TonnerreInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C25510214D661E0011A38E /* TonnerreInterpreter.swift */; };
 		14C25515214DB37B0011A38E /* WebExtInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C25514214DB37B0011A38E /* WebExtInterpreter.swift */; };
 		14C2DF9F2134DDA800C6A91D /* TNEHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DF9E2134DDA800C6A91D /* TNEHub.swift */; };
 		14C2DFA32138C4E200C6A91D /* TNEScriptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */; };
 		14C2DFA52138CC8E00C6A91D /* TNEScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2DFA42138CC8E00C6A91D /* TNEScript.swift */; };
+		14C4102A21826CAD00CEA1E9 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4102921826CAD00CEA1E9 /* SplitViewController.swift */; };
+		14C4102C21826CCB00CEA1E9 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */; };
+		14C4102F21826D0F00CEA1E9 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */; };
 		14CC56D3217930510015540A /* LiteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56D1217930510015540A /* LiteTableViewController.swift */; };
 		14CC56D6217AB0160015540A /* LiteTableVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */; };
 		14CC56FB217BC78F0015540A /* LiteTableView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CC56FA217BC78F0015540A /* LiteTableView.framework */; };
@@ -252,7 +246,6 @@
 		142C5940215C64F700D819F2 /* String+match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+match.swift"; sourceTree = "<group>"; };
 		142C5942215D842800D819F2 /* UpgradeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHandler.swift; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
-		14398FCE2120D35900F5AFCA /* GradientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCell.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		14398FD32120DB3500F5AFCA /* GradientColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColours.swift; sourceTree = "<group>"; };
 		143FD19D210567F100E79F7E /* TerminalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalService.swift; sourceTree = "<group>"; };
@@ -332,7 +325,6 @@
 		14AEB30620C210EB00D10D44 /* BaseWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindowController.swift; sourceTree = "<group>"; };
 		14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SettingPanel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		14AFE69E2112A4F1002BBBB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14AFE6A32112A4F4002BBBB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14AFE6A52112A4F4002BBBB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -341,18 +333,11 @@
 		14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewAnimator.swift; sourceTree = "<group>"; };
 		14AFE6B22118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSStoryboardSegue+Extension.swift"; sourceTree = "<group>"; };
 		14AFE6B62118FD99002BBBB2 /* tonnerre.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tonnerre.icns; sourceTree = "<group>"; };
-		14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		14AFE6BA2119F031002BBBB2 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingCell.xib; sourceTree = "<group>"; };
 		14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNib+Extension.swift"; sourceTree = "<group>"; };
-		14AFE6C0211A016E002BBBB2 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
-		14AFE6C2211A03A5002BBBB2 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		14AFE6C4211A7093002BBBB2 /* VolumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeService.swift; sourceTree = "<group>"; };
-		14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffCell.swift; sourceTree = "<group>"; };
 		14AFE6CD211A8F5B002BBBB2 /* Switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Switch.json; sourceTree = "<group>"; };
 		14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathParser.swift; sourceTree = "<group>"; };
 		14AFE6D1211BA111002BBBB2 /* MathError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathError.swift; sourceTree = "<group>"; };
-		14AFE6D5211BC6C8002BBBB2 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSettings.swift; sourceTree = "<group>"; };
 		14C25510214D661E0011A38E /* TonnerreInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreInterpreter.swift; sourceTree = "<group>"; };
@@ -360,6 +345,9 @@
 		14C2DF9E2134DDA800C6A91D /* TNEHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEHub.swift; sourceTree = "<group>"; };
 		14C2DFA22138C4E200C6A91D /* TNEScriptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScriptError.swift; sourceTree = "<group>"; };
 		14C2DFA42138CC8E00C6A91D /* TNEScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEScript.swift; sourceTree = "<group>"; };
+		14C4102921826CAD00CEA1E9 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		14CC56D1217930510015540A /* LiteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTableViewController.swift; sourceTree = "<group>"; };
 		14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTableVCDelegate.swift; sourceTree = "<group>"; };
 		14CC56FA217BC78F0015540A /* LiteTableView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LiteTableView.framework; path = Carthage/Build/Mac/LiteTableView.framework; sourceTree = "<group>"; };
@@ -698,13 +686,13 @@
 			children = (
 				14AFE6CD211A8F5B002BBBB2 /* Switch.json */,
 				14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */,
-				14AFE69E2112A4F1002BBBB2 /* ViewController.swift */,
-				14AFE6B82119EF95002BBBB2 /* SettingViewController.swift */,
-				14AFE6BA2119F031002BBBB2 /* SettingView.swift */,
 				14AFE6DA211CDDCC002BBBB2 /* Settings.plist */,
+				14398FD32120DB3500F5AFCA /* GradientColours.swift */,
+				14C4102921826CAD00CEA1E9 /* SplitViewController.swift */,
+				14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */,
+				14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */,
 				14AFE6D9211BD64D002BBBB2 /* Segue */,
 				14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */,
-				14AFE6D8211BD61F002BBBB2 /* Cells */,
 				14AFE6A22112A4F4002BBBB2 /* Main.storyboard */,
 				14AFE6A52112A4F4002BBBB2 /* Info.plist */,
 				14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */,
@@ -726,20 +714,6 @@
 				1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		14AFE6D8211BD61F002BBBB2 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				14AFE6C0211A016E002BBBB2 /* SettingCell.swift */,
-				14AFE6BC2119F5F8002BBBB2 /* SettingCell.xib */,
-				14AFE6C2211A03A5002BBBB2 /* TextCell.swift */,
-				14AFE6C6211A7B62002BBBB2 /* OnOffCell.swift */,
-				14AFE6D5211BC6C8002BBBB2 /* Switch.swift */,
-				14398FCE2120D35900F5AFCA /* GradientCell.swift */,
-				14398FD32120DB3500F5AFCA /* GradientColours.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		14AFE6D9211BD64D002BBBB2 /* Segue */ = {
@@ -1025,7 +999,6 @@
 			files = (
 				14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */,
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
-				14AFE6BD2119F5F8002BBBB2 /* SettingCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
 				14F230302147467C00B7A0FB /* Settings.plist in Resources */,
 			);
@@ -1170,21 +1143,16 @@
 			files = (
 				1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */,
 				14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */,
-				14AFE6C3211A03A5002BBBB2 /* TextCell.swift in Sources */,
-				14AFE69F2112A4F1002BBBB2 /* ViewController.swift in Sources */,
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
+				14C4102F21826D0F00CEA1E9 /* ContentViewController.swift in Sources */,
+				14C4102C21826CCB00CEA1E9 /* MenuViewController.swift in Sources */,
 				14398FD42120DB3500F5AFCA /* GradientColours.swift in Sources */,
-				14AFE6C7211A7B62002BBBB2 /* OnOffCell.swift in Sources */,
+				14C4102A21826CAD00CEA1E9 /* SplitViewController.swift in Sources */,
 				14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */,
-				14AFE6BB2119F031002BBBB2 /* SettingView.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
 				14AFE6B32118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift in Sources */,
 				1449E577212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
-				14AFE6D6211BC6C8002BBBB2 /* Switch.swift in Sources */,
-				14398FCF2120D35900F5AFCA /* GradientCell.swift in Sources */,
-				14AFE6B92119EF95002BBBB2 /* SettingViewController.swift in Sources */,
-				14AFE6C1211A016E002BBBB2 /* SettingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
