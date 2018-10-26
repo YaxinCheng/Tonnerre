@@ -32,14 +32,14 @@ extension Google {
 
 struct GoogleSearch: Google {
   let name: String = "Google"
-  let contentTemplate: String = "Search %@ on google"
+  let contentTemplate: String = "Search %@ on Google"
   let template: String = "https://google.%@/search?q=%@"
   static let keyword: String = "google"
 }
 
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
-  let contentTemplate: String = "Search %@ on google image"
+  let contentTemplate: String = "Search %@ on Google Image"
   let template: String = "https://google.%@/search?q=%@&tbm=isch"
   static let keyword: String = "image"
 }
