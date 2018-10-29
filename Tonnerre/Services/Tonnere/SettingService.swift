@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct SettingService: TonnerreService {
   static let keyword: String = "tonnerre"

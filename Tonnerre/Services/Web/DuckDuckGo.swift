@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct DuckDuckGoSearch: WebService {
   let name: String = "DuckDuckGo"

@@ -19,7 +19,7 @@ final class PrioriLoader: ServiceLoader {
   }
   
   init() {
-    providers  = [LaunchService(), CalculationService(), URLService(), CurrencyService(), FlightService()]
+    providers  = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
     let saveToSettings: (ArraySlice<TonnerreService>) -> () = { providers in
       DispatchQueue.global(qos: .background).async {
         let userDefault = UserDefaults.shared

@@ -7,7 +7,7 @@
 //
 
 import CoreServices
-import Foundation
+import Cocoa
 
 struct DictionarySerivce: TonnerreService {
   let icon: NSImage = .dictionary

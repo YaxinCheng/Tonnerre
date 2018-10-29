@@ -99,26 +99,28 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func keyPressed(_ event: NSEvent) {
     switch event.keyCode {
     case 125, 126: // move down/up
+      PreviewPopover.shared.close()
       if datasource.count == 0 && event.keyCode == 126 {
         delegate?.retrieveLastQuery()
       }
       guard datasource.count > 0 else { return }
       highlightedIndex += event.keyCode == 125 ? 1 : -1
-      let selectedService = datasource[min(max(highlightedIndex, 0), datasource.count - 1)]
+      highlightedIndex = min(max(highlightedIndex, 0), datasource.count - 1)
+      let selectedService = datasource[highlightedIndex]
       delegate?.serviceHighlighted(service: selectedService)
       delegate?.updatePlaceholder(service: selectedService)
     case 48: // tab
+      guard datasource.count > 0 else { return }
       let selectedService = datasource[max(highlightedIndex, 0)]
       delegate?.tabPressed(service: selectedService)
     case 36, 76: // enter
-      let highlightedCell = tableView.highlightedCell as? ServiceCell
       let withCmd = event.modifierFlags.contains(.command)
       guard
-        withCmd || highlightedCell?.popoverView.isShown == true ,
+        withCmd || PreviewPopover.shared.isShown == true ,
         let servicePack = retrieveHighlighted()
       else { break }
       delegate?.serve(servicePack, withCmd: withCmd)
-    case 49:
+    case 49: // spac
       (tableView.highlightedCell as? ServiceCell)?.preview()
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }

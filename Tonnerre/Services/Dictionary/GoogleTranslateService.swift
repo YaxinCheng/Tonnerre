@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct GoogleTranslateService: TonnerreService, HistoryProtocol {  
   static let keyword: String = "translate"

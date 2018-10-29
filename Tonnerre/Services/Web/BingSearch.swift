@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 // NOTE: The suggestionTemplate may not be stable in the future
 struct BingSearch: WebService {
