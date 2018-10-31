@@ -50,19 +50,19 @@ struct DictionarySerivce: TonnerreService {
   
   private func wrapQuery(_ query: String) -> DisplayableContainer<URL> {
     let (headWord, content): (String, String)
-    let viewController: NSViewController?
+    let definitionView: NSView?
     if let (foundTerm, definition) = define(query) {
       headWord = foundTerm
       content = definition
-      viewController = buildView(with: definition)
+      definitionView = buildView(with: definition)
     } else {
       headWord = query
       content = "Cannot find definition for \"\(query)\""
-      viewController = nil
+      definitionView = nil
     }
     let urlEncoded = headWord.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? headWord
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    return DisplayableContainer(name: headWord, content: content, icon: icon, priority: priority, innerItem: dictURL, placeholder: "", extraContent: viewController)
+    return DisplayableContainer(name: headWord, content: content, icon: icon, priority: priority, innerItem: dictURL, placeholder: "", extraContent: definitionView)
   }
   
   private func wrap(_ query: String) -> DisplayableContainer<URL>? {
@@ -73,21 +73,20 @@ struct DictionarySerivce: TonnerreService {
     return DisplayableContainer(name: foundTerm, content: definition, icon: icon, priority: priority, innerItem: dictURL, extraContent: viewController)
   }
   
-  private func buildView(with definition: String) -> NSViewController {
+  private func buildView(with definition: String) -> NSView {
     let targetView: NSView
     let textView: NSTextView
     if #available(OSX 10.14, *) {
-      targetView = NSTextView.scrollableTextView()
+      targetView = NSTextView.scrollablePlainDocumentContentTextView()
       textView = (targetView as! NSScrollView).documentView as! NSTextView
     } else {
       textView = NSTextView()
       targetView = textView
     }
+    textView.drawsBackground = false
     textView.string = definition
     textView.isEditable = false
-    textView.font = NSFont.systemFont(ofSize: 17)
-    let viewController = NSViewController()
-    viewController.view = targetView
-    return viewController
+    textView.font = .systemFont(ofSize: 17)
+    return targetView
   }
 }

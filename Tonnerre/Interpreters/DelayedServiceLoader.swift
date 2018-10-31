@@ -34,7 +34,7 @@ final class DelayedServiceLoader: ServiceLoader {
   }
   
   func _find(keyword: String) -> [TonnerreService] {
-    return providerTrie.find(value: keyword)
+    return providerTrie.find(value: keyword.lowercased())
       .filter { !$0.isDisabled }
       .map { $0.init() }
   }

@@ -38,7 +38,7 @@ final class WebExtHub: ServiceLoader {
   func _find(keyword: String) -> [WebExt] {
     guard !keyword.isEmpty else { return [] }
     let userDefault = UserDefaults.shared
-    return serviceTrie.find(value: keyword)
+    return serviceTrie.find(value: keyword.lowercased())
       .filter { !userDefault.bool(forKey: "\($0.id)+isDisabled") }
   }
   

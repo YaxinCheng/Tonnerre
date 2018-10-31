@@ -55,8 +55,8 @@ final class ServiceCell: LiteTableCell {
     guard case .service(_, let service)? = displayItem else { return }
     if let container = service as? DisplayableContainer<URL>,
       let url = container.innerItem {
-      if let buildInVC = container.extraContent as? NSViewController {
-        viewController.view = buildInVC.view
+      if let buildInView = container.extraContent as? NSView {
+        viewController.view = buildInView
       } else {
         viewController.view = constructView(url, container.name)
       }

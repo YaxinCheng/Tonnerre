@@ -49,7 +49,7 @@ final class TNEHub: ServiceLoader {
   func _find(keyword: String) -> [TNEScript] {
     guard !keyword.isEmpty else { return [] }
     let userDefault = UserDefaults.shared
-    let possibleScripts = serviceTrie.find(value: keyword)
+    let possibleScripts = serviceTrie.find(value: keyword.lowercased())
       .filter { !userDefault.bool(forKey: "\($0.path.deletingLastPathComponent())+isDisabled") }
     return possibleScripts
   }

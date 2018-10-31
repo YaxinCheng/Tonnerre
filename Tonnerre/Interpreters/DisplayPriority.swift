@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DisplayPriority {
+enum DisplayPriority: String {
   case high
   case normal
   case low

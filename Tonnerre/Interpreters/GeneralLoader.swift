@@ -19,7 +19,7 @@ final class GeneralLoader: ServiceLoader {
   private let providerTrie: Trie<TonnerreService.Type>
   
   func _find(keyword: String) -> [TonnerreService] {
-    let fetchedServices = providerTrie.find(value: keyword)
+    let fetchedServices = providerTrie.find(value: keyword.lowercased())
       .filter { !$0.isDisabled }
       .map { $0.init() }
     return fetchedServices
