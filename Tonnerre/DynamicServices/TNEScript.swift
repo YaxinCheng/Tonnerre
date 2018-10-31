@@ -100,26 +100,25 @@ struct TNEScript: DisplayProtocol {
     let jsonURL = scriptPath.appendingPathComponent("description.json")
     do {
       let jsonData = try Data(contentsOf: jsonURL)
-      let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? Dictionary<String, Any>
       guard
-        let descriptionObj = jsonObject,
-        let name = descriptionObj["name"] as? String,
-        let keyword = descriptionObj["keyword"] as? String
+        let json = JSON(data: jsonData),
+        let name = json["name"] as? String,
+        let keyword = json["keyword"] as? String
       else { return nil }
       let getIcon: (String, NSImage?) -> NSImage? = {
         if let icon = $1 { return icon }
-        else if let iconPath = descriptionObj[$0] as? String {
+        else if let iconPath = json[$0] as? String {
           return NSImage(contentsOfFile: iconPath)
         } else { return nil }
       }
       let lightIcon = getIcon("icon", lightFileIcon)
       let darkIcon = getIcon("icon_dark", darkFileIcon)
-      let placeholder = descriptionObj["placeholder"] as? String
-      let lowerBound = descriptionObj["lowerBound"] as? Int ?? 1
-      let upperBound = descriptionObj["upperBound"] as? Int ?? .max
-      let priorityStr = descriptionObj["priority"] as? String
+      let placeholder = json["placeholder"] as? String
+      let lowerBound = json["lowerBound"] as? Int ?? 1
+      let upperBound = json["upperBound"] as? Int ?? .max
+      let priorityStr = json["priority"] as? String
       let priority = DisplayPriority(rawValue: priorityStr ?? "") ?? .normal
-      self.init(keyword: keyword, name: name, content: descriptionObj["content"] as? String ?? "", lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound, priority: priority)
+      self.init(keyword: keyword, name: name, content: json["content"] as? String ?? "", lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound, priority: priority)
     } catch {
       #if DEBUG
       print("Error happened in script constructor: ", error)
