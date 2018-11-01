@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -759,11 +759,21 @@
                                     <constraint firstItem="aLE-uw-uC8" firstAttribute="leading" secondItem="INu-6D-MeR" secondAttribute="trailing" constant="4" id="zvl-ID-CFr"/>
                                 </constraints>
                             </customView>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="Cur-Lc-A96">
+                                <rect key="frame" x="0.0" y="0.0" width="670" height="0.0"/>
+                                <connections>
+                                    <segue destination="irL-gd-kQ7" kind="embed" identifier="liteTableVC" id="KaY-mB-cTF"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Cur-Lc-A96" firstAttribute="trailing" secondItem="5FM-BE-sWa" secondAttribute="trailing" id="6Nx-hM-Frx"/>
+                            <constraint firstItem="Cur-Lc-A96" firstAttribute="leading" secondItem="5FM-BE-sWa" secondAttribute="leading" id="7gg-pv-Wva"/>
                             <constraint firstItem="5FM-BE-sWa" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="8yu-vN-Z6g"/>
                             <constraint firstAttribute="trailing" secondItem="5eP-PP-XxY" secondAttribute="trailing" constant="8" id="BsT-1h-0Mu"/>
                             <constraint firstAttribute="trailing" secondItem="5FM-BE-sWa" secondAttribute="trailing" id="H1f-UI-cSI"/>
+                            <constraint firstAttribute="bottom" secondItem="Cur-Lc-A96" secondAttribute="bottom" id="Hcf-5c-xL8"/>
+                            <constraint firstItem="Cur-Lc-A96" firstAttribute="top" secondItem="5FM-BE-sWa" secondAttribute="bottom" id="K63-Ko-6Mo"/>
                             <constraint firstAttribute="bottom" secondItem="hZT-aK-YhT" secondAttribute="bottom" id="RZs-nE-e38"/>
                             <constraint firstItem="hZT-aK-YhT" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cZW-YW-0rz"/>
                             <constraint firstItem="hZT-aK-YhT" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="fmw-fQ-0ie"/>
@@ -794,7 +804,7 @@
                 </viewController>
                 <customObject id="iRt-Nk-ZRG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="29" y="953"/>
+            <point key="canvasLocation" x="39" y="1032"/>
         </scene>
     </scenes>
     <resources>

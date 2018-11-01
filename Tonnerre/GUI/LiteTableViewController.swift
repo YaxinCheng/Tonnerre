@@ -36,6 +36,7 @@ class LiteTableViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
+    
     HeightConstraint = view.heightAnchor.constraint(equalToConstant: 0)
     NSLayoutConstraint.activate([HeightConstraint])
     
