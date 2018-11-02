@@ -654,13 +654,8 @@
 			isa = PBXGroup;
 			children = (
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
-				14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */,
-				14CC56D1217930510015540A /* LiteTableViewController.swift */,
-				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
-				14F10998218BA2C7003A5E07 /* TonnerreFieldController.swift */,
-				14F1099A218BA43C003A5E07 /* TonnerreFieldDelegate.swift */,
-				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
-				14F015C620F999E200537160 /* PlaceholderField.swift */,
+				14F1099D218BEC53003A5E07 /* TableView */,
+				14F1099E218BEC6A003A5E07 /* TonnerreField */,
 				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
 				14C410332187ACCC00CEA1E9 /* PreviewPopover.swift */,
 				14F1099C218BC1C1003A5E07 /* Designs */,
@@ -791,6 +786,27 @@
 				14F10996218BA276003A5E07 /* TonnerreField.storyboard */,
 			);
 			path = Designs;
+			sourceTree = "<group>";
+		};
+		14F1099D218BEC53003A5E07 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */,
+				14CC56D1217930510015540A /* LiteTableViewController.swift */,
+			);
+			name = TableView;
+			sourceTree = "<group>";
+		};
+		14F1099E218BEC6A003A5E07 /* TonnerreField */ = {
+			isa = PBXGroup;
+			children = (
+				14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */,
+				14F10998218BA2C7003A5E07 /* TonnerreFieldController.swift */,
+				14F1099A218BA43C003A5E07 /* TonnerreFieldDelegate.swift */,
+				146AAE6D20BE0700009AC9C6 /* TonnerreField.swift */,
+				14F015C620F999E200537160 /* PlaceholderField.swift */,
+			);
+			name = TonnerreField;
 			sourceTree = "<group>";
 		};
 		14F23035214B324000B7A0FB /* Interpreters */ = {

@@ -121,7 +121,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
         let servicePack = retrieveHighlighted()
       else { break }
       delegate?.serve(servicePack, withCmd: withCmd)
-    case 49: // spac
+    case 49: // space
       (tableView.highlightedCell as? ServiceCell)?.preview()
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }

@@ -49,32 +49,35 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
     do {
-      return copy + (try context.fetch(fetchRequest).map {
-        if $0.type! == "public.file-url" {
-          let name = $0.value!.components(separatedBy: "/").last ?? ""
-          let url = URL(string: $0.value!)!
+      return copy + (try context.fetch(fetchRequest).compactMap {
+        guard
+          let type = $0.type,
+          let value = $0.value?.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression),
+          let time = $0.time
+        else { return nil }
+        if type == "public.file-url" {
+          let name = value.components(separatedBy: "/").last ?? ""
+          guard let url = URL(string: value) else { return nil }
           let content = url.path
           let alterContent = "Show file in Finder"
           let icon = NSWorkspace.shared.icon(forFile: url.path)
           return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
-        } else if ($0.value?.lowercased().starts(with: "http://") ?? false)
-          || ($0.value?.lowercased().starts(with: "https://") ?? false) {
-          let name = $0.value!
-          let url = URL(string: $0.value!)!
+        } else if value.lowercased().starts(with: "http://")
+          || value.lowercased().starts(with: "https://") {
+          guard let url = URL(string: value) else { return nil }
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-          let content = "Copied at \(dateFmt.string(from: $0.time!))"
+          let content = "Copied at \(dateFmt.string(from: time))"
           let alterContent = "Open copied URL in default browser"
           let browserURL = NSWorkspace.shared.urlForApplication(toOpen: url)
           let icon = NSWorkspace.shared.icon(forFile: browserURL?.path ?? "/Applications/Safari.app")
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
+          return DisplayableContainer(name: value, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
         } else {
-          let name = $0.value!.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression)
           let dateFmt = DateFormatter()
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-          let content = "Copied at \(dateFmt.string(from: $0.time!))"
+          let content = "Copied at \(dateFmt.string(from: time))"
           let icon: NSImage = .notes ?? self.icon
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: $0.value!)
+          return DisplayableContainer(name: value, content: content, icon: icon, priority: priority, innerItem: $0.value!)
         }
       })
     } catch {

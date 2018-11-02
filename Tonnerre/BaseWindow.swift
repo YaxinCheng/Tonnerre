@@ -15,13 +15,15 @@ final class BaseWindow: NSPanel {
   }
   
   var isHidden: Bool = false {
-    didSet {
+    willSet {
       #if RELEASE
-      if isHidden {
+      if !isHidden && newValue == true {
+        hideKey.isPaused = true
         orderOut(self)
         let notification = Notification(name: .windowIsHiding)
         NotificationCenter.default.post(notification)
-      } else {
+      } else if isHidden && newValue == false {
+        hideKey.isPaused = false
         resetWindownLocation()
         makeKeyAndOrderFront(self)
         orderFrontRegardless()
@@ -50,6 +52,7 @@ final class BaseWindow: NSPanel {
   }
   
   let hotkey: HotKey
+  let hideKey: HotKey
   
   override func setFrameOrigin(_ point: NSPoint) {
     super.setFrameOrigin(point)
@@ -59,9 +62,13 @@ final class BaseWindow: NSPanel {
   
   override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
     hotkey = HotKey(key: .space, modifiers: [.option])
+    hideKey = HotKey(key: .escape, modifiers: [])
     super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
     hotkey.keyDownHandler = { [weak self] in
       self?.isHidden = !(self?.isHidden ?? true)
+    }
+    hideKey.keyDownHandler = { [weak self] in
+      self?.isHidden = true
     }
     
     isMovableByWindowBackground = true
