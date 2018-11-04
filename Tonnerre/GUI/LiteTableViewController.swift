@@ -47,7 +47,7 @@ class LiteTableViewController: NSViewController {
     tableView.liteDelegate   = self
     tableView.liteDataSource = self
     tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
-    let allowedKeys: [UInt16] = [48, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
+    let allowedKeys: [UInt16] = [48, 53, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
   }
   
@@ -123,6 +123,12 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       delegate?.serve(servicePack, withCmd: withCmd)
     case 49: // space
       (tableView.highlightedCell as? ServiceCell)?.preview()
+    case 53:
+      if PreviewPopover.shared.isShown == true {
+        PreviewPopover.shared.close()
+      } else {
+        (tableView.window as? BaseWindow)?.isHidden = true
+      }
     case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
       let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
