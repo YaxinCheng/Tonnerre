@@ -29,11 +29,6 @@ final class TonnerreFieldController: NSViewController {
     return textField.becomeFirstResponder()
   }
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-  }
-  
   override func viewWillAppear() {
     super.viewWillAppear()
     resetIconView()
@@ -77,17 +72,27 @@ final class TonnerreFieldController: NSViewController {
     adjustEditing(withString: lastQuery)
     textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
   }
+  
+  func display(info: String?) {
+    if let placeholder = info {
+      textFieldWidth.constant = 0
+      placeholderWidth.constant = 610
+      placeholderString = placeholder
+    } else {
+      placeholderString = ""
+      adjustEditing(withString: "")
+    }
+  }
 }
 
 extension TonnerreFieldController: NSTextFieldDelegate {
   func controlTextDidChange(_ obj: Notification) {
     guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
     let current = objTextField.stringValue// Capture the current value
-    let trimmedValue = current.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
-      .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)// Trim current
+    let trimmedValue = current.trimmed// Trim current
     if !current.isEmpty {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in// dispatch after 1 second
-        guard let now = self?.textField.stringValue else { return } // Test the current value (after 1 second)
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in// dispatch after 0.4 second
+        guard let now = self?.textField.stringValue else { return } // Test the current value (after 0.4 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
           self?.fullEditing()// Keep the length to max
         } else if !now.trimmingCharacters(in: .whitespaces).isEmpty {// If user is deleting the text or not editing anymore

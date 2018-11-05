@@ -47,7 +47,7 @@ class LiteTableViewController: NSViewController {
     tableView.liteDelegate   = self
     tableView.liteDataSource = self
     tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
-    let allowedKeys: [UInt16] = [48, 53, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
+    let allowedKeys: [UInt16] = [12, 48, 53, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
   }
   
@@ -140,6 +140,20 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
         let servicePack = cell.displayItem
       else { return }
       delegate?.serve(servicePack, withCmd: false)
+    case 12: // Q
+      guard event.modifierFlags.contains(.command) else { return }
+      if event.isARepeat { // Long hold cmd + Q
+        #if DEBUG
+        print("long hold trigered (\(String.CMD) + Q)")
+        #else
+        exit(0)
+        #endif
+      } else {
+        delegate?.updatePlaceholder(string: "Long hold \(String.CMD) + Q to exit")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+          self?.delegate?.updatePlaceholder(string: nil)
+        }
+      }
     default:
       break
     }

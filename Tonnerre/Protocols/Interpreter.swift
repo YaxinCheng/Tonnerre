@@ -42,9 +42,7 @@ extension Interpreter {
    - returns: tokenized tokens
   */
   private func tokenize(input: String) -> [String] {
-    let trimmed = input
-      .replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
-      .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)
+    let trimmed = input.trimmed
     return trimmed.components(separatedBy: .whitespacesAndNewlines)
   }
   

@@ -44,7 +44,7 @@ final class TonnerreField: NSTextField {
       window?.makeFirstResponder(nil)
       return
     }
-    let tokens = stringValue.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
+    let tokens = stringValue.trimmed.components(separatedBy: .whitespaces)
     guard !tokens.isEmpty else { return }
     if tokens.count > 1 {
       let toBeCompletedString = tokens[1...].joined(separator: " ")

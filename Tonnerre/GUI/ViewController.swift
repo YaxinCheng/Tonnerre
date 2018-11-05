@@ -126,6 +126,10 @@ extension ViewController: LiteTableVCDelegate {
     fieldVC.placeholderString = String(service!.placeholder[stringValue.endIndex...])
   }
   
+  func updatePlaceholder(string: String?) {
+    fieldVC.display(info: string)
+  }
+  
   func tabPressed(service: ServicePack) {
     switch service {
     case .provider(origin: let service) where !type(of: service).keyword.isEmpty:
