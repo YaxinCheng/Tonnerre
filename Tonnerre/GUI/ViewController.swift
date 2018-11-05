@@ -133,16 +133,19 @@ extension ViewController: LiteTableVCDelegate {
   func tabPressed(service: ServicePack) {
     switch service {
     case .provider(origin: let service) where !type(of: service).keyword.isEmpty:
-      fieldVC.autoComplete(cmd: type(of: service).keyword, appendingSpace: true)
-    case .service(provider: _, content: let value) where !value.placeholder.isEmpty:
+      fieldVC.autoComplete(cmd: type(of: service).keyword, appendingSpace: true, hasKeyword: false)
+    case .service(provider: let provider, content: let value) where !value.placeholder.isEmpty:
       if let tneService = value as? TNEScript {
-        fieldVC.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0)
+        fieldVC.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0,
+                             hasKeyword: tneService.keyword == fieldVC.firstValue)
       } else if let webExt = value as? WebExt {
-        fieldVC.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0)
+        fieldVC.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0,
+                             hasKeyword: webExt.keyword == fieldVC.firstValue)
       } else if let tservice = value as? TonnerreService {
-        fieldVC.autoComplete(cmd: type(of: tservice).keyword, appendingSpace: tservice.argLowerBound > 0)
+        fieldVC.autoComplete(cmd: type(of: tservice).keyword, appendingSpace: tservice.argLowerBound > 0,
+                             hasKeyword: type(of: provider).keyword == fieldVC.firstValue)
       } else {
-        fieldVC.autoComplete(cmd: value.name, appendingSpace: false)
+        fieldVC.autoComplete(cmd: value.name, appendingSpace: false, hasKeyword: false)
       }
     default: return
     }

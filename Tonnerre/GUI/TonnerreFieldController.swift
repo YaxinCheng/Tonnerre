@@ -19,6 +19,11 @@ final class TonnerreFieldController: NSViewController {
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
   
+  var firstValue: String {
+    guard let spaceIndex = stringValue.firstIndex(of: " ") else { return stringValue }
+    return String(stringValue[..<spaceIndex])
+  }
+  
   func resetIconView(check: Bool = false) {
     if iconView.image === #imageLiteral(resourceName: "tonnerre") || !check {
       iconView.image = #imageLiteral(resourceName: "tonnerre")
@@ -62,9 +67,29 @@ final class TonnerreFieldController: NSViewController {
     }
   }
   
-  func autoComplete(cmd: String, appendingSpace: Bool) {
-    textField.autoComplete(cmd: cmd, appendingSpace: appendingSpace)
-    fullEditing()
+  private let stringWithOperator = try! NSRegularExpression(pattern: "^.+?(\\s(AND|OR)\\s.+?)+", options: .anchorsMatchLines)
+  
+  func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool) {
+    defer {
+      textField.window?.makeFirstResponder(nil)
+      fullEditing()
+    }
+    guard
+      stringWithOperator.numberOfMatches(in: stringValue, options: .anchored, range: NSRange(stringValue.startIndex..., in: stringValue)) < 1
+      else {
+        stringValue = cmd + (appendingSpace ? " " : "")
+        return
+    }
+    let tokens = stringValue.trimmed.components(separatedBy: .whitespaces)
+    guard !tokens.isEmpty else { return }
+    if hasKeyword {
+      let toBeCompletedString = tokens[1...].joined(separator: " ")
+      let commonPart = String(zip(toBeCompletedString, cmd).map { $0.0 })
+      let surplusPart = String(cmd[commonPart.endIndex...])
+      stringValue = (tokens.first! + " " + commonPart + surplusPart).lowercased()
+    } else {
+      stringValue = cmd + (appendingSpace ? " " : "")
+    }
   }
   
   func restore(lastQuery: String) {
