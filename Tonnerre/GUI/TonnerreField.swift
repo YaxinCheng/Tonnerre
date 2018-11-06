@@ -36,27 +36,6 @@ final class TonnerreField: NSTextField {
   
   private let stringWithOperator = try! NSRegularExpression(pattern: "^.+?(\\s(AND|OR)\\s.+?)+", options: .anchorsMatchLines)
   
-  func autoComplete(cmd: String, appendingSpace: Bool) {
-    guard
-      stringWithOperator.numberOfMatches(in: stringValue, options: .anchored, range: NSRange(stringValue.startIndex..., in: stringValue)) < 1
-    else {
-      stringValue = cmd + (appendingSpace ? " " : "")
-      window?.makeFirstResponder(nil)
-      return
-    }
-    let tokens = stringValue.trimmed.components(separatedBy: .whitespaces)
-    guard !tokens.isEmpty else { return }
-    if tokens.count > 1 {
-      let toBeCompletedString = tokens[1...].joined(separator: " ")
-      let commonPart = String(zip(toBeCompletedString, cmd).map { $0.0 })
-      let surplusPart = String(cmd[commonPart.endIndex...])
-      stringValue = (tokens.first! + " " + commonPart + surplusPart).lowercased()
-    } else {
-      stringValue = cmd + (appendingSpace ? " " : "")
-    }
-    window?.makeFirstResponder(nil)
-  }
-  
   override var intrinsicContentSize: NSSize {
     let value = stringValue ?? "Tonnerre"
     let cell = NSTextFieldCell(textCell: value)

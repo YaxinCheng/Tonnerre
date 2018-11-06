@@ -210,12 +210,14 @@ final class CoreIndexing {
       let relatedModes = identify(path: pathURL)
       let relatedIndexes = relatedModes.map { indexes[$0, true] }
       if flags.contains(.created) {
-        for index in relatedIndexes {
+        for (mode, index) in zip(relatedModes, relatedIndexes)
+          where mode.canInclude(fileURL: pathURL) {
           _ = try? index.addDocument(atPath: pathURL)
         }
       } else if flags.contains(.renamed) {
         let fileManager = FileManager.default
-        for index in relatedIndexes {
+        for (mode, index) in zip(relatedModes, relatedIndexes)
+          where mode.canInclude(fileURL: pathURL) {
           let exist = fileManager.fileExists(atPath: path)
           if exist == false {
             _ = index.removeDocument(atPath: pathURL)
@@ -224,7 +226,8 @@ final class CoreIndexing {
           }
         }
       } else if flags.contains(.removed) {
-        for index in relatedIndexes {
+        for (mode, index) in zip(relatedModes, relatedIndexes)
+          where mode.canInclude(fileURL: pathURL) {
           _ = index.removeDocument(atPath: pathURL)
         }
       }
