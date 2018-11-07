@@ -16,10 +16,10 @@ struct VolumeService: TonnerreService {
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     let workspace = NSWorkspace.shared
     let queue = DispatchQueue.global(qos: .userInitiated)
-    if let allVolumes = (source as? DisplayableContainer<[URL]>)?.innerItem {
+    if let allVolumes = (service as? DisplayableContainer<[URL]>)?.innerItem {
       queue.async {
         var errorCount = 0
         for volume in allVolumes {
@@ -34,7 +34,7 @@ struct VolumeService: TonnerreService {
           LocalNotification.send(title: "Eject Successfully", content: "Successfully ejected all volumes", muted: true)
         }
       }
-    } else if let specificVolume = (source as? DisplayableContainer<URL>)?.innerItem {
+    } else if let specificVolume = (service as? DisplayableContainer<URL>)?.innerItem {
       queue.async {
         do {
           try workspace.unmountAndEjectDevice(at: specificVolume)
@@ -46,7 +46,7 @@ struct VolumeService: TonnerreService {
     }
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let fileManager = FileManager.default
     let semaphore = DispatchSemaphore(value: 0)
     var volumeURLs: [URL] = []

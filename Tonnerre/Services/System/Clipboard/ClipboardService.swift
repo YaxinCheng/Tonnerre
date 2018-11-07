@@ -35,7 +35,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
     }
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let copy: [DisplayProtocol]
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
@@ -85,10 +85,10 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
     }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     let pasteboard = NSPasteboard.general
     pasteboard.clearContents()
-    if let item = source as? DisplayableContainer<URL>, let url = item.innerItem {
+    if let item = service as? DisplayableContainer<URL>, let url = item.innerItem {
       if FileManager.default.fileExists(atPath: url.path) {
         if withCmd {
           NSWorkspace.shared.activateFileViewerSelecting([url])
@@ -102,7 +102,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           pasteboard.setString(url.absoluteString, forType: .string)
         }
       }
-    } else if let item = source as? DisplayableContainer<String>, let string = item.innerItem {
+    } else if let item = service as? DisplayableContainer<String>, let string = item.innerItem {
       pasteboard.setString(string, forType: .string)
     }
   }

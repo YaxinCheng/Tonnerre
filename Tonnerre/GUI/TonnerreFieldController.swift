@@ -82,7 +82,7 @@ final class TonnerreFieldController: NSViewController {
     }
     let tokens = stringValue.trimmed.components(separatedBy: .whitespaces)
     guard !tokens.isEmpty else { return }
-    if hasKeyword {
+    if hasKeyword && tokens.count > 1 {
       let toBeCompletedString = tokens[1...].joined(separator: " ")
       let commonPart = String(zip(toBeCompletedString, cmd).map { $0.0 })
       let surplusPart = String(cmd[commonPart.endIndex...])

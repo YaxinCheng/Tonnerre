@@ -35,24 +35,24 @@ final class TNEServices: TonnerreService {
   }
   
   @available(*, deprecated: 6.0, message: "Prepare is replaced by functions in TNEInterpreter")
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     fatalError("Prepare is replaced by functions in TNEInterpreter")
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
       let originalService: TNEScript
-      if let urlResult = source as? DisplayableContainer<URL>,
+      if let urlResult = service as? DisplayableContainer<URL>,
         let service = urlResult.extraContent as? TNEScript {
         originalService = service
       } else if
-        let anyResult = source as? DisplayableContainer<Any>,
+        let anyResult = service as? DisplayableContainer<Any>,
         let service = anyResult.extraContent as? TNEScript {
         originalService = service
-      } else if let appleScript = source as? TNEScript {
+      } else if let appleScript = service as? TNEScript {
         originalService = appleScript
       } else { return }
-      var dictionarizedChoice = self.dictionarize(source)
+      var dictionarizedChoice = self.dictionarize(service)
       dictionarizedChoice["withCmd"] = withCmd
       _ = originalService.execute(args: .serve(choice: dictionarizedChoice))
     }

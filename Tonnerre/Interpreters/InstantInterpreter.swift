@@ -18,7 +18,7 @@ struct InstantInterpreter<T: ServiceLoader>: Interpreter where T.ServiceType == 
   func wrap(_ rawData: [TonnerreService], withTokens tokens: [String]) -> [ServicePack] {
     return rawData.map { provider in
       if tokens.count >= provider.argLowerBound && tokens.count <= provider.argUpperBound {
-        return provider.prepare(input: tokens).map { ServicePack(provider: provider, service: $0) }
+        return provider.prepare(withInput: tokens).map { ServicePack(provider: provider, service: $0) }
       } else {
         return []
       }

@@ -47,7 +47,7 @@ extension BookMarkService {
     }
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let bookMarks: [BookMark]
     do {
       bookMarks = try parseFile()
@@ -64,9 +64,9 @@ extension BookMarkService {
     return filteredBMs.map { DisplayableContainer(name: $0.title, content: $0.url.absoluteString, icon: icon, priority: priority, innerItem: $0.url, placeholder: $0.title) }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     if let browserURL = Self.browser.appURL,
-    let innerItem = (source as? DisplayableContainer<URL>)?.innerItem {
+    let innerItem = (service as? DisplayableContainer<URL>)?.innerItem {
       do {
         _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])
       } catch {
@@ -74,7 +74,7 @@ extension BookMarkService {
         print("Browser open bookmarks:", error)
         #endif
       }
-    } else if source is DisplayableContainer<Int> {
+    } else if service is DisplayableContainer<Int> {
       guard
         let settingPanelURL = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")
       else { return }

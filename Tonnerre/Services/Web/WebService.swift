@@ -70,13 +70,13 @@ extension WebService {
      }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let request = (service as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     workspace.open(request)
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let queryURL = fillInTemplate(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ")

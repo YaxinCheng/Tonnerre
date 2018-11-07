@@ -142,6 +142,8 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       delegate?.serve(servicePack, withCmd: false)
     case 12: // Q
       guard event.modifierFlags.contains(.command) else { return }
+      let finder = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.finder").first
+      finder?.activate(options: .activateIgnoringOtherApps)
       if event.isARepeat { // Long hold cmd + Q
         #if DEBUG
         print("long hold trigered (\(String.CMD) + Q)")

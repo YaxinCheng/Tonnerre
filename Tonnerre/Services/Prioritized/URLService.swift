@@ -14,7 +14,7 @@ struct URLService: TonnerreService {
   let icon: NSImage = .safari
   let content: String = "Open typed URL in a browser"
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard let query = input.first, input.count == 1 else { return [] }
     let urlRegex = try! NSRegularExpression(pattern: "^(https?:\\/\\/)?(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&]*)*", options: .caseInsensitive)
     let isURL = urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
@@ -28,9 +28,9 @@ struct URLService: TonnerreService {
     return browsers.map { DisplayableContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, priority: priority, innerItem: url, extraContent: $0) }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     guard
-      let service = source as? DisplayableContainer<URL>,
+      let service = service as? DisplayableContainer<URL>,
       let request = service.innerItem,
       let browser = service.extraContent as? Browser,
       let browserURL = browser.appURL

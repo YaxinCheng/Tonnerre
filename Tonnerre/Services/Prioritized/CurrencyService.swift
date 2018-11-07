@@ -56,7 +56,7 @@ struct CurrencyService: TonnerreService {
     return (fromCurrency, toCurrency, amount)
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard let (fromCurrency, toCurrency, amount) = extractInfomation(from: input) else { return [] }
     // The async function to setup the view
     let label = "\(amount) \(fromCurrency) = %@ "
@@ -93,8 +93,8 @@ struct CurrencyService: TonnerreService {
     }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let innerItem = (source as? AsyncedDisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let innerItem = (service as? AsyncedDisplayableContainer<URL>)?.innerItem else { return }
     NSWorkspace.shared.open(innerItem)
   }
 }

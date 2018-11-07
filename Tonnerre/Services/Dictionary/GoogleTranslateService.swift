@@ -39,7 +39,7 @@ struct GoogleTranslateService: TonnerreService, HistoryProtocol {
     } else { return [] }
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     var firstArg = input.first!.lowercased()
     let example = DisplayableContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon, priority: priority)
     let rawQuery = input.joined(separator: " ")
@@ -64,9 +64,9 @@ struct GoogleTranslateService: TonnerreService, HistoryProtocol {
     return [translator] + autoTranslator + history
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     guard
-      let item = source as? DisplayableContainer<URL>,
+      let item = service as? DisplayableContainer<URL>,
       let request = item.innerItem
     else { return }
     if let requestedLangues = item.extraContent as? String,

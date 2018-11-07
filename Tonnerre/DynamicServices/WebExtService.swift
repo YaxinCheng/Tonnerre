@@ -18,13 +18,13 @@ final class WebExtService: TonnerreService {
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre_extension")
   
   @available(*, deprecated: 6.0, message: "Prepare is replaced by functions in WebExtInterpreter")
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     fatalError("Prepare is replaced by functions in WebExtInterpreter")
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     guard
-      let webExt = source as? WebExt,
+      let webExt = service as? WebExt,
       let url = URL(string: webExt.rawURL)
     else { return }
     let workspace = NSWorkspace.shared

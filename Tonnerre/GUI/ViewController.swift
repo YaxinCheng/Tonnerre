@@ -173,7 +173,7 @@ extension ViewController: LiteTableVCDelegate {
     let queryValue = fieldVC.stringValue
     queue.async { [unowned self] in
       self.lastQuery = queryValue
-      provider.serve(source: service, withCmd: withCmd)
+      provider.serve(service: service, withCmd: withCmd)
     }
   }
 }

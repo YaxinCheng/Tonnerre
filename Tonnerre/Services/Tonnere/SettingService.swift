@@ -16,11 +16,11 @@ struct SettingService: TonnerreService {
   let argUpperBound: Int = 1
   let icon: NSImage = #imageLiteral(resourceName: "settings")
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     return [self]
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     DispatchQueue(label: "SettingPanelSetup").async {
       let settingLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/SettingPanel.app")
       let workspace = NSWorkspace.shared

@@ -21,9 +21,9 @@ struct AmazonSearch: WebService {
   func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
-      let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
-      let suggestions = jsonObject[1] as? [String]
+      let jsonObject = JSON(data: jsonData),
+      let suggestions = jsonObject[1]?.rawValue as? [JSON]
     else { return [] }
-    return suggestions
+    return suggestions.compactMap { $0.rawValue as? String }
   }
 }

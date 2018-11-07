@@ -18,7 +18,7 @@ struct CalculationService: TonnerreService {
   private let tokenizer = MathTokenizer()
   private let parser = MathParser()
 
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let rawExpression = input.joined()
     do {
       let tokens = try tokenizer.tokenize(expression: rawExpression)
@@ -35,9 +35,9 @@ struct CalculationService: TonnerreService {
     }
   }
 
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     guard
-      let result = source as? DisplayableContainer<Int>,
+      let result = service as? DisplayableContainer<Int>,
       let _ = Double(result.name)
     else { return }
     if withCmd {

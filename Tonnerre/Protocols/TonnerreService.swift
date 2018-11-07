@@ -31,13 +31,13 @@ protocol TonnerreService: DisplayProtocol {
    - parameter input: the user input excluding the keyword
    - returns: an array of displayable items each represent a specific service
   */
-  func prepare(input: [String]) -> [DisplayProtocol]
+  func prepare(withInput input: [String]) -> [DisplayProtocol]
   /**
    The function that serves the user with the service it selected
-   - parameter source: the user selected service
+   - parameter service: the user selected service
    - parameter withCmd: a flag indicates whether the user selected the service with cmd key modifier
    */
-  func serve(source: DisplayProtocol, withCmd: Bool)
+  func serve(service: DisplayProtocol, withCmd: Bool)
   /**
    Constructor.
    - Note: no parameter should be given for TonnerreService constructors

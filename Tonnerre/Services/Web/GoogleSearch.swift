@@ -22,11 +22,11 @@ extension Google {
   func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
-      let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
+      let json = JSON(data: jsonData),
       json.count > 2,
-      let availableOptions = json[1] as? [NSArray]
-      else { return [] }
-    return availableOptions.compactMap { $0[0] as? String }
+      let availableOptions = json[1]
+    else { return [] }
+    return availableOptions.compactMap { $0.value[0]?.rawValue as? String }
   }
 }
 

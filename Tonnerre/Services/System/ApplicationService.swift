@@ -17,13 +17,13 @@ struct ApplicationService: TonnerreService {
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let value = (source as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let value = (service as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
     if withCmd { value.forceTerminate() }
     else { value.terminate() }
   }
 
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
     if input.isEmpty || (input.first?.isEmpty ?? false) {

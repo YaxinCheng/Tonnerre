@@ -23,7 +23,7 @@ struct DictionarySerivce: TonnerreService {
     spellChecker.automaticallyIdentifiesLanguages = true
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard input.count > 0, !input[0].isEmpty else { return [self] }
     let text = input.joined(separator: " ")
     let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
@@ -31,8 +31,8 @@ struct DictionarySerivce: TonnerreService {
     return [wrapQuery(text)] + filteredSuggestiosn.compactMap(wrap)
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let request = source as? DisplayableContainer<URL>, let url = request.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let request = service as? DisplayableContainer<URL>, let url = request.innerItem else { return }
     NSWorkspace.shared.open(url)
   }
   
