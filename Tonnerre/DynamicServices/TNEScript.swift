@@ -102,23 +102,24 @@ struct TNEScript: DisplayProtocol {
       let jsonData = try Data(contentsOf: jsonURL)
       guard
         let json = JSON(data: jsonData),
-        let name = json["name"] as? String,
-        let keyword = json["keyword"] as? String
+        let name = json["name"]?.rawValue as? String,
+        let keyword = json["keyword"]?.rawValue as? String
       else { return nil }
       let getIcon: (String, NSImage?) -> NSImage? = {
         if let icon = $1 { return icon }
-        else if let iconPath = json[$0] as? String {
+        else if let iconPath = json[$0]?.rawValue as? String {
           return NSImage(contentsOfFile: iconPath)
         } else { return nil }
       }
       let lightIcon = getIcon("icon", lightFileIcon)
       let darkIcon = getIcon("icon_dark", darkFileIcon)
-      let placeholder = json["placeholder"] as? String
-      let lowerBound = json["lowerBound"] as? Int ?? 1
-      let upperBound = json["upperBound"] as? Int ?? .max
-      let priorityStr = json["priority"] as? String
+      let placeholder = json["placeholder"]?.rawValue as? String
+      let lowerBound = json["lowerBound"]?.rawValue as? Int ?? 1
+      let upperBound = json["upperBound"]?.rawValue as? Int ?? .max
+      let priorityStr = json["priority"]?.rawValue as? String
+      let content = json["content"]?.rawValue as? String ?? ""
       let priority = DisplayPriority(rawValue: priorityStr ?? "") ?? .normal
-      self.init(keyword: keyword, name: name, content: json["content"] as? String ?? "", lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound, priority: priority)
+      self.init(keyword: keyword, name: name, content: content, lightIcon: lightIcon, darkIcon: darkIcon, script: validScript, placeholder: placeholder, lowerBound: lowerBound, upperBound: upperBound, priority: priority)
     } catch {
       #if DEBUG
       print("Error happened in script constructor: ", error)

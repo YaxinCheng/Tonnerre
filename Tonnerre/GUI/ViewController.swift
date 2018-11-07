@@ -137,15 +137,19 @@ extension ViewController: LiteTableVCDelegate {
     case .service(provider: let provider, content: let value) where !value.placeholder.isEmpty:
       if let tneService = value as? TNEScript {
         fieldVC.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0,
-                             hasKeyword: tneService.keyword == fieldVC.firstValue)
+                             hasKeyword: tneService.keyword.lowercased()
+                              .starts(with: fieldVC.firstValue.lowercased()))
       } else if let webExt = value as? WebExt {
         fieldVC.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0,
-                             hasKeyword: webExt.keyword == fieldVC.firstValue)
+                             hasKeyword: webExt.keyword.lowercased()
+                              .starts(with: fieldVC.firstValue.lowercased()))
       } else if let tservice = value as? TonnerreService {
         fieldVC.autoComplete(cmd: type(of: tservice).keyword, appendingSpace: tservice.argLowerBound > 0,
-                             hasKeyword: type(of: provider).keyword == fieldVC.firstValue)
+                             hasKeyword: type(of: provider).keyword.lowercased()
+                              .starts(with: fieldVC.firstValue.lowercased()))
       } else {
-        fieldVC.autoComplete(cmd: value.name, appendingSpace: false, hasKeyword: false)
+        fieldVC.autoComplete(cmd: value.name, appendingSpace: false, hasKeyword: type(of: provider).keyword.lowercased()
+          .starts(with: fieldVC.firstValue.lowercased()))
       }
     default: return
     }

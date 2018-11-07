@@ -66,22 +66,22 @@ struct WebExt: DisplayProtocol {
     guard url.pathExtension == "json" else { return [] }
     do {
       let jsonData = try Data(contentsOf: url)
-      if let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
-      as? Dictionary<String, [String: Any]> {
+      if let jsonObject = JSON(data: jsonData) {
         var validExts = [WebExt]()
         for (attrName, jsonContent) in jsonObject {
           guard
-            let name = jsonContent["name"] as? String,
-            let keyword = jsonContent["keyword"] as? String,
-            let rawURL = jsonContent["url"] as? String
+            case .string(let attributeName) = attrName,
+            let name = jsonContent["name"]?.rawValue as? String,
+            let keyword = jsonContent["keyword"]?.rawValue as? String,
+            let rawURL = jsonContent["url"]?.rawValue as? String
           else { continue }
-          let content = jsonContent["content"] as? String ?? ""
-          let argLowerBound = jsonContent["argLowerBound"] as? Int ?? 1
-          let argUpperBound = jsonContent["argUpperBound"] as? Int ?? .max
-          let priorityStr = jsonContent["priority"] as? String
+          let content = jsonContent["content"]?.rawValue as? String ?? ""
+          let argLowerBound = jsonContent["argLowerBound"]?.rawValue as? Int ?? 1
+          let argUpperBound = jsonContent["argUpperBound"]?.rawValue as? Int ?? .max
+          let priorityStr = jsonContent["priority"]?.rawValue as? String
           let priority = DisplayPriority(rawValue: priorityStr ?? "") ?? .normal
-          let icon = jsonContent["icon"] is String ? loadImage(rawURL: jsonContent["icon"] as! String) : #imageLiteral(resourceName: "notFound")
-          let loadedExt = WebExt(keyword: keyword, name: name, content: content, icon: icon, rawURL: rawURL, attrName: attrName, lowerBound: argLowerBound, upperBound: argUpperBound, priority: priority)
+          let icon = jsonContent["icon"]?.rawValue is String ? loadImage(rawURL: jsonContent["icon"]?.rawValue as! String) : #imageLiteral(resourceName: "notFound")
+          let loadedExt = WebExt(keyword: keyword, name: name, content: content, icon: icon, rawURL: rawURL, attrName: attributeName, lowerBound: argLowerBound, upperBound: argUpperBound, priority: priority)
           validExts.append(loadedExt)
         }
         return validExts
