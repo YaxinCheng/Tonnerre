@@ -8,8 +8,8 @@
 
 import Cocoa
 
-struct GoogleTranslateService: TonnerreService, HistoryProtocol {  
-  static let keyword: String = "translate"
+struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {  
+  let keyword: String = "translate"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let icon: NSImage = #imageLiteral(resourceName: "Google_Translate")

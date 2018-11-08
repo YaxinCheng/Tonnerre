@@ -11,7 +11,7 @@ import Cocoa
 /**
  A protocol for loading bookmarks from safari and chrome
 */
-protocol BookMarkService: TonnerreService {
+protocol BookMarkService: BuiltInProvider {
   /**
    Type of bookmark
   */
@@ -34,17 +34,6 @@ extension BookMarkService {
   var priority: DisplayPriority { return .low }
   var icon: NSImage {
     return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound")
-  }
-  
-  static var isDisabled: Bool {
-    get {
-      guard browser.appURL != nil else { return true }
-      let userDeafult = UserDefaults.shared
-      return userDeafult.bool(forKey: settingKey)
-    } set {
-      let userDeafult = UserDefaults.shared
-      userDeafult.set(newValue, forKey: settingKey)
-    }
   }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {

@@ -1,69 +1,61 @@
 //
-//  TonnerreService.swift
+//  ServiceProvider.swift
 //  Tonnerre
 //
-//  Created by Yaxin Cheng on 2018-05-29.
+//  Created by Yaxin Cheng on 2018-11-07.
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 /**
  The base protocol that each service provider in the system should conforms to
  
  Each service provider should provide services based on user inputs
-*/
-protocol TonnerreService: DisplayProtocol {
+ */
+protocol ServiceProvider: DisplayProtocol {
+  ///
+  /// a single unique id
+  ///
+  var id: String { get }
   /**
    The specific word used to locate the service
-  */
-  static var keyword: String { get }
+   */
+  var keyword: String { get }
   /**
    Except the keyword, the number of extra words needed to call `prepare` function
-  */
+   */
   var argLowerBound: Int { get }
   /**
    Except the keyword, the number of extra words the `prepare` function can take
-  */
+   */
   var argUpperBound: Int { get }
   /**
    The function that accepts the user input, and give certain services based on the input
    - parameter input: the user input excluding the keyword
    - returns: an array of displayable items each represent a specific service
-  */
+   */
   func prepare(withInput input: [String]) -> [DisplayProtocol]
   /**
    The function that serves the user with the service it selected
-   - parameter service: the user selected service
+   - parameter source: the user selected service
    - parameter withCmd: a flag indicates whether the user selected the service with cmd key modifier
    */
   func serve(service: DisplayProtocol, withCmd: Bool)
   /**
    Constructor.
    - Note: no parameter should be given for TonnerreService constructors
-  */
+   */
   init()
-}
-extension TonnerreService {
-  var alterContent: String? { return nil }
-  var alterIcon: NSImage? { return nil }
-  var argUpperBound: Int { return argLowerBound }
-  static var settingKey: String { return "\(Self.self)+Disabled" }
-  /**
-   A bool value specifies if the service is disabled. Disabled services cannot be called
-  */
-  static var isDisabled: Bool {
-    get {
-      let userDeafult = UserDefaults.shared
-      return userDeafult.bool(forKey: settingKey)
-    } set {
-      let userDeafult = UserDefaults.shared
-      userDeafult.set(newValue, forKey: settingKey)
-    }
-  }
-  var placeholder: String {
-    return Self.keyword
-  }
+  ///
+  /// This flag marks a provider will only be shown when keywords match exactly
+  ///
+  /// Generally, when a keyword like `g` would trigger `google` service.
+  /// But when a provider is marked as defered, it will not be shown until
+  /// the keyword matches exactly
+  var defered: Bool { get }
 }
 
-protocol TonnerreInstantService {}
+extension ServiceProvider {
+  var defered: Bool { return false }
+}

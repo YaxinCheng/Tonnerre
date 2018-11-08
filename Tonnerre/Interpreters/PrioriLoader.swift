@@ -9,21 +9,21 @@
 import Foundation
 
 final class PrioriLoader: ServiceLoader {
-  typealias ServiceType = TonnerreService
-  private let providers: [TonnerreService]
+  typealias ServiceType = BuiltInProvider
+  private let providers: [BuiltInProvider]
   var cachedKey: String = ""
-  var cachedProviders: Array<TonnerreService> = []
+  var cachedProviders: Array<BuiltInProvider> = []
   
-  func _find(keyword: String) -> [TonnerreService] {
+  func _find(keyword: String) -> [BuiltInProvider] {
     return providers
   }
   
   init() {
     providers  = [LaunchService(), CalculationService(), URLService(), CurrencyService()]
-    let saveToSettings: (ArraySlice<TonnerreService>) -> () = { providers in
+    let saveToSettings: (ArraySlice<BuiltInProvider>) -> () = { providers in
       DispatchQueue.global(qos: .background).async {
         let userDefault = UserDefaults.shared
-        let settings = providers.map { [type(of: $0).keyword, $0.name, $0.content, type(of: $0).settingKey] }
+        let settings = providers.map { [$0.keyword, $0.name, $0.content, $0.id] }
         userDefault.set(settings, forKey: .prioriProviders)
       }
     }

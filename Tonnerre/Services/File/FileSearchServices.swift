@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol FileSearchService: TonnerreService {
+protocol FileSearchService: BuiltInProvider {
   var associatedMode: SearchMode { get }
 }
 
@@ -44,12 +44,12 @@ struct FileNameSearchService: FileSearchService {
   let name = "Search files by names"
   
   let associatedMode: SearchMode = .name
-  static let keyword = "file"
+  let keyword = "file"
 }
 
 struct FileContentSearchService: FileSearchService {
   let name = "Search files by content"
   
   let associatedMode: SearchMode = .content
-  static let keyword = "content"
+  let keyword = "content"
 }

@@ -8,8 +8,8 @@
 
 import Cocoa
 
-struct URLService: TonnerreService {
-  static let keyword: String = ""
+struct URLService: BuiltInProvider {
+  let keyword: String = ""
   let argLowerBound: Int = 1
   let icon: NSImage = .safari
   let content: String = "Open typed URL in a browser"

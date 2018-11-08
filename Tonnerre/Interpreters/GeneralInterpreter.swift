@@ -11,12 +11,12 @@ import Foundation
 /**
  Interpreter provides general built-in services 
  */
-struct GeneralInterpreter<T: ServiceLoader>: Interpreter where T.ServiceType == TonnerreService {
+struct GeneralInterpreter<T: ServiceLoader>: Interpreter where T.ServiceType == BuiltInProvider {
   typealias LoaderType = T
   let loader: T
-  func wrap(_ rawData: [TonnerreService], withTokens tokens: [String]) -> [ServicePack] {
+  func wrap(_ rawData: [BuiltInProvider], withTokens tokens: [String]) -> [ServicePack] {
     return rawData.map { provider in
-      let keyword = type(of: provider).keyword
+      let keyword = provider.keyword
       if provider is DeferedServiceProtocol && keyword != tokens.first { return [] }
       if tokens.count - 1 > provider.argUpperBound { return [] }
       else if tokens.count - 1 >= provider.argLowerBound  {

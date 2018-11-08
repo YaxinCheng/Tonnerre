@@ -8,10 +8,10 @@
 
 import Cocoa
 
-struct VolumeService: TonnerreService {
+struct VolumeService: BuiltInProvider {
   let name: String = "Eject Volumes"
   let content: String = "Eject selected volumes"
-  static let keyword: String = "eject"
+  let keyword: String = "eject"
   let icon: NSImage = #imageLiteral(resourceName: "eject")
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0

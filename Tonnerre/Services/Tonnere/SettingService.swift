@@ -8,8 +8,8 @@
 
 import Cocoa
 
-struct SettingService: TonnerreService {
-  static let keyword: String = "tonnerre"
+struct SettingService: BuiltInProvider {
+  let keyword: String = "tonnerre"
   let name: String = "Tonnerre Settings"
   let content: String = "Open Tonnerre setting panels"
   let argLowerBound: Int = 0

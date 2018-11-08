@@ -9,10 +9,10 @@
 import Foundation
 
 final class DefaultLoader: ServiceLoader {
-  typealias ServiceType = TonnerreService
+  typealias ServiceType = BuiltInProvider
   var cachedKey: String = ""
-  var cachedProviders: Array<TonnerreService> = []
-  let defaultServices: [String: TonnerreService.Type]
+  var cachedProviders: Array<BuiltInProvider> = []
+  let defaultServices: [String: BuiltInProvider.Type]
   
   init() {
     defaultServices = [
@@ -24,7 +24,7 @@ final class DefaultLoader: ServiceLoader {
     ]
   }
   
-  func _find(keyword: String) -> [TonnerreService] {
+  func _find(keyword: String) -> [BuiltInProvider] {
     let userDefault = UserDefaults.shared
     guard
       let serviceKeys: [String] = userDefault.array(forKey: .defaultServices)

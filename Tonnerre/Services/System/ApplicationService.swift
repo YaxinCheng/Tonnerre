@@ -8,11 +8,11 @@
 
 import Cocoa
 
-struct ApplicationService: TonnerreService {
+struct ApplicationService: BuiltInProvider {
   let name: String = "Quit program"
   let content: String = "Find and quite a running program"
   let alterContent: String? = "Force quit program"
-  static let keyword: String = "quit"
+  let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0

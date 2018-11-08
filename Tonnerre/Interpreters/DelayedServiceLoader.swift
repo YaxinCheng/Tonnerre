@@ -12,30 +12,30 @@ import Foundation
  All service providers is loaded when general service providers cannot be loaded
 */
 final class DelayedServiceLoader: ServiceLoader {
-  typealias ServiceType = TonnerreService
-  private var providerTrie: Trie<TonnerreService.Type>
+  typealias ServiceType = BuiltInProvider
+  private var providerTrie: Trie<BuiltInProvider.Type>
   var cachedKey: String = ""
-  var cachedProviders: Array<TonnerreService> = []
+  var cachedProviders: Array<BuiltInProvider> = []
   
   init() {
-    let DelayedServices: [TonnerreService.Type] = [ApplicationService.self, VolumeService.self]
+    let DelayedServices: [BuiltInProvider.Type] = [ApplicationService.self, VolumeService.self]
     
-    let saveToSettings: ([TonnerreService.Type]) -> () = { providers in
+    let saveToSettings: ([BuiltInProvider.Type]) -> () = { providers in
       DispatchQueue.global(qos: .background).async {
         let userDefault = UserDefaults.shared
         let settings = providers.map { $0.init() }
-          .map { [type(of: $0).keyword, $0.name, $0.content, type(of: $0).settingKey] }
+          .map { [$0.keyword, $0.name, $0.content, $0.id] }
         userDefault.set(settings, forKey: .delayedProviders)
       }
     }
     saveToSettings(DelayedServices)
     
-    providerTrie = Trie(values: DelayedServices) { $0.keyword }
+    providerTrie = Trie(values: DelayedServices) { BuiltInProviderMap.extractKeyword(from: $0) }
   }
   
-  func _find(keyword: String) -> [TonnerreService] {
+  func _find(keyword: String) -> [BuiltInProvider] {
     return providerTrie.find(value: keyword.lowercased())
-      .filter { !$0.isDisabled }
+      .filter { !DisableManager.shared.isDisabled(builtinProvider: $0) }
       .map { $0.init() }
   }
 }

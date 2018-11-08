@@ -8,8 +8,8 @@
 
 import Cocoa
 
-struct CurrencyService: TonnerreService {
-  static let keyword: String = ""
+struct CurrencyService: BuiltInProvider {
+  let keyword: String = ""
   let icon: NSImage = .calculator
   let name: String = "Currency Exchange"
   let content: String = "Currency change from %@ to %@"

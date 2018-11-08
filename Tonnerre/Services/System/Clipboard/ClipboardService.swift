@@ -9,8 +9,8 @@
 import Cocoa
 import CoreData
 
-struct ClipboardService: TonnerreService, DeferedServiceProtocol {
-  static let keyword: String = "cb"
+struct ClipboardService: BuiltInProvider, DeferedServiceProtocol {
+  let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let content: String = "Your records of recnet copies"
@@ -20,20 +20,20 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
     CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)
   }
   
-  static var isDisabled: Bool {
-    get {
-      let userDeafult = UserDefaults.shared
-      return userDeafult.bool(forKey: "\(ClipboardService.self)+Disabled")
-    } set {
-      let userDeafult = UserDefaults.shared
-      userDeafult.set(newValue, forKey: "\(ClipboardService.self)+Disabled")
-      if newValue == true {
-        ClipboardService.monitor.start()
-      } else {
-        ClipboardService.monitor.stop()
-      }
-    }
-  }
+//  static var isDisabled: Bool {
+//    get {
+//      let userDeafult = UserDefaults.shared
+//      return userDeafult.bool(forKey: "\(ClipboardService.self)+Disabled")
+//    } set {
+//      let userDeafult = UserDefaults.shared
+//      userDeafult.set(newValue, forKey: "\(ClipboardService.self)+Disabled")
+//      if newValue == true {
+//        ClipboardService.monitor.start()
+//      } else {
+//        ClipboardService.monitor.stop()
+//      }
+//    }
+//  }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let copy: [DisplayProtocol]

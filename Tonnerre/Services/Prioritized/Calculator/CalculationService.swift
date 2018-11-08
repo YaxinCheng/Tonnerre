@@ -8,8 +8,8 @@
 
 import Cocoa
 
-struct CalculationService: TonnerreService {
-  static let keyword: String = ""
+struct CalculationService: BuiltInProvider {
+  let keyword: String = ""
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let alterContent: String? = "Copy to clipboard"

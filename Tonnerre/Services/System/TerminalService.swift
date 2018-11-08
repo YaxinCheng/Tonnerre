@@ -8,8 +8,8 @@
 
 import Cocoa
 
-struct TerminalService: TonnerreService, TonnerreInstantService, AsyncLoadingProtocol {
-  static let keyword: String = ">"
+struct TerminalService: BuiltInProvider, TonnerreInstantService, AsyncLoadingProtocol {
+  let keyword: String = ">"
   let name: String = "Run shell commands here"
   let content: String = "Click enter to execute it"
   let argLowerBound: Int = 1

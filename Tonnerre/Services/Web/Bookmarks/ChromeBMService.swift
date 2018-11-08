@@ -12,7 +12,7 @@ struct ChromeBMService: BookMarkService, DeferedServiceProtocol {
   typealias rawDataType = Dictionary<String, Any>
   let name: String = "Chrome BookMarks"
   let content: String = "Quick launch Chrome Bookmarks"
-  static let keyword: String = "chrome"
+  let keyword: String = "chrome"
   static let browser: Browser = .chrome
   
   func parseFile() throws -> [BookMarkService.BookMark] {

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol WebService: TonnerreService, AsyncLoadingProtocol {
+protocol WebService: BuiltInProvider, AsyncLoadingProtocol {
   var template: String { get }
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }

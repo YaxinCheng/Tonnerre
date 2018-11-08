@@ -34,14 +34,14 @@ struct GoogleSearch: Google {
   let name: String = "Google"
   let contentTemplate: String = "Search %@ on Google"
   let template: String = "https://google.%@/search?q=%@"
-  static let keyword: String = "google"
+  let keyword: String = "google"
 }
 
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
   let contentTemplate: String = "Search %@ on Google Image"
   let template: String = "https://google.%@/search?q=%@&tbm=isch"
-  static let keyword: String = "image"
+  let keyword: String = "image"
 }
 
 struct YoutubeSearch: Google {
@@ -49,6 +49,6 @@ struct YoutubeSearch: Google {
   let name: String = "Youtube"
   let contentTemplate: String = "Find %@ on Youtube"
   let template: String = "https://www.youtube.com/results?search_query=%@"
-  static let keyword: String = "youtube"
+  let keyword: String = "youtube"
   let icon: NSImage = #imageLiteral(resourceName: "youtube")
 }

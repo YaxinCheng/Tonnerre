@@ -11,8 +11,8 @@ import Cocoa
 /**
  Wraper class for TNE scripts
  */
-final class TNEServices: TonnerreService {
-  static let keyword: String = ""
+final class TNEServices: BuiltInProvider {
+  let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre_extension")

@@ -14,7 +14,7 @@ struct BingSearch: WebService {
   let template: String = "http://www.bing.com/search?q=%@"
   let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"
   let contentTemplate: String = "Search %@ on bing"
-  static let keyword: String = "bing"
+  let keyword: String = "bing"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "bing")

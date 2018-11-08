@@ -23,7 +23,7 @@ struct GoogleMapService: WebService {
     else { return [] }
     return predictions.compactMap { $0.value["description"]?.rawValue as? String }
   }
-  static let keyword: String = "map"
+  let keyword: String = "map"
   let argLowerBound: Int = 1
   let name: String = "Google Maps"
   let contentTemplate: String = "Search %@ on Google Maps"

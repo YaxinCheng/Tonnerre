@@ -11,8 +11,8 @@ import Cocoa
 /**
  Wrapper class for WebExts
 */
-final class WebExtService: TonnerreService {
-  static let keyword: String = ""
+final class WebExtService: BuiltInProvider {
+  let keyword: String = ""
   let argLowerBound: Int = 0
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "tonnerre_extension")
