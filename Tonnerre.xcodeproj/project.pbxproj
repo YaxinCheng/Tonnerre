@@ -162,7 +162,6 @@
 		14F2303D214B3A9600B7A0FB /* InstantInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2303C214B3A9600B7A0FB /* InstantInterpreter.swift */; };
 		14F23041214B437600B7A0FB /* TNEInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23040214B437600B7A0FB /* TNEInterpreter.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
-		14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE26F21938529009A4798 /* ServiceProvider.swift */; };
 		14FF21392191279F00F505B3 /* ManagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF21382191279F00F505B3 /* ManagedList.swift */; };
 /* End PBXBuildFile section */
 
@@ -393,7 +392,6 @@
 		14F2303C214B3A9600B7A0FB /* InstantInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantInterpreter.swift; sourceTree = "<group>"; };
 		14F23040214B437600B7A0FB /* TNEInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEInterpreter.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
-		14FEE26F21938529009A4798 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		14FF21382191279F00F505B3 /* ManagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -713,7 +711,6 @@
 				14F23031214B220300B7A0FB /* Interpreter.swift */,
 				14F23033214B230100B7A0FB /* ServiceLoader.swift */,
 				146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */,
-				14FEE26F21938529009A4798 /* ServiceProvider.swift */,
 				14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
 				143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */,
@@ -1133,7 +1130,6 @@
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				1449E57B212E1DC300500BF4 /* DeferedServiceProtocol.swift in Sources */,
-				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
 				143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
