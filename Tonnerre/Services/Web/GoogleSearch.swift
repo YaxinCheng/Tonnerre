@@ -24,9 +24,9 @@ extension Google {
       let jsonData = suggestionData,
       let json = JSON(data: jsonData),
       json.count > 2,
-      let availableOptions = json[1]
+      let availableOptions: [[Any]] = json[1]
     else { return [] }
-    return availableOptions.compactMap { $0.value[0]?.rawValue as? String }
+    return availableOptions.compactMap { $0[0] as? String }
   }
 }
 

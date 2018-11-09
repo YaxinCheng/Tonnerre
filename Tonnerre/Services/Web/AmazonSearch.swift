@@ -22,8 +22,8 @@ struct AmazonSearch: WebService {
     guard
       let jsonData = suggestionData,
       let jsonObject = JSON(data: jsonData),
-      let suggestions = jsonObject[1]?.rawValue as? [JSON]
+      let suggestions: [String] = jsonObject[1]
     else { return [] }
-    return suggestions.compactMap { $0.rawValue as? String }
+    return suggestions
   }
 }
