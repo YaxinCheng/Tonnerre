@@ -38,7 +38,7 @@ struct WebExt: DisplayProtocol {
   
   private static func loadImage(rawURL: String) -> NSImage {
     if rawURL.starts(with: "https://") {// If it's http url, send sync request to load
-      let url = URL(string: rawURL)!
+      let url = URL(string: rawURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
       let request = URLRequest(url: url, timeoutInterval: 60 * 60 * 24)
       var image: NSImage = #imageLiteral(resourceName: "notFound")
       let asyncSemaphore = DispatchSemaphore(value: 0)

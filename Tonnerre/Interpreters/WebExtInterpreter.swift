@@ -22,7 +22,7 @@ struct WebExtInterpreter: Interpreter {
       .filter { $0.argLowerBound <= queryContent.count && $0.argUpperBound >= queryContent.count }
     for (index, var service) in inRangedServices.enumerated() {
       service.content = service.content.filled(arguments: queryContent)
-      service.rawURL = service.rawURL.filled(arguments: queryContent.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) }
+      service.rawURL = service.rawURL.filled(arguments: queryContent.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
         , separator: "+")
       inRangedServices[index] = service
     }
