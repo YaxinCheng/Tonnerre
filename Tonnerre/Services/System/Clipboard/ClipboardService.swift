@@ -17,7 +17,7 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
   let icon: NSImage = #imageLiteral(resourceName: "clipboard")
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
-    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)
+    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 9)
   }
   
   static var isDisabled: Bool {
@@ -56,7 +56,8 @@ struct ClipboardService: TonnerreService, DeferedServiceProtocol {
           let time = $0.time
         else { return nil }
         if type == "public.file-url" {
-          let name = value.components(separatedBy: "/").last ?? ""
+          let name = value.components(separatedBy: "/").last?
+            .removingPercentEncoding ?? ""
           guard let url = URL(string: value) else { return nil }
           let content = url.path
           let alterContent = "Show file in Finder"
