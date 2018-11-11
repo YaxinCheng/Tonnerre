@@ -29,6 +29,7 @@
 		14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1A2197C795008F1A8B /* PyExecutor.swift */; };
 		14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1C2197C7A0008F1A8B /* ASExecutor.swift */; };
 		14454D1F2197C7A7008F1A8B /* JSONExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */; };
+		14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D20219887C6008F1A8B /* TNEServiceProvider.swift */; };
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
 		1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
 		1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
@@ -270,6 +271,7 @@
 		14454D1A2197C795008F1A8B /* PyExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyExecutor.swift; sourceTree = "<group>"; };
 		14454D1C2197C7A0008F1A8B /* ASExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASExecutor.swift; sourceTree = "<group>"; };
 		14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExecutor.swift; sourceTree = "<group>"; };
+		14454D20219887C6008F1A8B /* TNEServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEServiceProvider.swift; sourceTree = "<group>"; };
 		1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedDataProtocol.swift; sourceTree = "<group>"; };
 		1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+shared.swift"; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 		14454D112197BD9D008F1A8B /* NewTNE */ = {
 			isa = PBXGroup;
 			children = (
+				14454D20219887C6008F1A8B /* TNEServiceProvider.swift */,
 				14454D182197C242008F1A8B /* TNEExecutor.swift */,
 				14454D1A2197C795008F1A8B /* PyExecutor.swift */,
 				14454D1C2197C7A0008F1A8B /* ASExecutor.swift */,
@@ -740,9 +743,8 @@
 			children = (
 				14F23031214B220300B7A0FB /* Interpreter.swift */,
 				14F23033214B230100B7A0FB /* ServiceLoader.swift */,
-				146AAE6520BDD7FF009AC9C6 /* BuiltInProvider.swift */,
 				14FEE26F21938529009A4798 /* ServiceProvider.swift */,
-				146AAE6520BDD7FF009AC9C6 /* TonnerreService.swift */,
+				146AAE6520BDD7FF009AC9C6 /* BuiltInProvider.swift */,
 				14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
 				143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */,
@@ -1141,6 +1143,7 @@
 				146AAE6C20BDEBD9009AC9C6 /* GeneralInterpreter.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14F2302B21409E4700B7A0FB /* WebExtService.swift in Sources */,
+				14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				14D5A37921658AF200DBB188 /* DisplayPriority.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
@@ -1164,7 +1167,6 @@
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
-				1449E57B212E1DC300500BF4 /* DeferedServiceProtocol.swift in Sources */,
 				143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,

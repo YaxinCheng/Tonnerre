@@ -9,6 +9,8 @@
 import Foundation
 
 final class ProviderMap {
+  static let shared = ProviderMap()
+  private init() {}
   private var registeredProviders: [String: ServiceProvider] = [:]
   
   func register(provider: ServiceProvider) {

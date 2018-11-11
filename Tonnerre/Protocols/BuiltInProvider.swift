@@ -9,6 +9,11 @@
 import Cocoa
 
 protocol BuiltInProvider: ServiceProvider {
+  /**
+   Constructor.
+   - Note: no parameter should be given for TonnerreService constructors
+   */
+  init()
 }
 extension BuiltInProvider {
   var alterContent: String? { return nil }

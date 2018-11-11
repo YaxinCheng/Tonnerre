@@ -12,14 +12,14 @@ struct PyExecutor: TNEExecutor {
   let scriptPath: URL
   private class Cache {
     var currentProcess: Process?
-    var previousArgs: [String] = []
   }
   
   private let cache = Cache()
   
   init?(scriptPath: URL) {
-    guard scriptPath.pathExtension == "py" else { return nil }
-    self.scriptPath = scriptPath
+    let mainScript = scriptPath.appendingPathComponent("main.py")
+    guard FileManager.default.fileExists(atPath: mainScript.path) else { return nil }
+    self.scriptPath = mainScript
   }
   
   func execute(withArguments args: Arguments) throws -> JSON? {
@@ -30,10 +30,11 @@ struct PyExecutor: TNEExecutor {
     
     let runtimeErrorData = (process.standardError as! Pipe).fileHandleForReading.readDataToEndOfFile()
     if !runtimeErrorData.isEmpty,
-      let errorMsg: String = JSON(data: runtimeErrorData)?["error"] {
+      let errorMsg = JSON(data: runtimeErrorData)?["error"] as? String {
       throw TNEExecutor.Error.runtimeError(reason: errorMsg)
     }
     
+    guard case .prepare(_) = args else { return nil }
     let outputData = (process.standardOutput as! Pipe).fileHandleForReading.readDataToEndOfFile()
     return JSON(data: outputData)
   }
@@ -60,9 +61,5 @@ struct PyExecutor: TNEExecutor {
     stdin.fileHandleForWriting.write(try! argumentJSON.serialized())
     stdin.fileHandleForWriting.closeFile()
     return process
-  }
-  
-  func terminate() {
-    cache.currentProcess?.terminate()
   }
 }

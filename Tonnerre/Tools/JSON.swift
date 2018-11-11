@@ -144,6 +144,13 @@ struct JSON {
     /// - Note: trying to retrieve values by String Key from
     ///     an dictionary-like JSON would return nil
     case number(_ rawValue: Int)
+    
+    fileprivate var rawValue: Any {
+      switch self {
+      case .string(let rawValue): return rawValue
+      case .number(let rawValue): return rawValue
+      }
+    }
   }
   
   /// Storage for JSON existing keys, with lazy loading
@@ -176,6 +183,10 @@ struct JSON {
   /// Serialize the JSON Object back to data
   func serialized() throws -> Data {
     return try JSONSerialization.data(withJSONObject: rawValue, options: .prettyPrinted)
+  }
+  
+  func mapValue<T>(_ transform: (_ value: Any) throws -> T) rethrows -> [T] {
+    return try self.map { try transform($0.value) }
   }
 }
 
@@ -220,6 +231,18 @@ extension JSON {
       return (rawValue as! [Any])[numberKey]
     default: return nil
     }
+  }
+  
+  subscript<T>(key: Key, default defaultMethod: @autoclosure ()->T) -> T {
+    return (self[key] as? T) ?? defaultMethod()
+  }
+  
+  subscript<T>(key: Int, default defaultMethod: @autoclosure ()->T) -> T {
+    return self[.number(key), default: defaultMethod]
+  }
+  
+  subscript<T>(key: String, default defaultMethod: @autoclosure ()->T) -> T {
+    return self[.string(key), default: defaultMethod]
   }
   
   subscript(key: Int) -> Any? {
@@ -274,5 +297,18 @@ extension JSON: Collection {
     let key = keys[position.rawValue]
     let value = self[key]!
     return (key, value)
+  }
+}
+
+extension JSON: ExpressibleByDictionaryLiteral {
+  init(dictionaryLiteral elements: (JSON.Key, Any)...) {
+    let dict = Dictionary(elements.map { ($0.0.rawValue as! String, $0.1) }) { first, second in return first }
+    self.init(dictionary: dict)
+  }
+}
+
+extension JSON: ExpressibleByArrayLiteral {
+  init(arrayLiteral elements: Any...) {
+    self.init(array: elements)
   }
 }

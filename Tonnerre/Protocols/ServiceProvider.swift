@@ -42,11 +42,6 @@ protocol ServiceProvider: DisplayProtocol {
    - parameter withCmd: a flag indicates whether the user selected the service with cmd key modifier
    */
   func serve(service: DisplayProtocol, withCmd: Bool)
-  /**
-   Constructor.
-   - Note: no parameter should be given for TonnerreService constructors
-   */
-  init()
   ///
   /// This flag marks a provider will only be shown when keywords match exactly
   ///
