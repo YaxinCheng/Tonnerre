@@ -23,5 +23,3 @@ extension BuiltInProvider {
     return keyword
   }
 }
-
-protocol TonnerreInstantService {}

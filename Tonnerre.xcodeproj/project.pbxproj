@@ -23,7 +23,6 @@
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
-		143FD19E210567F100E79F7E /* TerminalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD19D210567F100E79F7E /* TerminalService.swift */; };
 		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
 		1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
@@ -32,7 +31,6 @@
 		1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
 		1449E577212B6B3300500BF4 /* UserDefault+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */; };
 		1449E579212E173F00500BF4 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E578212E173F00500BF4 /* Browser.swift */; };
-		1449E57B212E1DC300500BF4 /* DeferedServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */; };
 		1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */; };
 		1449E5882133521A00500BF4 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E5872133521A00500BF4 /* NSImage+Tint.swift */; };
 		1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E5872133521A00500BF4 /* NSImage+Tint.swift */; };
@@ -261,13 +259,11 @@
 		142C5942215D842800D819F2 /* UpgradeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHandler.swift; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
-		143FD19D210567F100E79F7E /* TerminalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalService.swift; sourceTree = "<group>"; };
 		143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLoadingProtocol.swift; sourceTree = "<group>"; };
 		1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedDataProtocol.swift; sourceTree = "<group>"; };
 		1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+shared.swift"; sourceTree = "<group>"; };
 		1449E578212E173F00500BF4 /* Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
-		1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferedServiceProtocol.swift; sourceTree = "<group>"; };
 		1449E5872133521A00500BF4 /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
 		144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitor.swift; sourceTree = "<group>"; };
 		144F80C420B5FF75006A16BC /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
@@ -646,7 +642,6 @@
 				1405334720F692F500C289CF /* Clipboard */,
 				1484148420C70263008FD68E /* ApplicationService.swift */,
 				14AFE6C4211A7093002BBBB2 /* VolumeService.swift */,
-				143FD19D210567F100E79F7E /* TerminalService.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -727,7 +722,6 @@
 				14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
 				143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */,
-				1449E57A212E1DC300500BF4 /* DeferedServiceProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1125,7 +1119,6 @@
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				14D5A37921658AF200DBB188 /* DisplayPriority.swift in Sources */,
 				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
-				143FD19E210567F100E79F7E /* TerminalService.swift in Sources */,
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
 				14F23034214B230100B7A0FB /* ServiceLoader.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
@@ -1144,7 +1137,6 @@
 				14F015D421010ABB00537160 /* ChromeBMService.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
-				1449E57B212E1DC300500BF4 /* DeferedServiceProtocol.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
 				143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,

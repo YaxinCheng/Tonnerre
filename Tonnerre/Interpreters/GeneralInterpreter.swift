@@ -17,7 +17,7 @@ struct GeneralInterpreter<T: ServiceLoader>: Interpreter where T.ServiceType == 
   func wrap(_ rawData: [BuiltInProvider], withTokens tokens: [String]) -> [ServicePack] {
     return rawData.map { provider in
       let keyword = provider.keyword
-      if provider is DeferedServiceProtocol && keyword != tokens.first { return [] }
+      if provider.defered && keyword != tokens.first { return [] }
       if tokens.count - 1 > provider.argUpperBound { return [] }
       else if tokens.count - 1 >= provider.argLowerBound  {
         return provider.prepare(withInput: Array(tokens[1...])).map {

@@ -9,31 +9,17 @@
 import Cocoa
 import CoreData
 
-struct ClipboardService: BuiltInProvider, DeferedServiceProtocol {
+struct ClipboardService: BuiltInProvider {
   let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let content: String = "Your records of recnet copies"
   let icon: NSImage = #imageLiteral(resourceName: "clipboard")
+  let defered: Bool = true
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
     CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)
   }
-  
-//  static var isDisabled: Bool {
-//    get {
-//      let userDeafult = UserDefaults.shared
-//      return userDeafult.bool(forKey: "\(ClipboardService.self)+Disabled")
-//    } set {
-//      let userDeafult = UserDefaults.shared
-//      userDeafult.set(newValue, forKey: "\(ClipboardService.self)+Disabled")
-//      if newValue == true {
-//        ClipboardService.monitor.start()
-//      } else {
-//        ClipboardService.monitor.stop()
-//      }
-//    }
-//  }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let copy: [DisplayProtocol]

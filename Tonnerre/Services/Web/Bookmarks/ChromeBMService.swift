@@ -8,11 +8,12 @@
 
 import Cocoa
 
-struct ChromeBMService: BookMarkService, DeferedServiceProtocol {
+struct ChromeBMService: BookMarkService {
   typealias rawDataType = Dictionary<String, Any>
   let name: String = "Chrome BookMarks"
   let content: String = "Quick launch Chrome Bookmarks"
   let keyword: String = "chrome"
+  let defered: Bool = true
   static let browser: Browser = .chrome
   
   func parseFile() throws -> [BookMarkService.BookMark] {

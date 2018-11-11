@@ -13,17 +13,8 @@ extension DisableManager {
     return isDisabled(providerID: provider.id)
   }
   
-  func disable(provider: ServiceProvider) {
-    disable(providerID: provider.id)
-  }
-  
   func isDisabled(builtinProvider: BuiltInProvider.Type) -> Bool {
-    let id = BuiltInProviderMap.extractKeyword(from: builtinProvider)
+    let id = "Tonnerre.Provider.BuiltIn.\(builtinProvider.self)"
     return isDisabled(providerID: id)
-  }
-  
-  func disable(builtinProvider: BuiltInProvider.Type) {
-    let id = BuiltInProviderMap.extractKeyword(from: builtinProvider)
-    disable(providerID: id)
   }
 }

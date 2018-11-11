@@ -33,4 +33,9 @@ final class DisableManager {
     guard !disabledIDs.contains(providerID) else { return }
     disabledIDs.insert(providerID)
   }
+  
+  func enable(providerID: String) {
+    guard disabledIDs.contains(providerID) else { return }
+    disabledIDs.remove(providerID)
+  }
 }

@@ -165,7 +165,6 @@ extension ViewController: LiteTableVCDelegate {
   func serve(_ servicePack: ServicePack, withCmd: Bool) {
     guard case .service(let provider, let service) = servicePack else { return }
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
-      guard !(provider is TonnerreInstantService && withCmd == false) else { return }
       (self?.view.window as? BaseWindow)?.isHidden = true
       self?.fieldVC.stringValue = ""
     }
