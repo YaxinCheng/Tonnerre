@@ -30,6 +30,7 @@
 		14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1C2197C7A0008F1A8B /* ASExecutor.swift */; };
 		14454D1F2197C7A7008F1A8B /* JSONExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */; };
 		14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D20219887C6008F1A8B /* TNEServiceProvider.swift */; };
+		14454D2321989E0D008F1A8B /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D2221989E0D008F1A8B /* Heap.swift */; };
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
 		1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
 		1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
@@ -272,6 +273,7 @@
 		14454D1C2197C7A0008F1A8B /* ASExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASExecutor.swift; sourceTree = "<group>"; };
 		14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExecutor.swift; sourceTree = "<group>"; };
 		14454D20219887C6008F1A8B /* TNEServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEServiceProvider.swift; sourceTree = "<group>"; };
+		14454D2221989E0D008F1A8B /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
 		1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedDataProtocol.swift; sourceTree = "<group>"; };
 		1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+shared.swift"; sourceTree = "<group>"; };
@@ -499,10 +501,12 @@
 		145CF983218A5341003B9468 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				1449E578212E173F00500BF4 /* Browser.swift */,
 				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 				145CF984218A5352003B9468 /* JSON.swift */,
 				14FF21382191279F00F505B3 /* ManagedList.swift */,
+				14454D2221989E0D008F1A8B /* Heap.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -528,7 +532,6 @@
 			isa = PBXGroup;
 			children = (
 				14561B8B20C444470057B4C1 /* ServicePack.swift */,
-				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
 				14FEE2712193CE62009A4798 /* DisabledManager.swift */,
 				14FEE2772193D93B009A4798 /* DisableManager+Provider.swift */,
@@ -1186,6 +1189,7 @@
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
 				14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */,
 				14C25515214DB37B0011A38E /* WebExtInterpreter.swift in Sources */,
+				14454D2321989E0D008F1A8B /* Heap.swift in Sources */,
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,
 				14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */,
