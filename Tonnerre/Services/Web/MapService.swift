@@ -18,10 +18,10 @@ struct GoogleMapService: WebService {
     guard
       let jsonData = suggestionData,
       let jsonObject = JSON(data: jsonData),
-      (jsonObject["status"]?.rawValue as? String) == "OK",
-      let predictions = jsonObject["predictions"]
+      (jsonObject["status"] as? String) == "OK",
+      let predictions: [[String: Any]] = jsonObject["predictions"]
     else { return [] }
-    return predictions.compactMap { $0.value["description"]?.rawValue as? String }
+    return predictions.compactMap { $0["description"] as? String }
   }
   let keyword: String = "map"
   let argLowerBound: Int = 1

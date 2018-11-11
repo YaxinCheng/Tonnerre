@@ -29,7 +29,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
   }()
 
   private func generateAuto(query: String) -> [DisplayableContainer<URL>] {
-    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return [] }
+    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return [] }
     let contentTemplate = "Translate \"\(query)\" from %@ to %@"
     if let currentLangCode = Locale.current.languageCode {
       let prefix = "🖥 ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
@@ -59,7 +59,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
       if secondArg.count >= 2 && !type(of: self).supportedLanguages.contains(secondArg) { return autoTranslator + history + [example] }
     }
     let query = input.count > 2 ? input[2...].joined(separator: " ") : "..."
-    guard let _ = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return autoTranslator + history }
+    guard let _ = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return autoTranslator + history }
     let translator = formContents(query: query, fromLangue: firstArg, toLangue: secondArg)!
     return [translator] + autoTranslator + history
   }
@@ -77,7 +77,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
   }
   
   private func formContents(query: String, fromLangue: String, toLangue: String) -> DisplayableContainer<URL>? {
-    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return nil }
+    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
     let contentTemplate = "Translate \"\(query)\" from %@ to %@"
     let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
     let prefix = "\(type(of: self).langueToEmoji[fromLangue] ?? "...") ➡️ \(type(of: self).langueToEmoji[toLangue] ?? "..."): "

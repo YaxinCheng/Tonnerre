@@ -60,14 +60,14 @@ struct DictionarySerivce: BuiltInProvider {
       content = "Cannot find definition for \"\(query)\""
       definitionView = nil
     }
-    let urlEncoded = headWord.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? headWord
+    let urlEncoded = headWord.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? headWord
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
     return DisplayableContainer(name: headWord, content: content, icon: icon, priority: priority, innerItem: dictURL, placeholder: "", extraContent: definitionView)
   }
   
   private func wrap(_ query: String) -> DisplayableContainer<URL>? {
     guard let (foundTerm, definition) = define(query) else { return nil }
-    let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? foundTerm
+    let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foundTerm
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
     let viewController = buildView(with: definition)
     return DisplayableContainer(name: foundTerm, content: definition, icon: icon, priority: priority, innerItem: dictURL, extraContent: viewController)

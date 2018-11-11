@@ -47,7 +47,7 @@ class LiteTableViewController: NSViewController {
     tableView.liteDelegate   = self
     tableView.liteDataSource = self
     tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
-    let allowedKeys: [UInt16] = [12, 48, 53, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
+    let allowedKeys: [UInt16] = [12, 48, 53, 36, 76, 49, 25, 26, 28, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
   }
   
@@ -129,7 +129,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       } else {
         (tableView.window as? BaseWindow)?.isHidden = true
       }
-    case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
+    case 18...23, 25, 26, 28, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
       let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
                                        83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
@@ -142,12 +142,12 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       delegate?.serve(servicePack, withCmd: false)
     case 12: // Q
       guard event.modifierFlags.contains(.command) else { return }
-      let finder = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.finder").first
-      finder?.activate(options: .activateIgnoringOtherApps)
       if event.isARepeat { // Long hold cmd + Q
         #if DEBUG
         print("long hold trigered (\(String.CMD) + Q)")
         #else
+        let finder = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.finder").first
+        finder?.activate(options: .activateIgnoringOtherApps)
         exit(0)
         #endif
       } else {

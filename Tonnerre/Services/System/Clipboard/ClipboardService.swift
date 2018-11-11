@@ -18,7 +18,7 @@ struct ClipboardService: BuiltInProvider {
   let defered: Bool = true
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
-    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)
+    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 9)
   }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
@@ -42,7 +42,8 @@ struct ClipboardService: BuiltInProvider {
           let time = $0.time
         else { return nil }
         if type == "public.file-url" {
-          let name = value.components(separatedBy: "/").last ?? ""
+          let name = value.components(separatedBy: "/").last?
+            .removingPercentEncoding ?? ""
           guard let url = URL(string: value) else { return nil }
           let content = url.path
           let alterContent = "Show file in Finder"
