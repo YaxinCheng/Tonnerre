@@ -2,60 +2,80 @@
 //  TonnerreInterpreter.swift
 //  Tonnerre
 //
-//  Created by Yaxin Cheng on 2018-09-15.
+//  Created by Yaxin Cheng on 2018-11-11.
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
 import Foundation
 
-/**
- The main interpreter access to interpret user input.
- 
- It encapsulates different interpreters and the logics of using them
- */
-struct TonnerreInterpreter {
-  private let generalInterpreter = GeneralInterpreter(loader: GeneralLoader())
-  private let delayedInterpreter = GeneralInterpreter(loader: DelayedServiceLoader())
-  private let prioritInterpreter = InstantInterpreter(loader: PrioriLoader())
-  private let defaultInterpreter = InstantInterpreter(loader: DefaultLoader())
-  private let tneInterpreter     = TNEInterpreter()
-  private let webExtInterpreter  = WebExtInterpreter()
+final class TonnerreInterpreter {
+  private class Cache {
+    var previousRequest: String?
+    var previousProvider: [ServiceProvider] = []
+  }
+  private let cache = Cache()
+  static var serviceIDTrie = ServiceIDTrie(array: BuiltInProviderMap.IDtoKeyword.map { ($1, $0) })
+  private let session = TonnerreSession.shared
   
-  private func isEmpty(_ pack: PrioritizedPack) -> Bool {
-    return pack.0.isEmpty && pack.1.isEmpty && pack.2.isEmpty
+  init() {
+    ProviderMap.shared.start()
   }
   
-  private func sum(_ pack: PrioritizedPack) -> [ServicePack] {
-    return pack.2 + pack.1 + pack.0
-  }
-  /**
-   Interpret user input into ServicePacks
-   - parameter input: user input
-   - returns: well structured ServicePacks
-  */
-  func interpret(input: String) -> [ServicePack] {
-    guard !input.isEmpty else { return [] }
-    var providedServices = tneInterpreter.interpret(input: input)
-    providedServices += webExtInterpreter.interpret(input: input)
-    providedServices += generalInterpreter.interpret(input: input)
-    providedServices += prioritInterpreter.interpret(input: input)
-    if isEmpty(providedServices) {
-      providedServices += delayedInterpreter.interpret(input: input)
+  func interpret(input: String) -> ManagedList<ServicePack> {
+    let tokens = tokenize(input: input)
+    guard tokens.count > 0 else { return [] }
+    
+    let providers: [ServiceProvider]
+    if cache.previousRequest == tokens.first! {
+      providers = cache.previousProvider
+    } else {
+      providers = TonnerreInterpreter.serviceIDTrie
+        .find(basedOn: tokens.first!)
+        .compactMap { ProviderMap.shared.retrieve(byID: $0) }
+        .filter { !DisableManager.shared.isDisabled(provider: $0) }
+        .filter { !$0.defered || $0.keyword == tokens.first! }
+        .filter { tokens.count <= $0.argUpperBound }
+      cache.previousProvider = providers
     }
-    if isEmpty(providedServices) {
-      providedServices += defaultInterpreter.interpret(input: input)
+    cache.previousRequest = input
+    
+    let managedList = ManagedList<ServicePack>(array: providers
+      .filter { !$0.keyword.isEmpty }
+      .map { .provider($0) }
+    )
+    managedList.lock = DispatchSemaphore(value: 1)
+    
+    let asyncTask = DispatchWorkItem {
+      for provider in providers {
+        guard
+          tokens.count >= provider.argLowerBound,
+          tokens.count <= provider.argUpperBound
+        else { continue }
+        let services: [ServicePack] = provider.prepare(withInput: tokens)
+              .map {
+                if let provider = $0 as? ServiceProvider { return .provider(provider) }
+                else { return .service(provider: provider, content: $0) }
+              }
+        managedList.replace(at: .provider(provider), elements: services)
+        // needs some kind of notification to refresh the view
+      }
     }
-    return sum(providedServices)
+    session.send(request: asyncTask)
+    
+    return managedList
   }
   
   func clearCache() {
-    prioritInterpreter.clearCache()
+    cache.previousProvider = []
+    cache.previousRequest = nil
   }
-}
-
-fileprivate typealias PrioritizedPack = ([ServicePack], [ServicePack], [ServicePack])
-fileprivate func += (lhs: inout PrioritizedPack, rhs: PrioritizedPack) {
-  lhs.0 += rhs.0
-  lhs.1 += rhs.1
-  lhs.2 += rhs.2
+  
+  /**
+   Tokenize user input
+   - parameter input: user input
+   - returns: tokenized tokens
+   */
+  private func tokenize(input: String) -> [String] {
+    return input.trimmed.components(separatedBy: .whitespacesAndNewlines)
+  }
 }

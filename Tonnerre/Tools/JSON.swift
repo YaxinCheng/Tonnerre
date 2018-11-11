@@ -46,7 +46,7 @@ struct JSON {
   ///   - Dictionary<String, Any>
   ///   - Array<Any>
   ///   - Any
-  private let rawValue: Any
+  let rawValue: Any
   /// The number of elements inside this JSON
   let count: Int
   

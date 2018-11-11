@@ -37,10 +37,6 @@ struct Heap<T: Hashable> {
     }
   }
   
-  mutating func removeFirst() -> T {
-    return remove(at: 0)
-  }
-  
   @discardableResult
   mutating func remove(at index: Int, removeHash: Bool = true) -> T {
     let childrenIndeces = (index * 2 + 1, index * 2 + 2)
@@ -90,6 +86,15 @@ struct Heap<T: Hashable> {
         (self[index], self[parentIndex])
       reorder(from: parentIndex)
     }
+  }
+  
+  func linearized() -> [T] {
+    var linearCopy = linearStorage
+    var linearizedArray = [T]()
+    while linearCopy.count > 0 {
+      linearizedArray.append(linearCopy.removeFirst())
+    }
+    return linearizedArray
   }
 }
 

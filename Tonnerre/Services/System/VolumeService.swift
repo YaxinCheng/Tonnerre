@@ -55,15 +55,15 @@ struct VolumeService: BuiltInProvider {
       semaphore.signal()
     }
     _ = semaphore.wait(timeout: .now() + 0.2)
-    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon, priority: priority)
+    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon)
     guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }
     guard !externalVolumes.isEmpty else { return [noEjectable] }
     let volumeRequest = externalVolumes.map {
-      DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), priority: priority, innerItem: $0)
+      DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
     }
-    let ejectAllRequest = DisplayableContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: icon, priority: priority, innerItem: externalVolumes)
+    let ejectAllRequest = DisplayableContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: icon, innerItem: externalVolumes)
     return [ejectAllRequest] + volumeRequest
   }
 }

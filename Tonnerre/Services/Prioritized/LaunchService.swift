@@ -42,7 +42,7 @@ struct LaunchService: BuiltInProvider {
           }
         }]
       } else { name = fileName }
-      return DisplayableContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), priority: priority, innerItem: $0)
+      return DisplayableContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path),innerItem: $0)
     }.sorted {
       let firstTime = LaunchOrder.retrieveTime(with: ($0 as! DisplayableContainer<URL>).innerItem!.absoluteString)
       let secondTime = LaunchOrder.retrieveTime(with: ($1 as! DisplayableContainer<URL>).innerItem!.absoluteString)

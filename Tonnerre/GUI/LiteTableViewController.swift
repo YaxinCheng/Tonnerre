@@ -11,7 +11,7 @@ import LiteTableView
 
 class LiteTableViewController: NSViewController {
   
-  var datasource: [ServicePack] = [] {
+  var datasource: ManagedList<ServicePack> = [] {
     didSet {
       HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
       highlightedIndex = -1
@@ -41,7 +41,7 @@ class LiteTableViewController: NSViewController {
     NSLayoutConstraint.activate([HeightConstraint])
     
     NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
-      self?.datasource.removeAll()
+      self?.datasource = []
     }
     
     tableView.liteDelegate   = self

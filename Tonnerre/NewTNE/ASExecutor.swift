@@ -13,7 +13,9 @@ struct ASExecutor: TNEExecutor {
   
   init?(scriptPath: URL) {
     let mainScript = scriptPath.appendingPathComponent("main.scpt")
-    guard FileManager.default.fileExists(atPath: mainScript.path) else { return nil }
+    guard
+      FileManager.default.fileExists(atPath: mainScript.path)
+    else { return nil }
     self.scriptPath = mainScript
   }
   

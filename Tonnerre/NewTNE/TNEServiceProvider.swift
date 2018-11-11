@@ -69,7 +69,7 @@ struct TNEServiceProvider: ServiceProvider {
     do {
       guard
         let returnedJSON = try executor.execute(withArguments: .prepare(input: input))
-      else { return [] }
+      else { return [self] }
       return returnedJSON.compactMap { _, value in
         guard
           let dict = value as? [String: Any],
@@ -82,11 +82,11 @@ struct TNEServiceProvider: ServiceProvider {
           (stringInner.starts(with: "http://") || stringInner.starts(with: "https://")),
           let encodedString = stringInner.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
           let urlInner = URL(string: encodedString) {
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: .normal,
+          return DisplayableContainer(name: name, content: content, icon: icon,
                                       alterContent: alterContent ?? self.alterContent,
                                       innerItem: urlInner, placeholder: name)
         } else {
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: .normal,
+          return DisplayableContainer(name: name, content: content, icon: icon,
                                       alterContent: alterContent ?? self.alterContent,
                                       alterIcon: alterIcon, innerItem: innerItem, placeholder: name)
         }
@@ -95,23 +95,23 @@ struct TNEServiceProvider: ServiceProvider {
       #if DEBUG
       print("error during prepare: \n\(error)\ninput: \(input)\n")
       #endif
-      return [DisplayableContainer(name: "Error", content: "\(error)", icon: icon, priority: .normal, innerItem: error, placeholder: "")]
+      return [DisplayableContainer(name: "Error", content: "\(error)", icon: icon, innerItem: error, placeholder: "")]
     }
   }
   
   func serve(service: DisplayProtocol, withCmd: Bool) {
-    let inner: Any
+    let inner: Any?
     if let anyInner = (service as? DisplayableContainer<Any>)?.innerItem {
       inner = anyInner
     } else if let urlInner = (service as? DisplayableContainer<URL>)?.innerItem {
       inner = urlInner.absoluteString
     } else {
-      fatalError("Wrong type of service is passed to TNEServiceProvider")
+      inner = nil
     }
     let name = service.name
     let content = service.content
     do {
-      _ = try executor.execute(withArguments: .serve(choice: ["name": name, "content": content, "innerItem": inner, "withCmd": withCmd]))
+      _ = try executor.execute(withArguments: .serve(choice: ["name": name, "content": content, "innerItem": inner as Any, "withCmd": withCmd]))
     } catch {
       #if DEBUG
       print("error during serve: \n\(error)\nwithCmd: \(withCmd)\nservice: \(service)")

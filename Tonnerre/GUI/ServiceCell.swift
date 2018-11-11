@@ -63,9 +63,9 @@ final class ServiceCell: LiteTableCell {
     } else if let container = service as? AsyncedDisplayableContainer<URL>,
       let url = container.innerItem {
       viewController.view = constructView(url, container.name)
-    } else if let container = service as? WebExt,
-      let url = URL(string: container.rawURL) {
-      viewController.view = constructView(url, container.name)
+//    } else if let container = service as? WebExt,
+//      let url = URL(string: container.rawURL) {
+//      viewController.view = constructView(url, container.name)
     } else { return }
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)
     PreviewPopover.shared.contentViewController = viewController

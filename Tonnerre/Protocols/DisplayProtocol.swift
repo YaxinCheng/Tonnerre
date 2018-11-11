@@ -36,8 +36,6 @@ protocol DisplayProtocol {
    The placeholder content when for this item shown on the textField
   */
   var placeholder: String { get }
-  
-  var priority: DisplayPriority { get }
 }
 
 extension DisplayProtocol {
@@ -45,5 +43,4 @@ extension DisplayProtocol {
   var content: String { return "" }
   var alterContent: String? { return nil }
   var alterIcon: NSImage? { return nil }
-  var priority: DisplayPriority { return .normal }
 }

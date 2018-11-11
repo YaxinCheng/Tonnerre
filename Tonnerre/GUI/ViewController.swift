@@ -33,7 +33,7 @@ final class ViewController: NSViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    NotificationCenter.default.addObserver(self, selector: #selector(asyncContentDidLoad(notification:)), name: .asyncLoadingDidFinish, object: nil)
+//    NotificationCenter.default.addObserver(self, selector: #selector(asyncContentDidLoad(notification:)), name: .asyncLoadingDidFinish, object: nil)
     view.wantsLayer = true
     view.layer?.masksToBounds = true
     view.layer?.cornerRadius = 7
@@ -62,23 +62,23 @@ final class ViewController: NSViewController {
     ])
   }
   
-  
-  @objc private func asyncContentDidLoad(notification: Notification) {
-    DispatchQueue.main.async { [unowned self] in
-      guard
-        case .service(let service, _)? = self.tableVC.datasource.first,
-        let dataPack = notification.userInfo as? [String: Any],
-        let asyncLoader = service as? AsyncLoadingProtocol,
-        let content = dataPack["rawElements"] as? [Any]
-      else { return }
-      let processedData = asyncLoader.present(rawElements: content)
-      if asyncLoader.mode == .append {
-        self.tableVC.datasource += processedData
-      } else if asyncLoader.mode == .replaced {
-        self.tableVC.datasource = processedData
-      }
-    }
-  }
+//
+//  @objc private func asyncContentDidLoad(notification: Notification) {
+//    DispatchQueue.main.async { [unowned self] in
+//      guard
+//        case .service(let service, _)? = self.tableVC.datasource.first,
+//        let dataPack = notification.userInfo as? [String: Any],
+//        let asyncLoader = service as? AsyncLoadingProtocol,
+//        let content = dataPack["rawElements"] as? [Any]
+//      else { return }
+//      let processedData = asyncLoader.present(rawElements: content)
+//      if asyncLoader.mode == .append {
+//        self.tableVC.datasource += processedData
+//      } else if asyncLoader.mode == .replaced {
+//        self.tableVC.datasource = processedData
+//      }
+//    }
+//  }
 }
 
 extension ViewController: TonnerreFieldDelegate {
@@ -106,7 +106,7 @@ extension ViewController: LiteTableVCDelegate {
     case .provider(let provider):
       fieldVC.iconView.image = provider.icon
     case .service(provider: let provider, content: let service):
-      fieldVC.iconView.image = provider is TNEServices ? service.icon : provider.icon
+//      fieldVC.iconView.image = provider is TNEServices ? service.icon : provider.icon
       fieldVC.resetIconView(check: true)
     }
   }
@@ -131,30 +131,30 @@ extension ViewController: LiteTableVCDelegate {
   }
   
   func tabPressed(service: ServicePack) {
-    switch service {
-    case .provider(origin: let service) where !service.keyword.isEmpty:
-      fieldVC.autoComplete(cmd: service.keyword, appendingSpace: true, hasKeyword: false)
-    case .service(provider: let provider, content: let value) where !value.placeholder.isEmpty:
-      if let tneService = value as? TNEScript {
-        fieldVC.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0,
-                             hasKeyword: tneService.keyword.lowercased()
-                              .starts(with: fieldVC.firstValue.lowercased()))
-      } else if let webExt = value as? WebExt {
-        fieldVC.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0,
-                             hasKeyword: webExt.keyword.lowercased()
-                              .starts(with: fieldVC.firstValue.lowercased()))
-      } else if let tservice = value as? BuiltInProvider {
-        fieldVC.autoComplete(cmd: tservice.keyword, appendingSpace: tservice.argLowerBound > 0,
-                             hasKeyword: provider.keyword.lowercased()
-                              .starts(with: fieldVC.firstValue.lowercased()))
-      } else {
-        fieldVC.autoComplete(cmd: value.name, appendingSpace: false, hasKeyword: provider.keyword.lowercased()
-          .starts(with: fieldVC.firstValue.lowercased()))
-      }
-    default: return
-    }
-    _ = fieldVC.becomeFirstResponder()
-    textDidChange(value: fieldVC.stringValue)
+//    switch service {
+//    case .provider(origin: let service) where !service.keyword.isEmpty:
+//      fieldVC.autoComplete(cmd: service.keyword, appendingSpace: true, hasKeyword: false)
+//    case .service(provider: let provider, content: let value) where !value.placeholder.isEmpty:
+//      if let tneService = value as? TNEScript {
+//        fieldVC.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0,
+//                             hasKeyword: tneService.keyword.lowercased()
+//                              .starts(with: fieldVC.firstValue.lowercased()))
+//      } else if let webExt = value as? WebExt {
+//        fieldVC.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0,
+//                             hasKeyword: webExt.keyword.lowercased()
+//                              .starts(with: fieldVC.firstValue.lowercased()))
+//      } else if let tservice = value as? BuiltInProvider {
+//        fieldVC.autoComplete(cmd: tservice.keyword, appendingSpace: tservice.argLowerBound > 0,
+//                             hasKeyword: provider.keyword.lowercased()
+//                              .starts(with: fieldVC.firstValue.lowercased()))
+//      } else {
+//        fieldVC.autoComplete(cmd: value.name, appendingSpace: false, hasKeyword: provider.keyword.lowercased()
+//          .starts(with: fieldVC.firstValue.lowercased()))
+//      }
+//    default: return
+//    }
+//    _ = fieldVC.becomeFirstResponder()
+//    textDidChange(value: fieldVC.stringValue)
   }
   
   func retrieveLastQuery() {

@@ -25,7 +25,7 @@ struct URLService: BuiltInProvider {
     let browsers: [Browser] = [.safari, .chrome]
         .filter { $0.appURL != nil }
         .sorted { LaunchOrder.retrieveTime(with: $0.name) > LaunchOrder.retrieveTime(with: $1.name) }
-    return browsers.map { DisplayableContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, priority: priority, innerItem: url, extraContent: $0) }
+    return browsers.map { DisplayableContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, innerItem: url, extraContent: $0) }
   }
   
   func serve(service: DisplayProtocol, withCmd: Bool) {

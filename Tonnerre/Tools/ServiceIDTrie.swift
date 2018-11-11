@@ -35,12 +35,17 @@ struct ServiceIDTrie {
   
   private let rootNode: Node
   
+  private var wildcards: [String] = []
+  
   /**
    Insert a value into the trie
    - parameter value: the element needs to be inserted
    */
   mutating func insert(key: String, value: String) {
-    if key.isEmpty { return }
+    if key.isEmpty {
+      wildcards.append(value)
+      return
+    }
     var node = rootNode
     var index = key.startIndex
     node.values.add(value) // Always add every value to the root
@@ -64,17 +69,21 @@ struct ServiceIDTrie {
    - parameter value: the key with which the elments associate
    - returns: an array of elements that share the same beginning as the `value`
    */
-  func find(value: String) -> [String] {
-    if value.isEmpty { return rootNode.values.linearStorage }
+  func find(basedOn key: String) -> [String] {
+    if key.isEmpty { return wildcards }
     var node = rootNode
-    for char in value {
+    for char in key {
       guard let next = node.children[char] else { return [] }
       node = next
     }
-    return node.values.linearStorage
+    return node.values.linearized() + wildcards
   }
   
   mutating func remove(key: String, value: String) {
+    if key.isEmpty {
+      wildcards.removeAll { $0 == value }
+      return
+    }
     rootNode.values.remove(element: value)
     var node = rootNode
     for character in key {
@@ -83,6 +92,13 @@ struct ServiceIDTrie {
       else { return }
       next.values.remove(element: value)
       node = next
+    }
+  }
+  
+  init(array: [(key: String, value: String)]) {
+    rootNode = Node()
+    for (key, value) in array {
+      insert(key: key, value: value)
     }
   }
 }

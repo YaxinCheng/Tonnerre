@@ -53,7 +53,7 @@ struct JSONExecutor: TNEExecutor {
       return [["name": name, "content": content, "innerItem": filledURL]]
     case .serve(choice: let choice):
       guard
-        let rawURL = (choice["url"] as? String)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+        let rawURL = (choice["innerItem"] as? String)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
         let url = URL(string: rawURL)
       else { return nil }
       NSWorkspace.shared.open(url)

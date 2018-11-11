@@ -34,14 +34,14 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     if let currentLangCode = Locale.current.languageCode {
       let prefix = "🖥 ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
       let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
-      let translator = DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, priority: priority, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)), placeholder: "from to content")
+      let translator = DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)), placeholder: "from to content")
       return [translator]
     } else { return [] }
   }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     var firstArg = input.first!.lowercased()
-    let example = DisplayableContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon, priority: priority)
+    let example = DisplayableContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
     let rawQuery = input.joined(separator: " ")
     let autoTranslator = generateAuto(query: rawQuery)
     let history = histories().map { $0.components(separatedBy: "/") }.compactMap { formContents(query: rawQuery, fromLangue: $0[0], toLangue: $0[1]) }
@@ -84,6 +84,6 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     let url = URL(string: String(format: template, regionCode ?? "com", "#" + fromLangue, toLangue, encodedContent))
     let localizedFromLangue = NSLocale(localeIdentifier: fromLangue).displayName(forKey: .identifier, value: fromLangue) ?? "..."
     let localizedToLangue = NSLocale(localeIdentifier: toLangue).displayName(forKey: .identifier, value: toLangue) ?? "..."
-    return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, priority: priority, innerItem: url, extraContent: "\(fromLangue)/\(toLangue)")
+    return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url, extraContent: "\(fromLangue)/\(toLangue)")
   }
 }

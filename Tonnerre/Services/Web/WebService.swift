@@ -64,7 +64,7 @@ extension WebService {
       }
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
       let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(readableContent)'"]) : contentTemplate
-      return DisplayableContainer(name: readableContent, content: content, icon: icon, priority: priority, innerItem: url)
+      return DisplayableContainer(name: readableContent, content: content, icon: icon, innerItem: url)
       }.map {
         ServicePack(provider: self, service: $0)
      }
@@ -81,8 +81,8 @@ extension WebService {
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ")
     let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(queryContent)'"]) : contentTemplate
-    guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)] }
-    let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, priority: priority, innerItem: url)
+    guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
+    let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     guard
       !suggestionTemplate.isEmpty,
       let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),

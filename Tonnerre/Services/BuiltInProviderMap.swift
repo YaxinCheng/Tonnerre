@@ -10,8 +10,15 @@ import Foundation
 
 struct BuiltInProviderMap {
   /// provider_id to keyword
-  static private let IDtoKeyword: [String: String] = [
-      "Tonnerre.Provider.BuiltIn.DictionarySerivce"        : "define"
+  static let IDtoKeyword: [String: String] = [
+      "Tonnerre.Provider.BuiltIn.LaunchService"            : ""
+    , "Tonnerre.Provider.BuiltIn.CalculationService"       : ""
+    , "Tonnerre.Provider.BuiltIn.URLService"               : ""
+    , "Tonnerre.Provider.BuiltIn.AmazonSearch"             : "amazon"
+    , "Tonnerre.Provider.BuiltIn.WikipediaSearch"          : "wiki"
+    , "Tonnerre.Provider.BuiltIn.BingSearch"               : "bing"
+    ,"Tonnerre.Provider.BuiltIn.DuckDuckGoSearch"          : "duck"
+    , "Tonnerre.Provider.BuiltIn.DictionarySerivce"        : "define"
     , "Tonnerre.Provider.BuiltIn.GoogleTranslateService"   : "translate"
     , "Tonnerre.Provider.BuiltIn.FileNameSearchService"    : "file"
     , "Tonnerre.Provider.BuiltIn.FileContentSearchService" : "content"
@@ -23,8 +30,15 @@ struct BuiltInProviderMap {
     , "Tonnerre.Provider.BuiltIn.SettingService"           : "tonnerre"
   ]
   
-  static private let IDtoStruct: [String: BuiltInProvider.Type] = [
-      "Tonnerre.Provider.BuiltIn.DictionarySerivce"        : DictionarySerivce.self
+  static let IDtoStruct: [String: BuiltInProvider.Type] = [
+      "Tonnerre.Provider.BuiltIn.LaunchService"            : LaunchService.self
+    , "Tonnerre.Provider.BuiltIn.CalculationService"       : CalculationService.self
+    , "Tonnerre.Provider.BuiltIn.URLService"               : URLService.self
+    , "Tonnerre.Provider.BuiltIn.AmazonSearch"             : AmazonSearch.self
+    , "Tonnerre.Provider.BuiltIn.WikipediaSearch"          : WikipediaSearch.self
+    , "Tonnerre.Provider.BuiltIn.BingSearch"               : BingSearch.self
+    , "Tonnerre.Provider.BuiltIn.DuckDuckGoSearch"         : DuckDuckGoSearch.self
+    , "Tonnerre.Provider.BuiltIn.DictionarySerivce"        : DictionarySerivce.self
     , "Tonnerre.Provider.BuiltIn.GoogleTranslateService"   : GoogleTranslateService.self
     , "Tonnerre.Provider.BuiltIn.FileNameSearchService"    : FileNameSearchService.self
     , "Tonnerre.Provider.BuiltIn.FileContentSearchService" : FileContentSearchService.self
