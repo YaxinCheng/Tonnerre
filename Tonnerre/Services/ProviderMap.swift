@@ -20,4 +20,12 @@ final class ProviderMap {
   func retrieve(byID id: String) -> ServiceProvider? {
     return registeredProviders[id] ?? BuiltInProviderMap.retrieveType(baseOnID: id)?.init()
   }
+  
+  /// TODO: - Get sorting score by provided id
+  /// sorting id is used sort the providers in the heap
+  /// - parameter id: the provided id of a provider
+  /// - returns: the sorting score
+  func getSortingScore(byID id: String) -> UInt {
+    return 0
+  }
 }

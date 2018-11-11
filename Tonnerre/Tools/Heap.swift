@@ -9,13 +9,19 @@
 import Foundation
 
 struct Heap<T: Hashable> {
-  private var linearStorage: [T] = []
+  private(set) var linearStorage: [T] = []
   private var duplicateAvoider: Set<T> = []
   var compareMethod: (T, T) -> Bool
   var count: Int { return linearStorage.count }
   
   init(compareMethod: @escaping (T, T) -> Bool) {
     self.compareMethod = compareMethod
+  }
+  
+  init<V: Sequence>(newElements: V, compareMethod: @escaping (T, T) -> Bool)
+    where V.Element == T {
+    self.compareMethod = compareMethod
+    add(contentOf: newElements)
   }
   
   mutating func add(_ newElement: T) {
@@ -35,6 +41,7 @@ struct Heap<T: Hashable> {
     return remove(at: 0)
   }
   
+  @discardableResult
   mutating func remove(at index: Int, removeHash: Bool = true) -> T {
     let childrenIndeces = (index * 2 + 1, index * 2 + 2)
     let removedItem: T
@@ -54,6 +61,23 @@ struct Heap<T: Hashable> {
     }
     duplicateAvoider.remove(removedItem)
     return removedItem
+  }
+  
+  func find(element: T, startingIndex: Int = 0) -> Int {
+    let item = self[startingIndex]
+    if item == element { return startingIndex }
+    else if compareMethod(element, item) { return -1 }
+    else {
+      let leftSide  = find(element: element, startingIndex: startingIndex * 2 + 1)
+      let rightSide = find(element: element, startingIndex: startingIndex * 2 + 2)
+      return Swift.max(leftSide, rightSide)
+    }
+  }
+  
+  @discardableResult
+  mutating func remove(element: T) -> T {
+    let elementIndex = find(element: element)
+    return remove(at: elementIndex)
   }
   
   mutating func reorder(from index: Int) {

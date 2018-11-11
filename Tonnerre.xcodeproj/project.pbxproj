@@ -31,6 +31,7 @@
 		14454D1F2197C7A7008F1A8B /* JSONExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */; };
 		14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D20219887C6008F1A8B /* TNEServiceProvider.swift */; };
 		14454D2321989E0D008F1A8B /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D2221989E0D008F1A8B /* Heap.swift */; };
+		14454D252198AB9F008F1A8B /* ServiceIDTrie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D242198AB9F008F1A8B /* ServiceIDTrie.swift */; };
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
 		1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
 		1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
@@ -274,6 +275,7 @@
 		14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExecutor.swift; sourceTree = "<group>"; };
 		14454D20219887C6008F1A8B /* TNEServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEServiceProvider.swift; sourceTree = "<group>"; };
 		14454D2221989E0D008F1A8B /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
+		14454D242198AB9F008F1A8B /* ServiceIDTrie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIDTrie.swift; sourceTree = "<group>"; };
 		1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedDataProtocol.swift; sourceTree = "<group>"; };
 		1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+shared.swift"; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				14AEB2FE20BF84D100D10D44 /* Trie.swift */,
+				14454D242198AB9F008F1A8B /* ServiceIDTrie.swift */,
 				1449E578212E173F00500BF4 /* Browser.swift */,
 				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 				145CF984218A5352003B9468 /* JSON.swift */,
@@ -1123,6 +1126,7 @@
 				14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */,
 				14FEE2782193D93B009A4798 /* DisableManager+Provider.swift in Sources */,
 				145CF985218A5352003B9468 /* JSON.swift in Sources */,
+				14454D252198AB9F008F1A8B /* ServiceIDTrie.swift in Sources */,
 				145DA16920DAD70100C1E804 /* BingSearch.swift in Sources */,
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
