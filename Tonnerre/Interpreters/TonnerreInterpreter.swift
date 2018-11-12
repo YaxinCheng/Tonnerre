@@ -25,16 +25,17 @@ final class TonnerreInterpreter {
     let tokens = tokenize(input: input)
     guard tokens.count > 0 else { return [] }
     
+    session.cancel()
     let providers: [ServiceProvider]
     if cache.previousRequest == tokens.first! {
       providers = cache.previousProvider
     } else {
       providers = TonnerreInterpreter.serviceIDTrie
-        .find(basedOn: tokens.first!)
+        .find(basedOn: tokens.first!.lowercased())
         .compactMap { ProviderMap.shared.retrieve(byID: $0) }
         .filter { !DisableManager.shared.isDisabled(provider: $0) }
         .filter { !$0.defered || $0.keyword == tokens.first! }
-        .filter { tokens.count <= $0.argUpperBound }
+        .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
       cache.previousProvider = providers
       #warning("Provide a default service loader")
     }
@@ -46,14 +47,13 @@ final class TonnerreInterpreter {
     )
     managedList.lock = DispatchSemaphore(value: 1)
     
-    #warning("Separate to several work item, and queue them up")
-    let asyncTask = DispatchWorkItem {
-      for provider in providers {
-        let keywordCount = provider.keyword.isEmpty ? 0 : 1
-        guard
-          tokens.count - keywordCount >= provider.argLowerBound,
-          tokens.count - keywordCount <= provider.argUpperBound
-        else { continue }
+    for provider in providers {
+      let keywordCount = provider.keyword.isEmpty ? 0 : 1
+      guard
+        tokens.count - keywordCount >= provider.argLowerBound,
+        tokens.count - keywordCount <= provider.argUpperBound
+      else { continue }
+      let asyncTask = DispatchWorkItem { [keywordCount, provider, tokens] in
         let services: [ServicePack] = provider.prepare(withInput: Array(tokens[keywordCount...]))
               .map {
                 if let provider = $0 as? ServiceProvider { return .provider(provider) }
@@ -61,8 +61,8 @@ final class TonnerreInterpreter {
               }
         managedList.replace(at: .provider(provider), elements: services)
       }
+      session.enqueue(task: asyncTask)
     }
-    session.send(request: asyncTask)
     
     return managedList
   }

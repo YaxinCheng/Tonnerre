@@ -42,8 +42,8 @@ extension BookMarkService {
     } catch {
       let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
       let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
-      let error = DisplayableContainer<Int>(name: errorTitle, content: errorContent, icon: icon, placeholder: "")
-      return [error]
+      let errorMsg = DisplayableContainer<Error>(name: errorTitle, content: errorContent, icon: icon, innerItem: error, placeholder: "")
+      return [errorMsg]
     }
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
     let filteredBMs = bookMarks.filter {
@@ -62,7 +62,7 @@ extension BookMarkService {
         print("Browser open bookmarks:", error)
         #endif
       }
-    } else if service is DisplayableContainer<Int> {
+    } else if service is DisplayableContainer<Error> {
       guard
         let settingPanelURL = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")
       else { return }

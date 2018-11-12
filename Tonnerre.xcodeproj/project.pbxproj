@@ -23,7 +23,6 @@
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
-		143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */; };
 		14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D162197C04C008F1A8B /* ProviderMap.swift */; };
 		14454D192197C242008F1A8B /* TNEExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D182197C242008F1A8B /* TNEExecutor.swift */; };
 		14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1A2197C795008F1A8B /* PyExecutor.swift */; };
@@ -248,7 +247,6 @@
 		142C5942215D842800D819F2 /* UpgradeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHandler.swift; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
-		143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLoadingProtocol.swift; sourceTree = "<group>"; };
 		14454D162197C04C008F1A8B /* ProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMap.swift; sourceTree = "<group>"; };
 		14454D182197C242008F1A8B /* TNEExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEExecutor.swift; sourceTree = "<group>"; };
 		14454D1A2197C795008F1A8B /* PyExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyExecutor.swift; sourceTree = "<group>"; };
@@ -711,7 +709,6 @@
 				146AAE6520BDD7FF009AC9C6 /* BuiltInProvider.swift */,
 				14AEB2E120BF0F3400D10D44 /* DisplayProtocol.swift */,
 				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
-				143FD1A3210A9D8B00E79F7E /* AsyncLoadingProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1097,7 +1094,6 @@
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
-				143FD1A4210A9D8B00E79F7E /* AsyncLoadingProtocol.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1452252020B4A794001E0D52 /* URL+Extension.swift in Sources */,

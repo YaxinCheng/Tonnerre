@@ -28,7 +28,7 @@ struct Heap<T: Hashable> {
     guard !duplicateAvoider.contains(newElement) else { return }
     duplicateAvoider.insert(newElement)
     linearStorage.append(newElement)
-    reorder(from: count - 1)
+    reorderUp(from: count - 1)
   }
   
   mutating func add<V: Sequence>(contentOf newElements: V) where V.Element == T {
@@ -59,6 +59,10 @@ struct Heap<T: Hashable> {
     return removedItem
   }
   
+  func index(of element: T) -> Int {
+    return find(element: element)
+  }
+  
   func find(element: T, startingIndex: Int = 0) -> Int {
     let item = self[startingIndex]
     if item == element { return startingIndex }
@@ -76,16 +80,38 @@ struct Heap<T: Hashable> {
     return remove(at: elementIndex)
   }
   
-  mutating func reorder(from index: Int) {
-    guard index > 0 else { return }
+  mutating func reorderUp(from index: Int) {
+    guard index > 0, index < count else { return }
     let parentIndex = (index - 1) / 2
     if compareMethod(self[parentIndex], self[index]) == true {
       return
     } else {
       (self[parentIndex], self[index]) =
         (self[index], self[parentIndex])
-      reorder(from: parentIndex)
     }
+    reorderUp(from: parentIndex)
+  }
+  
+  mutating func reorderDown(from index: Int) {
+    guard index >= 0, index < count - 1 else { return }
+    let (leftIndex, rightIndex) = (index * 2 + 1, index * 2 + 2)
+    let nextIndex: Int
+    if (leftIndex >= count ||
+      compareMethod(self[index], self[leftIndex]))
+      &&
+      (rightIndex >= count ||
+      compareMethod(self[index], self[rightIndex])) { return }
+    else if
+      leftIndex < count &&
+      compareMethod(self[index], self[leftIndex]) == false
+    {
+      (self[index], self[leftIndex]) = (self[leftIndex], self[index])
+      nextIndex = leftIndex
+    } else {
+      (self[index], self[rightIndex]) = (self[rightIndex], self[index])
+      nextIndex = rightIndex
+    }
+    reorderDown(from: nextIndex)
   }
   
   func linearized() -> [T] {

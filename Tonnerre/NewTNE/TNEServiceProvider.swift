@@ -46,7 +46,7 @@ struct TNEServiceProvider: ServiceProvider {
       }(scriptPath)
       guard descriptJSON != nil else { return nil }
       iconPack = TNEServiceProvider.buildIconPack(descriptionJSON: descriptJSON!, path: scriptPath)
-      id = "Tonnerre.Provider.Extension.\(scriptPath.lastPathComponent)"
+      id = "Tonnerre.Provider.Extension.\(scriptPath.deletingPathExtension().lastPathComponent)"
       guard
         let keyword: String = descriptJSON!["keyword"],
         let name: String = descriptJSON!["name"],
@@ -67,9 +67,10 @@ struct TNEServiceProvider: ServiceProvider {
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     do {
+      if argLowerBound == argUpperBound && argUpperBound == 0 { return [self] }
       guard
         let returnedJSON = try executor.execute(withArguments: .prepare(input: input))
-      else { return [self] }
+      else { return [] }
       return returnedJSON.compactMap { _, value in
         guard
           let dict = value as? [String: Any],

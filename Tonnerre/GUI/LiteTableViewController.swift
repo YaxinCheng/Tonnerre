@@ -83,7 +83,6 @@ class LiteTableViewController: NSViewController {
   }
   
   private func completeViewReload() {
-    HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
     highlightedIndex = -1
     tableView.reload()
     if case .service(_, _)? = datasource.first {
@@ -118,8 +117,8 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       }
       guard datasource.count > 0 else { return }
       highlightedIndex += event.keyCode == 125 ? 1 : -1
-      highlightedIndex = min(max(highlightedIndex, 0), datasource.count - 1)
-      let selectedService = datasource[highlightedIndex]
+      highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
+      let selectedService = datasource[max(highlightedIndex, 0)]
       delegate?.serviceHighlighted(service: selectedService)
       delegate?.updatePlaceholder(service: selectedService)
     case 48: // tab
@@ -178,6 +177,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   }
   
   func numberOfCells(_ tableView: LiteTableView) -> Int {
+    HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
     return datasource.count
   }
   

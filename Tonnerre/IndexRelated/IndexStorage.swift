@@ -19,10 +19,11 @@ struct IndexStorage {
   subscript(index: SearchMode, writable: Bool) -> TonnerreIndex {
     get {
       if let indexFile = IndexStorage.storedIndexes[index.storedInt] {
-        IndexStorage.storedIndexes[index.storedInt] = indexFile
         return indexFile
       } else {
-        return TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: writable)!
+        let tnIndex = TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: writable)!
+        IndexStorage.storedIndexes[index.storedInt] = tnIndex
+        return tnIndex
       }
     } set {
       IndexStorage.storedIndexes[index.storedInt] = newValue

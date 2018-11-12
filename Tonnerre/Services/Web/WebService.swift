@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol WebService: BuiltInProvider, AsyncLoadingProtocol {
+protocol WebService: BuiltInProvider {
   var template: String { get }
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
@@ -18,10 +18,6 @@ protocol WebService: BuiltInProvider, AsyncLoadingProtocol {
 extension WebService {
   private var session: TonnerreSession {
     return .shared
-  }
-  
-  var mode: AsyncLoadingType {
-    return .append
   }
   
   private var localeInTemplate: Bool {
@@ -89,19 +85,23 @@ extension WebService {
       let suggestionURL = URL(string: suggestionTemplate.filled(arguments: [query]))
     else { return [originalSearch] }
     let request = URLRequest(url: suggestionURL, timeoutInterval: 60 * 60)
-    let ongoingTask = session.dataTask(request: request) { (data, response, error) in
+    let session = URLSession(configuration: .default)
+    let lock = DispatchSemaphore(value: 0)
+    var suggestions: [DisplayProtocol] = []
+    session.dataTask(with: request) { (data, response, error) in
       if error != nil {
         #if DEBUG
         debugPrint(error!)
         #endif
+        lock.signal()
         return
       }
       let lowerQuery = queryContent.lowercased()
       let processedData = self.parse(suggestionData: data).filter { $0.lowercased() != lowerQuery }
-      let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": processedData])
-      NotificationCenter.default.post(notification)
-    }
-    session.send(request: ongoingTask)
-    return [originalSearch]
+      suggestions = self.present(rawElements: processedData)
+      lock.signal()
+    }.resume()
+    _ = lock.wait(timeout: .now() + 0.2)
+    return [originalSearch] + suggestions
   }
 }

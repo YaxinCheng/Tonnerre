@@ -33,7 +33,6 @@ final class ViewController: NSViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-//    NotificationCenter.default.addObserver(self, selector: #selector(asyncContentDidLoad(notification:)), name: .asyncLoadingDidFinish, object: nil)
     view.wantsLayer = true
     view.layer?.masksToBounds = true
     view.layer?.cornerRadius = 7
@@ -61,24 +60,6 @@ final class ViewController: NSViewController {
       tableVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ])
   }
-  
-//
-//  @objc private func asyncContentDidLoad(notification: Notification) {
-//    DispatchQueue.main.async { [unowned self] in
-//      guard
-//        case .service(let service, _)? = self.tableVC.datasource.first,
-//        let dataPack = notification.userInfo as? [String: Any],
-//        let asyncLoader = service as? AsyncLoadingProtocol,
-//        let content = dataPack["rawElements"] as? [Any]
-//      else { return }
-//      let processedData = asyncLoader.present(rawElements: content)
-//      if asyncLoader.mode == .append {
-//        self.tableVC.datasource += processedData
-//      } else if asyncLoader.mode == .replaced {
-//        self.tableVC.datasource = processedData
-//      }
-//    }
-//  }
 }
 
 extension ViewController: TonnerreFieldDelegate {
@@ -131,30 +112,14 @@ extension ViewController: LiteTableVCDelegate {
   }
   
   func tabPressed(service: ServicePack) {
-//    switch service {
-//    case .provider(origin: let service) where !service.keyword.isEmpty:
-//      fieldVC.autoComplete(cmd: service.keyword, appendingSpace: true, hasKeyword: false)
-//    case .service(provider: let provider, content: let value) where !value.placeholder.isEmpty:
-//      if let tneService = value as? TNEScript {
-//        fieldVC.autoComplete(cmd: tneService.placeholder, appendingSpace: tneService.lowerBound > 0,
-//                             hasKeyword: tneService.keyword.lowercased()
-//                              .starts(with: fieldVC.firstValue.lowercased()))
-//      } else if let webExt = value as? WebExt {
-//        fieldVC.autoComplete(cmd: webExt.placeholder, appendingSpace: webExt.argLowerBound > 0,
-//                             hasKeyword: webExt.keyword.lowercased()
-//                              .starts(with: fieldVC.firstValue.lowercased()))
-//      } else if let tservice = value as? BuiltInProvider {
-//        fieldVC.autoComplete(cmd: tservice.keyword, appendingSpace: tservice.argLowerBound > 0,
-//                             hasKeyword: provider.keyword.lowercased()
-//                              .starts(with: fieldVC.firstValue.lowercased()))
-//      } else {
-//        fieldVC.autoComplete(cmd: value.name, appendingSpace: false, hasKeyword: provider.keyword.lowercased()
-//          .starts(with: fieldVC.firstValue.lowercased()))
-//      }
-//    default: return
-//    }
-//    _ = fieldVC.becomeFirstResponder()
-//    textDidChange(value: fieldVC.stringValue)
+    switch service {
+    case .provider(origin: let provider):
+      fieldVC.autoComplete(cmd: provider.keyword, appendingSpace: provider.argLowerBound > 0, hasKeyword: false)
+    case .service(provider: _, content: let service):
+      fieldVC.autoComplete(cmd: service.placeholder, appendingSpace: false, hasKeyword: true)
+    }
+    _ = fieldVC.becomeFirstResponder()
+    textDidChange(value: fieldVC.stringValue)
   }
   
   func retrieveLastQuery() {
@@ -163,16 +128,18 @@ extension ViewController: LiteTableVCDelegate {
   }
   
   func serve(_ servicePack: ServicePack, withCmd: Bool) {
-    guard case .service(let provider, let service) = servicePack else { return }
+    DispatchQueue.global(qos: .userInitiated).async {
+      switch servicePack {
+      case .provider(let provider):
+        provider.serve(service: provider, withCmd: withCmd)
+      case .service(provider: let provider, content: let service):
+        provider.serve(service: service, withCmd: withCmd)
+      }
+    }
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
       (self?.view.window as? BaseWindow)?.isHidden = true
       self?.fieldVC.stringValue = ""
     }
-    let queue = DispatchQueue.global(qos: .userInitiated)
-    let queryValue = fieldVC.stringValue
-    queue.async { [unowned self] in
-      self.lastQuery = queryValue
-      provider.serve(service: service, withCmd: withCmd)
-    }
+    lastQuery = fieldVC.stringValue
   }
 }
