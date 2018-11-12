@@ -63,9 +63,24 @@ final class ServiceCell: LiteTableCell {
     } else if let container = service as? AsyncedDisplayableContainer<URL>,
       let url = container.innerItem {
       viewController.view = constructView(url, container.name)
-//    } else if let container = service as? WebExt,
-//      let url = URL(string: container.rawURL) {
-//      viewController.view = constructView(url, container.name)
+    } else if let container = service as? DisplayableContainer<Error> {
+      let textViewBuilder: (String)->NSView = {
+        let targetView: NSView
+        let textView: NSTextView
+        if #available(OSX 10.14, *) {
+          targetView = NSTextView.scrollablePlainDocumentContentTextView()
+          textView = (targetView as! NSScrollView).documentView as! NSTextView
+        } else {
+          textView = NSTextView()
+          targetView = textView
+        }
+        textView.drawsBackground = false
+        textView.string = $0
+        textView.isEditable = false
+        textView.font = .systemFont(ofSize: 17)
+        return targetView
+      }
+      viewController.view = textViewBuilder("\n" + container.name + "\n\n" + container.content)
     } else { return }
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)
     PreviewPopover.shared.contentViewController = viewController
