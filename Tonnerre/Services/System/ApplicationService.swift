@@ -16,6 +16,7 @@ struct ApplicationService: BuiltInProvider {
   let icon: NSImage = #imageLiteral(resourceName: "close")
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0
+  let defered: Bool = true
   
   func serve(service: DisplayProtocol, withCmd: Bool) {
     guard let value = (service as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }

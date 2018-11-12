@@ -73,7 +73,7 @@ struct ServiceIDTrie {
     if key.isEmpty { return wildcards }
     var node = rootNode
     for char in key {
-      guard let next = node.children[char] else { return [] }
+      guard let next = node.children[char] else { return wildcards }
       node = next
     }
     return node.values.linearized() + wildcards

@@ -36,6 +36,7 @@ final class TonnerreInterpreter {
         .filter { !$0.defered || $0.keyword == tokens.first! }
         .filter { tokens.count <= $0.argUpperBound }
       cache.previousProvider = providers
+      #warning("Provide a default service loader")
     }
     cache.previousRequest = input
     
@@ -45,19 +46,20 @@ final class TonnerreInterpreter {
     )
     managedList.lock = DispatchSemaphore(value: 1)
     
+    #warning("Separate to several work item, and queue them up")
     let asyncTask = DispatchWorkItem {
       for provider in providers {
+        let keywordCount = provider.keyword.isEmpty ? 0 : 1
         guard
-          tokens.count >= provider.argLowerBound,
-          tokens.count <= provider.argUpperBound
+          tokens.count - keywordCount >= provider.argLowerBound,
+          tokens.count - keywordCount <= provider.argUpperBound
         else { continue }
-        let services: [ServicePack] = provider.prepare(withInput: tokens)
+        let services: [ServicePack] = provider.prepare(withInput: Array(tokens[keywordCount...]))
               .map {
                 if let provider = $0 as? ServiceProvider { return .provider(provider) }
                 else { return .service(provider: provider, content: $0) }
               }
         managedList.replace(at: .provider(provider), elements: services)
-        // needs some kind of notification to refresh the view
       }
     }
     session.send(request: asyncTask)

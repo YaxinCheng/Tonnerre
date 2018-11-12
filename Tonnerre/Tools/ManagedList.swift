@@ -24,15 +24,17 @@ final class ManagedList<T: Hashable> {
   }
   private var cache = IndexCache()
   var lock: DispatchSemaphore?
+  var listExpanded: ((_ fromIndex: Int) -> Void)?
   
   func append<C: Collection>(at item: T, elements: C) where C.Element == T {
     lock?.wait()
     if let index = indices[item] {
-      let originValue = storage[index]
-      storage[index] = originValue + Array(elements)
+      storage[index] += Array(elements)
+      listExpanded?((0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
       indices[item] = storage.count
       storage.append(Array(elements))
+      listExpanded?(storage.count)
     }
     lock?.signal()
   }
@@ -41,9 +43,11 @@ final class ManagedList<T: Hashable> {
     lock?.wait()
     if let index = indices[item] {
       storage[index] = Array(elements)
+      listExpanded?((0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
       indices[item] = storage.count
       storage.append(Array(elements))
+      listExpanded?(storage.count)
     }
     lock?.signal()
   }
@@ -66,13 +70,15 @@ extension ManagedList: ExpressibleByArrayLiteral {
 extension ManagedList: Collection {
   subscript(position: Int) -> T {
     let diff = cache.prevRequest < 0 ? .min : position - cache.prevRequest
-    let (group, item): (Int, Int)
+    var (group, item): (Int, Int)
     if fabs(Double(diff)) == 1 {
       if cache.prevItem == 0 && diff == -1 {
         (group, item) = (cache.prevGroup - 1, storage[cache.prevGroup - 1].count - 1)
+        while item < 0 { (group, item) = (group - 1, storage[group - 1].count - 1) }
       } else if cache.prevItem == storage[cache.prevGroup].count - 1
         && diff == 1 {
         (group, item) = (cache.prevGroup + 1, 0)
+        while storage[group].count <= 0 { group += 1 }
       } else {
         (group, item) = (cache.prevGroup, cache.prevItem + diff)
       }

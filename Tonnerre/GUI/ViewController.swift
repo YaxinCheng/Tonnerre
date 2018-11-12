@@ -105,8 +105,8 @@ extension ViewController: LiteTableVCDelegate {
     switch service! {
     case .provider(let provider):
       fieldVC.iconView.image = provider.icon
-    case .service(provider: let provider, content: let service):
-//      fieldVC.iconView.image = provider is TNEServices ? service.icon : provider.icon
+    case .service(provider: let provider, content: _):
+      fieldVC.iconView.image = provider.icon
       fieldVC.resetIconView(check: true)
     }
   }

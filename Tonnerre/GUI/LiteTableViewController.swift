@@ -13,15 +13,8 @@ class LiteTableViewController: NSViewController {
   
   var datasource: ManagedList<ServicePack> = [] {
     didSet {
-      HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
-      highlightedIndex = -1
-      tableView.reload()
-      if case .service(_, _)? = datasource.first {
-        delegate?.serviceHighlighted(service: datasource.first)
-      } else {
-        delegate?.serviceHighlighted(service: nil)
-      }
-      delegate?.updatePlaceholder(service: datasource.first)
+      completeViewReload()
+      datasource.listExpanded = listExpanded
     }
   }
   var tableView: LiteTableView {
@@ -87,6 +80,25 @@ class LiteTableViewController: NSViewController {
   func retrieveHighlighted() -> ServicePack? {
     guard datasource.count > 0 else { return nil }
     return datasource[max(0, highlightedIndex)]
+  }
+  
+  private func completeViewReload() {
+    HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
+    highlightedIndex = -1
+    tableView.reload()
+    if case .service(_, _)? = datasource.first {
+      delegate?.serviceHighlighted(service: datasource.first)
+    } else {
+      delegate?.serviceHighlighted(service: nil)
+    }
+    delegate?.updatePlaceholder(service: datasource.first)
+  }
+  
+  private func listExpanded(fromIndex index: Int) {
+    guard index < 9 else { return }
+    DispatchQueue.main.async { [weak self] in
+      self?.completeViewReload()
+    }
   }
 }
 

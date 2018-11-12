@@ -14,10 +14,14 @@ struct BuiltInProviderMap {
       "Tonnerre.Provider.BuiltIn.LaunchService"            : ""
     , "Tonnerre.Provider.BuiltIn.CalculationService"       : ""
     , "Tonnerre.Provider.BuiltIn.URLService"               : ""
+    , "Tonnerre.Provider.BuiltIn.CurrencyService"          : ""
+    , "Tonnerre.Provider.BuiltIn.GoogleSearch"             : "google"
+    , "Tonnerre.Provider.BuiltIn.GoogleImageSearch"        : "image"
+    , "Tonnerre.Provider.BuiltIn.YoutubeSearch"            : "youtube"
     , "Tonnerre.Provider.BuiltIn.AmazonSearch"             : "amazon"
     , "Tonnerre.Provider.BuiltIn.WikipediaSearch"          : "wiki"
     , "Tonnerre.Provider.BuiltIn.BingSearch"               : "bing"
-    ,"Tonnerre.Provider.BuiltIn.DuckDuckGoSearch"          : "duck"
+    , "Tonnerre.Provider.BuiltIn.DuckDuckGoSearch"         : "duck"
     , "Tonnerre.Provider.BuiltIn.DictionarySerivce"        : "define"
     , "Tonnerre.Provider.BuiltIn.GoogleTranslateService"   : "translate"
     , "Tonnerre.Provider.BuiltIn.FileNameSearchService"    : "file"
@@ -28,12 +32,17 @@ struct BuiltInProviderMap {
     , "Tonnerre.Provider.BuiltIn.VolumeService"            : "eject"
     , "Tonnerre.Provider.BuiltIn.ClipboardService"         : "cb"
     , "Tonnerre.Provider.BuiltIn.SettingService"           : "tonnerre"
+    , "Tonnerre.Provider.BuiltIn.ApplicationService"       : "quit"
   ]
   
   static let IDtoStruct: [String: BuiltInProvider.Type] = [
       "Tonnerre.Provider.BuiltIn.LaunchService"            : LaunchService.self
     , "Tonnerre.Provider.BuiltIn.CalculationService"       : CalculationService.self
     , "Tonnerre.Provider.BuiltIn.URLService"               : URLService.self
+    , "Tonnerre.Provider.BuiltIn.CurrencyService"          : CurrencyService.self
+    , "Tonnerre.Provider.BuiltIn.GoogleSearch"             : GoogleSearch.self
+    , "Tonnerre.Provider.BuiltIn.GoogleImageSearch"        : GoogleImageSearch.self
+    , "Tonnerre.Provider.BuiltIn.YoutubeSearch"            : YoutubeSearch.self
     , "Tonnerre.Provider.BuiltIn.AmazonSearch"             : AmazonSearch.self
     , "Tonnerre.Provider.BuiltIn.WikipediaSearch"          : WikipediaSearch.self
     , "Tonnerre.Provider.BuiltIn.BingSearch"               : BingSearch.self
@@ -48,6 +57,7 @@ struct BuiltInProviderMap {
     , "Tonnerre.Provider.BuiltIn.VolumeService"            : VolumeService.self
     , "Tonnerre.Provider.BuiltIn.ClipboardService"         : ClipboardService.self
     , "Tonnerre.Provider.BuiltIn.SettingService"           : SettingService.self
+    , "Tonnerre.Provider.BuiltIn.ApplicationService"       : ApplicationService.self
   ]
   
   static func extractKeyword(from provider: BuiltInProvider.Type) -> String {
