@@ -81,8 +81,7 @@ struct TNEServiceProvider: ServiceProvider {
         let alterContent = dict["alterContent"] as? String
         if let stringInner = innerItem as? String,
           (stringInner.starts(with: "http://") || stringInner.starts(with: "https://")),
-          let encodedString = stringInner.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-          let urlInner = URL(string: encodedString) {
+          let urlInner = URL(string: stringInner) {
           return DisplayableContainer(name: name, content: content, icon: icon,
                                       alterContent: alterContent ?? self.alterContent,
                                       innerItem: urlInner, placeholder: name)

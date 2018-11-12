@@ -40,8 +40,8 @@ struct JSONExecutor: TNEExecutor {
         }
       }
       let templateURL: String = mainJSON["templateURL"]!
-      let filledURL = templateURL.filled(arguments: input, separator: "+")
-        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+      let filledURL = templateURL.filled(arguments: input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) },
+                                         separator: "+")
       
       guard let nameTemplate: String = descJSON["name"]
         else { throw TNEExecutor.Error.missingAttribute("name", atPath: scriptPath) }
@@ -54,8 +54,7 @@ struct JSONExecutor: TNEExecutor {
     case .serve(choice: let choice):
       let rawURL = (choice["innerItem"] as? String) ?? mainJSON["templateURL"] as! String
       guard
-        let URLstr = rawURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-        let url = URL(string: URLstr)
+        let url = URL(string: rawURL)
       else { return nil }
       NSWorkspace.shared.open(url)
       return nil
