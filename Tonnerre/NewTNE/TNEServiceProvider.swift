@@ -8,6 +8,27 @@
 
 import Cocoa
 
+/**
+ All the extended service providers are constructed as
+ this TNEServiceProvider. It now supports scripts in
+ `Python`, `AppleScript`, and a simple `JSON`.
+ 
+ Three important components inside a TNE extension:
+ 1. `description.json`
+    - this defines how the provider and its services will
+      be shown on the screen
+ 2. `icon.png`/`icon_dark.png`
+    - this is the icon file for the provider and its
+      services. `icon.png` is the first choice for icon
+      in light mode, while another for dark mode. However,
+      when one is missing, another one will be used anyway.
+    - Suggested size: 72 x 72
+ 3. `main.{json, py, scpt}`
+    - this is the script defines the functionality of your
+     provider.
+    - warning: it can only be named `main`, with the correct
+     extension. Otherwise, it would not be run correctly
+ */
 struct TNEServiceProvider: ServiceProvider {
   let id: String
   let keyword: String
@@ -16,12 +37,19 @@ struct TNEServiceProvider: ServiceProvider {
   var alterContent: String?
   let argLowerBound: Int
   let argUpperBound: Int
+  /**
+   Functionalities in the script are kept here
+  */
   let executor: TNEExecutor
   let placeholder: String
   var icon: NSImage {
     return iconPack.icon
   }
   
+  /**
+   A pack of two icons, and it presents the suitable
+   one based on the current system theme
+  */
   private struct IconPack {
     let _iconLight: NSImage?
     let _iconDark: NSImage?
@@ -38,7 +66,7 @@ struct TNEServiceProvider: ServiceProvider {
   
   init?(scriptPath: URL) {
     do {
-      executor = try createExecutor(basedOn: scriptPath)
+      executor = try TNEServiceProvider.createExecutor(basedOn: scriptPath)
       let descriptJSON: JSON? = try {
         let descriptJSONPath = $0.appendingPathComponent("description.json")
         let descriptJSONData = try Data(contentsOf: descriptJSONPath)
@@ -148,5 +176,16 @@ private extension TNEServiceProvider {
     let darkIcon = getIcon("icon_dark", darkIconFile, descriptionJSON)
     
     return IconPack(_iconLight: lightIcon, _iconDark: darkIcon)
+  }
+  
+  private static func createExecutor(basedOn scriptPath: URL) throws -> TNEExecutor {
+    let executor: TNEExecutor? =
+      PyExecutor(scriptPath: scriptPath) ??
+        ASExecutor(scriptPath: scriptPath) ??
+        JSONExecutor(scriptPath: scriptPath)
+    guard executor != nil else {
+      throw TNEExecutor.Error.unsupportedScriptType
+    }
+    return executor!
   }
 }

@@ -40,17 +40,6 @@ extension TNEExecutor {
   }
 }
 
-func createExecutor(basedOn scriptPath: URL) throws -> TNEExecutor {
-  let executor: TNEExecutor? =
-    PyExecutor(scriptPath: scriptPath) ??
-    ASExecutor(scriptPath: scriptPath) ??
-    JSONExecutor(scriptPath: scriptPath)
-  guard executor != nil else {
-    throw TNEExecutor.Error.unsupportedScriptType
-  }
-  return executor!
-}
-
 enum TNEArguments {
   case supply(input: [String])
   case serve(choice: [String: Any])

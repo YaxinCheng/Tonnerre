@@ -41,7 +41,7 @@ final class TonnerreField: NSTextField {
     let cell = NSTextFieldCell(textCell: value)
     let attributedString: NSAttributedString
     if stringValue.isEmpty {
-      attributedString = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 35)])
+      attributedString = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 33.5)])
     } else {
       attributedString = attributedStringValue
     }

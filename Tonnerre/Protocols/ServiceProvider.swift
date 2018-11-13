@@ -17,6 +17,8 @@ protocol ServiceProvider: DisplayProtocol {
   ///
   /// a single unique id
   ///
+  /// The id may be used to locate/create/assign the provider
+  ///
   var id: String { get }
   /**
    The specific word used to locate the service
@@ -39,11 +41,14 @@ protocol ServiceProvider: DisplayProtocol {
    */
   func prepare(withInput input: [String]) -> [DisplayProtocol]
   /**
-   The function that load services asynchronizingly. All the heavy loading work should be put here
+   This function loads services asynchronizingly. All the heavy loading work should be put here.
+   - note: This function will be run in a separate thread, so there's no need to dispatch to another
+          thread again inside. For any UI updating, you need to dispatch to main
    - parameter input: the user input excluding the keyword
-   - returns: an array of displayable items each represent a specific service
+   - parameter callback: accepts an array of displayable items each represent a specific service
+   - parameter services: a list of services loaded asynchronizingly
    */
-  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol]) -> Void)
+  func supply(withInput input: [String], callback: @escaping (_ services: [DisplayProtocol]) -> Void)
   /**
    The function that serves the user with the service it selected
    - parameter source: the user selected service

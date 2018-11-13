@@ -143,7 +143,7 @@ extension TonnerreFieldController: NSTextFieldDelegate {
   
   private func calculateSize(value: String) -> NSSize {
     let cell = NSTextFieldCell(textCell: value)
-    cell.attributedStringValue = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 35)])
+    cell.attributedStringValue = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 33.5)])
     return cell.cellSize
   }
   
