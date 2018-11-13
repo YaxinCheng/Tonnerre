@@ -21,13 +21,29 @@ struct JSONExecutor: TNEExecutor {
     guard
       let mainJSONData = try? Data(contentsOf: mainScript),
       let mainJSON = JSON(data: mainJSONData),
-      (mainJSON["templateURL"] as? String)?.starts(with: "http") == true,
+      (mainJSON["URLTemplate"] as? String)?.starts(with: "http") == true,
     
       let descJSONData = try? Data(contentsOf: descriptJSONURL),
       let descJSON = JSON(data: descJSONData)
     else { return nil }
     self.mainJSON = mainJSON
     self.descJSON = descJSON
+  }
+  
+  func prepare(withInput input: [String], provider: TNEServiceProvider) -> [DisplayProtocol] {
+    let urlTemplate = mainJSON["URLTemplate"] as! String
+    if provider.argLowerBound == provider.argUpperBound && provider.argUpperBound == 0 {
+      return [DisplayableContainer<URL>(name: provider.name, content: provider.content,
+                                        icon: provider.icon, innerItem: URL(string: urlTemplate),
+                                        placeholder: provider.keyword)]
+    } else {
+      let filledURL = urlTemplate.filled(arguments: input.compactMap {
+        $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+      }, separator: "+")
+      return [DisplayableContainer<URL>(name: provider.name.filled(arguments: input)
+        , content: provider.content.filled(arguments: input), icon: provider.icon
+        , innerItem: URL(string: filledURL), placeholder: provider.keyword)]
+    }
   }
   
   func execute(withArguments args: Arguments) throws -> JSON? {
@@ -39,9 +55,10 @@ struct JSONExecutor: TNEExecutor {
           throw TNEExecutor.Error.wrongInputFormatError
         }
       }
-      let templateURL: String = mainJSON["templateURL"]!
-      let filledURL = templateURL.filled(arguments: input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) },
-                                         separator: "+")
+      let urlTemplate: String = mainJSON["URLTemplate"]!
+      let filledURL = urlTemplate.filled(arguments: input.compactMap {
+        $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        }, separator: "+")
       
       guard let nameTemplate: String = descJSON["name"]
         else { throw TNEExecutor.Error.missingAttribute("name", atPath: scriptPath) }
@@ -52,7 +69,7 @@ struct JSONExecutor: TNEExecutor {
       let content = contentTemplate.filled(arguments: input)
       return [["name": name, "content": content, "innerItem": filledURL]]
     case .serve(choice: let choice):
-      let rawURL = (choice["innerItem"] as? String) ?? mainJSON["templateURL"] as! String
+      let rawURL = (choice["innerItem"] as? String) ?? mainJSON["URLTemplate"] as! String
       guard
         let url = URL(string: rawURL)
       else { return nil }
