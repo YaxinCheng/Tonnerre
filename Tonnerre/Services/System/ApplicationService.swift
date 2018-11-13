@@ -28,10 +28,10 @@ struct ApplicationService: BuiltInProvider {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
     if input.isEmpty || (input.first?.isEmpty ?? false) {
-      return runningApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
+      return runningApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
     } else {
       let filteredApps = runningApps.filter { match(appName: $0.localizedName!, query: input) }
-      return filteredApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0) }
+      return filteredApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
     }
   }
   
