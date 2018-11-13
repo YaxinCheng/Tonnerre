@@ -130,8 +130,10 @@ extension ViewController: LiteTableVCDelegate {
   
   func serve(_ servicePack: ServicePack, withCmd: Bool) {
     guard case .service(provider: let provider, content: let service) = servicePack else { return }
+    ProviderMap.shared.updateSortingScore(byID: provider.id)
     DispatchQueue.global(qos: .userInitiated).async {
       provider.serve(service: service, withCmd: withCmd)
+      TonnerreInterpreter.serviceIDTrie.updateHeap(key: provider.keyword, value: provider.id)
     }
     DispatchQueue.main.async {[weak self] in // hide the window, and avoid the beeping sound
       (self?.view.window as? BaseWindow)?.isHidden = true

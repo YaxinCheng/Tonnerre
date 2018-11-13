@@ -40,9 +40,8 @@ final class TonnerreInterpreter {
     }
     cache.previousRequest = input
     
-    let managedList = ManagedList<ServicePack>(array: providers
-      .filter { !$0.keyword.isEmpty }
-      .map { .provider($0) }
+    let managedList = ManagedList<ServicePack>(array:
+      providers.map { .provider($0) }, filter: { !$0.provider.keyword.isEmpty }
     )
     managedList.lock = DispatchSemaphore(value: 1)
     

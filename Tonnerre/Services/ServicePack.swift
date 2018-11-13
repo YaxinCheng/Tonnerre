@@ -63,10 +63,10 @@ enum ServicePack: DisplayProtocol {
     }
   }
   
-  var isPlaceholder: Bool {
+  var provider: ServiceProvider {
     switch self {
-    case .provider(_): return false
-    default: return true
+    case .provider(let provider): return provider
+    case .service(provider: let provider, content: _): return provider
     }
   }
   

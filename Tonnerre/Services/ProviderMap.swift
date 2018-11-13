@@ -63,12 +63,16 @@ final class ProviderMap {
     return retrieve(byID: id)
   }
   
-  /// TODO: - Get sorting score by provided id
-  /// sorting id is used sort the providers in the heap
-  /// - parameter id: the provided id of a provider
-  /// - returns: the sorting score
   func getSortingScore(byID id: String) -> UInt {
-    return 0
+    guard let provider = retrieve(byID: id) else { fatalError("Unregistered provider") }
+    let lastVisit = LaunchOrder.retrieveTime(with: id)
+    let timeDiffScore = min(max(lastVisit.timeIntervalSinceNow / (24 * 60 * 60 / 5), -5), -1)
+    let keywordDiffScore: Double = provider.keyword.isEmpty ? -1 : 0
+    return UInt(floor(max(10 + timeDiffScore + keywordDiffScore, 0)))
+  }
+  
+  func updateSortingScore(byID id: String) {
+    LaunchOrder.save(with: id)
   }
   
   private func filesDidChange(events: [TonnerreFSDetector.event]) {

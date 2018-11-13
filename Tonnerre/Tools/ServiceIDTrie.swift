@@ -64,6 +64,19 @@ struct ServiceIDTrie {
     }
   }
   
+  mutating func updateHeap(key: String, value: String) {
+    guard !key.isEmpty else { return }
+    var node = rootNode
+    for character in key {
+      guard
+        let next = node.children[character]
+      else { return }
+      let index = node.values.find(element: value)
+      node.values.reorderUp(from: index)
+      node = next
+    }
+  }
+  
   /**
    Find a list of stored values with given string
    - parameter value: the key with which the elments associate
@@ -76,7 +89,10 @@ struct ServiceIDTrie {
       guard let next = node.children[char] else { return wildcards }
       node = next
     }
-    return node.values.linearized() + wildcards
+    var valuesCopy = node.values
+    valuesCopy.add(contentOf: wildcards)
+    let linearized = valuesCopy.linearized()
+    return linearized
   }
   
   mutating func remove(key: String, value: String) {

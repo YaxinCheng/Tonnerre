@@ -71,6 +71,18 @@ extension ManagedList: ExpressibleByArrayLiteral {
       indices[element] = index
     }
   }
+  
+  convenience init(array elements: [T], filter: (T)->Bool) {
+    self.init()
+    for (index, element) in elements.enumerated() {
+      if filter(element) == true {
+        storage.append([element])
+      } else {
+        storage.append([])
+      }
+      indices[element] = index
+    }
+  }
 }
 
 extension ManagedList: Collection {
