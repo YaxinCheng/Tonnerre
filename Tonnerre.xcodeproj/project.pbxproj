@@ -124,7 +124,6 @@
 		14B9BB18218267C100C3D43E /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9BB11218267C100C3D43E /* Switch.swift */; };
 		14B9BB1B218267CF00C3D43E /* TabViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9BB19218267CF00C3D43E /* TabViewAnimator.swift */; };
 		14B9BB1C218267CF00C3D43E /* TabViewSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9BB1A218267CF00C3D43E /* TabViewSegue.swift */; };
-		14C1ECB6219A791200DEA837 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C1ECB5219A791200DEA837 /* Placeholder.swift */; };
 		14C410342187ACCC00CEA1E9 /* PreviewPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C410332187ACCC00CEA1E9 /* PreviewPopover.swift */; };
 		14CC56D3217930510015540A /* LiteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56D1217930510015540A /* LiteTableViewController.swift */; };
 		14CC56D6217AB0160015540A /* LiteTableVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */; };
@@ -350,7 +349,6 @@
 		14B9BB11218267C100C3D43E /* Switch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14B9BB19218267CF00C3D43E /* TabViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewAnimator.swift; sourceTree = "<group>"; };
 		14B9BB1A218267CF00C3D43E /* TabViewSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewSegue.swift; sourceTree = "<group>"; };
-		14C1ECB5219A791200DEA837 /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		14C410332187ACCC00CEA1E9 /* PreviewPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPopover.swift; sourceTree = "<group>"; };
 		14CC56D1217930510015540A /* LiteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTableViewController.swift; sourceTree = "<group>"; };
 		14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTableVCDelegate.swift; sourceTree = "<group>"; };
@@ -497,7 +495,6 @@
 			children = (
 				14561B8B20C444470057B4C1 /* ServicePack.swift */,
 				148414A420C85AC3008FD68E /* DisplayableContainer.swift */,
-				14C1ECB5219A791200DEA837 /* Placeholder.swift */,
 				14FEE2712193CE62009A4798 /* DisabledManager.swift */,
 				14FEE2772193D93B009A4798 /* DisableManager+Provider.swift */,
 				14FEE2732193D1A7009A4798 /* BuiltInProviderMap.swift */,
@@ -1127,7 +1124,6 @@
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,
-				14C1ECB6219A791200DEA837 /* Placeholder.swift in Sources */,
 				14E9AD6320CDECD100F3EEC8 /* MathTokenizer.swift in Sources */,
 				14F1099B218BA43C003A5E07 /* TonnerreFieldDelegate.swift in Sources */,
 				14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */,

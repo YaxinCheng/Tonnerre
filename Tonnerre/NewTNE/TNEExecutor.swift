@@ -27,7 +27,9 @@ extension TNEExecutor {
   func prepare(withInput input: [String], provider: TNEServiceProvider) -> [DisplayProtocol] {
     if provider.argLowerBound == provider.argUpperBound &&
       provider.argUpperBound == 0 { return [provider] }
-    return [Placeholder(fromProvider: provider, query: input)]
+    return [DisplayableContainer<String>(name: provider.name.filled(arguments: input)
+      , content: provider.content.filled(arguments: input), icon: provider.icon,
+        placeholder: provider.keyword)]
   }
 }
 

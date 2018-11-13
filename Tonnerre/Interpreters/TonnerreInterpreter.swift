@@ -94,9 +94,7 @@ final class TonnerreInterpreter {
           else { return .service(provider: provider, content: $0) }
       }
       guard services.count > 0 else { return }
-      let currentItems = destination.peak(at: .provider(provider))
-      if let items = currentItems,
-        items.map({ $0.isPlaceholder }).reduce(true, { $0 && $1 }) {
+      if !(provider is BuiltInProvider) {
         destination.replace(at: .provider(provider), elements: services)
       } else {
         destination.append(at: .provider(provider), elements: services)
