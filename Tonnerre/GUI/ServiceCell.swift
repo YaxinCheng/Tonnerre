@@ -43,6 +43,23 @@ final class ServiceCell: LiteTableCell {
     }
   }
   
+  private func textViewBuilder(text: String) -> NSView {
+    let targetView: NSView
+    let textView: NSTextView
+    if #available(OSX 10.14, *) {
+      targetView = NSTextView.scrollablePlainDocumentContentTextView()
+      textView = (targetView as! NSScrollView).documentView as! NSTextView
+    } else {
+      textView = NSTextView()
+      targetView = textView
+    }
+    textView.drawsBackground = false
+    textView.string = text
+    textView.isEditable = false
+    textView.font = .systemFont(ofSize: 17)
+    return targetView
+  }
+  
   func preview() {
     guard !PreviewPopover.shared.isShown else { return }
     let viewController = NSViewController()
@@ -64,22 +81,10 @@ final class ServiceCell: LiteTableCell {
       let url = container.innerItem {
       viewController.view = constructView(url, container.name)
     } else if let container = service as? DisplayableContainer<Error> {
-      viewController.view = {
-        let targetView: NSView
-        let textView: NSTextView
-        if #available(OSX 10.14, *) {
-          targetView = NSTextView.scrollablePlainDocumentContentTextView()
-          textView = (targetView as! NSScrollView).documentView as! NSTextView
-        } else {
-          textView = NSTextView()
-          targetView = textView
-        }
-        textView.drawsBackground = false
-        textView.string = $0
-        textView.isEditable = false
-        textView.font = .systemFont(ofSize: 17)
-        return targetView
-      }("\n" + container.name + "\n\n" + container.content)
+      viewController.view = textViewBuilder(text: "\n" + container.name + "\n\n" + container.content)
+    } else if let container = service as? DisplayableContainer<String>,
+      let innerString = container.innerItem {
+      viewController.view = textViewBuilder(text: innerString)
     } else { return }
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)
     PreviewPopover.shared.contentViewController = viewController

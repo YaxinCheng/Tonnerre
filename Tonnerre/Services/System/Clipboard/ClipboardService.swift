@@ -64,7 +64,7 @@ struct ClipboardService: BuiltInProvider {
           dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
           let content = "Copied at \(dateFmt.string(from: time))"
           let icon: NSImage = .notes ?? self.icon
-          return DisplayableContainer(name: value, content: content, icon: icon, innerItem: $0.value!)
+          return DisplayableContainer(name: value, content: content, icon: icon, innerItem: $0.value)
         }
       })
     } catch {
