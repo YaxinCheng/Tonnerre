@@ -29,12 +29,15 @@ struct DictionarySerivce: BuiltInProvider {
     return [wrapQuery(text)]
   }
   
-  func supply(withInput input: [String]) -> [DisplayProtocol] {
-    guard input.count > 0, !input[0].isEmpty else { return [] }
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+    guard input.count > 0, !input[0].isEmpty else {
+      callback([])
+      return
+    }
     let text = input.joined(separator: " ")
     let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
     let filteredSuggestiosn = suggestions.filter { $0.lowercased() != text }
-    return filteredSuggestiosn.compactMap(wrap)
+    callback(filteredSuggestiosn.compactMap(wrap))
   }
   
   func serve(service: DisplayProtocol, withCmd: Bool) {

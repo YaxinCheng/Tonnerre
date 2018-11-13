@@ -56,8 +56,7 @@ final class TonnerreInterpreter {
       supply(fromProvider: provider, requirements: passinContent, destination: managedList)
     }
     if managedList.count == 0 &&
-      !input.isEmpty &&
-      (providers.first { !$0.keyword.isEmpty } == nil)  { // If no service is available, use default
+      !input.isEmpty { // If no service is available, use default
       let defaultProvider = ProviderMap.shared.defaultProvider ?? GoogleSearch()
       guard tokens.count <= defaultProvider.argUpperBound else { return managedList }
       supply(fromProvider: defaultProvider, requirements: tokens, destination: managedList)
@@ -88,16 +87,17 @@ final class TonnerreInterpreter {
                             else { return .service(provider: provider, content: $0) }
                         })
     let asyncTask = DispatchWorkItem { [requirements, provider] in
-      let services: [ServicePack] = provider.supply(withInput: requirements)
-        .map {
+      provider.supply(withInput: requirements) {
+        let services: [ServicePack] = $0.map {
           if let provider = $0 as? ServiceProvider { return .provider(provider) }
           else { return .service(provider: provider, content: $0) }
-      }
-      guard services.count > 0 else { return }
-      if !(provider is BuiltInProvider) {
-        destination.replace(at: .provider(provider), elements: services)
-      } else {
-        destination.append(at: .provider(provider), elements: services)
+        }
+        guard services.count > 0 else { return }
+        if !(provider is BuiltInProvider) {
+          destination.replace(at: .provider(provider), elements: services)
+        } else {
+          destination.append(at: .provider(provider), elements: services)
+        }
       }
     }
     session.enqueue(task: asyncTask, after: 0.2)

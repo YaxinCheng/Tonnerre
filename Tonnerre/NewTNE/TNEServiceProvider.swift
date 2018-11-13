@@ -69,13 +69,16 @@ struct TNEServiceProvider: ServiceProvider {
     return executor.prepare(withInput: input, provider: self)
   }
   
-  func supply(withInput input: [String]) -> [DisplayProtocol] {
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
     do {
       guard
         !(argLowerBound == argUpperBound && argUpperBound == 0),
         let returnedJSON = try executor.execute(withArguments: .supply(input: input))
-      else { return [] }
-      return returnedJSON.compactMap { _, value in
+      else {
+        callback([])
+        return
+      }
+      let result: [DisplayProtocol] = returnedJSON.compactMap { _, value in
         guard
           let dict = value as? [String: Any],
           let name      = dict["name"] as? String,
@@ -95,13 +98,14 @@ struct TNEServiceProvider: ServiceProvider {
                                       alterIcon: alterIcon, innerItem: innerItem, placeholder: name)
         }
       }
+      callback(result)
     } catch TNEExecutor.Error.wrongInputFormatError(information: _) {
-      return []
+      callback([])
     } catch {
       #if DEBUG
       print("error during prepare: \n\(error)\ninput: \(input)\n")
       #endif
-      return [DisplayableContainer(name: "Error", content: "\(error)", icon: icon, innerItem: error, placeholder: "")]
+      callback([DisplayableContainer(name: "Error", content: "\(error)", icon: icon, innerItem: error, placeholder: "")])
     }
   }
   

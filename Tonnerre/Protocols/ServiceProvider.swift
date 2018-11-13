@@ -43,7 +43,7 @@ protocol ServiceProvider: DisplayProtocol {
    - parameter input: the user input excluding the keyword
    - returns: an array of displayable items each represent a specific service
    */
-  func supply(withInput input: [String]) -> [DisplayProtocol]
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol]) -> Void)
   /**
    The function that serves the user with the service it selected
    - parameter source: the user selected service
@@ -61,7 +61,7 @@ protocol ServiceProvider: DisplayProtocol {
 
 extension ServiceProvider {
   var defered: Bool { return false }
-  func supply(withInput input: [String]) -> [DisplayProtocol] {
-    return []
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+    return
   }
 }

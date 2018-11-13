@@ -79,31 +79,30 @@ extension WebService {
     return [originalSearch]
   }
   
-  func supply(withInput input: [String]) -> [DisplayProtocol] {
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
     let queryContent = input.joined(separator: " ")
     guard
       !suggestionTemplate.isEmpty,
       let query = queryContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
       let suggestionURL = URL(string: suggestionTemplate.filled(arguments: [query]))
-    else { return [] }
+    else {
+      callback([])
+      return
+    }
     let request = URLRequest(url: suggestionURL, timeoutInterval: 60 * 60)
     let session = URLSession(configuration: .default)
-    let lock = DispatchSemaphore(value: 0)
     let suggestions = NSMutableArray()
     session.dataTask(with: request) { (data, response, error) in
       if error != nil {
         #if DEBUG
         debugPrint(error!)
         #endif
-        lock.signal()
         return
       }
       let lowerQuery = queryContent.lowercased()
       let processedData = self.parse(suggestionData: data).filter { $0.lowercased() != lowerQuery }
       suggestions.addObjects(from: self.present(rawElements: processedData))
-      lock.signal()
+      callback(suggestions as? [DisplayProtocol] ?? [])
     }.resume()
-    _ = lock.wait(timeout: .now() + 0.2)
-    return (suggestions as? [DisplayProtocol]) ?? []
   }
 }

@@ -64,14 +64,12 @@ struct Heap<T: Hashable> {
   }
   
   func find(element: T, startingIndex: Int = 0) -> Int {
+    guard startingIndex < count else { return -1 }
     let item = self[startingIndex]
     if item == element { return startingIndex }
     else if compareMethod(element, item) { return -1 }
-    else {
-      let leftSide  = find(element: element, startingIndex: startingIndex * 2 + 1)
-      let rightSide = find(element: element, startingIndex: startingIndex * 2 + 2)
-      return Swift.max(leftSide, rightSide)
-    }
+    return Swift.max(find(element: element, startingIndex: startingIndex * 2 + 1),
+                     find(element: element, startingIndex: startingIndex * 2 + 2))
   }
   
   @discardableResult
