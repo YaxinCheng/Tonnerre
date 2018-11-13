@@ -16,7 +16,7 @@ struct URLService: BuiltInProvider {
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard let query = input.first, input.count == 1 else { return [] }
-    let urlRegex = try! NSRegularExpression(pattern: "^(https?:\\/\\/)?(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&]*)*", options: .caseInsensitive)
+    let urlRegex = try! NSRegularExpression(pattern: "^(https?:\\/\\/)?(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&/.]*)*", options: .caseInsensitive)
     let isURL = urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
     guard isURL else { return [] }
     let url: URL

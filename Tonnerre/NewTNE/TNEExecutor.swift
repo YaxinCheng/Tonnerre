@@ -11,7 +11,7 @@ import Foundation
 enum ExecuteError: Error {
   case unsupportedScriptType
   case runtimeError(reason: String)
-  case wrongInputFormatError
+  case wrongInputFormatError(information: String)
   case missingAttribute(_ attribute: String, atPath: URL)
 }
 

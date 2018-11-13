@@ -95,6 +95,8 @@ struct TNEServiceProvider: ServiceProvider {
                                       alterIcon: alterIcon, innerItem: innerItem, placeholder: name)
         }
       }
+    } catch TNEExecutor.Error.wrongInputFormatError(information: _) {
+      return []
     } catch {
       #if DEBUG
       print("error during prepare: \n\(error)\ninput: \(input)\n")

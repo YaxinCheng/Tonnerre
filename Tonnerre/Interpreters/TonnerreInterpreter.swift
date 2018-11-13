@@ -19,6 +19,7 @@ final class TonnerreInterpreter {
   
   init() {
     ProviderMap.shared.start()
+    ClipboardService.monitor.start()
   }
   
   func interpret(input: String) -> ManagedList<ServicePack> {

@@ -52,7 +52,8 @@ struct JSONExecutor: TNEExecutor {
       if let inputFormat = mainJSON["inputFormat"] as? String {
         let inputFmtRegex = try NSRegularExpression(pattern: inputFormat, options: .caseInsensitive)
         for query in input where query.match(regex: inputFmtRegex) == nil {
-          throw TNEExecutor.Error.wrongInputFormatError
+          throw TNEExecutor.Error.wrongInputFormatError(information:
+            "The flight code is formed with 2 alphabets + 3~4 numbers")
         }
       }
       let urlTemplate: String = mainJSON["URLTemplate"]!
