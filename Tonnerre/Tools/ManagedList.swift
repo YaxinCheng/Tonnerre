@@ -51,6 +51,12 @@ final class ManagedList<T: Hashable> {
     }
     lock?.signal()
   }
+  
+  func peak(at item: T) -> [T]? {
+    if let index = indices[item] {
+      return storage[index]
+    } else { return nil }
+  }
 }
 
 extension ManagedList: ExpressibleByArrayLiteral {

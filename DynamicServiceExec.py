@@ -2,11 +2,11 @@ from __future__ import print_function
 import importlib, sys, argparse, json, os
 
 parser = argparse.ArgumentParser(description='Run import and run assigned python script')
-parser.add_argument('-p', '--prepare', metavar='SCRIPT', help='Accepts a list of query commands from stdin, and return a list of displayable items')
-parser.add_argument('-s', '--serve', metavar='SCRIPT', help='Serve the selected item, and do actions')
+parser.add_argument('--supply', metavar='SCRIPT', help='Accepts a list of query commands from stdin, and return a list of displayable items')
+parser.add_argument('--serve', metavar='SCRIPT', help='Serve the selected item, and do actions')
 args = parser.parse_args()
 
-if not (args.prepare or args.serve):
+if not (args.supply or args.serve):
     print('{"error": "Missing required arguments"}', end='', file=sys.stderr)
     sys.exit(0)
 
@@ -29,9 +29,9 @@ feedback = None
 with NoPrintsZone():
     inputVal = json.loads(sys.stdin.read())
     try:
-        if args.prepare:
-            scriptLoaded = load_source(args.prepare)
-            feedback = scriptLoaded.prepare(inputVal)
+        if args.supply:
+            scriptLoaded = load_source(args.supply)
+            feedback = scriptLoaded.supply(inputVal)
         elif args.serve:
             scriptLoaded = load_source(args.serve)
             scriptLoaded.serve(inputVal)

@@ -57,6 +57,12 @@ final class ProviderMap {
     return registeredProviders[id] ?? BuiltInProviderMap.retrieveType(baseOnID: id)?.init()
   }
   
+  var defaultProvider: ServiceProvider? {
+    let userDefault = UserDefaults.shared
+    let id = userDefault.string(forKey: "Tonnerre.Provider.Default") ?? ""
+    return retrieve(byID: id)
+  }
+  
   /// TODO: - Get sorting score by provided id
   /// sorting id is used sort the providers in the heap
   /// - parameter id: the provided id of a provider

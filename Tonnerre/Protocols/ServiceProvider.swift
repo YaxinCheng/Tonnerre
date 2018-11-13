@@ -32,10 +32,18 @@ protocol ServiceProvider: DisplayProtocol {
   var argUpperBound: Int { get }
   /**
    The function that accepts the user input, and give certain services based on the input
+   - Note: This function runs synchronizingly, so it should only gives out some at once services.
+   For more complicated services should be provided by the `loadService(withInput:)`
    - parameter input: the user input excluding the keyword
    - returns: an array of displayable items each represent a specific service
    */
   func prepare(withInput input: [String]) -> [DisplayProtocol]
+  /**
+   The function that load services asynchronizingly. All the heavy loading work should be put here
+   - parameter input: the user input excluding the keyword
+   - returns: an array of displayable items each represent a specific service
+   */
+  func supply(withInput input: [String]) -> [DisplayProtocol]
   /**
    The function that serves the user with the service it selected
    - parameter source: the user selected service
@@ -53,4 +61,7 @@ protocol ServiceProvider: DisplayProtocol {
 
 extension ServiceProvider {
   var defered: Bool { return false }
+  func supply(withInput input: [String]) -> [DisplayProtocol] {
+    return []
+  }
 }

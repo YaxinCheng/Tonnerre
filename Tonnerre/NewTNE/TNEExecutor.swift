@@ -19,7 +19,16 @@ protocol TNEExecutor {
   typealias Arguments = TNEArguments
   typealias Error = ExecuteError
   init?(scriptPath: URL)
+  func prepare(withInput input: [String], provider: TNEServiceProvider) -> [DisplayProtocol]
   func execute(withArguments args: Arguments) throws -> JSON?
+}
+
+extension TNEExecutor {
+  func prepare(withInput input: [String], provider: TNEServiceProvider) -> [DisplayProtocol] {
+    if provider.argLowerBound == provider.argUpperBound &&
+      provider.argUpperBound == 0 { return [provider] }
+    return [Placeholder(fromProvider: provider, query: input)]
+  }
 }
 
 func createExecutor(basedOn scriptPath: URL) throws -> TNEExecutor {
@@ -34,12 +43,12 @@ func createExecutor(basedOn scriptPath: URL) throws -> TNEExecutor {
 }
 
 enum TNEArguments {
-  case prepare(input: [String])
+  case supply(input: [String])
   case serve(choice: [String: Any])
   
   var argumentType: String {
     switch self {
-    case .prepare(input: _): return "--prepare"
+    case .supply(input: _): return "--supply"
     case .serve(choice: _): return "--serve"
     }
   }

@@ -32,6 +32,9 @@ final class TonnerreSession {
   func enqueue(task: DispatchWorkItem, after second: Double = 0) {
     lock.wait()
     taskQueue.append(task)
+    lock.signal()
+
+    lock.wait()
     guard
       taskQueue.count != 0,
       taskQueue.first?.isCancelled == false
@@ -46,9 +49,7 @@ final class TonnerreSession {
   }
   
   func cancel() {
-    lock.wait()
     taskQueue.removeAll()
-    lock.signal()
   }
 
 }

@@ -37,7 +37,6 @@ final class TonnerreInterpreter {
         .filter { !$0.defered || $0.keyword == tokens.first! }
         .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
       cache.previousProvider = providers
-      #warning("Provide a default service loader")
     }
     cache.previousRequest = input
     
@@ -53,15 +52,15 @@ final class TonnerreInterpreter {
         tokens.count - keywordCount >= provider.argLowerBound,
         tokens.count - keywordCount <= provider.argUpperBound
       else { continue }
-      let asyncTask = DispatchWorkItem { [keywordCount, provider, tokens] in
-        let services: [ServicePack] = provider.prepare(withInput: Array(tokens[keywordCount...]))
-              .map {
-                if let provider = $0 as? ServiceProvider { return .provider(provider) }
-                else { return .service(provider: provider, content: $0) }
-              }
-        managedList.replace(at: .provider(provider), elements: services)
-      }
-      session.enqueue(task: asyncTask)
+      let passinContent = Array(tokens[keywordCount...])
+      supply(fromProvider: provider, requirements: passinContent, destination: managedList)
+    }
+    if managedList.count == 0 &&
+      !input.isEmpty &&
+      (providers.first { !$0.keyword.isEmpty } == nil)  { // If no service is available, use default
+      let defaultProvider = ProviderMap.shared.defaultProvider ?? GoogleSearch()
+      guard tokens.count <= defaultProvider.argUpperBound else { return managedList }
+      supply(fromProvider: defaultProvider, requirements: tokens, destination: managedList)
     }
     
     return managedList
@@ -79,5 +78,30 @@ final class TonnerreInterpreter {
    */
   private func tokenize(input: String) -> [String] {
     return input.trimmed.components(separatedBy: .whitespacesAndNewlines)
+  }
+  
+  private func supply(fromProvider provider: ServiceProvider, requirements: [String], destination: ManagedList<ServicePack>) {
+    destination.replace(at: .provider(provider),
+                        elements: provider.prepare(withInput: requirements)
+                          .map {
+                            if let provider = $0 as? ServiceProvider { return .provider(provider) }
+                            else { return .service(provider: provider, content: $0) }
+                        })
+    let asyncTask = DispatchWorkItem { [requirements, provider] in
+      let services: [ServicePack] = provider.supply(withInput: requirements)
+        .map {
+          if let provider = $0 as? ServiceProvider { return .provider(provider) }
+          else { return .service(provider: provider, content: $0) }
+      }
+      guard services.count > 0 else { return }
+      let currentItems = destination.peak(at: .provider(provider))
+      if let items = currentItems,
+        items.map({ $0.isPlaceholder }).reduce(true, { $0 && $1 }) {
+        destination.replace(at: .provider(provider), elements: services)
+      } else {
+        destination.append(at: .provider(provider), elements: services)
+      }
+    }
+    session.enqueue(task: asyncTask, after: 0.2)
   }
 }

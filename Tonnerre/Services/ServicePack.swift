@@ -63,6 +63,13 @@ enum ServicePack: DisplayProtocol {
     }
   }
   
+  var isPlaceholder: Bool {
+    switch self {
+    case .provider(_): return false
+    default: return true
+    }
+  }
+  
   /**
    Constructor of ServicePack
    - parameter provider: the service provider needs to be represented

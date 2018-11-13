@@ -64,7 +64,7 @@ final class ServiceCell: LiteTableCell {
       let url = container.innerItem {
       viewController.view = constructView(url, container.name)
     } else if let container = service as? DisplayableContainer<Error> {
-      let textViewBuilder: (String)->NSView = {
+      viewController.view = {
         let targetView: NSView
         let textView: NSTextView
         if #available(OSX 10.14, *) {
@@ -79,8 +79,7 @@ final class ServiceCell: LiteTableCell {
         textView.isEditable = false
         textView.font = .systemFont(ofSize: 17)
         return targetView
-      }
-      viewController.view = textViewBuilder("\n" + container.name + "\n\n" + container.content)
+      }("\n" + container.name + "\n\n" + container.content)
     } else { return }
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)
     PreviewPopover.shared.contentViewController = viewController

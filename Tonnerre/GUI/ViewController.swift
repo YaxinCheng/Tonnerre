@@ -115,8 +115,9 @@ extension ViewController: LiteTableVCDelegate {
     switch service {
     case .provider(origin: let provider):
       fieldVC.autoComplete(cmd: provider.keyword, appendingSpace: provider.argLowerBound > 0, hasKeyword: false)
-    case .service(provider: _, content: let service):
-      fieldVC.autoComplete(cmd: service.placeholder, appendingSpace: false, hasKeyword: true)
+    case .service(provider: let provider, content: let service):
+      fieldVC.autoComplete(cmd: service.placeholder, appendingSpace: false,
+                           hasKeyword: provider.keyword.starts(with: fieldVC.firstValue.lowercased()))
     }
     _ = fieldVC.becomeFirstResponder()
     textDidChange(value: fieldVC.stringValue)

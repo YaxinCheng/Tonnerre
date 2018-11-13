@@ -32,7 +32,7 @@ struct JSONExecutor: TNEExecutor {
   
   func execute(withArguments args: Arguments) throws -> JSON? {
     switch args {
-    case .prepare(input: let input):
+    case .supply(input: let input):
       if let inputFormat = mainJSON["inputFormat"] as? String {
         let inputFmtRegex = try NSRegularExpression(pattern: inputFormat, options: .caseInsensitive)
         for query in input where query.match(regex: inputFmtRegex) == nil {

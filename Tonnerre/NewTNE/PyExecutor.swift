@@ -34,7 +34,7 @@ struct PyExecutor: TNEExecutor {
       throw TNEExecutor.Error.runtimeError(reason: errorMsg)
     }
     
-    guard case .prepare(_) = args else { return nil }
+    guard case .supply(_) = args else { return nil }
     let outputData = (process.standardOutput as! Pipe).fileHandleForReading.readDataToEndOfFile()
     return JSON(data: outputData)
   }
@@ -54,7 +54,7 @@ struct PyExecutor: TNEExecutor {
     
     let argumentJSON: JSON
     switch args {
-    case .prepare(input: let input): argumentJSON = JSON(array: input)
+    case .supply(input: let input): argumentJSON = JSON(array: input)
     case .serve(choice: let choice): argumentJSON = JSON(dictionary: choice)
     }
     let stdin = process.standardInput as! Pipe

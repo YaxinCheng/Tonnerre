@@ -47,9 +47,8 @@ extension WebService {
     return URL(string: rawURL)
   }
   
-  func present(rawElements: [Any]) -> [ServicePack] {
-    guard rawElements is [String] else { return [] }
-    return (rawElements as! [String]).compactMap {
+  func present(rawElements: [String]) -> [DisplayProtocol] {
+    return rawElements.compactMap {
       let readableContent: String
       let htmlEncodeDetect = try! NSRegularExpression(pattern: "(&#\\d+;)+")
       let isHTMLEncoded = htmlEncodeDetect.numberOfMatches(in: $0, range: NSRange(location: 0, length: $0.count)) > 0
@@ -61,9 +60,7 @@ extension WebService {
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
       let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(readableContent)'"]) : contentTemplate
       return DisplayableContainer(name: readableContent, content: content, icon: icon, innerItem: url)
-      }.map {
-        ServicePack(provider: self, service: $0)
-     }
+    }
   }
   
   func serve(service: DisplayProtocol, withCmd: Bool) {
@@ -79,15 +76,20 @@ extension WebService {
     let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(queryContent)'"]) : contentTemplate
     guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
+    return [originalSearch]
+  }
+  
+  func supply(withInput input: [String]) -> [DisplayProtocol] {
+    let queryContent = input.joined(separator: " ")
     guard
       !suggestionTemplate.isEmpty,
-      let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+      let query = queryContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
       let suggestionURL = URL(string: suggestionTemplate.filled(arguments: [query]))
-    else { return [originalSearch] }
+    else { return [] }
     let request = URLRequest(url: suggestionURL, timeoutInterval: 60 * 60)
     let session = URLSession(configuration: .default)
     let lock = DispatchSemaphore(value: 0)
-    var suggestions: [DisplayProtocol] = []
+    let suggestions = NSMutableArray()
     session.dataTask(with: request) { (data, response, error) in
       if error != nil {
         #if DEBUG
@@ -98,10 +100,10 @@ extension WebService {
       }
       let lowerQuery = queryContent.lowercased()
       let processedData = self.parse(suggestionData: data).filter { $0.lowercased() != lowerQuery }
-      suggestions = self.present(rawElements: processedData)
+      suggestions.addObjects(from: self.present(rawElements: processedData))
       lock.signal()
     }.resume()
     _ = lock.wait(timeout: .now() + 0.2)
-    return [originalSearch] + suggestions
+    return (suggestions as? [DisplayProtocol]) ?? []
   }
 }
