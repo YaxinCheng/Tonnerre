@@ -13,18 +13,16 @@ struct SettingService: BuiltInProvider {
   let name: String = "Tonnerre Settings"
   let content: String = "Open Tonnerre setting panels"
   let argLowerBound: Int = 0
-  let argUpperBound: Int = 1
+  let argUpperBound: Int = 0
   let icon: NSImage = #imageLiteral(resourceName: "settings")
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
-    return [self]
+    return [DisplayableContainer<Int>(name: name, content: content, icon: icon, placeholder: keyword)]
   }
   
   func serve(service: DisplayProtocol, withCmd: Bool) {
-    DispatchQueue(label: "SettingPanelSetup").async {
-      let settingLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/SettingPanel.app")
-      let workspace = NSWorkspace.shared
-      _ = try? workspace.launchApplication(at: settingLocation, options: .default, configuration: [:])
-    }
+    let settingLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/SettingPanel.app")
+    let workspace = NSWorkspace.shared
+    _ = try? workspace.launchApplication(at: settingLocation, options: .default, configuration: [:])
   }
 }

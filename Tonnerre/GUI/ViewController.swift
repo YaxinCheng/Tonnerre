@@ -114,10 +114,12 @@ extension ViewController: LiteTableVCDelegate {
   func tabPressed(service: ServicePack) {
     switch service {
     case .provider(origin: let provider):
-      fieldVC.autoComplete(cmd: provider.keyword, appendingSpace: provider.argLowerBound > 0, hasKeyword: false)
+      fieldVC.autoComplete(cmd: provider.keyword, appendingSpace: provider.argLowerBound > 0
+        , hasKeyword: false, prependingSpace: false)
     case .service(provider: let provider, content: let service):
       fieldVC.autoComplete(cmd: service.placeholder, appendingSpace: false,
-                           hasKeyword: provider.keyword.starts(with: fieldVC.firstValue.lowercased()))
+                           hasKeyword: provider.keyword.starts(with: fieldVC.firstValue.lowercased()),
+                           prependingSpace: provider.defered && provider.argLowerBound == 0)
     }
     _ = fieldVC.becomeFirstResponder()
     textDidChange(value: fieldVC.stringValue)

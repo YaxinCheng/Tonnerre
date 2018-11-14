@@ -55,7 +55,7 @@ struct VolumeService: BuiltInProvider {
       semaphore.signal()
     }
     _ = semaphore.wait(timeout: .now() + 0.2)
-    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon)
+    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon, placeholder: keyword)
     guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }

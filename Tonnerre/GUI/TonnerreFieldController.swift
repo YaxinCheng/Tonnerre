@@ -69,27 +69,34 @@ final class TonnerreFieldController: NSViewController {
   
   private let stringWithOperator = try! NSRegularExpression(pattern: "^.+?(\\s(AND|OR)\\s.+?)+", options: .anchorsMatchLines)
   
-  func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool) {
+  func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool, prependingSpace: Bool) {
     defer {
       textField.window?.makeFirstResponder(nil)
       fullEditing()
     }
+    let trimmedValue = stringValue.trimmed + (prependingSpace ? " " : "")
+    let tokens = trimmedValue.components(separatedBy: .whitespaces)
+    guard !tokens.isEmpty else { return }
     guard
-      stringWithOperator.numberOfMatches(in: stringValue, options: .anchored, range: NSRange(stringValue.startIndex..., in: stringValue)) < 1
+      stringWithOperator.numberOfMatches(in: trimmedValue, options: .anchored, range: NSRange(stringValue.startIndex..., in: trimmedValue)) < 1
       else {
-        stringValue = cmd + (appendingSpace ? " " : "")
+        stringValue = (hasKeyword ? (tokens.first ?? "") : "") + cmd + (appendingSpace ? " " : "")
         return
     }
-    let tokens = stringValue.trimmed.components(separatedBy: .whitespaces)
-    guard !tokens.isEmpty else { return }
+    let (toBeCompletedString, prefixValue): (String, String)
     if hasKeyword && tokens.count > 1 {
-      let toBeCompletedString = tokens[1...].joined(separator: " ")
-      let commonPart = String(zip(toBeCompletedString, cmd).map { $0.0 })
-      let surplusPart = String(cmd[commonPart.endIndex...])
-      stringValue = (tokens.first! + " " + commonPart + surplusPart).lowercased()
+      toBeCompletedString = tokens[1...].joined(separator: " ")
+      prefixValue = tokens.first! + " "
     } else {
-      stringValue = cmd + (appendingSpace ? " " : "")
+      toBeCompletedString = trimmedValue
+      prefixValue = ""
     }
+    
+    let commonPart = String(zip(toBeCompletedString, cmd)
+                      .filter{ String($0.0).lowercased() == String($0.1).lowercased() }
+                      .map { $0.0 })
+    let surplusPart = String(cmd[commonPart.endIndex...])
+    stringValue = prefixValue + commonPart + surplusPart
   }
   
   func restore(lastQuery: String) {
