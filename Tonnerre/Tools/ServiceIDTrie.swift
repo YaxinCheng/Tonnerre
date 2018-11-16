@@ -8,11 +8,22 @@
 
 import Foundation
 
+/**
+ A trie keeps service ids with their related keywords
+ */
 struct ServiceIDTrie {
   private final class Node {
+    /// This dictionary stores the values starts with the same common prefix
+    /// with the current value + the next letter
     var children: [Character: Node]
+    /// Ordered queue of strings with the same common prefix
     var values: Heap<String>
     
+    /**
+     Construct a node with current values and its children
+     - parameter children: the children of the current node
+     - parameter values: a sequence of values that needs to be stored
+    */
     init<T: Sequence>(children: [Character: Node], values: T)
       where T.Element == String {
       self.children = children
@@ -23,6 +34,9 @@ struct ServiceIDTrie {
       }
     }
     
+    /**
+     Empty constructor
+    */
     init() {
       children = [:]
       values = Heap<String> {
@@ -32,13 +46,14 @@ struct ServiceIDTrie {
       }
     }
   }
-  
+  /// Root node of this trie
   private let rootNode: Node
-  
+  /// A list of values with empty keyword
   private var wildcards: [String] = []
   
   /**
    Insert a value into the trie
+   - parameter key: the key associated with the value
    - parameter value: the element needs to be inserted
    */
   mutating func insert(key: String, value: String) {
@@ -64,6 +79,11 @@ struct ServiceIDTrie {
     }
   }
   
+  /**
+   Update the order for a specific value with a specific key
+   - parameter key: the key is used to locate the value in the trie
+   - parameter value: the value is used to make reorder faster
+  */
   mutating func updateHeap(key: String, value: String) {
     guard !key.isEmpty else { return }
     var node = rootNode
@@ -95,6 +115,11 @@ struct ServiceIDTrie {
     return linearized
   }
   
+  /**
+   Remove a value from the trie
+   - parameter key: the key is used to locate the value in the trie
+   - parameter value: the value that needs to be removed
+  */
   mutating func remove(key: String, value: String) {
     if key.isEmpty {
       wildcards.removeAll { $0 == value }
@@ -110,19 +135,21 @@ struct ServiceIDTrie {
       node = next
     }
   }
-  
-  init(array: [(key: String, value: String)]) {
-    rootNode = Node()
-    for (key, value) in array {
-      insert(key: key, value: value)
-    }
-  }
 }
 
 extension ServiceIDTrie: ExpressibleByArrayLiteral {
   init(arrayLiteral elements: (key: String, value: String)...) {
     rootNode = Node()
     for (key, value) in elements {
+      insert(key: key, value: value)
+    }
+  }
+  
+  ///Creates an instance initialized with the given elements
+  /// - parameter array: an array of key value pairs
+  init(array: [(key: String, value: String)]) {
+    rootNode = Node()
+    for (key, value) in array {
       insert(key: key, value: value)
     }
   }

@@ -26,7 +26,7 @@ struct GoogleMapService: WebService {
   let keyword: String = "map"
   let argLowerBound: Int = 1
   let name: String = "Google Maps"
-  let contentTemplate: String = "Search %@ on Google Maps"
+  let contentTemplate: String = "Search \"%@\" on Google Maps"
   let icon: NSImage = #imageLiteral(resourceName: "googlemap")
   var alterIcon: NSImage? {
     let workspace = NSWorkspace.shared

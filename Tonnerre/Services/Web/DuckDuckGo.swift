@@ -13,7 +13,7 @@ struct DuckDuckGoSearch: WebService {
   let template: String = "https://duckduckgo.com/?q=%@"
   let keyword: String = "duck"
   let suggestionTemplate: String = "https://duckduckgo.com/ac/?&q=%@"
-  let contentTemplate: String = "Search %@ on DuckDuckGo"
+  let contentTemplate: String = "Search \"%@\" on DuckDuckGo"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "duck")

@@ -15,7 +15,7 @@ struct DisplayableContainer<T>: DisplayProtocol {
   var innerItem: T?
   let _placeholder: String?
   var placeholder: String {
-    return _placeholder == nil ? ((innerItem as? DisplayProtocol)?.placeholder ?? name) : _placeholder!
+    return _placeholder ?? ((innerItem as? DisplayProtocol)?.placeholder ?? name)
   }
   var extraContent: Any? = nil
   let alterContent: String?

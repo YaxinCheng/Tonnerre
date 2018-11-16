@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoreData
 
 /**
 Common browsers on mac, with possible URL paths and bookmarks URLs and icons
@@ -20,26 +21,21 @@ enum Browser {
   Google Chrome browser
   */
   case chrome
-  
+
   /**
   The URL locates the browser application
   - Note: the appURL can be nil when the browser is not installed in the system
   */
   var appURL: URL? {
+    let bundleID: CFString
     switch self {
     case .safari:
-      let safariURL = URL(fileURLWithPath: "/Applications/Safari.app")
-      if FileManager.default.fileExists(atPath: safariURL.path) { return safariURL }
-      else { return nil }
+      bundleID = "com.apple.safari" as CFString
     case .chrome:
-      let fileManager = FileManager.default
-      let userDir = fileManager.homeDirectoryForCurrentUser
-      let possibleURL = [URL(fileURLWithPath: "/Applications/Google Chrome.app"), userDir.appendingPathComponent("Applications/Google Chrome.app")]
-      for url in possibleURL where fileManager.fileExists(atPath: url.path) {
-        return url
-      }
-      return nil
+      bundleID = "com.google.chrome" as CFString
     }
+    return (LSCopyApplicationURLsForBundleIdentifier(bundleID, nil)?
+      .takeRetainedValue() as? [URL])?.first
   }
   
   /**

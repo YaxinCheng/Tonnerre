@@ -12,8 +12,8 @@ struct CalculationService: BuiltInProvider {
   let keyword: String = ""
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
-  let alterContent: String? = "Copy to clipboard"
-  let content: String = "A quick access to calculator"
+  let alterContent: String? = "Open calculator with this value in"
+  let content: String = "A quick access to calculator. Select to copy to clipboard"
   let icon: NSImage = .calculator
   private let tokenizer = MathTokenizer()
   private let parser = MathParser()
@@ -23,7 +23,7 @@ struct CalculationService: BuiltInProvider {
     do {
       let tokens = try tokenizer.tokenize(expression: rawExpression)
       let calculationResult = try parser.parse(tokens: tokens)
-      return [DisplayableContainer<Error>(name: "\(calculationResult.value)", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayableContainer<Int>(name: "\(calculationResult.value)", content: rawExpression, icon: icon)]
     } catch MathError.zeroDivision {
       return [DisplayableContainer<Error>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
     } catch MathError.unclosedBracket {
@@ -40,7 +40,7 @@ struct CalculationService: BuiltInProvider {
       let result = service as? DisplayableContainer<Int>,
       let _ = Double(result.name)
     else { return }
-    if withCmd {
+    if !withCmd {
       let pasteboard: NSPasteboard = .general
       pasteboard.declareTypes([.string], owner: nil)
       pasteboard.setString(result.name, forType: .string)

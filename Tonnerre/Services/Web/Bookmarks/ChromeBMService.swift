@@ -9,38 +9,37 @@
 import Cocoa
 
 struct ChromeBMService: BookMarkService {
-  typealias rawDataType = Dictionary<String, Any>
   let name: String = "Chrome BookMarks"
   let content: String = "Quick launch Chrome Bookmarks"
   let keyword: String = "chrome"
   let defered: Bool = true
   static let browser: Browser = .chrome
   
+  init() {
+    let disableManager = DisableManager.shared
+    let isDisabled = disableManager.isDisabled(provider: self)
+    if ChromeBMService.browser.appURL == nil || isDisabled {
+      disableManager.disable(providerID: id)
+    } else {
+      disableManager.enable(providerID: id)
+    }
+  }
+  
   func parseFile() throws -> [BookMarkService.BookMark] {
     guard let bmFile = type(of: self).browser.bookMarksFile else { return [] }
     let jsonData = try Data(contentsOf: bmFile)
-    let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
-    guard let bookmarkSource = jsonObject as? Dictionary<String, Any> else { return [] }
-    return parse(rawFile: bookmarkSource)
+    guard let jsonObject = JSON(data: jsonData) else { return [] }
+    let bookmarBar = (jsonObject["roots", "bookmark_bar", "children"] as? [Dictionary<String, Any>]) ?? []
+    let other = (jsonObject["roots", "other", "children"] as? [Dictionary<String, Any>]) ?? []
+    return bookmarBar.compactMap(parse) + other.compactMap(parse)
   }
   
-  private func parse(rawFile: Dictionary<String, Any>) -> [BookMarkService.BookMark] {
-    if let root = rawFile["roots"] as? Dictionary<String, Any> {
-      return parse(rawFile: root)
-    } else {
-      return rawFile.compactMap { (_, value) -> [BookMark] in
-        guard
-          let children = (value as? Dictionary<String, Any>)?["children"] as? [Dictionary<String, Any>]
-        else { return [] }
-        return children.compactMap {
-          guard
-            let name = $0["name"] as? String,
-            let URLString = $0["url"] as? String,
-            let url = URL(string: URLString)
-          else { return nil }
-          return (name, url) as BookMark
-        }
-      }.reduce([], +)
-    }
+  private func parse(rawContent: Dictionary<String, Any>) -> BookMarkService.BookMark? {
+    guard
+      let name = rawContent["name"] as? String,
+      let URLString = rawContent["url"] as? String,
+      let url = URL(string: URLString)
+    else { return nil }
+    return (name, url)
   }
 }

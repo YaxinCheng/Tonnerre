@@ -13,7 +13,7 @@ struct AmazonSearch: WebService {
   let name: String = "Amazon"
   let template: String = "https://www.amazon.%@/s/?field-keywords=%@"
   let suggestionTemplate: String = "https://completion.amazon.com/search/complete?search-alias=aps&client=amazon-search-ui&mkt=1&q=%@"
-  let contentTemplate: String = "Shopping %@ on Amazon"
+  let contentTemplate: String = "Shopping \"%@\" on Amazon"
   let keyword: String = "amazon"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max

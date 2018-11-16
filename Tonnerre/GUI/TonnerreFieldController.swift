@@ -91,12 +91,9 @@ final class TonnerreFieldController: NSViewController {
       toBeCompletedString = trimmedValue
       prefixValue = ""
     }
-    
-    let commonPart = String(zip(toBeCompletedString, cmd)
-                      .filter{ String($0.0).lowercased() == String($0.1).lowercased() }
-                      .map { $0.0 })
+    let commonPart = toBeCompletedString.commonPrefix(with: cmd, options: [.caseInsensitive, .anchored])
     let surplusPart = String(cmd[commonPart.endIndex...])
-    stringValue = prefixValue + commonPart + surplusPart
+    stringValue = prefixValue + commonPart + surplusPart + (appendingSpace ? " " : "")
   }
   
   func restore(lastQuery: String) {
