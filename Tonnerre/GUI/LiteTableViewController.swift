@@ -153,18 +153,18 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       delegate?.serve(servicePack, withCmd: false)
     case 12: // Q
       guard event.modifierFlags.contains(.command) else { return }
-      if event.isARepeat { // Long hold cmd + Q
+      if type(of: self).canExit { // Double clicked cmd + Q
         #if DEBUG
-        print("long hold trigered (\(String.CMD) + Q)")
+        print("Double click trigered (\(String.CMD) + Q)")
         #else
-        let finder = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.finder").first
-        finder?.activate(options: .activateIgnoringOtherApps)
         exit(0)
         #endif
       } else {
-        delegate?.updatePlaceholder(string: "Long hold \(String.CMD) + Q to exit")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        delegate?.updatePlaceholder(string: " Double click \(String.CMD) + Q to exit")
+        type(of: self).canExit = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
           self?.delegate?.updatePlaceholder(string: nil)
+          LiteTableViewController.canExit = false
         }
       }
     default:
@@ -200,4 +200,8 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
     }
     return cell
   }
+}
+
+fileprivate extension LiteTableViewController {
+  static var canExit: Bool = false
 }
