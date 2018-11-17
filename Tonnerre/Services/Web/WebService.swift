@@ -58,7 +58,7 @@ extension WebService {
         readableContent = $0.removingPercentEncoding ?? $0
       }
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
-      let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(readableContent)'"]) : contentTemplate
+      let content = contentTemplate.filled(arguments: ["\(readableContent)"])
       return DisplayableContainer(name: readableContent, content: content, icon: icon, innerItem: url)
     }
   }
@@ -73,7 +73,7 @@ extension WebService {
     let queryURL = fillInTemplate(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ")
-    let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(queryContent)'"]) : contentTemplate
+    let content = contentTemplate.filled(arguments: ["\(queryContent)"])
     guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     return [originalSearch]

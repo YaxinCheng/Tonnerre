@@ -11,30 +11,20 @@ import TonnerreSearch
 
 struct IndexStorage {
   private static var storedIndexes = [TonnerreIndex?](repeating: nil, count: 3)
-  private static var readonlyIndexes = [TonnerreIndex?](repeating: nil, count: 3)
   
   subscript(index: SearchMode) -> TonnerreIndex {
-    if let indexFile = IndexStorage.readonlyIndexes[index.storedInt] {
-      return indexFile
-    } else {
-      let tnIndex = TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: false)!
-      IndexStorage.readonlyIndexes[index.storedInt] = tnIndex
-      return tnIndex
-    }
+    return self[index, false]
   }
   
   subscript(index: SearchMode, writable: Bool) -> TonnerreIndex {
     get {
-      guard writable else { return self[index] }
       if let indexFile = IndexStorage.storedIndexes[index.storedInt] {
+        IndexStorage.storedIndexes[index.storedInt] = indexFile
         return indexFile
       } else {
-        let tnIndex = TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: writable)!
-        IndexStorage.storedIndexes[index.storedInt] = tnIndex
-        return tnIndex
+        return TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: writable)!
       }
     } set {
-      guard writable else { return }
       IndexStorage.storedIndexes[index.storedInt] = newValue
     }
   }

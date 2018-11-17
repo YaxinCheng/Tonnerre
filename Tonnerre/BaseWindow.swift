@@ -30,6 +30,7 @@ final class BaseWindow: NSPanel {
           self.orderFrontRegardless()
         }
       }
+      launchHelper()
       #endif
     }
   }
@@ -74,7 +75,6 @@ final class BaseWindow: NSPanel {
     isOpaque = false
     backgroundColor = .clear
     collectionBehavior.insert(.canJoinAllSpaces)
-    DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
     
     folderChecks()
     setupCache()
@@ -119,8 +119,12 @@ final class BaseWindow: NSPanel {
   
   @objc private func launchHelper() {
     #if RELEASE
-    let helperLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/TonnerreIndexHelper.app")
     let workspace = NSWorkspace.shared
+    guard
+      NSRunningApplication
+      .runningApplications(withBundleIdentifier: "com.ycheng.Tonnerre.helper").count < 1
+    else { return }
+    let helperLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/TonnerreIndexHelper.app")
     _ = try? workspace.launchApplication(at: helperLocation, options: .andHide, configuration: [:])
     #endif
   }

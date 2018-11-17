@@ -20,7 +20,7 @@ final class TonnerreSession {
   private var taskQueue: [DispatchWorkItem] = []
   
   init() {
-    queue = DispatchQueue(label: "Tonnerre.Session.Queue", qos: .userInitiated, attributes: .concurrent)
+    queue = DispatchQueue(label: "Tonnerre.Session.Queue", qos: .userInteractive, attributes: .concurrent)
     lock  = DispatchSemaphore(value: 1)
   }
   
