@@ -134,11 +134,16 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       delegate?.serve(servicePack, withCmd: withCmd)
     case 49: // space
       (tableView.highlightedCell as? ServiceCell)?.preview()
-    case 53:
+    case 53: // ESC
+      guard event.modifierFlags.rawValue == 256 else { return }
       if PreviewPopover.shared.isShown == true {
         PreviewPopover.shared.close()
       } else {
+        #if DEBUG
+        print("ESC pressed")
+        #else
         (tableView.window as? BaseWindow)?.isHidden = true
+        #endif
       }
     case 18...23, 25, 26, 28, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }

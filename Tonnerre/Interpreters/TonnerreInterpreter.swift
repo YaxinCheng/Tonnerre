@@ -100,6 +100,6 @@ final class TonnerreInterpreter {
         }
       }
     }
-    session.enqueue(task: asyncTask, after: 0.2)
+    session.enqueue(task: asyncTask)
   }
 }

@@ -17,9 +17,20 @@ final class TonnerreSession {
   static let shared = TonnerreSession()
   
   private let queue: DispatchQueue
-  private var taskQueue: [DispatchWorkItem] = []
+  private var taskQueue: [DispatchWorkItem] = [] {
+    didSet {
+      var task: DispatchWorkItem! = nil
+      while taskQueue.count > 0 {
+        task = taskQueue.removeFirst()
+        if !task.isCancelled { break }
+      }
+      lock.signal()
+      guard task != nil else { return }
+      queue.async(execute: task)
+    }
+  }
   
-  init() {
+  private init() {
     queue = DispatchQueue(label: "Tonnerre.Session.Queue", qos: .userInteractive, attributes: .concurrent)
     lock  = DispatchSemaphore(value: 1)
   }
@@ -29,26 +40,13 @@ final class TonnerreSession {
     lock = DispatchSemaphore(value: 1)
   }
   
-  func enqueue(task: DispatchWorkItem, after second: Double = 0) {
+  func enqueue(task: DispatchWorkItem) {
     lock.wait()
     taskQueue.append(task)
-    lock.signal()
-
-    lock.wait()
-    guard
-      taskQueue.count != 0,
-      taskQueue.first?.isCancelled == false
-    else {
-      lock.signal()
-      return
-    }
-    let task = taskQueue.removeFirst()
-    lock.signal()
-    
-    queue.asyncAfter(deadline: .now() + second, execute: task)
   }
   
   func cancel() {
+    lock.wait()
     taskQueue.removeAll()
   }
 
