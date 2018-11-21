@@ -72,7 +72,7 @@ extension ServiceProvider {
   
   private func findLongestMatchScore(withPattern pattern: String) -> UInt8 {
     let gain = Double(pattern.count) / Double(keyword.count)
-    let lose = (pattern.first == keyword.first ? 0 : 0.1)
+    let lose = keyword.starts(with: pattern) ? -0.1 : 0.1
     return UInt8(min(max((gain - lose) * 100, 0), 100))
   }
   

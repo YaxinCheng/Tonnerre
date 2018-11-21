@@ -26,7 +26,6 @@ final class ViewController: NSViewController {
     return fieldController
   }()
   
-  private var lastQuery: String = ""
   private let asyncSession = TonnerreSession.shared
   
   override func viewDidLoad() {
@@ -126,7 +125,7 @@ extension ViewController: LiteTableVCDelegate {
   }
   
   func retrieveLastQuery() {
-    fieldVC.restore(lastQuery: lastQuery)
+    fieldVC.restore()
     textDidChange(value: fieldVC.stringValue)
   }
   
@@ -140,6 +139,5 @@ extension ViewController: LiteTableVCDelegate {
       (self?.view.window as? BaseWindow)?.isHidden = true
       self?.fieldVC.stringValue = ""
     }
-    lastQuery = fieldVC.stringValue
   }
 }

@@ -18,6 +18,7 @@ final class TonnerreFieldController: NSViewController {
   weak var delegate: TonnerreFieldDelegate?
   @IBOutlet weak var textFieldWidth: NSLayoutConstraint!
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
+  private var lastQuery: String = ""
   
   var firstValue: String {
     guard let spaceIndex = stringValue.firstIndex(of: " ") else { return stringValue }
@@ -55,6 +56,7 @@ final class TonnerreFieldController: NSViewController {
     get {
       return textField.stringValue
     } set {
+      if newValue.isEmpty { lastQuery = textField.stringValue }
       textField.stringValue = newValue
     }
   }
@@ -96,7 +98,7 @@ final class TonnerreFieldController: NSViewController {
     stringValue = prefixValue + commonPart + surplusPart + (appendingSpace ? " " : "")
   }
   
-  func restore(lastQuery: String) {
+  func restore() {
     textField.stringValue = lastQuery
     adjustEditing(withString: lastQuery)
     textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
