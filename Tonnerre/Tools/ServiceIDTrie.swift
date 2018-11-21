@@ -17,7 +17,7 @@ struct ServiceIDTrie {
     /// with the current value + the next letter
     var children: [Character: Node]
     /// Ordered queue of strings with the same common prefix
-    var values: Heap<String>
+    var values: Array<String>
     
     /**
      Construct a node with current values and its children
@@ -27,11 +27,7 @@ struct ServiceIDTrie {
     init<T: Sequence>(children: [Character: Node], values: T)
       where T.Element == String {
       self.children = children
-      self.values = Heap<String>(newElements: values) {
-        ProviderMap.shared.getSortingScore(byID: $0)
-        >
-        ProviderMap.shared.getSortingScore(byID: $1)
-      }
+      self.values = Array(values)
     }
     
     /**
@@ -39,11 +35,7 @@ struct ServiceIDTrie {
     */
     init() {
       children = [:]
-      values = Heap<String> {
-        ProviderMap.shared.getSortingScore(byID: $0)
-          >
-        ProviderMap.shared.getSortingScore(byID: $1)
-      }
+      values = []
     }
   }
   /// Root node of this trie
@@ -63,12 +55,12 @@ struct ServiceIDTrie {
     }
     var node = rootNode
     var index = key.startIndex
-    node.values.add(value) // Always add every value to the root
+    node.values.append(value) // Always add every value to the root
     while index < key.endIndex { // Going through the characters
       let char = key[index]
       guard let next = node.children[char] else { break } // Make sure there is existing entry, otherwise break
       node = next
-      node.values.add(value)
+      node.values.append(value)
       index = key.index(after: index)
     }
     if index < key.endIndex && index >= key.startIndex {// Add new entries into the trie
@@ -76,24 +68,6 @@ struct ServiceIDTrie {
         node.children[char] = Node(children: [:], values: [value])
         node = node.children[char]!
       }
-    }
-  }
-  
-  /**
-   Update the order for a specific value with a specific key
-   - parameter key: the key is used to locate the value in the trie
-   - parameter value: the value is used to make reorder faster
-  */
-  mutating func updateHeap(key: String, value: String) {
-    guard !key.isEmpty else { return }
-    var node = rootNode
-    for character in key {
-      guard
-        let next = node.children[character]
-      else { return }
-      let index = node.values.find(element: value)
-      node.values.reorderUp(from: index)
-      node = next
     }
   }
   
@@ -109,10 +83,7 @@ struct ServiceIDTrie {
       guard let next = node.children[char] else { return wildcards }
       node = next
     }
-    var valuesCopy = node.values
-    valuesCopy.add(contentOf: wildcards)
-    let linearized = valuesCopy.linearized()
-    return linearized
+    return wildcards + node.values
   }
   
   /**
@@ -125,13 +96,13 @@ struct ServiceIDTrie {
       wildcards.removeAll { $0 == value }
       return
     }
-    rootNode.values.remove(element: value)
+    rootNode.values.removeAll { $0 == value }
     var node = rootNode
     for character in key {
       guard
         let next = node.children[character]
       else { return }
-      next.values.remove(element: value)
+      next.values.removeAll { $0 == value }
       node = next
     }
   }

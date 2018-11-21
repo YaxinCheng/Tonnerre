@@ -69,4 +69,26 @@ extension ServiceProvider {
   func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
     return
   }
+  
+  private func findLongestMatchScore(withPattern pattern: String) -> UInt8 {
+    let gain = Double(pattern.count) / Double(keyword.count)
+    let lose = (pattern.first == keyword.first ? 0 : 0.1)
+    return UInt8(min(max((gain - lose) * 100, 0), 100))
+  }
+  
+  private func getLastVisitScore() -> UInt8 {
+    let lastVisit = LaunchOrder.retrieveTime(with: id)
+    let timeDiffScore = 100 + max(lastVisit.timeIntervalSinceNow / 60, -100)
+    return UInt8(timeDiffScore)
+  }
+  
+  func sortingScore(query: String) -> UInt8 {
+    let keywordScore = keyword.isEmpty ? 50 : findLongestMatchScore(withPattern: query)
+    let lastVisiScore = getLastVisitScore()
+    return keywordScore + lastVisiScore
+  }
+  
+  func updateSortingScore() {
+    LaunchOrder.save(with: id)
+  }
 }
