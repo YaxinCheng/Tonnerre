@@ -22,9 +22,45 @@ struct ClipboardService: BuiltInProvider {
     CBRecord.recordInsert(value: value, type: type.rawValue, appURL: frontMostApp?.bundleURL, limit: 9)
   }
   
-  private func remove(value: String) {
-    let predicate = NSPredicate(format: "value=%@", value)
-    CBRecord.removeAll(predicate: predicate)
+  private func wrap(record: CBRecord) -> DisplayProtocol? {
+    guard
+      let type = record.type,
+      let value = record.value?.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression),
+      let time = record.time
+    else { return nil }
+    if type == "public.file-url" {
+      guard
+        let url = URL(string: value),
+        FileManager.default.fileExists(atPath: url.path)
+      else { return nil }
+      let name = value.components(separatedBy: "/").last?
+        .removingPercentEncoding ?? ""
+      let content = url.path
+      let alterContent = "Show file in Finder"
+      let icon = NSWorkspace.shared.icon(forFile: url.path)
+      return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url)
+    } else if value.lowercased().starts(with: "http://")
+      || value.lowercased().starts(with: "https://") {
+      guard
+        let url = URL(string: value)
+      else { return nil }
+      let dateFmt = DateFormatter()
+      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
+      let sourceContent = record.application == nil ? "" : " from: \(record.application!.deletingPathExtension().lastPathComponent),"
+      let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
+      let alterContent = "Open copied URL in default browser"
+      let browser: Browser = .default
+      return DisplayableContainer(name: value, content: content, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url)
+    } else {
+      let appURL = record.application
+      let iconFromApp: NSImage? = appURL == nil ? nil : NSWorkspace.shared.icon(forFile: appURL!.path)
+      let dateFmt = DateFormatter()
+      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
+      let sourceContent = appURL == nil ? "" : " from: \(appURL!.deletingPathExtension().lastPathComponent),"
+      let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
+      let icon: NSImage = iconFromApp ?? self.icon
+      return DisplayableContainer(name: value, content: content, icon: icon, innerItem: value)
+    }
   }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
@@ -41,53 +77,18 @@ struct ClipboardService: BuiltInProvider {
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
     do {
-      return copy + (try context.fetch(fetchRequest).compactMap {
-        guard
-          let type = $0.type,
-          let value = $0.value?.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression),
-          let time = $0.time
-        else { return nil }
-        if type == "public.file-url" {
-          guard
-            let url = URL(string: value),
-            FileManager.default.fileExists(atPath: url.path)
-          else {
-            remove(value: value)
-            return nil
-          }
-          let name = value.components(separatedBy: "/").last?
-            .removingPercentEncoding ?? ""
-          let content = url.path
-          let alterContent = "Show file in Finder"
-          let icon = NSWorkspace.shared.icon(forFile: url.path)
-          return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url)
-        } else if value.lowercased().starts(with: "http://")
-          || value.lowercased().starts(with: "https://") {
-          guard
-            let url = URL(string: value)
-          else {
-            remove(value: value)
-            return nil
-          }
-          let dateFmt = DateFormatter()
-          dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-          let sourceContent = $0.application == nil ? "" : " from: \($0.application!.deletingPathExtension().lastPathComponent),"
-          let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
-          let alterContent = "Open copied URL in default browser"
-          let browserURL = NSWorkspace.shared.urlForApplication(toOpen: url)
-          let icon = NSWorkspace.shared.icon(forFile: browserURL?.path ?? "/Applications/Safari.app")
-          return DisplayableContainer(name: value, content: content, icon: icon, alterContent: alterContent, innerItem: url)
+      let clipboardRecords = try context.fetch(fetchRequest)
+      let context = getContext()
+      var displayableRecords: [DisplayProtocol] = []
+      for record in clipboardRecords {
+        if let wrapped = wrap(record: record) {
+          displayableRecords.append(wrapped)
         } else {
-          let appURL = $0.application
-          let iconFromApp: NSImage? = appURL == nil ? nil : NSWorkspace.shared.icon(forFile: appURL!.path)
-          let dateFmt = DateFormatter()
-          dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-          let sourceContent = appURL == nil ? "" : " from: \(appURL!.deletingPathExtension().lastPathComponent),"
-          let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
-          let icon: NSImage = iconFromApp ?? .notes ?? self.icon
-          return DisplayableContainer(name: value, content: content, icon: icon, innerItem: $0.value)
+          context.delete(record)
         }
-      })
+      }
+      try context.save()
+      return copy + displayableRecords
     } catch {
       return copy
     }

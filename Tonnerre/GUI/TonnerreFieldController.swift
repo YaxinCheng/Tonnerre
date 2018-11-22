@@ -43,6 +43,7 @@ final class TonnerreFieldController: NSViewController {
   override func viewDidAppear() {
     super.viewDidAppear()
     _ = textField.becomeFirstResponder()
+    placeholderField.font = textField.font
   }
   
   override func viewWillDisappear() {
@@ -149,7 +150,7 @@ extension TonnerreFieldController: NSTextFieldDelegate {
   
   private func calculateSize(value: String) -> NSSize {
     let cell = NSTextFieldCell(textCell: value)
-    cell.attributedStringValue = NSAttributedString(string: value, attributes: [.font: NSFont.systemFont(ofSize: 33.5)])
+    cell.attributedStringValue = NSAttributedString(string: value, attributes: [.font: textField.font!])
     return cell.cellSize
   }
   

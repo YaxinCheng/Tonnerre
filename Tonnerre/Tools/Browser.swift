@@ -21,6 +21,10 @@ enum Browser {
   Google Chrome browser
   */
   case chrome
+  /**
+  Default browser of the system
+  */
+  case `default`
 
   /**
   The URL locates the browser application
@@ -33,6 +37,8 @@ enum Browser {
       bundleID = "com.apple.safari" as CFString
     case .chrome:
       bundleID = "com.google.chrome" as CFString
+    case .default:
+      return NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!)
     }
     return (LSCopyApplicationURLsForBundleIdentifier(bundleID, nil)?
       .takeRetainedValue() as? [URL])?.first
@@ -48,6 +54,8 @@ enum Browser {
       return .safari
     case .chrome:
       return NSImage(contentsOf: url.appendingPathComponent("Contents/Resources/app.icns"))
+    case .default:
+      return NSWorkspace.shared.icon(forFile: url.path)
     }
   }
   
@@ -63,6 +71,13 @@ enum Browser {
     case .chrome:
       let appSupDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
       return appSupDir?.appendingPathComponent("Google/Chrome/Default/Bookmarks")
+    case .default:
+      guard let url = appURL else { return nil }
+      switch url.deletingPathExtension().lastPathComponent.lowercased() {
+      case "Safari": return Browser.safari.bookMarksFile
+      case "Chrome": return Browser.chrome.bookMarksFile
+      default: return nil
+      }
     }
   }
   
@@ -70,10 +85,11 @@ enum Browser {
   The browser name
   */
   var name: String {
-    guard appURL != nil else { return "Not Found" }
+    guard let url = appURL else { return "Not Found" }
     switch self {
     case .safari: return "Safari"
     case .chrome: return "Google Chrome"
+    case .default: return url.deletingPathExtension().lastPathComponent
     }
   }
 }

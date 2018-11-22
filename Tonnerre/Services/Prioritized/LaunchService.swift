@@ -24,8 +24,7 @@ struct LaunchService: BuiltInProvider {
     let indexStorage = IndexStorage()
     let index = indexStorage[.default]
     let query = input.joined(separator: " ")
-    guard !query.starts(with: "http") else { return [] }
-    return index.search(query: query + "*", limit: 9 * 9, options: .default).map {
+    return index.search(query: query + "*", limit: 5 * 9, options: .default).map {
       let fileName: String = $0.deletingPathExtension().lastPathComponent
       let name: String
       if $0.pathExtension == "prefPane" {

@@ -37,7 +37,11 @@ final class TonnerreInterpreter {
         .filter { !DisableManager.shared.isDisabled(provider: $0) }
         .filter { !$0.defered || $0.keyword == tokens.first! }
         .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
-        .sorted { $0.sortingScore(query: tokens.first!) > $1.sortingScore(query: tokens.first!) }
+        .sorted {
+          DisplayOrder.sortingScore(baseString: $0.keyword, query: tokens.first!, timeIdentifier: $0.id)
+            >
+          DisplayOrder.sortingScore(baseString: $1.keyword, query: tokens.first!, timeIdentifier: $1.id)
+        }
       cache.previousProvider = providers
     }
     cache.previousRequest = input

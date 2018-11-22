@@ -27,7 +27,7 @@ final class ProviderMap {
           guard let provider = TNEServiceProvider(scriptPath: fileURL) else { continue }
           self.pathWithService[fileURL.path] = provider
           self.register(provider: provider)
-          TonnerreInterpreter.serviceIDTrie.insert(key: provider.keyword, value: provider.id)
+          TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
         }
       } catch {
         #if DEBUG
@@ -71,14 +71,14 @@ final class ProviderMap {
       else { return }
       self.pathWithService[$0.path] = provider
       self.register(provider: provider)
-      TonnerreInterpreter.serviceIDTrie.insert(key: provider.keyword, value: provider.id)
+      TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
     }
     
     let remove: (URL)->Void = {
       guard let provider = self.pathWithService[$0.path] else { return }
       self.pathWithService[$0.path] = nil
       self.unregister(provider: provider)
-      TonnerreInterpreter.serviceIDTrie.remove(key: provider.keyword, value: provider.id)
+      TonnerreInterpreter.serviceIDTrie.remove(value: provider.id)
     }
     
     queue.async { [unowned self] in

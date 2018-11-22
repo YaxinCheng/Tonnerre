@@ -42,29 +42,32 @@ struct ServiceIDTrie {
   private let rootNode: Node
   /// A list of values with empty keyword
   private var wildcards: [String] = []
+  private var removedValues: Set<String> = []
   
   /**
    Insert a value into the trie
    - parameter key: the key associated with the value
    - parameter value: the element needs to be inserted
    */
-  mutating func insert(key: String, value: String) {
-    if key.isEmpty {
+  mutating func insert(value: String, key: @autoclosure ()->String) {
+    let keyword = key()
+    removedValues.remove(value)
+    if keyword.isEmpty {
       wildcards.append(value)
       return
     }
     var node = rootNode
-    var index = key.startIndex
+    var index = keyword.startIndex
     node.values.append(value) // Always add every value to the root
-    while index < key.endIndex { // Going through the characters
-      let char = key[index]
+    while index < keyword.endIndex { // Going through the characters
+      let char = keyword[index]
       guard let next = node.children[char] else { break } // Make sure there is existing entry, otherwise break
       node = next
       node.values.append(value)
-      index = key.index(after: index)
+      index = keyword.index(after: index)
     }
-    if index < key.endIndex && index >= key.startIndex {// Add new entries into the trie
-      for char in key[index...] {
+    if index < keyword.endIndex && index >= keyword.startIndex {// Add new entries into the trie
+      for char in keyword[index...] {
         node.children[char] = Node(children: [:], values: [value])
         node = node.children[char]!
       }
@@ -83,28 +86,15 @@ struct ServiceIDTrie {
       guard let next = node.children[char] else { return wildcards }
       node = next
     }
-    return wildcards + node.values
+    return (wildcards + node.values).filter { !removedValues.contains($0) }
   }
   
   /**
    Remove a value from the trie
-   - parameter key: the key is used to locate the value in the trie
    - parameter value: the value that needs to be removed
   */
-  mutating func remove(key: String, value: String) {
-    if key.isEmpty {
-      wildcards.removeAll { $0 == value }
-      return
-    }
-    rootNode.values.removeAll { $0 == value }
-    var node = rootNode
-    for character in key {
-      guard
-        let next = node.children[character]
-      else { return }
-      next.values.removeAll { $0 == value }
-      node = next
-    }
+  mutating func remove(value: String) {
+    removedValues.insert(value)
   }
 }
 
@@ -112,7 +102,7 @@ extension ServiceIDTrie: ExpressibleByArrayLiteral {
   init(arrayLiteral elements: (key: String, value: String)...) {
     rootNode = Node()
     for (key, value) in elements {
-      insert(key: key, value: value)
+      insert(value: value, key: key)
     }
   }
   
@@ -121,7 +111,7 @@ extension ServiceIDTrie: ExpressibleByArrayLiteral {
   init(array: [(key: String, value: String)]) {
     rootNode = Node()
     for (key, value) in array {
-      insert(key: key, value: value)
+      insert(value: value, key: key)
     }
   }
 }
