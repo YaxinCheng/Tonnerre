@@ -29,7 +29,7 @@ extension LimitedDataProtocol {
     }
   }
   
-  static func uniquelize(predicate: NSPredicate) {
+  static func removeAll(predicate: NSPredicate) {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(Self.self)")
     fetchRequest.predicate = predicate
     let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
