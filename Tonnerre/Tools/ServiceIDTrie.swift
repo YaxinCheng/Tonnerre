@@ -17,7 +17,7 @@ struct ServiceIDTrie {
     /// with the current value + the next letter
     var children: [Character: Node]
     /// Ordered queue of strings with the same common prefix
-    var values: Array<String>
+    var values: Set<String>
     
     /**
      Construct a node with current values and its children
@@ -27,7 +27,7 @@ struct ServiceIDTrie {
     init<T: Sequence>(children: [Character: Node], values: T)
       where T.Element == String {
       self.children = children
-      self.values = Array(values)
+      self.values = Set(values)
     }
     
     /**
@@ -58,12 +58,12 @@ struct ServiceIDTrie {
     }
     var node = rootNode
     var index = keyword.startIndex
-    node.values.append(value) // Always add every value to the root
+    node.values.insert(value) // Always add every value to the root
     while index < keyword.endIndex { // Going through the characters
       let char = keyword[index]
       guard let next = node.children[char] else { break } // Make sure there is existing entry, otherwise break
       node = next
-      node.values.append(value)
+      node.values.insert(value)
       index = keyword.index(after: index)
     }
     if index < keyword.endIndex && index >= keyword.startIndex {// Add new entries into the trie
@@ -86,7 +86,8 @@ struct ServiceIDTrie {
       guard let next = node.children[char] else { return wildcards }
       node = next
     }
-    return (wildcards + node.values).filter { !removedValues.contains($0) }
+    return wildcards.filter { !removedValues.contains($0) } +
+      node.values.subtracting(removedValues)
   }
   
   /**
