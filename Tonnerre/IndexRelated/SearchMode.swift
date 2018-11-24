@@ -58,7 +58,10 @@ enum SearchMode: String {
   func canInclude(fileURL: URL) -> Bool {
     switch self {
     case .default:
-      return FileTypeControl(types: .app, .systemPref).isInControl(file: fileURL)
+      let allowedExtensions: Set<String> = ["app", "pref"]
+      return
+        allowedExtensions.contains(fileURL.pathExtension) ||
+        FileTypeControl(types: .app, .systemPref).isInControl(file: fileURL)
     case .content:
       return FileTypeControl(types: .document, .message).isInControl(file: fileURL)
     case .name:
