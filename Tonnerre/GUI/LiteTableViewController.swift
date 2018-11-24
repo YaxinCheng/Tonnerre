@@ -162,6 +162,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
         #if DEBUG
         print("Double click trigered (\(String.CMD) + Q)")
         #else
+        TonnerreHelper.terminate()
         exit(0)
         #endif
       } else {

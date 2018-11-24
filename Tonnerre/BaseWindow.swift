@@ -119,13 +119,7 @@ final class BaseWindow: NSPanel {
   
   @objc private func launchHelper() {
     #if RELEASE
-    let workspace = NSWorkspace.shared
-    guard
-      NSRunningApplication
-      .runningApplications(withBundleIdentifier: "com.ycheng.Tonnerre.helper").count < 1
-    else { return }
-    let helperLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/TonnerreIndexHelper.app")
-    _ = try? workspace.launchApplication(at: helperLocation, options: .andHide, configuration: [:])
+    TonnerreHelper.launch()
     #endif
   }
   

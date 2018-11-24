@@ -148,6 +148,7 @@
 		14F1099B218BA43C003A5E07 /* TonnerreFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F1099A218BA43C003A5E07 /* TonnerreFieldDelegate.swift */; };
 		14F2302D214206F100B7A0FB /* String+fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302C214206F100B7A0FB /* String+fill.swift */; };
 		14F230302147467C00B7A0FB /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
+		14F5701F21A9E7A000AE269B /* TonnerreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 		14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE26F21938529009A4798 /* ServiceProvider.swift */; };
 		14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
@@ -370,6 +371,7 @@
 		14F10998218BA2C7003A5E07 /* TonnerreFieldController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreFieldController.swift; sourceTree = "<group>"; };
 		14F1099A218BA43C003A5E07 /* TonnerreFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreFieldDelegate.swift; sourceTree = "<group>"; };
 		14F2302C214206F100B7A0FB /* String+fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+fill.swift"; sourceTree = "<group>"; };
+		14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreHelper.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 		14FEE26F21938529009A4798 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		14FEE2712193CE62009A4798 /* DisabledManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledManager.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				145CF984218A5352003B9468 /* JSON.swift */,
 				14FF21382191279F00F505B3 /* ManagedList.swift */,
 				14454D2221989E0D008F1A8B /* Heap.swift */,
+				14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1078,6 +1081,7 @@
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */,
+				14F5701F21A9E7A000AE269B /* TonnerreHelper.swift in Sources */,
 				1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */,

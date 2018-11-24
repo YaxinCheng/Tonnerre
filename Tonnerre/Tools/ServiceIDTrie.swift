@@ -17,7 +17,7 @@ struct ServiceIDTrie {
     /// with the current value + the next letter
     var children: [Character: Node]
     /// Ordered queue of strings with the same common prefix
-    var values: Set<String>
+    var values: Array<String>
     
     /**
      Construct a node with current values and its children
@@ -27,7 +27,7 @@ struct ServiceIDTrie {
     init<T: Sequence>(children: [Character: Node], values: T)
       where T.Element == String {
       self.children = children
-      self.values = Set(values)
+      self.values = Array(values)
     }
     
     /**
@@ -51,19 +51,18 @@ struct ServiceIDTrie {
    */
   mutating func insert(value: String, key: @autoclosure ()->String) {
     let keyword = key()
-    removedValues.remove(value)
     if keyword.isEmpty {
       wildcards.append(value)
       return
-    }
+    } else if removedValues.remove(value) != nil { return }
     var node = rootNode
     var index = keyword.startIndex
-    node.values.insert(value) // Always add every value to the root
+    node.values.append(value) // Always add every value to the root
     while index < keyword.endIndex { // Going through the characters
       let char = keyword[index]
       guard let next = node.children[char] else { break } // Make sure there is existing entry, otherwise break
       node = next
-      node.values.insert(value)
+      node.values.append(value)
       index = keyword.index(after: index)
     }
     if index < keyword.endIndex && index >= keyword.startIndex {// Add new entries into the trie
@@ -80,14 +79,13 @@ struct ServiceIDTrie {
    - returns: an array of elements that share the same beginning as the `value`
    */
   func find(basedOn key: String) -> [String] {
-    if key.isEmpty { return wildcards }
+    if key.isEmpty { return Array(wildcards) }
     var node = rootNode
     for char in key {
-      guard let next = node.children[char] else { return wildcards }
+      guard let next = node.children[char] else { return Array(wildcards) }
       node = next
     }
-    return wildcards.filter { !removedValues.contains($0) } +
-      node.values.subtracting(removedValues)
+    return (node.values + wildcards).filter { !removedValues.contains($0) }
   }
   
   /**
