@@ -59,43 +59,39 @@ struct DictionarySerivce: BuiltInProvider {
   
   private func wrapQuery(_ query: String) -> DisplayableContainer<URL> {
     let (headWord, content): (String, String)
-    let definitionView: NSView?
     if let (foundTerm, definition) = define(query) {
       headWord = foundTerm
       content = definition
-      definitionView = buildView(with: definition)
     } else {
       headWord = query
       content = "Cannot find definition for \"\(query)\""
-      definitionView = nil
     }
     let urlEncoded = headWord.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? headWord
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    return DisplayableContainer(name: headWord, content: content, icon: icon, innerItem: dictURL, placeholder: "", extraContent: definitionView)
+    return DisplayableContainer(name: headWord, content: content, icon: icon, innerItem: dictURL, placeholder: "")
   }
   
   private func wrap(_ query: String) -> DisplayableContainer<URL>? {
     guard let (foundTerm, definition) = define(query) else { return nil }
     let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foundTerm
     let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    let viewController = buildView(with: definition)
-    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, innerItem: dictURL, extraContent: viewController)
+    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, innerItem: dictURL)
   }
   
-  private func buildView(with definition: String) -> NSView {
-    let targetView: NSView
-    let textView: NSTextView
-    if #available(OSX 10.14, *) {
-      targetView = NSTextView.scrollablePlainDocumentContentTextView()
-      textView = (targetView as! NSScrollView).documentView as! NSTextView
-    } else {
-      textView = NSTextView()
-      targetView = textView
-    }
-    textView.drawsBackground = false
-    textView.string = definition
-    textView.isEditable = false
-    textView.font = .systemFont(ofSize: 17)
-    return targetView
-  }
+//  private func buildView(with definition: String) -> NSView {
+//    let targetView: NSView
+//    let textView: NSTextView
+//    if #available(OSX 10.14, *) {
+//      targetView = NSTextView.scrollablePlainDocumentContentTextView()
+//      textView = (targetView as! NSScrollView).documentView as! NSTextView
+//    } else {
+//      textView = NSTextView()
+//      targetView = textView
+//    }
+//    textView.drawsBackground = false
+//    textView.string = definition
+//    textView.isEditable = false
+//    textView.font = .systemFont(ofSize: 17)
+//    return targetView
+//  }
 }

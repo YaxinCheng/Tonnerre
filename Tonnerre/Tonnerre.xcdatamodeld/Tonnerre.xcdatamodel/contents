@@ -4,7 +4,7 @@
         <attribute name="application" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="time" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
-        <attribute name="value" attributeType="String" syncable="YES"/>
+        <attribute name="value" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="LaunchOrder" representedClassName="LaunchOrder" syncable="YES" codeGenerationType="class">
         <attribute name="identifier" attributeType="String" syncable="YES"/>

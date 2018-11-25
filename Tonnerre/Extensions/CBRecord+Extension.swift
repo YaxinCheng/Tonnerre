@@ -10,7 +10,7 @@ import Cocoa
 import CoreData
 
 extension CBRecord: LimitedDataProtocol {
-  static func recordInsert(value: String, type: String, appURL: URL?, limit: Int) {
+  static func recordInsert(value: NSAttributedString, type: String, appURL: URL?, limit: Int) {
     removeAll(predicate: NSPredicate(format: "value=%@", value))
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     let context = getContext()
