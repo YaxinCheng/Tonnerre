@@ -10,6 +10,9 @@ import Cocoa
 import Quartz
 
 final class PreviewPopover: NSPopover, NSPopoverDelegate {
+  private final let maxSize = NSSize(width: 500, height: 700)
+  private final let minSize = NSSize(width: 300, height: 40)
+  
   private final class PreviewItem: NSObject, QLPreviewItem {
     let previewItemTitle: String!
     let previewItemURL: URL!
@@ -25,7 +28,6 @@ final class PreviewPopover: NSPopover, NSPopoverDelegate {
   
   private override init() {
     super.init()
-    self.contentSize = NSSize(width: 500, height: 700)
     self.behavior = .transient
     self.delegate = self
   }
@@ -74,7 +76,8 @@ final class PreviewPopover: NSPopover, NSPopoverDelegate {
 
 private extension PreviewPopover {
   private func QLPreview(title: String, url: URL) -> QLPreviewView {
-    let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height), style: .normal)!
+    contentSize = maxSize
+    let qlView = QLPreviewView(frame: NSRect(x: 0, y: 0, width: maxSize.width, height: maxSize.height), style: .normal)!
     qlView.previewItem = PreviewItem(title: title, url: url)
     qlView.shouldCloseWithWindow = true
     return qlView
@@ -97,6 +100,13 @@ private extension PreviewPopover {
     textView.textStorage?.append(text)
     textView.drawsBackground = false
     textView.isEditable = false
+    contentSize = { maxSize, minSize, text in
+      let fitSize = text.boundingRect(with: NSSize(width: maxSize.width, height: 0),
+                                      options: [.usesFontLeading, .usesLineFragmentOrigin]).size
+      return NSSize(width: max(min(fitSize.width, maxSize.width), minSize.width),
+                    height: max(min(fitSize.height, maxSize.height), minSize.height))
+    }(maxSize, minSize, text)
     return targetView
   }
 }
+
