@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -733,27 +733,60 @@
         <scene sceneID="l5i-57-KKE">
             <objects>
                 <viewController id="sVX-jl-iHH" customClass="MenuViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
-                    <visualEffectView key="view" appearanceType="inheritedVibrantLight" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" id="adr-4r-umX">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <customView key="view" id="qic-dF-GIv">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <stackView focusRingType="none" distribution="equalCentering" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppR-6P-1Gm">
-                                <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
-                                <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="70" bottom="0.0"/>
+                            <visualEffectView appearanceType="inheritedVibrantLight" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="hxz-oB-DFz">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="600"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="600" id="1sD-Xp-i1Q"/>
+                                    <constraint firstAttribute="height" constant="600" id="v25-5a-kL0"/>
                                 </constraints>
-                            </stackView>
+                            </visualEffectView>
+                            <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SGj-nR-MdM">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="600"/>
+                                <clipView key="contentView" copiesOnScroll="NO" id="Kcx-dQ-fuX">
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <collectionView id="Xcn-nM-fKS">
+                                            <rect key="frame" x="0.0" y="0.0" width="450" height="158"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="kEk-RS-WnJ">
+                                                <size key="itemSize" width="480" height="64"/>
+                                                <edgeInsets key="sectionInset" left="10" right="10" top="30" bottom="0.0"/>
+                                            </collectionViewFlowLayout>
+                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <connections>
+                                                <outlet property="dataSource" destination="sVX-jl-iHH" id="kDX-mW-m3i"/>
+                                                <outlet property="delegate" destination="sVX-jl-iHH" id="zxK-xc-1cH"/>
+                                            </connections>
+                                        </collectionView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="fSM-dM-MrZ">
+                                    <rect key="frame" x="1" y="583" width="448" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="jRL-cL-ltT">
+                                    <rect key="frame" x="234" y="1" width="15" height="143"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="ppR-6P-1Gm" firstAttribute="leading" secondItem="adr-4r-umX" secondAttribute="leading" id="Dii-gw-CrG"/>
-                            <constraint firstAttribute="trailing" secondItem="ppR-6P-1Gm" secondAttribute="trailing" id="FNI-mK-li9"/>
-                            <constraint firstAttribute="bottom" secondItem="ppR-6P-1Gm" secondAttribute="bottom" id="PCq-Ly-qAN"/>
-                            <constraint firstItem="ppR-6P-1Gm" firstAttribute="top" secondItem="adr-4r-umX" secondAttribute="top" id="W6a-Q3-K6I"/>
+                            <constraint firstItem="hxz-oB-DFz" firstAttribute="leading" secondItem="qic-dF-GIv" secondAttribute="leading" id="0hF-4h-4qT"/>
+                            <constraint firstAttribute="bottom" secondItem="hxz-oB-DFz" secondAttribute="bottom" id="5ss-Bm-dQv"/>
+                            <constraint firstAttribute="trailing" secondItem="hxz-oB-DFz" secondAttribute="trailing" id="H7F-il-Ftq"/>
+                            <constraint firstItem="hxz-oB-DFz" firstAttribute="top" secondItem="qic-dF-GIv" secondAttribute="top" id="Y3T-0O-oTK"/>
+                            <constraint firstItem="SGj-nR-MdM" firstAttribute="leading" secondItem="hxz-oB-DFz" secondAttribute="leading" id="aii-jg-tuJ"/>
+                            <constraint firstItem="SGj-nR-MdM" firstAttribute="bottom" secondItem="hxz-oB-DFz" secondAttribute="bottom" id="g36-qb-Wwf"/>
+                            <constraint firstItem="SGj-nR-MdM" firstAttribute="top" secondItem="hxz-oB-DFz" secondAttribute="top" id="lL9-lp-LRX"/>
+                            <constraint firstItem="SGj-nR-MdM" firstAttribute="trailing" secondItem="hxz-oB-DFz" secondAttribute="trailing" id="pyz-KP-hh1"/>
                         </constraints>
-                    </visualEffectView>
+                    </customView>
                     <connections>
-                        <outlet property="menuStack" destination="ppR-6P-1Gm" id="rNS-lm-z9w"/>
+                        <outlet property="collectionView" destination="Xcn-nM-fKS" id="tAJ-uT-XuH"/>
                     </connections>
                 </viewController>
                 <customObject id="bXh-4B-yhU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

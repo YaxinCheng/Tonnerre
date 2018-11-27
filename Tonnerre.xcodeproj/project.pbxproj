@@ -152,6 +152,9 @@
 		14F23039214B394A00B7A0FB /* PrioriLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23038214B394A00B7A0FB /* PrioriLoader.swift */; };
 		14F2303D214B3A9600B7A0FB /* InstantInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2303C214B3A9600B7A0FB /* InstantInterpreter.swift */; };
 		14F23041214B437600B7A0FB /* TNEInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F23040214B437600B7A0FB /* TNEInterpreter.swift */; };
+		14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5702121ACA8B500AE269B /* MenuOption.swift */; };
+		14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14F5702221ACA8B500AE269B /* MenuOption.xib */; };
+		14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5702521ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 /* End PBXBuildFile section */
 
@@ -374,6 +377,9 @@
 		14F23038214B394A00B7A0FB /* PrioriLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioriLoader.swift; sourceTree = "<group>"; };
 		14F2303C214B3A9600B7A0FB /* InstantInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantInterpreter.swift; sourceTree = "<group>"; };
 		14F23040214B437600B7A0FB /* TNEInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEInterpreter.swift; sourceTree = "<group>"; };
+		14F5702121ACA8B500AE269B /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
+		14F5702221ACA8B500AE269B /* MenuOption.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuOption.xib; sourceTree = "<group>"; };
+		14F5702521ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -689,7 +695,7 @@
 				14AFE6DA211CDDCC002BBBB2 /* Settings.plist */,
 				14398FD32120DB3500F5AFCA /* GradientColours.swift */,
 				14C4102921826CAD00CEA1E9 /* SplitViewController.swift */,
-				14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */,
+				14F5702021ACA89E00AE269B /* Menu */,
 				14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */,
 				14AFE6D9211BD64D002BBBB2 /* Segue */,
 				14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */,
@@ -698,6 +704,7 @@
 				14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */,
 				14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */,
 				14AFE6B22118E8D6002BBBB2 /* NSStoryboardSegue+Extension.swift */,
+				14F5702521ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift */,
 			);
 			path = SettingPanel;
 			sourceTree = "<group>";
@@ -775,6 +782,16 @@
 				14D5A37821658AF200DBB188 /* DisplayPriority.swift */,
 			);
 			path = Interpreters;
+			sourceTree = "<group>";
+		};
+		14F5702021ACA89E00AE269B /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */,
+				14F5702121ACA8B500AE269B /* MenuOption.swift */,
+				14F5702221ACA8B500AE269B /* MenuOption.xib */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1000,6 +1017,7 @@
 				14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */,
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
+				14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */,
 				14F230302147467C00B7A0FB /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1141,6 +1159,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */,
+				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */,
 				14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */,
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
