@@ -47,13 +47,13 @@ struct ClipboardService: BuiltInProvider {
       else { return nil }
       let dateFmt = DateFormatter()
       dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-      let sourceContent = record.application == nil ? "" : " from: \(record.application!.deletingPathExtension().lastPathComponent),"
+      let sourceContent = record.source == nil ? "" : " from: \(record.source!.path!.deletingPathExtension().lastPathComponent),"
       let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
       let alterContent = "Open copied URL in default browser"
       let browser: Browser = .default
       return DisplayableContainer(name: stringValue, content: content, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url)
     } else {
-      let appURL = record.application
+      let appURL = record.source?.path
       let iconFromApp: NSImage? = appURL == nil ? nil : NSWorkspace.shared.icon(forFile: appURL!.path)
       let dateFmt = DateFormatter()
       dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"

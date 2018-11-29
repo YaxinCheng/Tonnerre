@@ -201,11 +201,17 @@ final class CoreIndexing {
     return []
   }
   
+  /// A regex that detects if the file is in an hidden directory
+  private let hiddenPathPattern = try! NSRegularExpression(pattern: "\\/\\..+")
   /**
    FileSystem event detected
   */
   private func detectedChanges(events: [TonnerreFSDetector.event]) {
     for (path, flags) in events {
+      guard
+        hiddenPathPattern.firstMatch(in: path, range:
+          NSRange(location: 0, length: path.count)) == nil
+      else { continue }
       let pathURL = URL(fileURLWithPath: path)
       let relatedModes = identify(path: pathURL)
       let relatedIndexes = relatedModes.map { indexes[$0, true] }

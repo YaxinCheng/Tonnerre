@@ -36,8 +36,7 @@ struct DictionarySerivce: BuiltInProvider {
     }
     let text = input.joined(separator: " ")
     let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
-    let filteredSuggestiosn = suggestions.filter { $0.lowercased() != text }
-    callback(filteredSuggestiosn.compactMap(wrap))
+    callback(suggestions.compactMap {wrap($0, filterWord: text) } )
   }
   
   func serve(service: DisplayProtocol, withCmd: Bool) {
@@ -71,27 +70,13 @@ struct DictionarySerivce: BuiltInProvider {
     return DisplayableContainer(name: headWord, content: content, icon: icon, innerItem: dictURL, placeholder: "")
   }
   
-  private func wrap(_ query: String) -> DisplayableContainer<URL>? {
-    guard let (foundTerm, definition) = define(query) else { return nil }
-    let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foundTerm
-    let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
+  private func wrap(_ query: String, filterWord: String) -> DisplayableContainer<URL>? {
+    guard
+      let (foundTerm, definition) = define(query),
+      foundTerm.caseInsensitiveCompare(filterWord) != .orderedSame
+    else { return nil }
+    let headWord = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foundTerm
+    let dictURL = URL(string: String(format: "dict://%@", headWord))!
     return DisplayableContainer(name: foundTerm, content: definition, icon: icon, innerItem: dictURL)
   }
-  
-//  private func buildView(with definition: String) -> NSView {
-//    let targetView: NSView
-//    let textView: NSTextView
-//    if #available(OSX 10.14, *) {
-//      targetView = NSTextView.scrollablePlainDocumentContentTextView()
-//      textView = (targetView as! NSScrollView).documentView as! NSTextView
-//    } else {
-//      textView = NSTextView()
-//      targetView = textView
-//    }
-//    textView.drawsBackground = false
-//    textView.string = definition
-//    textView.isEditable = false
-//    textView.font = .systemFont(ofSize: 17)
-//    return targetView
-//  }
 }
