@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY" customClass="CellView" customModule="SettingPanel" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l2B-np-pgb">
+                    <rect key="frame" x="6" y="40" width="58" height="24"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="KNr-OK-I0M">
+                        <font key="font" metaFont="systemHeavy" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1Ij-p3-J6q">
+                    <rect key="frame" x="6" y="23" width="363" height="17"/>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="iAK-iT-GOI">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="1Ij-p3-J6q" secondAttribute="trailing" constant="8" id="CNg-fr-JTt"/>
+                <constraint firstItem="l2B-np-pgb" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="F2i-88-Wat"/>
+                <constraint firstItem="1Ij-p3-J6q" firstAttribute="top" secondItem="l2B-np-pgb" secondAttribute="bottom" id="JpE-Rg-dx9"/>
+                <constraint firstItem="l2B-np-pgb" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="L94-4r-osC"/>
+                <constraint firstItem="1Ij-p3-J6q" firstAttribute="leading" secondItem="l2B-np-pgb" secondAttribute="leading" id="hey-te-gmZ"/>
+            </constraints>
+            <point key="canvasLocation" x="138.5" y="154"/>
+        </customView>
+        <customObject id="JaT-cC-ffW" customClass="GeneralCell" customModule="SettingPanel" customModuleProvider="target">
+            <connections>
+                <outlet property="contentLabel" destination="1Ij-p3-J6q" id="FG7-Jf-xAK"/>
+                <outlet property="titleLabel" destination="l2B-np-pgb" id="vju-cW-Ist"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="2km-kZ-iK7"/>
+            </connections>
+        </customObject>
+    </objects>
+</document>

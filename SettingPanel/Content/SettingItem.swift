@@ -14,7 +14,7 @@ protocol SettingItem {
   var settingKey: String? { get }
   /// Configurate the displayCell to display related information of this item
   /// - parameter displayCell: the cell that will be used to display this item
-  func configure(displayCell: NSCollectionViewItem)
+  func configure(displayCell: SettingCell)
   /// the identifier used to create certain type of setting item cell
   var displayIdentifier: NSUserInterfaceItemIdentifier { get }
 }

@@ -1,0 +1,31 @@
+//
+//  SettingCell.swift
+//  SettingPanel
+//
+//  Created by Yaxin Cheng on 2018-12-02.
+//  Copyright © 2018 Yaxin Cheng. All rights reserved.
+//
+
+import Cocoa
+
+class SettingCell: NSCollectionViewItem {
+  
+  @IBOutlet weak var titleLabel: NSTextField!
+  @IBOutlet weak var contentLabel: NSTextField!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    view.wantsLayer = true
+    view.layer?.cornerRadius = 15
+    view.layer?.masksToBounds = true
+    view.shadow = {
+      let shadow = NSShadow()
+      shadow.shadowBlurRadius = 15
+      shadow.shadowColor = NSColor(named: "ShadowColor")
+      shadow.shadowOffset = NSSize(width: 10, height: -15)
+      return shadow
+    }()
+  }
+  
+}

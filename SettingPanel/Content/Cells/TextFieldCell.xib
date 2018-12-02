@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY" customClass="CellView" customModule="SettingPanel" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XwB-IQ-yz0">
+                    <rect key="frame" x="6" y="40" width="48" height="24"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Title" id="CIy-iv-rDs">
+                        <font key="font" metaFont="systemHeavy" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dbW-Nc-29m">
+                    <rect key="frame" x="6" y="23" width="358" height="17"/>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline Content" id="u7s-0V-TQu">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vY2-IS-enJ">
+                    <rect key="frame" x="8" y="0.0" width="354" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Placeholder" drawsBackground="YES" usesSingleLineMode="YES" id="sEw-wG-woZ">
+                        <font key="font" metaFont="system" size="15"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    </textFieldCell>
+                </textField>
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iGD-ZA-14s">
+                    <rect key="frame" x="8" y="-3" width="354" height="5"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="dbW-Nc-29m" firstAttribute="leading" secondItem="XwB-IQ-yz0" secondAttribute="leading" id="LG2-1k-gcr"/>
+                <constraint firstItem="XwB-IQ-yz0" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="QJf-qx-PzK"/>
+                <constraint firstItem="iGD-ZA-14s" firstAttribute="top" secondItem="vY2-IS-enJ" secondAttribute="bottom" id="QRq-HT-Ms2"/>
+                <constraint firstItem="vY2-IS-enJ" firstAttribute="trailing" secondItem="dbW-Nc-29m" secondAttribute="trailing" id="RqU-Jn-pgC"/>
+                <constraint firstItem="iGD-ZA-14s" firstAttribute="leading" secondItem="vY2-IS-enJ" secondAttribute="leading" id="SYP-kn-Dvq"/>
+                <constraint firstItem="XwB-IQ-yz0" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="U7f-R6-PaE"/>
+                <constraint firstAttribute="trailing" secondItem="dbW-Nc-29m" secondAttribute="trailing" constant="8" id="XPq-zE-57I"/>
+                <constraint firstItem="iGD-ZA-14s" firstAttribute="trailing" secondItem="vY2-IS-enJ" secondAttribute="trailing" id="dSf-Ot-quF"/>
+                <constraint firstItem="vY2-IS-enJ" firstAttribute="leading" secondItem="dbW-Nc-29m" secondAttribute="leading" id="qVg-Qh-Kvy"/>
+                <constraint firstItem="iGD-ZA-14s" firstAttribute="width" secondItem="vY2-IS-enJ" secondAttribute="width" id="sxZ-i1-Bj1"/>
+                <constraint firstItem="dbW-Nc-29m" firstAttribute="top" secondItem="XwB-IQ-yz0" secondAttribute="bottom" id="uAv-sN-9Zz"/>
+                <constraint firstItem="vY2-IS-enJ" firstAttribute="top" secondItem="dbW-Nc-29m" secondAttribute="bottom" constant="4" id="umj-Rq-VZ3"/>
+            </constraints>
+        </customView>
+        <customObject id="jvG-ea-CjH" customClass="TextFieldCell" customModule="SettingPanel" customModuleProvider="target">
+            <connections>
+                <outlet property="contentLabel" destination="dbW-Nc-29m" id="b66-hP-XPa"/>
+                <outlet property="textField" destination="vY2-IS-enJ" id="0C2-2r-d1M"/>
+                <outlet property="titleLabel" destination="XwB-IQ-yz0" id="6Zr-DT-l1i"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="g8p-0X-tFC"/>
+            </connections>
+        </customObject>
+    </objects>
+</document>

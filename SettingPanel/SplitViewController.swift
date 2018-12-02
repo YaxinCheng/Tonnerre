@@ -16,4 +16,13 @@ class SplitViewController: NSViewController {
     // Do view setup here.
   }
   
+  override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+    switch segue.identifier {
+    case "providers":
+      let destinationVC = segue.destinationController as! ContentViewController
+      destinationVC.items = [[ProviderItem(key: ""), ProviderItem(key: "")]]
+    default:
+      break
+    }
+  }
 }
