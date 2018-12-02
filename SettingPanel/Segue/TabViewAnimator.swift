@@ -17,7 +17,7 @@ final class TabViewAnimator: NSObject, NSViewControllerPresentationAnimator {
     viewController.view.wantsLayer = true
     viewController.view.layerContentsRedrawPolicy = .onSetNeedsDisplay
     
-//    (fromViewController as! ViewController).contentView.addSubview(viewController.view)
+    (fromViewController as! SplitViewController).contentView.addSubview(viewController.view)
     let frame = fromViewController.view.frame
     viewController.view.frame = frame
   }

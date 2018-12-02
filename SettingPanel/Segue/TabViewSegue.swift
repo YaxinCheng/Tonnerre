@@ -10,8 +10,8 @@ import Cocoa
 
 final class TabViewSegue: NSStoryboardSegue {
   override func perform() {
-//    let tabController = sourceController as! ViewController
-//    tabController.contentView.subviews.removeAll()
-//    tabController.present(destinationController as! NSViewController, animator: TabViewAnimator())
+    let contentController = sourceController as! SplitViewController
+    contentController.contentView.subviews.removeAll()
+    contentController.present(destinationController as! NSViewController, animator: TabViewAnimator())
   }
 }

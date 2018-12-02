@@ -10,9 +10,19 @@ import Cocoa
 
 class MenuOption: NSCollectionViewItem {
   
+  override var highlightState: NSCollectionViewItem.HighlightState {
+    didSet {
+      switch highlightState {
+      case .forSelection: view.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
+      case .forDeselection: view.layer?.backgroundColor = .clear
+      default:
+        super.highlightState = highlightState
+      }
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
   }
-  
 }

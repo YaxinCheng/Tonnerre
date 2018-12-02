@@ -10,13 +10,17 @@ import Cocoa
 
 class MenuViewController: NSViewController {
   
-  @IBOutlet weak var collectionView: NSCollectionView! {
-    didSet {
-      collectionView.layer?.backgroundColor = .clear
+  @IBOutlet weak var collectionView: NSCollectionView!
+  private var selectedItem: NSCollectionViewItem? {
+    willSet {
+      selectedItem?.highlightState = .forDeselection
+    } didSet {
+      selectedItem?.highlightState = .forSelection
     }
   }
+  
   let options: [(String, NSImage)] = [
-    ("Providers", #imageLiteral(resourceName: "settings"))
+    ("Providers Setting", #imageLiteral(resourceName: "settings"))
   ]
   
   override func viewDidLoad() {
@@ -42,5 +46,14 @@ extension MenuViewController: NSCollectionViewDelegate, NSCollectionViewDataSour
     item.textField?.stringValue = datasource.0
     item.imageView?.image = datasource.1
     return item
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    guard
+      let firstSelect = indexPaths.first,
+      let selectedItem = collectionView.item(at: firstSelect)
+    else { return }
+    self.selectedItem = selectedItem
+    parent?.performSegue(withIdentifier: "providers", sender: options[firstSelect.item])
   }
 }

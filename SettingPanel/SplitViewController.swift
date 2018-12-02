@@ -2,17 +2,15 @@
 //  SplitViewController.swift
 //  SettingPanel
 //
-//  Created by Yaxin Cheng on 2018-10-25.
+//  Created by Yaxin Cheng on 2018-12-02.
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
 import Cocoa
 
-class SplitViewController: NSSplitViewController {
+class SplitViewController: NSViewController {
   
-  @IBOutlet weak var menuViewController: NSSplitViewItem!
-  @IBOutlet weak var contentViewController: NSSplitViewItem!
-  
+  @IBOutlet weak var contentView: NSView!
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
