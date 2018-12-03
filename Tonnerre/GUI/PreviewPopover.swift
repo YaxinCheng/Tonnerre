@@ -49,22 +49,25 @@ final class PreviewPopover: NSPopover, NSPopoverDelegate {
       where urlItem.innerItem != nil:
       displayView = QLPreview(title: urlItem.name, url: urlItem.innerItem!)
     case let urlItem as DisplayableContainer<URL>
-      where urlItem.innerItem != nil && !urlItem.innerItem!.absoluteString.starts(with: "dict"):
+      where urlItem.innerItem != nil && urlItem.innerItem?.scheme != "dict":
       displayView = QLPreview(title: urlItem.name, url: urlItem.innerItem!)
     case let errorItem as DisplayableContainer<Error>
       where errorItem.innerItem != nil:
-      let text = NSMutableAttributedString(string: "Error", attributes: [.font: NSFont.systemFont(ofSize: 23, weight: .black),
-                                                                         .foregroundColor: NSColor.labelColor])
-      let content = NSAttributedString(string: "\n\n\(errorItem.innerItem!)", attributes: [.font: NSFont.systemFont(ofSize: 17),
-                                                                                           .foregroundColor: NSColor.labelColor])
+      let text = NSMutableAttributedString(string: "Error",
+                                           attributes: [.font: NSFont.systemFont(ofSize: 23, weight: .black),
+                                                        .foregroundColor: NSColor.labelColor])
+      let content = NSAttributedString(string: "\n\n\(errorItem.innerItem!)",
+        attributes: [.font: NSFont.systemFont(ofSize: 17),
+                     .foregroundColor: NSColor.labelColor])
       text.append(content)
       displayView = TextView(text: text)
     case let stringItem as DisplayableContainer<NSAttributedString>
       where stringItem.innerItem != nil:
       displayView = TextView(text: stringItem.innerItem!)
     case let anyItem where anyItem.content.count > 20:
-      displayView = TextView(text: NSAttributedString(string: anyItem.content, attributes: [.font: NSFont.systemFont(ofSize: 17),
-                                                                                            .foregroundColor: NSColor.labelColor]))
+      displayView = TextView(text: NSAttributedString(string: anyItem.content,
+                                                      attributes: [.font: NSFont.systemFont(ofSize: 17),
+                                                                  .foregroundColor: NSColor.labelColor]))
     default: return
     }
     let viewController = NSViewController()

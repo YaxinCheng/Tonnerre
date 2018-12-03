@@ -87,7 +87,7 @@ struct CurrencyService: BuiltInProvider {
     }
     let populars = popularCurrencies.filter { $0 != fromCurrency && $0 != toCurrency }
     return ([toCurrency] + populars).map {
-      let googleURL = URL(string: "https://google.com/search?q=\(amount)+\(fromCurrency)+\(toCurrency)")!
+      let googleURL = URL(string: "https://google.com/search?q=\(amount)+\(fromCurrency)+\($0)")!
       let asyncViewSetup = viewSetupGenerator(fromCurrency, $0, label + $0)
       return AsyncedDisplayableContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: googleURL, viewSetup: asyncViewSetup)
     }
