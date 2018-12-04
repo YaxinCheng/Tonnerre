@@ -36,7 +36,8 @@ final class ClipboardMonitor {
         self?.callback(NSAttributedString(string: fileURL), .fileURL)
       } else if let string = self?.pasteboard
         .readObjects(forClasses: [NSAttributedString.self])?
-        .first as? NSAttributedString {
+        .first as? NSAttributedString,
+        !string.string.isEmpty {
         self?.callback(string, .string)
       }
       self?.changedCount = changedCount
