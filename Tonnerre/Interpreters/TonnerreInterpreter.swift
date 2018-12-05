@@ -81,7 +81,7 @@ final class TonnerreInterpreter {
    - returns: tokenized tokens
    */
   private func tokenize(input: String) -> [String] {
-    return input.trimmed.components(separatedBy: .whitespacesAndNewlines)
+    return input.truncatedSpaces.components(separatedBy: .whitespacesAndNewlines)
   }
   
   private func supply(fromProvider provider: ServiceProvider, requirements: [String], destination: ManagedList<ServicePack>) {

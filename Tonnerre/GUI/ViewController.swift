@@ -92,18 +92,25 @@ extension ViewController: LiteTableVCDelegate {
   }
   
   func updatePlaceholder(service: ServicePack?) {
-    guard service != nil else {
+    guard let servicePack = service else {
       fieldVC.placeholderString = ""
       return
     }
-    let stringValue = (fieldVC.stringValue.components(separatedBy: .whitespaces).last
-      ?? fieldVC.stringValue).lowercased()
-    let serviceValue = service!.placeholder.lowercased()
-    guard !stringValue.isEmpty, serviceValue.starts(with: stringValue) else {
-      fieldVC.placeholderString = ""
-      return
+    let placeholder: String
+    switch servicePack {
+    case .provider(_):
+      placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder)
+    case .service(provider: let provider, content: _):
+      let queryComponents = fieldVC.stringValue.components(separatedBy: .whitespaces)
+      if provider.keyword.starts(with: fieldVC.firstValue)
+        && fieldVC.stringValue.contains(" ") {
+        let processingPart = queryComponents[1...].joined(separator: " ")
+        placeholder = processingPart.formDifference(servicePack.placeholder)
+      } else {
+        placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder)
+      }
     }
-    fieldVC.placeholderString = String(service!.placeholder[stringValue.endIndex...])
+    fieldVC.placeholderString = placeholder
   }
   
   func updatePlaceholder(string: String?) {

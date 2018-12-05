@@ -76,8 +76,9 @@ final class TonnerreFieldController: NSViewController {
     defer {
       textField.window?.makeFirstResponder(nil)
       fullEditing()
+      controlTextDidChange(Notification(name: .init(""), object: textField))
     }
-    let trimmedValue = stringValue.trimmed + (prependingSpace ? " " : "")
+    let trimmedValue = stringValue.truncatedSpaces + (prependingSpace ? " " : "")
     let tokens = trimmedValue.components(separatedBy: .whitespaces)
     guard !tokens.isEmpty else { return }
     guard
@@ -86,17 +87,8 @@ final class TonnerreFieldController: NSViewController {
         stringValue = (hasKeyword ? (tokens.first ?? "") : "") + cmd + (appendingSpace ? " " : "")
         return
     }
-    let (toBeCompletedString, prefixValue): (String, String)
-    if hasKeyword && tokens.count > 1 {
-      toBeCompletedString = tokens[1...].joined(separator: " ")
-      prefixValue = tokens.first! + " "
-    } else {
-      toBeCompletedString = trimmedValue
-      prefixValue = ""
-    }
-    let commonPart = toBeCompletedString.commonPrefix(with: cmd, options: [.caseInsensitive, .anchored])
-    let surplusPart = String(cmd[commonPart.endIndex...])
-    stringValue = prefixValue + commonPart + surplusPart + (appendingSpace ? " " : "")
+    let completed = trimmedValue.completed(to: cmd, skipNum: hasKeyword ? 1 : 0, appendingSpace: appendingSpace)
+    stringValue = completed
   }
   
   func restore() {
@@ -119,9 +111,9 @@ final class TonnerreFieldController: NSViewController {
 
 extension TonnerreFieldController: NSTextFieldDelegate {
   func controlTextDidChange(_ obj: Notification) {
-    guard let objTextField = obj.object as? TonnerreField, textField ===  objTextField else { return }
+    guard let objTextField = obj.object as? TonnerreField, textField === objTextField else { return }
     let current = objTextField.stringValue// Capture the current value
-    let trimmedValue = current.trimmed// Trim current
+    let trimmedValue = current.truncatedSpaces// Trim current
     if !current.isEmpty {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in// dispatch after 0.4 second
         guard let now = self?.textField.stringValue else { return } // Test the current value (after 0.4 second)
@@ -177,5 +169,25 @@ extension TonnerreFieldController: NSTextFieldDelegate {
     textField.window?.makeFirstResponder(nil)// End the editing status
     textField.window?.makeFirstResponder(textField)
     textField.currentEditor()?.selectedRange = NSRange(location: position, length: 0)
+  }
+}
+
+private extension String {
+  func completed(to goal: String, skipNum: Int = 0, appendingSpace: Bool = false) -> String {
+    let (baseComponents, goalComponents) = (components(separatedBy: " "),
+                                            goal.components(separatedBy: " "))
+    let currentWord = baseComponents.last!
+    let desiredIndex = baseComponents.count - 1 - skipNum
+    guard desiredIndex < goalComponents.count else { return self }
+    let desiredWord = goalComponents[desiredIndex]
+    let commonPrefx = currentWord.commonPrefix(with: desiredWord, options: .caseInsensitive)
+    let completedWord = String(currentWord[..<commonPrefx.endIndex] + desiredWord[commonPrefx.endIndex...])
+    let completedComponents = Array(baseComponents[..<(baseComponents.endIndex - 1)] + [completedWord])
+    let assembledCompletion = completedComponents.joined(separator: " ")
+    let skippedCompletion = completedComponents[skipNum...].joined(separator: " ")
+    let addSpace = appendingSpace
+      || skippedCompletion.count != goal.count
+      || skippedCompletion.caseInsensitiveCompare(goal) != .orderedSame
+    return assembledCompletion + (addSpace ? " " : "")
   }
 }
