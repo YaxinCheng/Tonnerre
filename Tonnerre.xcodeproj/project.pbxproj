@@ -130,9 +130,9 @@
 		14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185021B4872400C93E7C /* TextFieldCell.xib */; };
 		14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185321B4875B00C93E7C /* GeneralCell.swift */; };
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
-		14D5185D21B48DF200C93E7C /* ProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185C21B48DF200C93E7C /* ProviderItem.swift */; };
 		14D5185F21B4996A00C93E7C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185E21B4996A00C93E7C /* CellView.swift */; };
 		14D5A37921658AF200DBB188 /* DisplayPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5A37821658AF200DBB188 /* DisplayPriority.swift */; };
+		14E49CDE21B87A8C0018527A /* ProviderFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* ProviderFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
 		14E72EAC2176A01600FA41F8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -364,9 +364,9 @@
 		14D5185021B4872400C93E7C /* TextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
 		14D5185321B4875B00C93E7C /* GeneralCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCell.swift; sourceTree = "<group>"; };
 		14D5185421B4875B00C93E7C /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
-		14D5185C21B48DF200C93E7C /* ProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderItem.swift; sourceTree = "<group>"; };
 		14D5185E21B4996A00C93E7C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		14D5A37821658AF200DBB188 /* DisplayPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPriority.swift; sourceTree = "<group>"; };
+		14E49CDD21B87A8C0018527A /* ProviderFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14E9AD6220CDECD100F3EEC8 /* MathTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTokenizer.swift; sourceTree = "<group>"; };
@@ -747,7 +747,7 @@
 			children = (
 				14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */,
 				14D5184B21B460BF00C93E7C /* SettingItem.swift */,
-				14D5185C21B48DF200C93E7C /* ProviderItem.swift */,
+				14E49CDD21B87A8C0018527A /* ProviderFetcher.swift */,
 				14D5185B21B4877D00C93E7C /* Cells */,
 			);
 			path = Content;
@@ -1204,6 +1204,7 @@
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
 				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,
+				14E49CDE21B87A8C0018527A /* ProviderFetcher.swift in Sources */,
 				14D5185121B4872400C93E7C /* TextFieldCell.swift in Sources */,
 				14C4102F21826D0F00CEA1E9 /* ContentViewController.swift in Sources */,
 				14D5184E21B486F900C93E7C /* SettingCell.swift in Sources */,
@@ -1211,7 +1212,6 @@
 				14C4102C21826CCB00CEA1E9 /* MenuViewController.swift in Sources */,
 				14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */,
 				14AFE69D2112A4F1002BBBB2 /* AppDelegate.swift in Sources */,
-				14D5185D21B48DF200C93E7C /* ProviderItem.swift in Sources */,
 				1449E577212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,7 +20,7 @@ class SplitViewController: NSViewController {
     switch segue.identifier {
     case "providers":
       let destinationVC = segue.destinationController as! ContentViewController
-      destinationVC.items = [[ProviderItem(key: ""), ProviderItem(key: "")]]
+      destinationVC.items = [ProviderFetcher.fetchInternalProviders(), ProviderFetcher.fetchTNEProviders()]
     default:
       break
     }
