@@ -78,7 +78,7 @@ final class TonnerreFieldController: NSViewController {
       fullEditing()
       controlTextDidChange(Notification(name: .init(""), object: textField))
     }
-    let trimmedValue = stringValue.truncatedSpaces + (prependingSpace ? " " : "")
+    let trimmedValue = (stringValue + (prependingSpace ? " " : "")).truncatedSpaces
     let tokens = trimmedValue.components(separatedBy: .whitespaces)
     guard !tokens.isEmpty else { return }
     guard

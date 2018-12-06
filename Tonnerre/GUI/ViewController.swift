@@ -99,15 +99,17 @@ extension ViewController: LiteTableVCDelegate {
     let placeholder: String
     switch servicePack {
     case .provider(_):
-      placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder)
+      placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
     case .service(provider: let provider, content: _):
       let queryComponents = fieldVC.stringValue.components(separatedBy: .whitespaces)
-      if provider.keyword.starts(with: fieldVC.firstValue)
-        && fieldVC.stringValue.contains(" ") {
+      if provider.keyword.starts(with: fieldVC.firstValue) {
         let processingPart = queryComponents[1...].joined(separator: " ")
-        placeholder = processingPart.formDifference(servicePack.placeholder)
+        placeholder = processingPart.formDifference(servicePack.placeholder, default: {
+          let prependingSpace = provider.argLowerBound == 0 && !fieldVC.stringValue.hasSuffix(" ") ? " " : ""
+          return prependingSpace + servicePack.placeholder
+        }())
       } else {
-        placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder)
+        placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
       }
     }
     fieldVC.placeholderString = placeholder

@@ -39,7 +39,7 @@ struct ClipboardService: BuiltInProvider {
       let content = url.path
       let alterContent = "Show file in Finder"
       let icon = NSWorkspace.shared.icon(forFile: url.path)
-      return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url)
+      return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url, placeholder: "")
     } else if stringValue.lowercased().starts(with: "http://")
       || stringValue.lowercased().starts(with: "https://") {
       guard
@@ -51,7 +51,7 @@ struct ClipboardService: BuiltInProvider {
       let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
       let alterContent = "Open copied URL in default browser"
       let browser: Browser = .default
-      return DisplayableContainer(name: stringValue, content: content, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url)
+      return DisplayableContainer(name: stringValue, content: content, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
     } else {
       let appURL = record.source?.path
       let iconFromApp: NSImage? = appURL == nil ? nil : NSWorkspace.shared.icon(forFile: appURL!.path)
@@ -60,7 +60,7 @@ struct ClipboardService: BuiltInProvider {
       let sourceContent = appURL == nil ? "" : " from: \(appURL!.deletingPathExtension().lastPathComponent),"
       let content = "Copied\(sourceContent) at \(dateFmt.string(from: time))"
       let icon: NSImage = iconFromApp ?? self.icon
-      return DisplayableContainer(name: stringValue, content: content, icon: icon, innerItem: value)
+      return DisplayableContainer(name: stringValue, content: content, icon: icon, innerItem: value, placeholder: "")
     }
   }
   
@@ -70,7 +70,7 @@ struct ClipboardService: BuiltInProvider {
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
       let text = query ?? "..."
-      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query) ]
+      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query, placeholder: "") ]
     } else { copy = [] }
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
