@@ -4,14 +4,6 @@
         <attribute name="time" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
         <attribute name="value" attributeType="Transformable" syncable="YES"/>
-        <relationship name="source" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CBSource" inverseName="copied" inverseEntity="CBSource" syncable="YES"/>
-    </entity>
-    <entity name="CBSource" representedClassName="CBSource" syncable="YES" codeGenerationType="class">
-        <attribute name="path" attributeType="URI" syncable="YES"/>
-        <relationship name="copied" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CBRecord" inverseName="source" inverseEntity="CBRecord" syncable="YES"/>
-        <fetchIndex name="URIIndex">
-            <fetchIndexElement property="path" type="Binary" order="ascending"/>
-        </fetchIndex>
     </entity>
     <entity name="LaunchOrder" representedClassName="LaunchOrder" syncable="YES" codeGenerationType="class">
         <attribute name="identifier" attributeType="String" syncable="YES"/>
@@ -29,8 +21,7 @@
         </fetchIndex>
     </entity>
     <elements>
-        <element name="CBRecord" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="CBSource" positionX="-54" positionY="18" width="128" height="75"/>
+        <element name="CBRecord" positionX="-63" positionY="-18" width="128" height="90"/>
         <element name="LaunchOrder" positionX="-54" positionY="27" width="128" height="75"/>
         <element name="QueryHistory" positionX="-63" positionY="9" width="128" height="90"/>
     </elements>
