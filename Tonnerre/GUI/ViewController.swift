@@ -99,16 +99,22 @@ extension ViewController: LiteTableVCDelegate {
     let placeholder: String
     switch servicePack {
     case .provider(_):
-      placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
+      if fieldVC.stringValue.hasSuffix(" ") { placeholder = "" }
+      else {
+        placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
+      }
     case .service(provider: let provider, content: _):
       let queryComponents = fieldVC.stringValue.components(separatedBy: .whitespaces)
-      if provider.keyword.starts(with: fieldVC.firstValue) {
+      let hasKeyword = !provider.keyword.isEmpty || provider.keyword.starts(with: fieldVC.firstValue)
+      switch (provider.defered, hasKeyword) {
+      case (true, _):
+        let hasSpace = fieldVC.stringValue.contains(" ")
         let processingPart = queryComponents[1...].joined(separator: " ")
-        placeholder = processingPart.formDifference(servicePack.placeholder, default: {
-          let prependingSpace = provider.argLowerBound == 0 && !fieldVC.stringValue.hasSuffix(" ") ? " " : ""
-          return prependingSpace + servicePack.placeholder
-        }())
-      } else {
+        placeholder = (hasSpace ? "" : " ") + processingPart.formDifference(servicePack.placeholder, default: servicePack.placeholder)
+      case (false, true):
+        let processingPart = queryComponents[1...].joined(separator: " ")
+        placeholder = processingPart.formDifference(servicePack.placeholder, default: "")
+      case (false, false):
         placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
       }
     }
@@ -127,7 +133,9 @@ extension ViewController: LiteTableVCDelegate {
     case .service(provider: let provider, content: let service):
       fieldVC.autoComplete(cmd: service.placeholder, appendingSpace: false,
                            hasKeyword: provider.keyword.starts(with: fieldVC.firstValue.lowercased()),
-                           prependingSpace: provider.defered && provider.argLowerBound == 0)
+                           prependingSpace: provider.defered
+                                        && provider.argLowerBound == 0
+                                        && !fieldVC.stringValue.contains(" ") )
     }
     _ = fieldVC.becomeFirstResponder()
     textDidChange(value: fieldVC.stringValue)
