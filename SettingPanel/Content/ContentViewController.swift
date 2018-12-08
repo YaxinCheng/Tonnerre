@@ -38,7 +38,7 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let item = items[indexPath.section][indexPath.item]
     let cell = collectionView.makeItem(withIdentifier: item.displayIdentifier, for: indexPath) as! SettingCell
-    item.configure(displayCell: cell)
+    cell.item = item
     return cell
   }
 }

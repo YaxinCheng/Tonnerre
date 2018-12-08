@@ -12,6 +12,11 @@ class SettingCell: NSCollectionViewItem {
   
   @IBOutlet weak var titleLabel: NSTextField!
   @IBOutlet weak var contentLabel: NSTextField!
+  var item: SettingItem! {
+    didSet {
+      item.configure(displayCell: self)
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()

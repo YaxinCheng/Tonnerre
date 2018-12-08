@@ -13,6 +13,17 @@ final class TextFieldCell: SettingCell {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
+    textField?.delegate = self
   }
-  
+}
+
+extension TextFieldCell: NSTextFieldDelegate {
+  func controlTextDidEndEditing(_ obj: Notification) {
+    guard
+      (obj.object as? NSTextField) === textField,
+      let value = textField?.stringValue,
+      (obj.userInfo?["NSTextMovement"] as? NSTextMovement) == .return
+    else { return }
+    item.set(value: value)
+  }
 }

@@ -18,3 +18,11 @@ protocol SettingItem {
   /// the identifier used to create certain type of setting item cell
   var displayIdentifier: NSUserInterfaceItemIdentifier { get }
 }
+
+extension SettingItem {
+  func set(value: Any) {
+    guard let key = settingKey else { return }
+    let userDefault = UserDefaults.shared
+    userDefault.set(value, forKey: key)
+  }
+}
