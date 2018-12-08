@@ -17,12 +17,15 @@ class SplitViewController: NSViewController {
   }
   
   override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-    switch segue.identifier {
-    case "providers":
-      let destinationVC = segue.destinationController as! ContentViewController
-      destinationVC.items = [ProviderFetcher.fetchInternalProviders(), ProviderFetcher.fetchTNEProviders()]
-    default:
-      break
+    guard
+      let destinationVC = segue.destinationController as? ContentViewController,
+      let identifier = segue.identifier,
+      case .providers = identifier
+    else {
+      super.prepare(for: segue, sender: sender)
+      return
     }
+    let builtinProviderFetcher = BuiltinProviderFetcher()
+    destinationVC.items = [builtinProviderFetcher.fetch()]
   }
 }

@@ -16,7 +16,7 @@ final class ContentViewController: NSViewController {
       collectionView.collectionViewLayout = {
         let layout = NSCollectionViewFlowLayout()
         let difference: CGFloat = 300 // difference between collectionView from the whole view
-        layout.sectionInset = NSEdgeInsets(top: 30, left: 20, bottom: 0, right: difference + 20)
+        layout.sectionInset = NSEdgeInsets(top: 30, left: 20, bottom: 10, right: difference + 20)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.itemSize = NSSize(width: 370, height: 70)
@@ -27,7 +27,8 @@ final class ContentViewController: NSViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do view setup here. 
+    // Do view setup here.
+    print("load")
   }
 }
 
@@ -44,7 +45,6 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
     let item = items[indexPath.section][indexPath.item]
     let cell = collectionView.makeItem(withIdentifier: item.displayIdentifier, for: indexPath) as! SettingCell
     item.configure(displayCell: cell)
-    cell.titleLabel.stringValue += " \(indexPath.item)"
     return cell
   }
 }

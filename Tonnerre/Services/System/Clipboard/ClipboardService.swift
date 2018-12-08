@@ -13,7 +13,8 @@ struct ClipboardService: BuiltInProvider {
   let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
-  let content: String = "Your records of recnet copies"
+  let name: String = "Clipboard Records"
+  let content: String = "Your records of recent copies"
   let icon: NSImage = #imageLiteral(resourceName: "clipboard")
   let defered: Bool = true
   

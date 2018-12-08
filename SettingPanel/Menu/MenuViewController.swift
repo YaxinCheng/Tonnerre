@@ -19,7 +19,8 @@ class MenuViewController: NSViewController {
     }
   }
   
-  let options: [(String, NSImage)] = [
+  let options: [(name: String, icon: NSImage)] = [
+    ("General Setting", #imageLiteral(resourceName: "tonnerre")),
     ("Providers Setting", #imageLiteral(resourceName: "settings"))
   ]
   
@@ -54,6 +55,7 @@ extension MenuViewController: NSCollectionViewDelegate, NSCollectionViewDataSour
       let selectedItem = collectionView.item(at: firstSelect)
     else { return }
     self.selectedItem = selectedItem
-    parent?.performSegue(withIdentifier: "providers", sender: options[firstSelect.item])
+    let option = options[firstSelect.item]
+    parent?.performSegue(withIdentifier: .providers, sender: option)
   }
 }

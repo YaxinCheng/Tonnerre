@@ -679,7 +679,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="-116" y="-56"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -695,7 +695,7 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="sVX-jl-iHH" kind="relationship" relationship="window.shadowedContentViewController" id="THm-c9-uX0"/>
+                        <segue destination="sVX-jl-iHH" kind="relationship" relationship="window.shadowedContentViewController" id="3qm-gm-5IY"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -753,7 +753,7 @@
                     </customView>
                     <connections>
                         <outlet property="contentView" destination="QeW-4a-v9U" id="hEf-kE-El0"/>
-                        <segue destination="j9y-8J-ePl" kind="custom" identifier="providers" customClass="TabViewSegue" customModule="SettingPanel" customModuleProvider="target" id="8Dh-fC-og6"/>
+                        <segue destination="j9y-8J-ePl" kind="custom" identifier="providers" customClass="TabViewSegue" customModule="SettingPanel" customModuleProvider="target" id="NNj-Fg-yEh"/>
                     </connections>
                 </viewController>
                 <customObject id="bXh-4B-yhU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -807,7 +807,7 @@
         <scene sceneID="81e-cG-OxT">
             <objects>
                 <viewController id="fNX-eN-AZy" customClass="MenuViewController" customModule="SettingPanel" customModuleProvider="target" sceneMemberID="viewController">
-                    <scrollView key="view" wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" id="sYs-i9-A3F">
+                    <scrollView key="view" wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="sYs-i9-A3F">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="QR4-dp-kNn">
@@ -830,7 +830,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="T9o-QC-gzz">
-                            <rect key="frame" x="1" y="144" width="233" height="15"/>
+                            <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="BnY-lq-MKz">

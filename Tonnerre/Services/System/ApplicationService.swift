@@ -9,8 +9,8 @@
 import Cocoa
 
 struct ApplicationService: BuiltInProvider {
-  let name: String = "Quit program"
-  let content: String = "Find and quite a running program"
+  let name: String = "Quit Programs"
+  let content: String = "Find and quite running programs"
   let alterContent: String? = "Force quit program"
   let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
