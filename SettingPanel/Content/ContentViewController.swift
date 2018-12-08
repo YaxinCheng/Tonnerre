@@ -17,18 +17,12 @@ final class ContentViewController: NSViewController {
         let layout = NSCollectionViewFlowLayout()
         let difference: CGFloat = 300 // difference between collectionView from the whole view
         layout.sectionInset = NSEdgeInsets(top: 30, left: 20, bottom: 10, right: difference + 20)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 20
+        layout.minimumInteritemSpacing = 10
         layout.itemSize = NSSize(width: 370, height: 70)
         return layout
       }()
     }
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do view setup here.
-    print("load")
   }
 }
 

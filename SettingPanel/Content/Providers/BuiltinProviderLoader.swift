@@ -1,5 +1,5 @@
 //
-//  BuiltinProviderInfo.swift
+//  BuiltinProviderLoader.swift
 //  SettingPanel
 //
 //  Created by Yaxin Cheng on 2018-12-08.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct BuiltinProviderInfo {
-  let info: [(String, String, String, String)] = [
+struct BuiltinProviderLoader {
+  let providers: [(String, String, String, String)] = [
       ("Tonnerre.Provider.BuiltIn.GoogleSearch"             , "google", "Google", "Search on Google")
     , ("Tonnerre.Provider.BuiltIn.GoogleImageSearch"        , "image", "Google Image", "Search on Google Image")
     , ("Tonnerre.Provider.BuiltIn.YoutubeSearch"            , "youtube", "YouTube", "Find on YouTube")

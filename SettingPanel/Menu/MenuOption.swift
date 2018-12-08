@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class MenuOption: NSCollectionViewItem {
+final class MenuOption: NSCollectionViewItem {
   
   override var highlightState: NSCollectionViewItem.HighlightState {
     didSet {

@@ -21,9 +21,9 @@ class SettingCell: NSCollectionViewItem {
     view.layer?.masksToBounds = true
     view.shadow = {
       let shadow = NSShadow()
-      shadow.shadowBlurRadius = 15
+      shadow.shadowBlurRadius = 10
       shadow.shadowColor = NSColor(named: "ShadowColor")
-      shadow.shadowOffset = NSSize(width: 10, height: -15)
+      shadow.shadowOffset = NSSize(width: 5, height: -10)
       return shadow
     }()
   }

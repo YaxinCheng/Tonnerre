@@ -20,12 +20,23 @@ class SplitViewController: NSViewController {
     guard
       let destinationVC = segue.destinationController as? ContentViewController,
       let identifier = segue.identifier,
+      let menuOptionId = sender as? MenuOptionId,
       case .providers = identifier
     else {
       super.prepare(for: segue, sender: sender)
       return
     }
-    let builtinProviderFetcher = BuiltinProviderFetcher()
-    destinationVC.items = [builtinProviderFetcher.fetch()]
+    setup(destinationVC: destinationVC, withOption: menuOptionId)
+  }
+  
+  private func setup(destinationVC: ContentViewController, withOption option: MenuOptionId) {
+    switch option {
+    case .general:
+      destinationVC.items = []
+    case .providers:
+      let builtinProviderFetcher = BuiltinProviderFetcher()
+      let tneProviderFetcher = TNEProviderFetcher()
+      destinationVC.items = [builtinProviderFetcher.fetch(), tneProviderFetcher.fetch()]
+    }
   }
 }
