@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zIt-L7-Ohv" customClass="TonnerreIconView" customModule="Tonnerre" customModuleProvider="target">
+                    <rect key="frame" x="8" y="8" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="PtK-cY-t0o"/>
+                        <constraint firstAttribute="height" constant="40" id="gQ4-0v-dSG"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="R6s-VK-Ba4"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="otR-5I-Obv">
+                    <rect key="frame" x="50" y="21" width="129" height="27"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="ServiceName" usesSingleLineMode="YES" id="Uuk-73-bDi">
+                        <font key="font" metaFont="systemLight" size="22"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="eSm-bB-rbb">
+                    <rect key="frame" x="175" y="13" width="477" height="30"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="⌘+#" id="MhO-Va-LEs">
+                        <font key="font" metaFont="system" size="25"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qiH-K4-ExG">
+                    <rect key="frame" x="50" y="8" width="65" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Intro label" id="U65-8N-A5z">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="eSm-bB-rbb" firstAttribute="leading" secondItem="otR-5I-Obv" secondAttribute="trailing" id="G9P-64-Qnr"/>
+                <constraint firstItem="eSm-bB-rbb" firstAttribute="centerY" secondItem="zIt-L7-Ohv" secondAttribute="centerY" id="NNy-4x-8dB"/>
+                <constraint firstItem="eSm-bB-rbb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qiH-K4-ExG" secondAttribute="trailing" constant="8" id="V1X-j5-Mdp"/>
+                <constraint firstItem="qiH-K4-ExG" firstAttribute="bottom" secondItem="zIt-L7-Ohv" secondAttribute="bottom" id="Zjx-te-pUW"/>
+                <constraint firstItem="zIt-L7-Ohv" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="jWN-6b-VSs"/>
+                <constraint firstItem="otR-5I-Obv" firstAttribute="leading" secondItem="zIt-L7-Ohv" secondAttribute="trailing" constant="4" id="kxK-Qq-oMg"/>
+                <constraint firstItem="zIt-L7-Ohv" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="nEQ-N7-Tin"/>
+                <constraint firstAttribute="trailing" secondItem="eSm-bB-rbb" secondAttribute="trailing" constant="20" symbolic="YES" id="p6Z-11-hgj"/>
+                <constraint firstItem="qiH-K4-ExG" firstAttribute="leading" secondItem="otR-5I-Obv" secondAttribute="leading" id="q2V-UL-GOb"/>
+                <constraint firstItem="otR-5I-Obv" firstAttribute="top" secondItem="zIt-L7-Ohv" secondAttribute="top" id="utB-dG-rw7"/>
+            </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.opacity">
+                    <integer key="value" value="0"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+        </customView>
+        <collectionViewItem nibName="ServiceCell" identifier="ServiceCell" id="eZD-gZ-6Dv" userLabel="Service Cell" customClass="ServiceCell" customModule="Tonnerre" customModuleProvider="target">
+            <connections>
+                <outlet property="cmdLabel" destination="eSm-bB-rbb" id="cfc-cY-VBu"/>
+                <outlet property="iconView" destination="zIt-L7-Ohv" id="TRC-bp-DY1"/>
+                <outlet property="introLabel" destination="qiH-K4-ExG" id="qqG-q2-jvQ"/>
+                <outlet property="serviceLabel" destination="otR-5I-Obv" id="Nt9-kj-3yL"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="bqJ-xk-yOa"/>
+            </connections>
+        </collectionViewItem>
+    </objects>
+    <resources>
+        <image name="tonnerre" width="128" height="128"/>
+    </resources>
+</document>

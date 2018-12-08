@@ -6,14 +6,14 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct DuckDuckGoSearch: WebService {
   let name: String = "DuckDuckGo"
   let template: String = "https://duckduckgo.com/?q=%@"
-  static let keyword: String = "duck"
+  let keyword: String = "duck"
   let suggestionTemplate: String = "https://duckduckgo.com/ac/?&q=%@"
-  let contentTemplate: String = "Search %@ on DuckDuckGo"
+  let contentTemplate: String = "Search \"%@\" on DuckDuckGo"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "duck")

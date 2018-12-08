@@ -6,101 +6,105 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 import CoreData
 
-struct ClipboardService: TonnerreService, DeferedServiceProtocol {
-  static let keyword: String = "cb"
+struct ClipboardService: BuiltInProvider {
+  let keyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let content: String = "Your records of recnet copies"
   let icon: NSImage = #imageLiteral(resourceName: "clipboard")
+  let defered: Bool = true
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
-    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 18)
+    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 9)
   }
   
-  static var isDisabled: Bool {
-    get {
-      let userDeafult = UserDefaults.shared
-      return userDeafult.bool(forKey: "\(ClipboardService.self)+Disabled")
-    } set {
-      let userDeafult = UserDefaults.shared
-      userDeafult.set(newValue, forKey: "\(ClipboardService.self)+Disabled")
-      if newValue == true {
-        ClipboardService.monitor.start()
-      } else {
-        ClipboardService.monitor.stop()
-      }
+  private func wrap(record: CBRecord) -> DisplayProtocol? {
+    guard
+      let type = record.type,
+      let value = record.value as? NSAttributedString,
+      let time = record.time
+    else { return nil }
+    let stringValue = value.string.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression)
+    if type == "public.file-url" {
+      guard
+        let url = URL(string: stringValue),
+        FileManager.default.fileExists(atPath: url.path)
+      else { return nil }
+      let name = stringValue.components(separatedBy: "/").last?
+        .removingPercentEncoding ?? ""
+      let content = url.path
+      let alterContent = "Show file in Finder"
+      let icon = NSWorkspace.shared.icon(forFile: url.path)
+      return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url, placeholder: "")
+    } else if stringValue.lowercased().starts(with: "http://")
+      || stringValue.lowercased().starts(with: "https://") {
+      guard
+        let url = URL(string: stringValue)
+      else { return nil }
+      let dateFmt = DateFormatter()
+      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
+      let content = "Copied at \(dateFmt.string(from: time))"
+      let alterContent = "Open copied URL in default browser"
+      let browser: Browser = .default
+      return DisplayableContainer(name: stringValue, content: content, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
+    } else {
+      let dateFmt = DateFormatter()
+      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
+      let content = "Copied at \(dateFmt.string(from: time))"
+      return DisplayableContainer(name: stringValue, content: content, icon: #imageLiteral(resourceName: "text"), innerItem: value, placeholder: "")
     }
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let copy: [DisplayProtocol]
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
       let text = query ?? "..."
-      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, priority: priority, innerItem: query) ]
-      if !query.isEmpty {
-        fetchRequest.predicate = NSPredicate(format: "value CONTAINS[cd] %@", query)
-      }
+      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query, placeholder: "") ]
     } else { copy = [] }
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
     do {
-      return copy + (try context.fetch(fetchRequest).map {
-        if $0.type! == "public.file-url" {
-          let name = $0.value!.components(separatedBy: "/").last ?? ""
-          let url = URL(string: $0.value!)!
-          let content = url.path
-          let alterContent = "Show file in Finder"
-          let icon = NSWorkspace.shared.icon(forFile: url.path)
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
-        } else if ($0.value?.lowercased().starts(with: "http://") ?? false)
-          || ($0.value?.lowercased().starts(with: "https://") ?? false) {
-          let name = $0.value!
-          let url = URL(string: $0.value!)!
-          let dateFmt = DateFormatter()
-          dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-          let content = "Copied at \(dateFmt.string(from: $0.time!))"
-          let alterContent = "Open copied URL in default browser"
-          let browserURL = NSWorkspace.shared.urlForApplication(toOpen: url)
-          let icon = NSWorkspace.shared.icon(forFile: browserURL?.path ?? "/Applications/Safari.app")
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, alterContent: alterContent, innerItem: url)
+      let clipboardRecords = try context.fetch(fetchRequest)
+      let context = getContext()
+      var displayableRecords: [DisplayProtocol] = []
+      for record in clipboardRecords {
+        if let wrapped = wrap(record: record) {
+          displayableRecords.append(wrapped)
         } else {
-          let name = $0.value!.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression)
-          let dateFmt = DateFormatter()
-          dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-          let content = "Copied at \(dateFmt.string(from: $0.time!))"
-          let icon: NSImage = .notes ?? self.icon
-          return DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: $0.value!)
+          context.delete(record)
         }
-      })
+      }
+      try context.save()
+      return copy + displayableRecords
     } catch {
       return copy
     }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayProtocol, withCmd: Bool) {
     let pasteboard = NSPasteboard.general
     pasteboard.clearContents()
-    if let item = source as? DisplayableContainer<URL>, let url = item.innerItem {
-      if FileManager.default.fileExists(atPath: url.path) {
-        if withCmd {
-          NSWorkspace.shared.activateFileViewerSelecting([url])
-        } else {
-          pasteboard.writeObjects([url as NSURL])
-        }
-      } else {
-        if withCmd {
-          NSWorkspace.shared.open(url)
-        } else {
-          pasteboard.setString(url.absoluteString, forType: .string)
-        }
+    switch service {
+    case let item as DisplayableContainer<URL> where item.innerItem != nil:
+      let url = item.innerItem!
+      switch (FileManager.default.fileExists(atPath: url.path), withCmd) {
+      case (true, true): NSWorkspace.shared.activateFileViewerSelecting([url])
+      case (true, false): pasteboard.writeObjects([url as NSURL])
+      case (false, true): NSWorkspace.shared.open(url)
+      case (false, false): pasteboard.setString(url.absoluteString, forType: .string)
       }
-    } else if let item = source as? DisplayableContainer<String>, let string = item.innerItem {
-      pasteboard.setString(string, forType: .string)
+    case let item as DisplayableContainer<NSAttributedString> where item.innerItem != nil:
+      pasteboard.writeObjects([item.innerItem!])
+    case let item as DisplayableContainer<String> where item.innerItem != nil:
+      let attributed = NSAttributedString(string: item.innerItem!, attributes: [.font: NSFont.systemFont(ofSize: 17),
+                                                                                .foregroundColor: NSColor.labelColor])
+      pasteboard.writeObjects([attributed])
+    default: return
     }
   }
   

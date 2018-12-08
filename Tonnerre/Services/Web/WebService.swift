@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol WebService: TonnerreService, AsyncLoadingProtocol {
+protocol WebService: BuiltInProvider {
   var template: String { get }
   var suggestionTemplate: String { get }
   var contentTemplate: String { get }
@@ -18,10 +18,6 @@ protocol WebService: TonnerreService, AsyncLoadingProtocol {
 extension WebService {
   private var session: TonnerreSession {
     return .shared
-  }
-  
-  var mode: AsyncLoadingType {
-    return .append
   }
   
   private var localeInTemplate: Bool {
@@ -45,15 +41,14 @@ extension WebService {
       requestingTemplate = template
     }
     guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
-    let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed )}
+    let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed )}
     guard urlEncoded.count >= input.count else { return nil }
     let rawURL = requestingTemplate.filled(arguments: urlEncoded, separator: "+")
     return URL(string: rawURL)
   }
   
-  func present(rawElements: [Any]) -> [ServicePack] {
-    guard rawElements is [String] else { return [] }
-    return (rawElements as! [String]).compactMap {
+  func present(rawElements: [String]) -> [DisplayProtocol] {
+    return rawElements.compactMap {
       let readableContent: String
       let htmlEncodeDetect = try! NSRegularExpression(pattern: "(&#\\d+;)+")
       let isHTMLEncoded = htmlEncodeDetect.numberOfMatches(in: $0, range: NSRange(location: 0, length: $0.count)) > 0
@@ -63,33 +58,41 @@ extension WebService {
         readableContent = $0.removingPercentEncoding ?? $0
       }
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
-      let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(readableContent)'"]) : contentTemplate
-      return DisplayableContainer(name: readableContent, content: content.capitalized, icon: icon, priority: priority, innerItem: url)
-      }.map {
-        ServicePack(provider: self, service: $0)
-     }
+      let content = contentTemplate.filled(arguments: ["\(readableContent)"])
+      return DisplayableContainer(name: readableContent, content: content, icon: icon, innerItem: url)
+    }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let request = (service as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     workspace.open(request)
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let queryURL = fillInTemplate(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
-    let queryContent = input.joined(separator: " ").capitalized
-    let content = contentTemplate.contains("%@") ? contentTemplate.filled(arguments: ["'\(queryContent)'"]) : contentTemplate
-    guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, priority: priority, innerItem: url)] }
-    let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, priority: priority, innerItem: url)
+    let queryContent = input.joined(separator: " ")
+    let content = contentTemplate.filled(arguments: ["\(queryContent)"])
+    guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
+    let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
+    return [originalSearch]
+  }
+  
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+    let queryContent = input.joined(separator: " ")
     guard
       !suggestionTemplate.isEmpty,
-      let query = input.joined(separator: " ").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+      let query = queryContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
       let suggestionURL = URL(string: suggestionTemplate.filled(arguments: [query]))
-    else { return [originalSearch] }
+    else {
+      callback([])
+      return
+    }
     let request = URLRequest(url: suggestionURL, timeoutInterval: 60 * 60)
-    let ongoingTask = session.dataTask(request: request) { (data, response, error) in
+    let session = URLSession(configuration: .default)
+    let suggestions = NSMutableArray()
+    session.dataTask(with: request) { (data, response, error) in
       if error != nil {
         #if DEBUG
         debugPrint(error!)
@@ -98,10 +101,8 @@ extension WebService {
       }
       let lowerQuery = queryContent.lowercased()
       let processedData = self.parse(suggestionData: data).filter { $0.lowercased() != lowerQuery }
-      let notification = Notification(name: .asyncLoadingDidFinish, object: self, userInfo: ["rawElements": processedData])
-      NotificationCenter.default.post(notification)
-    }
-    session.send(request: ongoingTask)
-    return [originalSearch]
+      suggestions.addObjects(from: self.present(rawElements: processedData))
+      callback(suggestions as? [DisplayProtocol] ?? [])
+    }.resume()
   }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 protocol Google: WebService {
 }
@@ -22,33 +22,33 @@ extension Google {
   func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
-      let json = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? NSArray,
+      let json = JSON(data: jsonData),
       json.count > 2,
-      let availableOptions = json[1] as? [NSArray]
-      else { return [] }
+      let availableOptions: [[Any]] = json[1]
+    else { return [] }
     return availableOptions.compactMap { $0[0] as? String }
   }
 }
 
 struct GoogleSearch: Google {
   let name: String = "Google"
-  let contentTemplate: String = "Search %@ on google"
+  let contentTemplate: String = "Search \"%@\" on Google"
   let template: String = "https://google.%@/search?q=%@"
-  static let keyword: String = "google"
+  let keyword: String = "google"
 }
 
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
-  let contentTemplate: String = "Search %@ on google image"
+  let contentTemplate: String = "Search %@ on Google Image"
   let template: String = "https://google.%@/search?q=%@&tbm=isch"
-  static let keyword: String = "image"
+  let keyword: String = "image"
 }
 
 struct YoutubeSearch: Google {
   let suggestionTemplate: String = "https://clients1.google.com/complete/search?client=safari&q=%@"
   let name: String = "Youtube"
-  let contentTemplate: String = "Find %@ on Youtube"
+  let contentTemplate: String = "Find \"%@\" on Youtube"
   let template: String = "https://www.youtube.com/results?search_query=%@"
-  static let keyword: String = "youtube"
+  let keyword: String = "youtube"
   let icon: NSImage = #imageLiteral(resourceName: "youtube")
 }

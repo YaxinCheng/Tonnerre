@@ -20,6 +20,11 @@ protocol LiteTableVCDelegate: class {
    */
   func updatePlaceholder(service: ServicePack?)
   /**
+   Request to fill in the placeholder field with given service
+   - parameter string: the content needs to be set as placeholder
+   */
+  func updatePlaceholder(string: String?)
+  /**
    Tab key is pressed, and request for auto completion
    - parameter service: the highlighted service that needs to be completed
    */

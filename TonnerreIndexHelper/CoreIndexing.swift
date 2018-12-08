@@ -201,21 +201,29 @@ final class CoreIndexing {
     return []
   }
   
+  /// A regex that detects if the file is in an hidden directory
+  private let hiddenPathPattern = try! NSRegularExpression(pattern: "\\/\\..+")
   /**
    FileSystem event detected
   */
   private func detectedChanges(events: [TonnerreFSDetector.event]) {
     for (path, flags) in events {
+      guard
+        hiddenPathPattern.firstMatch(in: path, range:
+          NSRange(location: 0, length: path.count)) == nil
+      else { continue }
       let pathURL = URL(fileURLWithPath: path)
       let relatedModes = identify(path: pathURL)
       let relatedIndexes = relatedModes.map { indexes[$0, true] }
       if flags.contains(.created) {
-        for index in relatedIndexes {
+        for (mode, index) in zip(relatedModes, relatedIndexes)
+          where mode.canInclude(fileURL: pathURL) {
           _ = try? index.addDocument(atPath: pathURL)
         }
       } else if flags.contains(.renamed) {
         let fileManager = FileManager.default
-        for index in relatedIndexes {
+        for (mode, index) in zip(relatedModes, relatedIndexes)
+          where mode.canInclude(fileURL: pathURL) {
           let exist = fileManager.fileExists(atPath: path)
           if exist == false {
             _ = index.removeDocument(atPath: pathURL)
@@ -224,7 +232,8 @@ final class CoreIndexing {
           }
         }
       } else if flags.contains(.removed) {
-        for index in relatedIndexes {
+        for (mode, index) in zip(relatedModes, relatedIndexes)
+          where mode.canInclude(fileURL: pathURL) {
           _ = index.removeDocument(atPath: pathURL)
         }
       }

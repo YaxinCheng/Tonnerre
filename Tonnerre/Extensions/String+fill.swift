@@ -29,5 +29,20 @@ extension String {
       return String(format: self, arguments: fillInArgs)
     }
   }
-
+  
+  static let CMD: String = "⌘"
+  
+  var truncatedSpaces: String {
+    return self.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
+      .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)
+  }
+  
+  func formDifference(_ other: String, default: @autoclosure ()->String) -> String {
+    let commonPrefix = self.commonPrefix(with: other, options: .caseInsensitive)
+    guard
+      commonPrefix.count == count,
+      commonPrefix.count > 0
+    else { return `default`() }
+    return String(other[commonPrefix.endIndex...])
+  }
 }

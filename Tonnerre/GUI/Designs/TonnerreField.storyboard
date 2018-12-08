@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tonnerre Field Controller-->
+        <scene sceneID="XLZ-JF-xft">
+            <objects>
+                <viewController storyboardIdentifier="TonnerreField" id="WGb-d7-1e3" customClass="TonnerreFieldController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
+                    <customView key="view" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" id="DbG-56-Qci">
+                        <rect key="frame" x="0.0" y="0.0" width="670" height="56"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="5" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="u9z-9q-Qck" customClass="TonnerreIconView" customModule="Tonnerre" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="2x8-Ww-AWp"/>
+                                    <constraint firstAttribute="height" constant="40" id="wv7-DP-O6y"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tonnerre" id="eNc-8d-OKT"/>
+                            </imageView>
+                            <textField focusRingType="none" horizontalHuggingPriority="252" verticalHuggingPriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="nhk-Uh-AyR" customClass="TonnerreField" customModule="Tonnerre" customModuleProvider="target">
+                                <rect key="frame" x="50" y="8" width="614" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="610" id="lLO-96-5O0"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Tonnerre" usesSingleLineMode="YES" id="VKd-i3-QOO">
+                                    <font key="font" metaFont="systemLight" size="33.5"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zjN-fA-uc6" customClass="PlaceholderField" customModule="Tonnerre" customModuleProvider="target">
+                                <rect key="frame" x="656" y="8" width="4" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="Hae-0o-qPb"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="Z7Q-N3-No4">
+                                    <font key="font" metaFont="systemLight" size="33.5"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="zjN-fA-uc6" firstAttribute="height" secondItem="nhk-Uh-AyR" secondAttribute="height" id="72V-X6-ZsS"/>
+                            <constraint firstItem="zjN-fA-uc6" firstAttribute="leading" secondItem="nhk-Uh-AyR" secondAttribute="trailing" constant="-4" id="Gkg-ND-NOu"/>
+                            <constraint firstAttribute="bottom" secondItem="nhk-Uh-AyR" secondAttribute="bottom" constant="8" id="K5P-Jv-5Zf"/>
+                            <constraint firstItem="u9z-9q-Qck" firstAttribute="leading" secondItem="DbG-56-Qci" secondAttribute="leading" constant="8" id="LKf-MJ-LpD"/>
+                            <constraint firstAttribute="bottom" secondItem="u9z-9q-Qck" secondAttribute="bottom" constant="8" id="R7Z-i0-uZl"/>
+                            <constraint firstItem="zjN-fA-uc6" firstAttribute="centerY" secondItem="nhk-Uh-AyR" secondAttribute="centerY" id="YDJ-lI-Ajb"/>
+                            <constraint firstItem="nhk-Uh-AyR" firstAttribute="top" secondItem="DbG-56-Qci" secondAttribute="top" constant="8" id="g2h-Kl-13v"/>
+                            <constraint firstItem="nhk-Uh-AyR" firstAttribute="leading" secondItem="u9z-9q-Qck" secondAttribute="trailing" constant="4" id="oZR-Nc-Wre"/>
+                            <constraint firstItem="u9z-9q-Qck" firstAttribute="top" secondItem="DbG-56-Qci" secondAttribute="top" constant="8" id="uPT-Cc-dL0"/>
+                        </constraints>
+                    </customView>
+                    <connections>
+                        <outlet property="iconView" destination="u9z-9q-Qck" id="wcb-dF-zCP"/>
+                        <outlet property="placeholderField" destination="zjN-fA-uc6" id="LgR-K5-XVm"/>
+                        <outlet property="placeholderWidth" destination="Hae-0o-qPb" id="Qxw-p1-BnZ"/>
+                        <outlet property="textField" destination="nhk-Uh-AyR" id="GNL-ea-oiZ"/>
+                        <outlet property="textFieldWidth" destination="lLO-96-5O0" id="cZG-Ji-CM5"/>
+                    </connections>
+                </viewController>
+                <customObject id="nUz-hL-4Xi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="449" y="-93"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tonnerre" width="128" height="128"/>
+    </resources>
+</document>

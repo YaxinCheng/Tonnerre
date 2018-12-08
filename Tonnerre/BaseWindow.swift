@@ -15,17 +15,22 @@ final class BaseWindow: NSPanel {
   }
   
   var isHidden: Bool = false {
-    didSet {
+    willSet {
       #if RELEASE
-      if isHidden {
-        orderOut(self)
-        let notification = Notification(name: .windowIsHiding)
-        NotificationCenter.default.post(notification)
-      } else {
-        resetWindownLocation()
-        makeKeyAndOrderFront(self)
-        orderFrontRegardless()
+      if !isHidden && newValue == true {
+        DispatchQueue.main.async { [unowned self] in
+          self.orderOut(self)
+          let notification = Notification(name: .windowIsHiding)
+          NotificationCenter.default.post(notification)
+        }
+      } else if isHidden && newValue == false {
+        DispatchQueue.main.async { [unowned self] in
+          self.resetWindownLocation()
+          self.makeKeyAndOrderFront(self)
+          self.orderFrontRegardless()
+        }
       }
+      launchHelper()
       #endif
     }
   }
@@ -70,7 +75,6 @@ final class BaseWindow: NSPanel {
     isOpaque = false
     backgroundColor = .clear
     collectionBehavior.insert(.canJoinAllSpaces)
-    DistributedNotificationCenter.default().addObserver(self, selector: #selector(launchHelper), name: .helperAppDidExit, object: nil)
     
     folderChecks()
     setupCache()
@@ -115,9 +119,7 @@ final class BaseWindow: NSPanel {
   
   @objc private func launchHelper() {
     #if RELEASE
-    let helperLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/TonnerreIndexHelper.app")
-    let workspace = NSWorkspace.shared
-    _ = try? workspace.launchApplication(at: helperLocation, options: .andHide, configuration: [:])
+    TonnerreHelper.launch()
     #endif
   }
   

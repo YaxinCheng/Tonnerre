@@ -12,14 +12,17 @@ protocol LimitedDataProtocol {
 }
 
 extension LimitedDataProtocol {
-  static func removeOldest(sortingKey: String, predicate: NSPredicate? = nil) {
+  static func removeOldest(sortingKey: String,
+                           predicate: NSPredicate? = nil,
+                           beforeDeleting: ((Self)->Void)? = nil) {
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "\(Self.self)")
     fetchRequest.predicate = predicate
     fetchRequest.fetchLimit = 1
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortingKey, ascending: true)]
     let context = getContext()
-    guard let fetchedData = (try? context.fetch(fetchRequest))?.first else { return }
-    context.delete(fetchedData)
+    guard let fetchedData = (try? context.fetch(fetchRequest))?.first as? Self else { return }
+    beforeDeleting?(fetchedData)
+    context.delete(fetchedData as! NSManagedObject)
     do {
       try context.save()
     } catch {
@@ -29,7 +32,7 @@ extension LimitedDataProtocol {
     }
   }
   
-  static func uniquelize(predicate: NSPredicate) {
+  static func removeAll(predicate: NSPredicate) {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(Self.self)")
     fetchRequest.predicate = predicate
     let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

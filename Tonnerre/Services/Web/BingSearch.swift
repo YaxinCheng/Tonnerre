@@ -6,14 +6,15 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
+// NOTE: The suggestionTemplate may not be stable in the future
 struct BingSearch: WebService {
   let name: String = "Bing"
-  let template: String = "http://www.bing.com/search?q=%@"
-  let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"// May not be stable
-  let contentTemplate: String = "Search %@ on bing"
-  static let keyword: String = "bing"
+  let template: String = "https://www.bing.com/search?q=%@"
+  let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"
+  let contentTemplate: String = "Search \"%@\" on bing"
+  let keyword: String = "bing"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "bing")

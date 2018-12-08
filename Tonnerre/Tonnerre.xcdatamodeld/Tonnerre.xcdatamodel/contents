@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CBRecord" representedClassName="CBRecord" syncable="YES" codeGenerationType="class">
         <attribute name="time" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
-        <attribute name="value" attributeType="String" syncable="YES"/>
+        <attribute name="value" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="LaunchOrder" representedClassName="LaunchOrder" syncable="YES" codeGenerationType="class">
         <attribute name="identifier" attributeType="String" syncable="YES"/>
@@ -22,7 +22,7 @@
     </entity>
     <elements>
         <element name="CBRecord" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="QueryHistory" positionX="-63" positionY="9" width="128" height="90"/>
         <element name="LaunchOrder" positionX="-54" positionY="27" width="128" height="75"/>
+        <element name="QueryHistory" positionX="-63" positionY="9" width="128" height="90"/>
     </elements>
 </model>

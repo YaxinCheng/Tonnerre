@@ -9,67 +9,45 @@
 import Foundation
 
 final class TonnerreSession {
-  private static let lock = DispatchSemaphore(value: 1)
+  private let lock: DispatchSemaphore
   
   /**
    Returns the shared instance of TonnerreSession
   */
   static let shared = TonnerreSession()
   
-  private let session: URLSession
-  private var URLDataTask: URLSessionDataTask? = nil
   private let queue: DispatchQueue
+  private var taskQueue: [DispatchWorkItem] = [] {
+    didSet {
+      var task: DispatchWorkItem! = nil
+      while taskQueue.count > 0 {
+        task = taskQueue.removeFirst()
+        if !task.isCancelled { break }
+      }
+      lock.signal()
+      guard task != nil else { return }
+      queue.async(execute: task)
+    }
+  }
   
   private init() {
-    session = URLSession(configuration: .default)
-    queue = DispatchQueue.global(qos: .userInitiated)
+    queue = DispatchQueue(label: "Tonnerre.Session.Queue", qos: .userInteractive, attributes: .concurrent)
+    lock  = DispatchSemaphore(value: 1)
   }
   
-  func send(request: URLSessionDataTask, after seconds: Double = 0.7) {
-    URLDataTask?.cancel()
-    URLDataTask = request
-    queue.asyncAfter(deadline: .now() + seconds) { [weak self] in
-      TonnerreSession.lock.wait()
-      defer { TonnerreSession.lock.signal() }
-      guard
-        self?.URLDataTask != nil,
-        self?.URLDataTask?.state == .suspended
-      else { return }
-      self?.URLDataTask?.resume()
-      self?.URLDataTask = nil
-    }
+  init(queue: DispatchQueue) {
+    self.queue = queue
+    lock = DispatchSemaphore(value: 1)
   }
   
-  private var asyncRequest: DispatchWorkItem? = nil
-  
-  func send(request: DispatchWorkItem, after second: Double = 0) {
-    asyncRequest?.cancel()
-    asyncRequest = request
-    queue.asyncAfter(deadline: .now() + second) { [weak self] in
-      TonnerreSession.lock.wait()
-      defer { TonnerreSession.lock.signal() }
-      guard
-        self?.asyncRequest != nil,
-        self?.asyncRequest?.isCancelled == false,
-        self?.asyncRequest === request
-      else { return }
-      DispatchQueue.global(qos: .userInteractive).async(execute: request)
-      self?.asyncRequest = nil
-    }
+  func enqueue(task: DispatchWorkItem) {
+    lock.wait()
+    taskQueue.append(task)
   }
   
   func cancel() {
-    if URLDataTask != nil {
-      URLDataTask?.cancel()
-      URLDataTask = nil
-    }
-    if asyncRequest != nil {
-      asyncRequest?.cancel()
-      asyncRequest = nil
-    }
+    lock.wait()
+    taskQueue.removeAll()
   }
-  
-  func dataTask(request: URLRequest, completionHanlder: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-    return session.dataTask(with: request, completionHandler: completionHanlder)
-  }
+
 }

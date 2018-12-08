@@ -6,10 +6,10 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
-struct CurrencyService: TonnerreService {
-  static let keyword: String = ""
+struct CurrencyService: BuiltInProvider {
+  let keyword: String = ""
   let icon: NSImage = .calculator
   let name: String = "Currency Exchange"
   let content: String = "Currency change from %@ to %@"
@@ -56,16 +56,16 @@ struct CurrencyService: TonnerreService {
     return (fromCurrency, toCurrency, amount)
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard let (fromCurrency, toCurrency, amount) = extractInfomation(from: input) else { return [] }
     // The async function to setup the view
     let label = "\(amount) \(fromCurrency) = %@ "
     let viewSetupGenerator: (String, String, String) -> ((ServiceCell) -> Void)? = { fromCurrency, toCurrency, label in
       if !self.currencyCodes.contains(fromCurrency) || !self.currencyCodes.contains(toCurrency) { return nil }
+      let key = [fromCurrency, toCurrency].joined(separator: "_")
+      let url = URL(string: String(format: self.template, key))!
+      let request = URLRequest(url: url, timeoutInterval: 60 * 2)
       return { cell in
-          let key = [fromCurrency, toCurrency].joined(separator: "_")
-          let url = URL(string: String(format: self.template, key))!
-          let request = URLRequest(url: url, timeoutInterval: 60 * 2)
           URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
             #if DEBUG
             if let errorInfo = error { print(errorInfo) }
@@ -76,6 +76,10 @@ struct CurrencyService: TonnerreService {
               let rate = jsonObj[key]
             else { return }
             DispatchQueue.main.async {
+              guard
+                case .service(_, let item)? = cell.displayItem,
+                item is AsyncDisplayable
+              else { return }
               cell.serviceLabel.stringValue = String(format: label, "\(rate * amount)")
             }
           }.resume()
@@ -83,14 +87,14 @@ struct CurrencyService: TonnerreService {
     }
     let populars = popularCurrencies.filter { $0 != fromCurrency && $0 != toCurrency }
     return ([toCurrency] + populars).map {
-      let googleURL = URL(string: "https://google.com/search?q=\(amount)+\(fromCurrency)+\(toCurrency)")!
+      let googleURL = URL(string: "https://google.com/search?q=\(amount)+\(fromCurrency)+\($0)")!
       let asyncViewSetup = viewSetupGenerator(fromCurrency, $0, label + $0)
       return AsyncedDisplayableContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: googleURL, viewSetup: asyncViewSetup)
     }
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let innerItem = (source as? AsyncedDisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let innerItem = (service as? AsyncedDisplayableContainer<URL>)?.innerItem else { return }
     NSWorkspace.shared.open(innerItem)
   }
 }

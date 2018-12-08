@@ -6,7 +6,7 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct GoogleMapService: WebService {
   let template: String = "https://maps.google.%@/?q=%@"
@@ -17,16 +17,16 @@ struct GoogleMapService: WebService {
   func parse(suggestionData: Data?) -> [String] {
     guard
       let jsonData = suggestionData,
-      let jsonObject = (try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)) as? [String: Any],
+      let jsonObject = JSON(data: jsonData),
       (jsonObject["status"] as? String) == "OK",
-      let predictions = jsonObject["predictions"] as? [[String: Any]]
+      let predictions: [[String: Any]] = jsonObject["predictions"]
     else { return [] }
     return predictions.compactMap { $0["description"] as? String }
   }
-  static let keyword: String = "map"
+  let keyword: String = "map"
   let argLowerBound: Int = 1
   let name: String = "Google Maps"
-  let contentTemplate: String = "Search %@ on Google Maps"
+  let contentTemplate: String = "Search \"%@\" on Google Maps"
   let icon: NSImage = #imageLiteral(resourceName: "googlemap")
   var alterIcon: NSImage? {
     let workspace = NSWorkspace.shared
@@ -35,8 +35,8 @@ struct GoogleMapService: WebService {
     return icon
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let request = (source as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let request = (service as? DisplayableContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
       let appleMapURL = request.absoluteString.replacingOccurrences(of: "maps\\.google\\.\\w+?\\/", with: "maps.apple.com/", options: .regularExpression)

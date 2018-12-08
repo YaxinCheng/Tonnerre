@@ -7,13 +7,13 @@
 //
 
 import CoreServices
-import Foundation
+import Cocoa
 
-struct DictionarySerivce: TonnerreService {
+struct DictionarySerivce: BuiltInProvider {
   let icon: NSImage = .dictionary
   let content: String = "Find definition for word in dictionary"
   let name: String = "Define words..."
-  static let keyword: String = "define"
+  let keyword: String = "define"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   private let spellChecker: NSSpellChecker
@@ -23,16 +23,26 @@ struct DictionarySerivce: TonnerreService {
     spellChecker.automaticallyIdentifiesLanguages = true
   }
   
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard input.count > 0, !input[0].isEmpty else { return [self] }
     let text = input.joined(separator: " ")
-    let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
-    let filteredSuggestiosn = suggestions.filter { $0.lowercased() != text }
-    return [wrapQuery(text)] + filteredSuggestiosn.compactMap(wrap)
+    let notFoundItem = DisplayableContainer(name: text, content: "Cannot find definition for \"\(text)\"", icon: icon, innerItem: URL(string: "dict://\(text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"))
+    return [buildService(basedOn: text, defaultService: notFoundItem)!]
   }
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let request = source as? DisplayableContainer<URL>, let url = request.innerItem else { return }
+  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+    guard input.count > 0, !input[0].isEmpty else {
+      callback([])
+      return
+    }
+    let text = input.joined(separator: " ")
+    let suggestions = spellChecker.completions(forPartialWordRange: NSRange(text.startIndex..., in: text), in: text, language: nil, inSpellDocumentWithTag: NSSpellChecker.uniqueSpellDocumentTag()) ?? []
+    let filteredSuggestions = suggestions.filter { $0.caseInsensitiveCompare(text) != .orderedSame }
+    callback(filteredSuggestions.compactMap { buildService(basedOn: $0, defaultService: nil) } )
+  }
+  
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let request = service as? DisplayableContainer<URL>, let url = request.innerItem else { return }
     NSWorkspace.shared.open(url)
   }
   
@@ -48,46 +58,15 @@ struct DictionarySerivce: TonnerreService {
     return (foundTerm, String(definition))
   }
   
-  private func wrapQuery(_ query: String) -> DisplayableContainer<URL> {
-    let (headWord, content): (String, String)
-    let viewController: NSViewController?
-    if let (foundTerm, definition) = define(query) {
-      headWord = foundTerm
-      content = definition
-      viewController = buildView(with: definition)
-    } else {
-      headWord = query
-      content = "Cannot find definition for \"\(query)\""
-      viewController = nil
-    }
-    let urlEncoded = headWord.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? headWord
-    let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    return DisplayableContainer(name: headWord, content: content, icon: icon, priority: priority, innerItem: dictURL, placeholder: "", extraContent: viewController)
-  }
-  
-  private func wrap(_ query: String) -> DisplayableContainer<URL>? {
-    guard let (foundTerm, definition) = define(query) else { return nil }
-    let urlEncoded = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? foundTerm
-    let dictURL = URL(string: String(format: "dict://%@", urlEncoded))!
-    let viewController = buildView(with: definition)
-    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, priority: priority, innerItem: dictURL, extraContent: viewController)
-  }
-  
-  private func buildView(with definition: String) -> NSViewController {
-    let targetView: NSView
-    let textView: NSTextView
-    if #available(OSX 10.14, *) {
-      targetView = NSTextView.scrollableTextView()
-      textView = (targetView as! NSScrollView).documentView as! NSTextView
-    } else {
-      textView = NSTextView()
-      targetView = textView
-    }
-    textView.string = definition
-    textView.isEditable = false
-    textView.font = NSFont.systemFont(ofSize: 17)
-    let viewController = NSViewController()
-    viewController.view = targetView
-    return viewController
+  private func buildService(basedOn query: String,
+                    defaultService: @autoclosure ()->DisplayableContainer<URL>?) -> DisplayableContainer<URL>?
+  {
+    guard
+      let (foundTerm, definition) = define(query),
+      foundTerm.caseInsensitiveCompare(query) == .orderedSame
+    else { return defaultService() }
+    let headWord = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foundTerm
+    let dictURL = URL(string: String(format: "dict://%@", headWord))!
+    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, innerItem: dictURL)
   }
 }

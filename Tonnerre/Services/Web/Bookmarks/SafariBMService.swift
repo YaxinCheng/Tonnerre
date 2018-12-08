@@ -8,11 +8,12 @@
 
 import Cocoa
 
-struct SafariBMService: BookMarkService, DeferedServiceProtocol {
+struct SafariBMService: BookMarkService {
   static let browser: Browser = .safari
   let name: String = "Safari BookMarks"
   let content: String = "Quick launch Safari Bookmarks"
-  static let keyword: String = "safari"
+  let keyword: String = "safari"
+  let defered: Bool = true
   
   func parseFile() throws -> [BookMarkService.BookMark] {
     guard let bookmarkFile = type(of: self).browser.bookMarksFile else { return [] }

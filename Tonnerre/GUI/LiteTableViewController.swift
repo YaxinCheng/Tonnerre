@@ -11,17 +11,10 @@ import LiteTableView
 
 class LiteTableViewController: NSViewController {
   
-  var datasource: [ServicePack] = [] {
+  var datasource: ManagedList<ServicePack> = [] {
     didSet {
-      HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
-      highlightedIndex = -1
-      tableView.reload()
-      if case .service(_, _)? = datasource.first {
-        delegate?.serviceHighlighted(service: datasource.first)
-      } else {
-        delegate?.serviceHighlighted(service: nil)
-      }
-      delegate?.updatePlaceholder(service: datasource.first)
+      completeViewReload()
+      datasource.listExpanded = listExpanded
     }
   }
   var tableView: LiteTableView {
@@ -36,17 +29,18 @@ class LiteTableViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
+    
     HeightConstraint = view.heightAnchor.constraint(equalToConstant: 0)
     NSLayoutConstraint.activate([HeightConstraint])
     
     NotificationCenter.default.addObserver(forName: .windowIsHiding, object: nil, queue: .main) { [weak self] _ in
-      self?.datasource.removeAll()
+      self?.datasource = []
     }
     
     tableView.liteDelegate   = self
     tableView.liteDataSource = self
     tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
-    let allowedKeys: [UInt16] = [48, 36, 76, 49, 25, 26, 91, 92] + Array(18...23) + Array(83...89)
+    let allowedKeys: [UInt16] = [12, 48, 53, 36, 76, 49, 25, 26, 28, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
   }
   
@@ -87,6 +81,24 @@ class LiteTableViewController: NSViewController {
     guard datasource.count > 0 else { return nil }
     return datasource[max(0, highlightedIndex)]
   }
+  
+  private func completeViewReload() {
+    highlightedIndex = -1
+    tableView.reload()
+    if case .service(_, _)? = datasource.first {
+      delegate?.serviceHighlighted(service: datasource.first)
+    } else {
+      delegate?.serviceHighlighted(service: nil)
+    }
+    delegate?.updatePlaceholder(service: datasource.first)
+  }
+  
+  private func listExpanded(fromIndex index: Int) {
+    guard index < 9 else { return }
+    DispatchQueue.main.async { [weak self] in
+      self?.completeViewReload()
+    }
+  }
 }
 
 extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
@@ -99,28 +111,41 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func keyPressed(_ event: NSEvent) {
     switch event.keyCode {
     case 125, 126: // move down/up
+      PreviewPopover.shared.close()
       if datasource.count == 0 && event.keyCode == 126 {
         delegate?.retrieveLastQuery()
       }
       guard datasource.count > 0 else { return }
       highlightedIndex += event.keyCode == 125 ? 1 : -1
-      let selectedService = datasource[min(max(highlightedIndex, 0), datasource.count - 1)]
+      highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
+      let selectedService = datasource[max(highlightedIndex, 0)]
       delegate?.serviceHighlighted(service: selectedService)
       delegate?.updatePlaceholder(service: selectedService)
     case 48: // tab
+      guard datasource.count > 0 else { return }
       let selectedService = datasource[max(highlightedIndex, 0)]
       delegate?.tabPressed(service: selectedService)
     case 36, 76: // enter
-      let highlightedCell = tableView.highlightedCell as? ServiceCell
       let withCmd = event.modifierFlags.contains(.command)
       guard
-        withCmd || highlightedCell?.popoverView.isShown == true ,
+        withCmd || PreviewPopover.shared.isShown == true ,
         let servicePack = retrieveHighlighted()
       else { break }
       delegate?.serve(servicePack, withCmd: withCmd)
-    case 49:
+    case 49: // space
       (tableView.highlightedCell as? ServiceCell)?.preview()
-    case 18...23, 25, 26, 83...89, 91, 92:// ⌘ + number
+    case 53: // ESC
+      guard event.modifierFlags.rawValue == 256 else { return }
+      if PreviewPopover.shared.isShown == true {
+        PreviewPopover.shared.close()
+      } else {
+        #if DEBUG
+        print("ESC pressed")
+        #else
+        (tableView.window as? BaseWindow)?.isHidden = true
+        #endif
+      }
+    case 18...23, 25, 26, 28, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
       let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
                                        83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
@@ -131,6 +156,23 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
         let servicePack = cell.displayItem
       else { return }
       delegate?.serve(servicePack, withCmd: false)
+    case 12: // Q
+      guard event.modifierFlags.contains(.command) else { return }
+      if type(of: self).canExit { // Double clicked cmd + Q
+        #if DEBUG
+        print("Double click trigered (\(String.CMD) + Q)")
+        #else
+        TonnerreHelper.terminate()
+        exit(0)
+        #endif
+      } else {
+        delegate?.updatePlaceholder(string: " Double click \(String.CMD) + Q to exit")
+        type(of: self).canExit = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+          self?.delegate?.updatePlaceholder(string: nil)
+          LiteTableViewController.canExit = false
+        }
+      }
     default:
       break
     }
@@ -141,6 +183,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   }
   
   func numberOfCells(_ tableView: LiteTableView) -> Int {
+    HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
     return datasource.count
   }
   
@@ -158,9 +201,13 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
     cell.displayItem = data
     if case .service(_, let value) = data {
       if let asyncedData = value as? AsyncDisplayable {
-        asyncedData.asyncedViewSetup?(cell)
+        asyncedData.asyncUpdate?(cell)
       }
     }
     return cell
   }
+}
+
+fileprivate extension LiteTableViewController {
+  static var canExit: Bool = false
 }

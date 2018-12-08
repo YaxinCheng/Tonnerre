@@ -13,10 +13,10 @@ final class ClipboardMonitor {
   private var changedCount: Int
   private let `repeat`: Bool
   private let interval: TimeInterval
-  private let callback: (String, NSPasteboard.PasteboardType)->Void
+  private let callback: (NSAttributedString, NSPasteboard.PasteboardType)->Void
   private var timer: Timer?
   
-  init(interval: TimeInterval, repeat: Bool = false, callback: @escaping (String, NSPasteboard.PasteboardType)->Void) {
+  init(interval: TimeInterval, repeat: Bool = false, callback: @escaping (NSAttributedString, NSPasteboard.PasteboardType)->Void) {
     pasteboard = NSPasteboard.general
     changedCount = pasteboard.changeCount
     self.`repeat` = `repeat`
@@ -33,8 +33,11 @@ final class ClipboardMonitor {
         originCount != changedCount
       else { return }
       if let fileURL = self?.pasteboard.string(forType: .fileURL) {
-        self?.callback(fileURL, .fileURL)
-      } else if let string = self?.pasteboard.string(forType: .string) {
+        self?.callback(NSAttributedString(string: fileURL), .fileURL)
+      } else if let string = self?.pasteboard
+        .readObjects(forClasses: [NSAttributedString.self])?
+        .first as? NSAttributedString,
+        !string.string.isEmpty {
         self?.callback(string, .string)
       }
       self?.changedCount = changedCount

@@ -35,11 +35,11 @@ final class TonnerreIconView: NSImageView {
     guard event.clickCount == 2 else { return }
     let mouseLocation = NSEvent.mouseLocation
     guard
-      var designedFrame = window?.frame,
+      let designedFrame = window?.frame,
       let mainScreen = NSScreen.screens.first(where: { NSMouseInRect(mouseLocation, $0.frame, false) })
     else { return }
-    designedFrame.origin.x = mainScreen.frame.width/2 - designedFrame.width/2
-    designedFrame.origin.y = mainScreen.frame.height * 5 / 6 - designedFrame.height
-    window?.setFrame(designedFrame, display: true)
+    let x = mainScreen.frame.width/2 - designedFrame.width/2
+    let y = mainScreen.frame.height * 5 / 6 - designedFrame.height
+    window?.setFrameOrigin(NSPoint(x: x, y: y))
   }
 }

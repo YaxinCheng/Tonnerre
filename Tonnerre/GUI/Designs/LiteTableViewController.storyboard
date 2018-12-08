@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Lite Table View Controller-->
+        <scene sceneID="w7F-qj-5Sz">
+            <objects>
+                <customObject id="FrN-uy-wB8" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="tableView" id="98G-ij-7dv" customClass="LiteTableViewController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
+                    <stackView key="view" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="vW5-WW-28t" customClass="LiteTableView" customModule="LiteTableView">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </stackView>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="39" y="1032"/>
+        </scene>
+    </scenes>
+</document>

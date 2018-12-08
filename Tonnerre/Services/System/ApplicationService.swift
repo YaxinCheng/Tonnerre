@@ -6,31 +6,32 @@
 //  Copyright © 2018 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
-struct ApplicationService: TonnerreService {
+struct ApplicationService: BuiltInProvider {
   let name: String = "Quit program"
   let content: String = "Find and quite a running program"
   let alterContent: String? = "Force quit program"
-  static let keyword: String = "quit"
+  let keyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0
+  let defered: Bool = true
   
-  func serve(source: DisplayProtocol, withCmd: Bool) {
-    guard let value = (source as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
+  func serve(service: DisplayProtocol, withCmd: Bool) {
+    guard let value = (service as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
     if withCmd { value.forceTerminate() }
     else { value.terminate() }
   }
 
-  func prepare(input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
     if input.isEmpty || (input.first?.isEmpty ?? false) {
-      return runningApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, priority: priority, innerItem: $0) }
+      return runningApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
     } else {
       let filteredApps = runningApps.filter { match(appName: $0.localizedName!, query: input) }
-      return filteredApps.map { DisplayableContainer(name: $0.localizedName!, content: $0.bundleURL!.path, icon: $0.icon!, priority: priority, innerItem: $0) }
+      return filteredApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
     }
   }
   
