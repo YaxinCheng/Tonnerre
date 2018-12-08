@@ -178,7 +178,7 @@ private extension String {
                                             goal.components(separatedBy: " "))
     let currentWord = baseComponents.last!
     let desiredIndex = baseComponents.count - 1 - skipNum
-    guard desiredIndex < goalComponents.count else { return self }
+    guard desiredIndex < goalComponents.count, desiredIndex >= 0 else { return self }
     let desiredWord = goalComponents[desiredIndex]
     let commonPrefx = currentWord.commonPrefix(with: desiredWord, options: .caseInsensitive)
     let completedWord = String(currentWord[..<commonPrefx.endIndex] + desiredWord[commonPrefx.endIndex...])
