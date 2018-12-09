@@ -92,6 +92,9 @@
 		146C053C21BDB20F0028B076 /* NonScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053B21BDB20F0028B076 /* NonScrollView.swift */; };
 		146C053E21BDB36F0028B076 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053D21BDB36F0028B076 /* DefaultProvider.swift */; };
 		146C053F21BDB6BF0028B076 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053D21BDB36F0028B076 /* DefaultProvider.swift */; };
+		146C054221BDBA490028B076 /* GeneralSettingLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C054121BDBA490028B076 /* GeneralSettingLoader.swift */; };
+		146C054621BDBBAB0028B076 /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C054521BDBBAB0028B076 /* TextItem.swift */; };
+		146C054721BDBFFD0028B076 /* TonnerreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */; };
 		146E874E21A76334001CF246 /* DisplayOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E874D21A76334001CF246 /* DisplayOrder.swift */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
@@ -314,6 +317,8 @@
 		146C053721BDAEB40028B076 /* ContentViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewDelegate.swift; sourceTree = "<group>"; };
 		146C053B21BDB20F0028B076 /* NonScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonScrollView.swift; sourceTree = "<group>"; };
 		146C053D21BDB36F0028B076 /* DefaultProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProvider.swift; sourceTree = "<group>"; };
+		146C054121BDBA490028B076 /* GeneralSettingLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingLoader.swift; sourceTree = "<group>"; };
+		146C054521BDBBAB0028B076 /* TextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextItem.swift; sourceTree = "<group>"; };
 		146E874D21A76334001CF246 /* DisplayOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayOrder.swift; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -579,6 +584,15 @@
 			path = Window;
 			sourceTree = "<group>";
 		};
+		146C054021BDBA360028B076 /* GeneralSettings */ = {
+			isa = PBXGroup;
+			children = (
+				146C054121BDBA490028B076 /* GeneralSettingLoader.swift */,
+				146C054521BDBBAB0028B076 /* TextItem.swift */,
+			);
+			path = GeneralSettings;
+			sourceTree = "<group>";
+		};
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
@@ -777,6 +791,7 @@
 				146C053721BDAEB40028B076 /* ContentViewDelegate.swift */,
 				14D5184B21B460BF00C93E7C /* SettingItem.swift */,
 				14E49CDD21B87A8C0018527A /* SettingFetcher.swift */,
+				146C054021BDBA360028B076 /* GeneralSettings */,
 				146C052821BC52C80028B076 /* Providers */,
 				14D5185B21B4877D00C93E7C /* Cells */,
 			);
@@ -1236,6 +1251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				146C054221BDBA490028B076 /* GeneralSettingLoader.swift in Sources */,
 				14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */,
 				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146C053821BDAEB50028B076 /* ContentViewDelegate.swift in Sources */,
@@ -1250,11 +1266,13 @@
 				146C052721BC4F200028B076 /* BuiltinProviderLoader.swift in Sources */,
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				146C052F21BC6BDD0028B076 /* TNEProviderLoader.swift in Sources */,
+				146C054721BDBFFD0028B076 /* TonnerreSettings.swift in Sources */,
 				146C052A21BC52D80028B076 /* ProviderItem.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
 				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,
 				14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */,
 				146C053F21BDB6BF0028B076 /* DefaultProvider.swift in Sources */,
+				146C054621BDBBAB0028B076 /* TextItem.swift in Sources */,
 				146C053021BC71950028B076 /* JSON.swift in Sources */,
 				146C053C21BDB20F0028B076 /* NonScrollView.swift in Sources */,
 				14D5185121B4872400C93E7C /* TextFieldCell.swift in Sources */,

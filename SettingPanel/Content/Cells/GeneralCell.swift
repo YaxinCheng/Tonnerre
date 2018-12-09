@@ -20,8 +20,7 @@ class GeneralCell: SettingCell {
     super.viewWillAppear()
     
     deleteButton.isHidden = indexPath.section == 0
-    guard let itemName = (item as? ProviderItem)?.name else { return }
-    view.menu = createMenu(withName: itemName)
+    view.menu = createMenu(withName: item.name)
   }
   
   private func createMenu(withName name: String) -> NSMenu {

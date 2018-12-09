@@ -32,7 +32,8 @@ class SplitViewController: NSViewController {
   private func setup(destinationVC: ContentViewController, withOption option: MenuOptionId) {
     switch option {
     case .general:
-      destinationVC.items = []
+      let generalSettingFetcher = GeneralSettingFetcher()
+      destinationVC.items = [generalSettingFetcher.fetch()]
     case .providers:
       let builtinProviderFetcher = BuiltinProviderFetcher()
       let tneProviderFetcher = TNEProviderFetcher()

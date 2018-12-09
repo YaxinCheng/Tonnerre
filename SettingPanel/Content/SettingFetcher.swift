@@ -25,3 +25,10 @@ struct TNEProviderFetcher: SettingFetcher {
     return loader.providers.map { ProviderItem(id: $0.0, keyword: $0.1, name: $0.2, content: $0.3) }
   }
 }
+
+struct GeneralSettingFetcher: SettingFetcher {
+  func fetch() -> [SettingItem] {
+    let loader = GeneralSettingLoader()
+    return loader.settings.map { TextItem(id: $0.0, name: $0.1, content: $0.2) }
+  }
+}

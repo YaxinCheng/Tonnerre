@@ -24,6 +24,7 @@ extension TextFieldCell: NSTextFieldDelegate {
       let value = textField?.stringValue,
       (obj.userInfo?["NSTextMovement"] as? NSTextMovement) == .return
     else { return }
-    item.set(value: value)
+    var textItem = item as? TextItem
+    textItem?.settingValue = value
   }
 }

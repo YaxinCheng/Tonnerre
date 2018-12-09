@@ -11,11 +11,9 @@ import Foundation
 enum DefaultProvider {
   static var id: String? {
     set {
-      let userDefault = UserDefaults.shared
-      userDefault.set(newValue, forKey: "Tonnerre.Provider.Default")
+      TonnerreSettings.set(newValue ?? "", forKey: .defaultProvider)
     } get {
-      let userDefault = UserDefaults.shared
-      return userDefault.string(forKey: "Tonnerre.Provider.Default")
+      return TonnerreSettings.get(fromKey: .defaultProvider) as? String
     }
   }
 }
