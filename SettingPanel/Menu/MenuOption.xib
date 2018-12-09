@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-Re-KAp" customClass="TintedImageView" customModule="SettingPanel" customModuleProvider="target">
+                    <rect key="frame" x="12" y="8" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="dvL-Re-KAp" secondAttribute="height" multiplier="1:1" id="8Zn-Dw-hh6"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="fCR-px-hQs"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1qc-qd-U4N">
+                    <rect key="frame" x="66" y="20" width="408" height="24"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="0Ji-dJ-NRE">
+                        <font key="font" metaFont="systemMedium" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="1qc-qd-U4N" firstAttribute="centerY" secondItem="dvL-Re-KAp" secondAttribute="centerY" id="GRY-TO-KZw"/>
+                <constraint firstItem="dvL-Re-KAp" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="12" id="SnM-Do-vBF"/>
+                <constraint firstAttribute="bottom" secondItem="dvL-Re-KAp" secondAttribute="bottom" constant="8" id="Ulv-iV-RQI"/>
+                <constraint firstItem="1qc-qd-U4N" firstAttribute="leading" secondItem="dvL-Re-KAp" secondAttribute="trailing" constant="8" id="VBw-PN-amD"/>
+                <constraint firstAttribute="trailing" secondItem="1qc-qd-U4N" secondAttribute="trailing" constant="8" id="h4i-bw-KTh"/>
+                <constraint firstItem="dvL-Re-KAp" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="jaD-LK-mEY"/>
+            </constraints>
+        </customView>
+        <customObject id="KOy-SO-6xI" customClass="MenuOption" customModule="SettingPanel" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="dvL-Re-KAp" id="ouA-8D-023"/>
+                <outlet property="textField" destination="1qc-qd-U4N" id="fxS-Pc-y5L"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="aAI-ls-hnf"/>
+            </connections>
+        </customObject>
+    </objects>
+</document>

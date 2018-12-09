@@ -58,8 +58,7 @@ final class ProviderMap {
   }
   
   var defaultProvider: ServiceProvider? {
-    let userDefault = UserDefaults.shared
-    let id = userDefault.string(forKey: "Tonnerre.Provider.Default") ?? ""
+    let id = DefaultProvider.id ?? ""
     return retrieve(byID: id)
   }
   

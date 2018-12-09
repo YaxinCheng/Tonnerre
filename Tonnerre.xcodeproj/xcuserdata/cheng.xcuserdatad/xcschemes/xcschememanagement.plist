@@ -4,88 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>IndexHelper.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>SettingPanel.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
 		<key>SettingPanel.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
-		</dict>
-		<key>Tonnerre Release.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>Tonnerre Release.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Tonnerre.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
 		<key>Tonnerre.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>TonnerreHelper.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>TonnerreIndexHelper.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
 		<key>TonnerreIndexHelper.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
-		</dict>
-	</dict>
-	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>143FD1D7210D1F8700E79F7E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>146AD8C320C9C09300D9E591</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1470513F20B1BEF900F6FBE8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1470515420B1BEFB00F6FBE8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1470515F20B1BEFB00F6FBE8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>14AFE6992112A4F1002BBBB2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
 		</dict>
 	</dict>
 </dict>
