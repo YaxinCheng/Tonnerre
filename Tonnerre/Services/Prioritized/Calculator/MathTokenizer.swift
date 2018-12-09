@@ -69,37 +69,27 @@ struct MathTokenizer {
     return Operator
   }
   
-  private func constant(matchWith string: Substring) -> Token {
-    let convertedConstant: Token
-    switch string {
-    case "PI", "π", "pi": convertedConstant = .number(.pi)
-    case "e": convertedConstant = .number(exp(1))
-    default: convertedConstant = .number(Double(String(string))!)
-    }
-    return convertedConstant
-  }
-  
   func tokenize(expression: String) throws -> [Token] {
-    let procesingExp = expression.replacingOccurrences(of: " ", with: "")
+    let processingExp = expression.replacingOccurrences(of: " ", with: "")
     let patterns = [openBracketPattern, closeBracketPattern, unaryOperatorPattern, binaryOpTopPattern, binaryOpHighPattern, binaryOpLowPattern, numberPattern]
     var tokens: [Token] = []
-    var index = procesingExp.startIndex
-    while index < procesingExp.endIndex {
+    var index = processingExp.startIndex
+    while index < processingExp.endIndex {
       var foundFlag = false
       for (patternNum, pattern) in patterns.enumerated() {
-        let searchRange = NSRange(index..., in: procesingExp)
+        let searchRange = NSRange(index..., in: processingExp)
         guard
-          let (matchedString, matchedRange) = match(string: procesingExp, regex: pattern, range: searchRange)
+          let (matchedString, matchedRange) = match(string: processingExp, regex: pattern, range: searchRange)
         else { continue }
         switch patternNum {
         case 0: tokens.append(.openBracket)
         case 1: tokens.append(.closeBracket)
         case 2: tokens.append(try unaryOperator(matchWith: matchedString))
         case 3...5: tokens.append(try binaryOperator(matchWith: matchedString))
-        case 6: tokens.append(constant(matchWith: matchedString))
+        case 6: tokens.append(try constant(matchWith: matchedString))
         default: fatalError("Extra tokens")
         }
-        index = procesingExp.index(index, offsetBy: matchedRange.length)
+        index = processingExp.index(index, offsetBy: matchedRange.length)
         foundFlag = true
         break
       }
@@ -107,9 +97,23 @@ struct MathTokenizer {
     }
     return tokens
   }
+  
+  private func constant(matchWith string: Substring) throws -> Token {
+    let convertedConstant: Token
+    switch string {
+    case "PI", "π", "pi": convertedConstant = .number(.pi)
+    case "e": convertedConstant = .number(exp(1))
+    default:
+      guard let number = Double(String(string)) else {
+        throw MathError.invalidToken(value: String(string))
+      }
+      convertedConstant = .number(number)
+    }
+    return convertedConstant
+  }
 }
 
-extension Double {
+private extension Double {
   static func % (lhs: Double, rhs: Double) -> Double {
     return Double(Int(lhs) % Int(rhs))
   }
