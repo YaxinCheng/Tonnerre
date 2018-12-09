@@ -16,13 +16,22 @@ final class ContentViewController: NSViewController {
       collectionView.collectionViewLayout = {
         let layout = NSCollectionViewFlowLayout()
         let difference: CGFloat = 300 // difference between collectionView from the whole view
-        layout.sectionInset = NSEdgeInsets(top: 30, left: 20, bottom: 10, right: difference + 20)
+        layout.sectionInset = NSEdgeInsets(top: 30, left: 20, bottom: 20, right: difference + 20)
         layout.minimumLineSpacing = 20
         layout.minimumInteritemSpacing = 10
-        layout.itemSize = NSSize(width: 370, height: 70)
+        layout.itemSize = NSSize(width: 370, height: 90)
         return layout
       }()
     }
+  }
+}
+
+extension ContentViewController: ContentViewDelegate {
+  func remove(cell: SettingCell) {
+    guard let indexPath = cell.indexPath else { return }
+    items[indexPath.section].remove(at: indexPath.item)
+    collectionView.deleteItems(at: [indexPath])
+    collectionView.reloadData()
   }
 }
 
@@ -39,6 +48,8 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
     let item = items[indexPath.section][indexPath.item]
     let cell = collectionView.makeItem(withIdentifier: item.displayIdentifier, for: indexPath) as! SettingCell
     cell.item = item
+    cell.indexPath = indexPath
+    cell.delegate = self
     return cell
   }
 }

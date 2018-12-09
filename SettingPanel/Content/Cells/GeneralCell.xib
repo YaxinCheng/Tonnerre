@@ -10,41 +10,72 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY" customClass="CellView" customModule="SettingPanel" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l2B-np-pgb">
-                    <rect key="frame" x="6" y="40" width="58" height="24"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="KNr-OK-I0M">
+                    <rect key="frame" x="6" y="54" width="58" height="24"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" title="Label" id="KNr-OK-I0M">
                         <font key="font" metaFont="systemHeavy" size="20"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1Ij-p3-J6q">
-                    <rect key="frame" x="6" y="23" width="363" height="17"/>
-                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="iAK-iT-GOI">
+                    <rect key="frame" x="6" y="37" width="363" height="17"/>
+                    <textFieldCell key="cell" enabled="NO" title="Multiline Label" id="iAK-iT-GOI">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S0b-ED-CCV">
+                    <rect key="frame" x="321" y="1" width="48" height="32"/>
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSMenuOnStateTemplate" imagePosition="overlaps" alignment="center" alternateImage="NSMenuMixedStateTemplate" state="on" borderStyle="border" inset="2" id="v5h-ID-Eaj">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="buttonPressed:" target="JaT-cC-ffW" id="llj-tG-zNd"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OaF-X7-H3I">
+                    <rect key="frame" x="274" y="1" width="51" height="32"/>
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSTouchBarDeleteTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="vtc-mS-7Os">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deleteButtonPresesd:" target="JaT-cC-ffW" id="gCz-6n-twR"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstItem="OaF-X7-H3I" firstAttribute="bottom" secondItem="S0b-ED-CCV" secondAttribute="bottom" id="9WO-gd-Lpa"/>
+                <constraint firstAttribute="bottom" secondItem="S0b-ED-CCV" secondAttribute="bottom" constant="8" id="BNO-hW-7Lg"/>
                 <constraint firstAttribute="trailing" secondItem="1Ij-p3-J6q" secondAttribute="trailing" constant="8" id="CNg-fr-JTt"/>
                 <constraint firstItem="l2B-np-pgb" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="F2i-88-Wat"/>
                 <constraint firstItem="1Ij-p3-J6q" firstAttribute="top" secondItem="l2B-np-pgb" secondAttribute="bottom" id="JpE-Rg-dx9"/>
                 <constraint firstItem="l2B-np-pgb" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="L94-4r-osC"/>
+                <constraint firstItem="S0b-ED-CCV" firstAttribute="leading" secondItem="OaF-X7-H3I" secondAttribute="trailing" constant="8" id="P4k-m3-uah"/>
+                <constraint firstAttribute="trailing" secondItem="S0b-ED-CCV" secondAttribute="trailing" constant="12" id="aoa-iM-ZB2"/>
                 <constraint firstItem="1Ij-p3-J6q" firstAttribute="leading" secondItem="l2B-np-pgb" secondAttribute="leading" id="hey-te-gmZ"/>
+                <constraint firstItem="S0b-ED-CCV" firstAttribute="top" secondItem="1Ij-p3-J6q" secondAttribute="bottom" constant="8" id="v3S-EM-Zcy"/>
             </constraints>
             <point key="canvasLocation" x="138.5" y="154"/>
         </customView>
         <customObject id="JaT-cC-ffW" customClass="GeneralCell" customModule="SettingPanel" customModuleProvider="target">
             <connections>
                 <outlet property="contentLabel" destination="1Ij-p3-J6q" id="FG7-Jf-xAK"/>
+                <outlet property="deleteButton" destination="OaF-X7-H3I" id="Axq-1j-vPF"/>
                 <outlet property="titleLabel" destination="l2B-np-pgb" id="vju-cW-Ist"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="2km-kZ-iK7"/>
             </connections>
         </customObject>
     </objects>
+    <resources>
+        <image name="NSMenuMixedStateTemplate" width="10" height="2"/>
+        <image name="NSMenuOnStateTemplate" width="12" height="12"/>
+        <image name="NSTouchBarDeleteTemplate" width="15" height="30"/>
+    </resources>
 </document>

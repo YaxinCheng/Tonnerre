@@ -86,6 +86,10 @@
 		146C052D21BC6AAC0028B076 /* MenuOptionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C052C21BC6AAC0028B076 /* MenuOptionId.swift */; };
 		146C052F21BC6BDD0028B076 /* TNEProviderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C052E21BC6BDD0028B076 /* TNEProviderLoader.swift */; };
 		146C053021BC71950028B076 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CF984218A5352003B9468 /* JSON.swift */; };
+		146C053821BDAEB50028B076 /* ContentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053721BDAEB40028B076 /* ContentViewDelegate.swift */; };
+		146C053921BDAF550028B076 /* String+fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302C214206F100B7A0FB /* String+fill.swift */; };
+		146C053A21BDB10A0028B076 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
+		146C053C21BDB20F0028B076 /* NonScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053B21BDB20F0028B076 /* NonScrollView.swift */; };
 		146E874E21A76334001CF246 /* DisplayOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E874D21A76334001CF246 /* DisplayOrder.swift */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
@@ -305,6 +309,8 @@
 		146C052921BC52D80028B076 /* ProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderItem.swift; sourceTree = "<group>"; };
 		146C052C21BC6AAC0028B076 /* MenuOptionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionId.swift; sourceTree = "<group>"; };
 		146C052E21BC6BDD0028B076 /* TNEProviderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEProviderLoader.swift; sourceTree = "<group>"; };
+		146C053721BDAEB40028B076 /* ContentViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewDelegate.swift; sourceTree = "<group>"; };
+		146C053B21BDB20F0028B076 /* NonScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonScrollView.swift; sourceTree = "<group>"; };
 		146E874D21A76334001CF246 /* DisplayOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayOrder.swift; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -765,6 +771,7 @@
 			isa = PBXGroup;
 			children = (
 				14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */,
+				146C053721BDAEB40028B076 /* ContentViewDelegate.swift */,
 				14D5184B21B460BF00C93E7C /* SettingItem.swift */,
 				14E49CDD21B87A8C0018527A /* SettingFetcher.swift */,
 				146C052821BC52C80028B076 /* Providers */,
@@ -852,6 +859,7 @@
 			isa = PBXGroup;
 			children = (
 				14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */,
+				146C053B21BDB20F0028B076 /* NonScrollView.swift */,
 				146C052C21BC6AAC0028B076 /* MenuOptionId.swift */,
 				14F5702121ACA8B500AE269B /* MenuOption.swift */,
 				14F5702221ACA8B500AE269B /* MenuOption.xib */,
@@ -1225,10 +1233,13 @@
 			files = (
 				14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */,
 				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
+				146C053821BDAEB50028B076 /* ContentViewDelegate.swift in Sources */,
 				146C052D21BC6AAC0028B076 /* MenuOptionId.swift in Sources */,
 				14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */,
 				1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */,
 				14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */,
+				146C053921BDAF550028B076 /* String+fill.swift in Sources */,
+				146C053A21BDB10A0028B076 /* DisabledManager.swift in Sources */,
 				146C052521BC4D960028B076 /* Segue+Identifier.swift in Sources */,
 				14D5184821B4575000C93E7C /* SplitViewController.swift in Sources */,
 				146C052721BC4F200028B076 /* BuiltinProviderLoader.swift in Sources */,
@@ -1239,6 +1250,7 @@
 				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,
 				14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */,
 				146C053021BC71950028B076 /* JSON.swift in Sources */,
+				146C053C21BDB20F0028B076 /* NonScrollView.swift in Sources */,
 				14D5185121B4872400C93E7C /* TextFieldCell.swift in Sources */,
 				14C4102F21826D0F00CEA1E9 /* ContentViewController.swift in Sources */,
 				14D5184E21B486F900C93E7C /* SettingCell.swift in Sources */,

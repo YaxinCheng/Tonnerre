@@ -17,6 +17,8 @@ class SettingCell: NSCollectionViewItem {
       item.configure(displayCell: self)
     }
   }
+  var indexPath: IndexPath!
+  weak var delegate: ContentViewDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()

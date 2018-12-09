@@ -34,7 +34,7 @@ struct TNEProviderLoader {
         let content: String = descriptionJSON["content"]
       else { return nil }
       let id = "Tonnerre.Provider.Extension.\(path.deletingPathExtension().lastPathComponent)"
-      return (id, keyword, name, content)
+      return (id, keyword, name, content.filled(arguments: ["..."]))
     } catch {
       return nil
     }
