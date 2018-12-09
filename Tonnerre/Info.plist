@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppleEventsUsageDescription</key>
-	<string>Quick access to Finder and System Preferences needs this permission</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
@@ -17,7 +15,7 @@
 			<string>tonnerre</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>com.ycheng.tne</string>
+				<string>com.tonnerre.tne</string>
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>Tonnerre Extension</string>
@@ -27,7 +25,7 @@
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.ycheng.tne</string>
+				<string>com.tonnerre.tne</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<true/>
@@ -55,6 +53,8 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Quick access to Finder and System Preferences needs this permission</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Yaxin Cheng. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
@@ -75,12 +75,12 @@
 			<key>UTTypeIconFile</key>
 			<string>tonnerre</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.ycheng.tne</string>
+			<string>com.tonnerre.tne</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.nspboard-type</key>
 				<array>
-					<string>com.ycheng.tne</string>
+					<string>com.tonnerre.tne</string>
 				</array>
 				<key>com.apple.ostype</key>
 				<array>
@@ -92,7 +92,7 @@
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>com.ycheng.tne</string>
+					<string>com.tonnerre.tne</string>
 				</array>
 			</dict>
 		</dict>
@@ -109,12 +109,12 @@
 			<key>UTTypeIconFile</key>
 			<string>tonnerre</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.ycheng.tne</string>
+			<string>com.tonnerre.tne</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.nspboard-type</key>
 				<array>
-					<string>com.ycheng.tne</string>
+					<string>com.tonnerre.tne</string>
 				</array>
 				<key>com.apple.ostype</key>
 				<array>
@@ -126,7 +126,7 @@
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>com.ycheng.tne</string>
+					<string>com.tonnerre.tne</string>
 				</array>
 			</dict>
 		</dict>

@@ -145,6 +145,7 @@
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
 		14D5185F21B4996A00C93E7C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185E21B4996A00C93E7C /* CellView.swift */; };
 		14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB560821BDCE88006C26C0 /* TintedImageView.swift */; };
+		14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -1125,6 +1126,7 @@
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
 				14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */,
 				14F230302147467C00B7A0FB /* Settings.plist in Resources */,
+				14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */,
 				14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
