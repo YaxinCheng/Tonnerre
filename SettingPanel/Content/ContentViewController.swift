@@ -11,19 +11,8 @@ import Cocoa
 final class ContentViewController: NSViewController {
   
   var items: [[SettingItem]] = []
-  @IBOutlet weak var collectionView: NSCollectionView! {
-    didSet {
-      collectionView.collectionViewLayout = {
-        let layout = NSCollectionViewFlowLayout()
-        let difference: CGFloat = 300 // difference between collectionView from the whole view
-        layout.sectionInset = NSEdgeInsets(top: 30, left: 20, bottom: 20, right: difference + 20)
-        layout.minimumLineSpacing = 20
-        layout.minimumInteritemSpacing = 10
-        layout.itemSize = NSSize(width: 370, height: 90)
-        return layout
-      }()
-    }
-  }
+  @IBOutlet weak var collectionView: NSCollectionView!
+  
 }
 
 extension ContentViewController: ContentViewDelegate {
@@ -51,5 +40,27 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
     cell.indexPath = indexPath
     cell.delegate = self
     return cell
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    let item = items[indexPath.section][indexPath.item]
+    let defaultCellSize = NSSize(width: 360, height: 0)
+    let nameSize = item.attributedName.boundingRect(with: defaultCellSize, options: [.usesFontLeading, .usesLineFragmentOrigin]).size
+    let contentSize = item.attributedContent.boundingRect(with: defaultCellSize, options: [.usesFontLeading, .usesLineFragmentOrigin]).size
+    let combinedHeight: CGFloat = 8 + nameSize.height + contentSize.height + 4 + 32 + 8
+    return NSSize(width: 370, height: combinedHeight)
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 20
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return 10
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, insetForSectionAt section: Int) -> NSEdgeInsets {
+    let difference: CGFloat = 300 // difference between collectionView from the whole view
+    return NSEdgeInsets(top: 30, left: 20, bottom: 20, right: difference + 20)
   }
 }

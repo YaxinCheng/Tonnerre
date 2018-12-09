@@ -16,4 +16,8 @@ final class NonScrollView: NSScrollView {
     nextResponder?.scrollWheel(with: event)
     #endif
   }
+  
+  override var mouseDownCanMoveWindow: Bool {
+    return true
+  }
 }

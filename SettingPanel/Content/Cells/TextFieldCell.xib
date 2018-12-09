@@ -30,22 +30,22 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vY2-IS-enJ">
+                <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vY2-IS-enJ">
                     <rect key="frame" x="8" y="0.0" width="354" height="19"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Placeholder" drawsBackground="YES" usesSingleLineMode="YES" id="sEw-wG-woZ">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" alignment="right" placeholderString="Placeholder" drawsBackground="YES" usesSingleLineMode="YES" id="sEw-wG-woZ">
                         <font key="font" metaFont="system" size="15"/>
                         <color key="textColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iGD-ZA-14s">
-                    <rect key="frame" x="8" y="-3" width="354" height="5"/>
+                    <rect key="frame" x="8" y="-11" width="354" height="5"/>
                 </box>
             </subviews>
             <constraints>
                 <constraint firstItem="dbW-Nc-29m" firstAttribute="leading" secondItem="XwB-IQ-yz0" secondAttribute="leading" id="LG2-1k-gcr"/>
                 <constraint firstItem="XwB-IQ-yz0" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="QJf-qx-PzK"/>
-                <constraint firstItem="iGD-ZA-14s" firstAttribute="top" secondItem="vY2-IS-enJ" secondAttribute="bottom" id="QRq-HT-Ms2"/>
+                <constraint firstItem="iGD-ZA-14s" firstAttribute="top" secondItem="vY2-IS-enJ" secondAttribute="bottom" constant="8" id="QRq-HT-Ms2"/>
                 <constraint firstItem="vY2-IS-enJ" firstAttribute="trailing" secondItem="dbW-Nc-29m" secondAttribute="trailing" id="RqU-Jn-pgC"/>
                 <constraint firstItem="iGD-ZA-14s" firstAttribute="leading" secondItem="vY2-IS-enJ" secondAttribute="leading" id="SYP-kn-Dvq"/>
                 <constraint firstItem="XwB-IQ-yz0" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="U7f-R6-PaE"/>

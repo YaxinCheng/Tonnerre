@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="64"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-Re-KAp">
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-Re-KAp" customClass="TintedImageView" customModule="SettingPanel" customModuleProvider="target">
                     <rect key="frame" x="12" y="8" width="48" height="48"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="dvL-Re-KAp" secondAttribute="height" multiplier="1:1" id="8Zn-Dw-hh6"/>
