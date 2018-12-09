@@ -20,6 +20,15 @@ class GeneralCell: SettingCell {
     super.viewWillAppear()
     
     deleteButton.isHidden = indexPath.section == 0
+    guard let itemName = (item as? ProviderItem)?.name else { return }
+    view.menu = createMenu(withName: itemName)
+  }
+  
+  private func createMenu(withName name: String) -> NSMenu {
+    let menu = NSMenu(title: "Setting")
+    menu.addItem(NSMenuItem(title: "Set \"\(name)\" as Default Provider",
+      action: #selector(setDefaultProvider(sender:)), keyEquivalent: ""))
+    return menu
   }
   
   @IBAction func buttonPressed(_ sender: NSButton) {
@@ -59,5 +68,10 @@ class GeneralCell: SettingCell {
     } else {
       DisableManager.shared.disable(providerID: id)
     }
+  }
+  
+  @objc private func setDefaultProvider(sender: Any) {
+    guard let id = item.settingKey else { return }
+    DefaultProvider.id = id
   }
 }

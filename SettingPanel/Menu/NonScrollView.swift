@@ -10,6 +10,10 @@ import Cocoa
 
 final class NonScrollView: NSScrollView {
   override func scrollWheel(with event: NSEvent) {
+    #if DEBUG
+    super.scrollWheel(with: event)
+    #else
     nextResponder?.scrollWheel(with: event)
+    #endif
   }
 }

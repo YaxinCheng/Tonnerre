@@ -90,6 +90,8 @@
 		146C053921BDAF550028B076 /* String+fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302C214206F100B7A0FB /* String+fill.swift */; };
 		146C053A21BDB10A0028B076 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
 		146C053C21BDB20F0028B076 /* NonScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053B21BDB20F0028B076 /* NonScrollView.swift */; };
+		146C053E21BDB36F0028B076 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053D21BDB36F0028B076 /* DefaultProvider.swift */; };
+		146C053F21BDB6BF0028B076 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C053D21BDB36F0028B076 /* DefaultProvider.swift */; };
 		146E874E21A76334001CF246 /* DisplayOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E874D21A76334001CF246 /* DisplayOrder.swift */; };
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
@@ -311,6 +313,7 @@
 		146C052E21BC6BDD0028B076 /* TNEProviderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEProviderLoader.swift; sourceTree = "<group>"; };
 		146C053721BDAEB40028B076 /* ContentViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewDelegate.swift; sourceTree = "<group>"; };
 		146C053B21BDB20F0028B076 /* NonScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonScrollView.swift; sourceTree = "<group>"; };
+		146C053D21BDB36F0028B076 /* DefaultProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProvider.swift; sourceTree = "<group>"; };
 		146E874D21A76334001CF246 /* DisplayOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayOrder.swift; sourceTree = "<group>"; };
 		1470514020B1BEF900F6FBE8 /* Tonnerre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tonnerre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470514320B1BEF900F6FBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -851,6 +854,7 @@
 			children = (
 				146E874D21A76334001CF246 /* DisplayOrder.swift */,
 				14454D262198B83C008F1A8B /* TonnerreInterpreter.swift */,
+				146C053D21BDB36F0028B076 /* DefaultProvider.swift */,
 			);
 			path = Interpreters;
 			sourceTree = "<group>";
@@ -1141,6 +1145,7 @@
 				146AAE6620BDD7FF009AC9C6 /* BuiltInProvider.swift in Sources */,
 				14F015D2210106E200537160 /* SafariBMService.swift in Sources */,
 				1484148320C63A1A008FD68E /* MapService.swift in Sources */,
+				146C053E21BDB36F0028B076 /* DefaultProvider.swift in Sources */,
 				14454D1F2197C7A7008F1A8B /* JSONExecutor.swift in Sources */,
 				1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */,
 				1484148520C70263008FD68E /* ApplicationService.swift in Sources */,
@@ -1249,6 +1254,7 @@
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
 				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,
 				14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */,
+				146C053F21BDB6BF0028B076 /* DefaultProvider.swift in Sources */,
 				146C053021BC71950028B076 /* JSON.swift in Sources */,
 				146C053C21BDB20F0028B076 /* NonScrollView.swift in Sources */,
 				14D5185121B4872400C93E7C /* TextFieldCell.swift in Sources */,

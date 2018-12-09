@@ -16,10 +16,12 @@ struct TonnerreSettings {
   
   enum SettingKey: String {
     case python
+    case defaultProvider = "Tonnerre.Provider.Default"
   }
   
   private static let defaultSettings: [(key: SettingKey, value: Any)] = [
-     (.python, "/usr/bin/python")
+     (.python, "/usr/bin/python"),
+     (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch")
   ]
   
   static func addDefaultSetting(reset: Bool = false) {
