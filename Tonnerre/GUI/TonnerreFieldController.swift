@@ -70,25 +70,36 @@ final class TonnerreFieldController: NSViewController {
     }
   }
   
-  private let stringWithOperator = try! NSRegularExpression(pattern: "^.+?(\\s(AND|OR)\\s.+?)+", options: .anchorsMatchLines)
-  
   func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool, prependingSpace: Bool) {
     defer {
       textField.window?.makeFirstResponder(nil)
       fullEditing()
       controlTextDidChange(Notification(name: .init(""), object: textField))
     }
-    let trimmedValue = (stringValue + (prependingSpace ? " " : "")).truncatedSpaces
-    let tokens = trimmedValue.components(separatedBy: .whitespaces)
+    let truncatedValue = stringValue.truncatedSpaces
+    let tokens = truncatedValue.components(separatedBy: .whitespaces)
     guard !tokens.isEmpty else { return }
-    guard
-      stringWithOperator.numberOfMatches(in: trimmedValue, options: .anchored, range: NSRange(stringValue.startIndex..., in: trimmedValue)) < 1
-      else {
-        stringValue = (hasKeyword ? (tokens.first ?? "") : "") + cmd + (appendingSpace ? " " : "")
-        return
+    let containsOperator = tokens.contains { $0 == "AND" || $0 == "OR" }
+    guard !containsOperator else { return }
+    if let placeholder = placeholderString, !placeholder.isEmpty {
+      var components = placeholder.components(separatedBy: .whitespaces)
+      var firstValue = components.removeFirst()
+      while firstValue == "" && components.count > 0 {
+        firstValue += " " + components.removeFirst()
+      }
+      stringValue += firstValue + (components.count > 1 ? " " : "")
+    } else {
+      let finishedCompletion = stringValue.range(of: cmd, options: .caseInsensitive) != nil
+      guard !finishedCompletion else { return }
+      let existingComponents = truncatedValue.components(separatedBy: .whitespaces)
+      let completeComponents = cmd.components(separatedBy: .whitespaces)
+      let existingExceptLast = existingComponents.dropLast().joined(separator: " ")
+      let appendingPart = completeComponents.first!
+      let completed = (existingExceptLast + " " + appendingPart).truncatedSpaces
+      let suffixSpace = completeComponents.count > 1 ? " " : ""
+      stringValue = completed + suffixSpace
     }
-    let completed = trimmedValue.completed(to: cmd, skipNum: hasKeyword ? 1 : 0, appendingSpace: appendingSpace)
-    stringValue = completed
+    if appendingSpace { stringValue = (stringValue + " ").truncatedSpaces }
   }
   
   func restore() {

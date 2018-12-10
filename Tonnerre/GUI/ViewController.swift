@@ -101,22 +101,16 @@ extension ViewController: LiteTableVCDelegate {
     case .provider(_):
       if fieldVC.stringValue.hasSuffix(" ") { placeholder = "" }
       else {
-        placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
+        placeholder = servicePack.placeholder.formDifference(with: fieldVC.stringValue)
       }
     case .service(provider: let provider, content: _):
       let queryComponents = fieldVC.stringValue.components(separatedBy: .whitespaces)
-      let hasKeyword = !provider.keyword.isEmpty || provider.keyword.starts(with: fieldVC.firstValue)
-      switch (provider.defered, hasKeyword) {
-      case (true, _):
-        let hasSpace = fieldVC.stringValue.contains(" ")
-        let processingPart = queryComponents[1...].joined(separator: " ")
-        placeholder = (hasSpace ? "" : " ") + processingPart.formDifference(servicePack.placeholder, default: servicePack.placeholder)
-      case (false, true):
-        let processingPart = queryComponents[1...].joined(separator: " ")
-        placeholder = processingPart.formDifference(servicePack.placeholder, default: "")
-      case (false, false):
-        placeholder = fieldVC.stringValue.formDifference(servicePack.placeholder, default: "")
-      }
+      let hasKeyword = !provider.keyword.isEmpty
+        && provider.keyword.starts(with: queryComponents.first!)
+        && (provider.defered || provider.argLowerBound > 0)
+      let hasSpace = fieldVC.stringValue.contains(" ")
+      let processingPart = hasKeyword ? queryComponents.dropFirst().joined(separator: " ") : fieldVC.stringValue
+      placeholder = (hasKeyword && !hasSpace ? " " : "") + servicePack.placeholder.formDifference(with: processingPart)
     }
     fieldVC.placeholderString = placeholder
   }

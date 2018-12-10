@@ -37,12 +37,11 @@ extension String {
       .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)
   }
   
-  func formDifference(_ other: String, default: @autoclosure ()->String) -> String {
+  func formDifference(with other: String) -> String {
+    let trimmedOther = other.truncatedSpaces
+    guard !trimmedOther.isEmpty else { return self }
     let commonPrefix = self.commonPrefix(with: other, options: .caseInsensitive)
-    guard
-      commonPrefix.count == count,
-      commonPrefix.count > 0
-    else { return `default`() }
-    return String(other[commonPrefix.endIndex...])
+    guard commonPrefix.count == trimmedOther.count else { return "" }
+    return String(self[commonPrefix.endIndex...])
   }
 }
