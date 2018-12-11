@@ -13,7 +13,7 @@ final class MenuOption: NSCollectionViewItem {
   override var highlightState: NSCollectionViewItem.HighlightState {
     didSet {
       switch highlightState {
-      case .forSelection: view.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
+      case .forSelection: view.layer?.backgroundColor = NSColor.labelColor.withAlphaComponent(0.3).cgColor
       case .forDeselection: view.layer?.backgroundColor = .clear
       default:
         super.highlightState = highlightState

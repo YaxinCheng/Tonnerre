@@ -182,23 +182,3 @@ extension TonnerreFieldController: NSTextFieldDelegate {
     textField.currentEditor()?.selectedRange = NSRange(location: position, length: 0)
   }
 }
-
-private extension String {
-  func completed(to goal: String, skipNum: Int = 0, appendingSpace: Bool = false) -> String {
-    let (baseComponents, goalComponents) = (components(separatedBy: " "),
-                                            goal.components(separatedBy: " "))
-    let currentWord = baseComponents.last!
-    let desiredIndex = baseComponents.count - 1 - skipNum
-    guard desiredIndex < goalComponents.count, desiredIndex >= 0 else { return self }
-    let desiredWord = goalComponents[desiredIndex]
-    let commonPrefx = currentWord.commonPrefix(with: desiredWord, options: .caseInsensitive)
-    let completedWord = String(currentWord[..<commonPrefx.endIndex] + desiredWord[commonPrefx.endIndex...])
-    let completedComponents = Array(baseComponents[..<(baseComponents.endIndex - 1)] + [completedWord])
-    let assembledCompletion = completedComponents.joined(separator: " ")
-    let skippedCompletion = completedComponents[skipNum...].joined(separator: " ")
-    let addSpace = appendingSpace
-      || skippedCompletion.count != goal.count
-      || skippedCompletion.caseInsensitiveCompare(goal) != .orderedSame
-    return assembledCompletion + (addSpace ? " " : "")
-  }
-}

@@ -13,8 +13,6 @@
 		1405CB8521777C3200FC7044 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A62CB20CB078500B759A4 /* DictionaryService.swift */; };
 		14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14257A0A216BD775008BE752 /* LocalNotification.swift */; };
-		1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
-		1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		142C5941215C64F700D819F2 /* String+match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C5940215C64F700D819F2 /* String+match.swift */; };
 		142C5943215D842800D819F2 /* UpgradeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C5942215D842800D819F2 /* UpgradeHandler.swift */; };
 		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in Apps copy */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
@@ -124,8 +122,6 @@
 		14AFE6B72118FD99002BBBB2 /* tonnerre.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tonnerre.icns */; };
 		14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */; };
 		14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C4211A7093002BBBB2 /* VolumeService.swift */; };
-		14AFE6CA211A7E97002BBBB2 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; };
-		14AFE6CB211A7E97002BBBB2 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1429AC7920D4427B00ABBCDE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6CD211A8F5B002BBBB2 /* Switch.json */; };
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
@@ -215,7 +211,6 @@
 				14CC56FC217BC78F0015540A /* LiteTableView.framework in Embed Frameworks */,
 				14E72EAC2176A01600FA41F8 /* TonnerreSearch.framework in Embed Frameworks */,
 				14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */,
-				1429AC7B20D4427B00ABBCDE /* Lottie.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,7 +233,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				14AFE6CB211A7E97002BBBB2 /* Lottie.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,7 +257,6 @@
 		140F8C6E20B3668C00C69C25 /* exclusionList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = exclusionList.plist; sourceTree = "<group>"; };
 		1421F284210257D90020480A /* DynamicServiceExec.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = DynamicServiceExec.py; sourceTree = SOURCE_ROOT; };
 		14257A0A216BD775008BE752 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
-		1429AC7920D4427B00ABBCDE /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/Mac/Lottie.framework; sourceTree = "<group>"; };
 		142C5940215C64F700D819F2 /* String+match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+match.swift"; sourceTree = "<group>"; };
 		142C5942215D842800D819F2 /* UpgradeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHandler.swift; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
@@ -427,7 +420,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
-				1429AC7A20D4427B00ABBCDE /* Lottie.framework in Frameworks */,
 				14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */,
 				14CC56FB217BC78F0015540A /* LiteTableView.framework in Frameworks */,
 			);
@@ -451,7 +443,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14AFE6CA211A7E97002BBBB2 /* Lottie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,7 +592,6 @@
 			children = (
 				14CC56FA217BC78F0015540A /* LiteTableView.framework */,
 				14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */,
-				1429AC7920D4427B00ABBCDE /* Lottie.framework */,
 				14561B8820C35F2C0057B4C1 /* HotKey.framework */,
 				1470514220B1BEF900F6FBE8 /* Tonnerre */,
 				1470515820B1BEFB00F6FBE8 /* TonnerreTests */,
