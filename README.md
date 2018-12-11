@@ -124,6 +124,12 @@ At the very beginning, the word `extensible` was mentioned. According to my buil
 
 So, Tonnerre supports extensions too. The extensions are called **TNE Script**. They are simply packed scripts with extra resource files. For more detailed info about **TNE Script**, go to: [TNEExamples](https://github.com/YaxinCheng/TNEExamples).
 
+## Roadmap
+
+- [ ] More options in the setting panel
+- [ ] Better indexing and change-listening algorithm
+- [ ] More script language support for TNE Script
+
 ## License
 
 This project is licensed under the GPLv3 Licence - see the [LICENSE.md](https://github.com/YaxinCheng/Tonnerre/blob/master/LICENSE)
