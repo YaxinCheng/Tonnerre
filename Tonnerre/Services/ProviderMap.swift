@@ -77,7 +77,7 @@ final class ProviderMap {
       guard let provider = self.pathWithService[$0.path] else { return }
       self.pathWithService[$0.path] = nil
       self.unregister(provider: provider)
-      TonnerreInterpreter.serviceIDTrie.remove(value: provider.id)
+      TonnerreInterpreter.serviceIDTrie.remove(value: provider.id, key: provider.keyword)
     }
     
     queue.async { [unowned self] in

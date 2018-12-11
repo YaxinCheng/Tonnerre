@@ -17,7 +17,7 @@ struct ServiceIDTrie {
     /// with the current value + the next letter
     var children: [Character: Node]
     /// Ordered queue of strings with the same common prefix
-    var values: Array<String>
+    var values: Set<String>
     
     /**
      Construct a node with current values and its children
@@ -27,7 +27,7 @@ struct ServiceIDTrie {
     init<T: Sequence>(children: [Character: Node], values: T)
       where T.Element == String {
       self.children = children
-      self.values = Array(values)
+      self.values = Set(values)
     }
     
     /**
@@ -41,8 +41,7 @@ struct ServiceIDTrie {
   /// Root node of this trie
   private let rootNode: Node
   /// A list of values with empty keyword
-  private var wildcards: [String] = []
-  private var removedValues: Set<String> = []
+  private var wildcards: Set<String> = []
   
   /**
    Insert a value into the trie
@@ -52,17 +51,17 @@ struct ServiceIDTrie {
   mutating func insert(value: String, key: @autoclosure ()->String) {
     let keyword = key()
     if keyword.isEmpty {
-      wildcards.append(value)
+      wildcards.insert(value)
       return
-    } else if removedValues.remove(value) != nil { return }
+    }
     var node = rootNode
     var index = keyword.startIndex
-    node.values.append(value) // Always add every value to the root
+    node.values.insert(value) // Always add every value to the root
     while index < keyword.endIndex { // Going through the characters
       let char = keyword[index]
       guard let next = node.children[char] else { break } // Make sure there is existing entry, otherwise break
       node = next
-      node.values.append(value)
+      node.values.insert(value)
       index = keyword.index(after: index)
     }
     if index < keyword.endIndex && index >= keyword.startIndex {// Add new entries into the trie
@@ -85,15 +84,22 @@ struct ServiceIDTrie {
       guard let next = node.children[char] else { return Array(wildcards) }
       node = next
     }
-    return (node.values + wildcards).filter { !removedValues.contains($0) }
+    return Array(node.values.union(wildcards))
   }
   
   /**
    Remove a value from the trie
    - parameter value: the value that needs to be removed
   */
-  mutating func remove(value: String) {
-    removedValues.insert(value)
+  mutating func remove(value: String, key: @autoclosure ()->String) {
+    let keyword = key()
+    if keyword.isEmpty { wildcards.remove(value); return }
+    var node = rootNode
+    for char in keyword {
+      guard let next = node.children[char] else { break }
+      node.values.remove(value)
+      node = next
+    }
   }
 }
 
