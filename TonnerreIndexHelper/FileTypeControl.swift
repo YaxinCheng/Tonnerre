@@ -67,6 +67,22 @@ struct FileTypeControl {
     for exURL in exclusionURL {
       if url.isChildOf(url: exURL) { return true }
     }
+    return isInPackageOrHideFolder(url: url)
+  }
+  
+  static private func isInPackageOrHideFolder(url: URL) -> Bool {
+    let urlComponents = url.pathComponents
+    var basePath = URL(fileURLWithPath: "/")
+    for component in urlComponents {
+      basePath.appendPathComponent(component)
+      let componentIsHiden = component.starts(with: ".")
+      let componentIsPackage = component.contains(".")
+      if componentIsHiden { return true }
+      if !componentIsPackage { continue }
+      do {
+        return try basePath.resourceValues(forKeys: [.isPackageKey]).isPackage ?? false
+      } catch { continue }
+    }
     return false
   }
   

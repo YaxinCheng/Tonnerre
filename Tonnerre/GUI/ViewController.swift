@@ -148,7 +148,7 @@ extension ViewController: LiteTableVCDelegate {
     DispatchQueue.main.async { [weak self, provider] in // hide the window, and avoid the beeping sound
       (self?.view.window as? BaseWindow)?.isHidden = true
       self?.fieldVC.stringValue = ""
-      DisplayOrder.updateSortingScore(timeIdentifier: provider.id)
+      LaunchOrder.save(with: provider.id)
     }
   }
 }
