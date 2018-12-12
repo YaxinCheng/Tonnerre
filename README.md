@@ -8,6 +8,7 @@ These instruction will get you a copy of the project up and running on your loca
 
 ### Prerequisites
 
+- from macOS High Sierra (10.13) 
 - Git
 - Xcode with the latest Swift version (4.2)
 - Carthage
