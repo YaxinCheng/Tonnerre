@@ -71,7 +71,7 @@ struct FileTypeControl {
   }
   
   static private func isInPackageOrHideFolder(url: URL) -> Bool {
-    let urlComponents = url.pathComponents
+    let urlComponents = url.deletingLastPathComponent().pathComponents
     var basePath = URL(fileURLWithPath: "/")
     for component in urlComponents {
       basePath.appendPathComponent(component)
