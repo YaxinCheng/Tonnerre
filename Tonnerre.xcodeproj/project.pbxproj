@@ -119,7 +119,7 @@
 		14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A22112A4F4002BBBB2 /* Main.storyboard */; };
 		14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */; };
 		14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */; };
-		14AFE6B72118FD99002BBBB2 /* tonnerre.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tonnerre.icns */; };
+		14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tne_icon.icns */; };
 		14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */; };
 		14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C4211A7093002BBBB2 /* VolumeService.swift */; };
 		14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6CD211A8F5B002BBBB2 /* Switch.json */; };
@@ -355,7 +355,7 @@
 		14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SettingPanel.entitlements; sourceTree = "<group>"; };
 		14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewSegue.swift; sourceTree = "<group>"; };
 		14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewAnimator.swift; sourceTree = "<group>"; };
-		14AFE6B62118FD99002BBBB2 /* tonnerre.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tonnerre.icns; sourceTree = "<group>"; };
+		14AFE6B62118FD99002BBBB2 /* tne_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tne_icon.icns; sourceTree = "<group>"; };
 		14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNib+Extension.swift"; sourceTree = "<group>"; };
 		14AFE6C4211A7093002BBBB2 /* VolumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeService.swift; sourceTree = "<group>"; };
 		14AFE6CD211A8F5B002BBBB2 /* Switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Switch.json; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
 				1421F284210257D90020480A /* DynamicServiceExec.py */,
-				14AFE6B62118FD99002BBBB2 /* tonnerre.icns */,
+				14AFE6B62118FD99002BBBB2 /* tne_icon.icns */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -1082,7 +1082,7 @@
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
-				14AFE6B72118FD99002BBBB2 /* tonnerre.icns in Resources */,
+				14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,

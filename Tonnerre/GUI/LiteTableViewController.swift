@@ -111,68 +111,20 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func keyPressed(_ event: NSEvent) {
     switch event.keyCode {
     case 125, 126: // move down/up
-      PreviewPopover.shared.close()
-      if datasource.count == 0 && event.keyCode == 126 {
-        delegate?.retrieveLastQuery()
-      }
-      guard datasource.count > 0 else { return }
-      highlightedIndex += event.keyCode == 125 ? 1 : -1
-      highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
-      let selectedService = datasource[max(highlightedIndex, 0)]
-      delegate?.serviceHighlighted(service: selectedService)
-      delegate?.updatePlaceholder(service: selectedService)
+      upDownKeyPressed(withEvent: event)
     case 48: // tab
-      guard datasource.count > 0 else { return }
-      let selectedService = datasource[max(highlightedIndex, 0)]
-      delegate?.tabPressed(service: selectedService)
+      tabPressed(withEvent: event)
     case 36, 76: // enter
-      let withCmd = event.modifierFlags.contains(.command)
-      guard
-        withCmd || PreviewPopover.shared.isShown == true ,
-        let servicePack = retrieveHighlighted()
-      else { break }
-      delegate?.serve(servicePack, withCmd: withCmd)
+      enterPressed(withEvent: event)
     case 49: // space
       (tableView.highlightedCell as? ServiceCell)?.preview()
     case 53: // ESC
-      guard event.modifierFlags.rawValue == 256 else { return }
-      if PreviewPopover.shared.isShown == true {
-        PreviewPopover.shared.close()
-      } else {
-        #if DEBUG
-        print("ESC pressed")
-        #else
-        (tableView.window as? BaseWindow)?.isHidden = true
-        #endif
-      }
+      escPrssed(withEvent: event)
     case 18...23, 25, 26, 28, 83...89, 91, 92:// ⌘ + number
-      guard event.modifierFlags.contains(.command) else { return }
-      let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
-                                       83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
-      let selectedIndex = keyCodeMap[event.keyCode]! - 1
-      guard
-        selectedIndex < tableView.visibleCells.count,
-        let cell = tableView.visibleCells[selectedIndex] as? ServiceCell,
-        let servicePack = cell.displayItem
-      else { return }
-      delegate?.serve(servicePack, withCmd: false)
+      quickSelect(withEvent: event)
     case 12: // Q
       guard event.modifierFlags.contains(.command) else { return }
-      if type(of: self).canExit { // Double clicked cmd + Q
-        #if DEBUG
-        print("Double click trigered (\(String.CMD) + Q)")
-        #else
-        TonnerreHelper.terminate()
-        exit(0)
-        #endif
-      } else {
-        delegate?.updatePlaceholder(string: " Double click \(String.CMD) + Q to exit")
-        type(of: self).canExit = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
-          self?.delegate?.updatePlaceholder(string: nil)
-          LiteTableViewController.canExit = false
-        }
-      }
+      exitProgramProcess(withEvent: event)
     default:
       break
     }
@@ -208,6 +160,80 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   }
 }
 
-fileprivate extension LiteTableViewController {
-  static var canExit: Bool = false
+// MARK: - Keyboard events come here
+extension LiteTableViewController {
+  private func upDownKeyPressed(withEvent event: NSEvent) {
+    PreviewPopover.shared.close()
+    if datasource.count == 0 && event.keyCode == 126 {
+      delegate?.retrieveLastQuery()
+    }
+    guard datasource.count > 0 else { return }
+    highlightedIndex += event.keyCode == 125 ? 1 : -1
+    highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
+    let selectedService = datasource[max(highlightedIndex, 0)]
+    delegate?.serviceHighlighted(service: selectedService)
+    delegate?.updatePlaceholder(service: selectedService)
+  }
+  
+  private func tabPressed(withEvent event: NSEvent) {
+    guard datasource.count > 0 else { return }
+    let selectedService = datasource[max(highlightedIndex, 0)]
+    delegate?.tabPressed(service: selectedService)
+  }
+  
+  private func enterPressed(withEvent event: NSEvent) {
+    let withCmd = event.modifierFlags.contains(.command)
+    guard
+      withCmd || PreviewPopover.shared.isShown == true ,
+      let servicePack = retrieveHighlighted()
+    else { return }
+    delegate?.serve(servicePack, withCmd: withCmd)
+  }
+  
+  private func escPrssed(withEvent event: NSEvent) {
+    guard event.modifierFlags.rawValue == 256 else { return }
+    if PreviewPopover.shared.isShown == true {
+      PreviewPopover.shared.close()
+    } else {
+      #if DEBUG
+      print("ESC pressed")
+      #else
+      (tableView.window as? BaseWindow)?.isHidden = true
+      #endif
+    }
+  }
+  
+  private func quickSelect(withEvent event: NSEvent) {
+    guard event.modifierFlags.contains(.command) else { return }
+    let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
+                                     83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
+    let selectedIndex = keyCodeMap[event.keyCode]! - 1
+    guard
+      selectedIndex < tableView.visibleCells.count,
+      let cell = tableView.visibleCells[selectedIndex] as? ServiceCell,
+      let servicePack = cell.displayItem
+      else { return }
+    delegate?.serve(servicePack, withCmd: false)
+  }
+  
+  /// This is a flag defines if the cmd + Q is double clicked in a short time
+  /// When it is set to true, and cmd + Q is pressed again, the program quick
+  private static var canExitFlag: Bool = false
+  private func exitProgramProcess(withEvent event: NSEvent) {
+    if type(of: self).canExitFlag { // Double clicked cmd + Q
+      #if DEBUG
+      print("Double click trigered (\(String.CMD) + Q)")
+      #else
+      TonnerreHelper.terminate()
+      exit(0)
+      #endif
+    } else {
+      delegate?.updatePlaceholder(string: " Double click \(String.CMD) + Q to exit")
+      type(of: self).canExitFlag = true
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+        self?.delegate?.updatePlaceholder(string: nil)
+        LiteTableViewController.canExitFlag = false
+      }
+    }
+  }
 }

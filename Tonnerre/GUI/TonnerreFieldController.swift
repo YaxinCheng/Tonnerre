@@ -70,7 +70,7 @@ final class TonnerreFieldController: NSViewController {
     }
   }
   
-  func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool, prependingSpace: Bool) {
+  func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool) {
     defer {
       textField.window?.makeFirstResponder(nil)
       fullEditing()

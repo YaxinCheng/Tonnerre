@@ -37,6 +37,12 @@ Or you can download a built version here: [Tonnerre.app](https://github.com/Yaxi
 
 Here is what Tonnerre can offer
 
+### Open everywhere
+
+Everywhere, when you press ⌥ + Space, Tonnerre search bar will show up, and waiting for your request.
+
+![searchbar](https://user-images.githubusercontent.com/13768613/49907481-4396fd00-fe44-11e8-8de9-122bc4c267ec.png)
+
 ### Quick search for your apps and your files
 
 When you type in a request, Tonnerre acts quickly and provides you a list of options. Besides navigating using **arrow keys**, and **Enter** to select, Tonnerre also provides quick-selection with **⌘+number**. 

@@ -123,13 +123,10 @@ extension ViewController: LiteTableVCDelegate {
     switch service {
     case .provider(origin: let provider):
       fieldVC.autoComplete(cmd: provider.keyword, appendingSpace: provider.argLowerBound > 0
-        , hasKeyword: false, prependingSpace: false)
+        , hasKeyword: false)
     case .service(provider: let provider, content: let service):
       fieldVC.autoComplete(cmd: service.placeholder, appendingSpace: false,
-                           hasKeyword: provider.keyword.starts(with: fieldVC.firstValue.lowercased()),
-                           prependingSpace: provider.defered
-                                        && provider.argLowerBound == 0
-                                        && !fieldVC.stringValue.contains(" ") )
+                           hasKeyword: provider.keyword.starts(with: fieldVC.firstValue.lowercased()))
     }
     _ = fieldVC.becomeFirstResponder()
     textDidChange(value: fieldVC.stringValue)

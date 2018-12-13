@@ -12,7 +12,7 @@
 				<string>tne</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>tonnerre</string>
+			<string>tne_icon</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>com.tonnerre.tne</string>
@@ -73,7 +73,7 @@
 			<key>UTTypeDescription</key>
 			<string>Tonnerre Extension</string>
 			<key>UTTypeIconFile</key>
-			<string>tonnerre</string>
+			<string>tne_icon</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.tonnerre.tne</string>
 			<key>UTTypeTagSpecification</key>
@@ -107,7 +107,7 @@
 			<key>UTTypeDescription</key>
 			<string>Tonnerre Extension</string>
 			<key>UTTypeIconFile</key>
-			<string>tonnerre</string>
+			<string>tne_icon</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.tonnerre.tne</string>
 			<key>UTTypeTagSpecification</key>
