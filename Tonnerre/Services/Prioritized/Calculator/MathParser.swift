@@ -104,7 +104,7 @@ struct MathParser {
 
 extension Array where Element == MathTokenizer.Token {
   func advanced() -> Array<MathTokenizer.Token> {
-    if self.count > 1 { return Array(self[1...]) }
+    if self.count > 1 { return Array(self.dropFirst()) }
     else { return [] }
   }
 }

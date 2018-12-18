@@ -220,7 +220,7 @@ extension JSON {
   private static func traverse(json: JSON, keys: [Key]) -> Any? {
     guard let firstKey = keys.first else { return json.rawValue }
     guard let nextJSON = json[firstKey] else { return nil }
-    return traverse(json: JSON(nextJSON), keys: Array(keys[1...]))
+    return traverse(json: JSON(nextJSON), keys: Array(keys.dropFirst()))
   }
   
   subscript(key: Key) -> Any? {

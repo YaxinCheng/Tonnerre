@@ -49,7 +49,7 @@ final class TonnerreFieldController: NSViewController {
   override func viewWillDisappear() {
     super.viewWillDisappear()
     
-    adjustEditing(withString: "")
+    adjustFieldsWidth(withString: "")
     textField.window?.makeFirstResponder(nil)
   }
   
@@ -57,7 +57,6 @@ final class TonnerreFieldController: NSViewController {
     get {
       return textField.stringValue
     } set {
-      if newValue.isEmpty { lastQuery = textField.stringValue }
       textField.stringValue = newValue
     }
   }
@@ -73,7 +72,7 @@ final class TonnerreFieldController: NSViewController {
   func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool) {
     defer {
       textField.window?.makeFirstResponder(nil)
-      fullEditing()
+      hidePlaceholderField()
       controlTextDidChange(Notification(name: .init(""), object: textField))
     }
     let truncatedValue = stringValue.truncatedSpaces
@@ -82,29 +81,44 @@ final class TonnerreFieldController: NSViewController {
     let containsOperator = tokens.contains { $0 == "AND" || $0 == "OR" }
     guard !containsOperator else { return }
     if let placeholder = placeholderString, !placeholder.isEmpty {
-      var components = placeholder.components(separatedBy: .whitespaces)
-      var firstValue = components.removeFirst()
-      while firstValue == "" && components.count > 0 {
-        firstValue += " " + components.removeFirst()
-      }
-      stringValue += firstValue + (components.count > 1 ? " " : "")
+      complete(withPlaceholder: placeholder)
     } else {
-      let finishedCompletion = stringValue.range(of: cmd, options: .caseInsensitive) != nil
-      guard !finishedCompletion else { return }
-      let existingComponents = truncatedValue.components(separatedBy: .whitespaces)
-      let completeComponents = cmd.components(separatedBy: .whitespaces)
-      let existingExceptLast = existingComponents.dropLast().joined(separator: " ")
-      let appendingPart = completeComponents.first!
-      let completed = (existingExceptLast + " " + appendingPart).truncatedSpaces
-      let suffixSpace = completeComponents.count > 1 ? " " : ""
-      stringValue = completed + suffixSpace
+      complete(withTarget: cmd)
     }
     if appendingSpace { stringValue = (stringValue + " ").truncatedSpaces }
   }
   
+  /// Append the first non-empty string component separated by whitespace of
+  /// the placeholder to the existing stringValue
+  /// - parameter placeholder: given placeholder
+  private func complete(withPlaceholder placeholder: String) {
+    var components = placeholder.components(separatedBy: .whitespaces)
+    var firstValue = components.removeFirst()
+    while firstValue.isEmpty && components.count > 0 {
+      firstValue += " " + components.removeFirst()
+    }
+    stringValue += firstValue + (components.count > 1 ? " " : "")
+  }
+  
+  /// Replace the last component separated by whitespace with the first component
+  /// of the given target
+  /// - parameter target: the target string whose first part will be replacing to the
+  ///      last component of the existing stringValue
+  private func complete(withTarget target: String) {
+    let finishedCompletion = stringValue.range(of: target, options: .caseInsensitive) != nil
+    guard !finishedCompletion else { return }
+    let existingComponents = stringValue.truncatedSpaces.components(separatedBy: .whitespaces)
+    let completeComponents = target.components(separatedBy: .whitespaces)
+    let existingExceptLast = existingComponents.dropLast().joined(separator: " ")
+    let appendingPart = completeComponents.first!
+    let completed = (existingExceptLast + " " + appendingPart).truncatedSpaces
+    let suffixSpace = completeComponents.count > 1 ? " " : ""
+    stringValue = completed + suffixSpace
+  }
+  
   func restore() {
     textField.stringValue = lastQuery
-    adjustEditing(withString: lastQuery)
+    adjustFieldsWidth(withString: lastQuery)
     textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
   }
   
@@ -115,9 +129,12 @@ final class TonnerreFieldController: NSViewController {
       placeholderString = placeholder
     } else {
       placeholderString = ""
-      adjustEditing(withString: "")
+      adjustFieldsWidth(withString: "")
     }
   }
+  
+  /// Records the previous text value in the textField
+  private var oldValue: String = ""
 }
 
 extension TonnerreFieldController: NSTextFieldDelegate {
@@ -129,26 +146,28 @@ extension TonnerreFieldController: NSTextFieldDelegate {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in// dispatch after 0.4 second
         guard let now = self?.textField.stringValue else { return } // Test the current value (after 0.4 second)
         if now.count > current.count {// If the length is increasing, means there are more to type
-          self?.fullEditing()// Keep the length to max
+          self?.hidePlaceholderField()// Keep the length to max
         } else if !now.trimmingCharacters(in: .whitespaces).isEmpty {// If user is deleting the text or not editing anymore
-          self?.adjustEditing(withString: now)// Adjust the size
+          self?.adjustFieldsWidth(withString: now)// Adjust the size
         }
       }
     } else {// If the text is empty
-      adjustEditing(withString: "")
+      adjustFieldsWidth(withString: "")
+      lastQuery = oldValue
       placeholderField.placeholderString = nil
     }
+    oldValue = current
     delegate?.textDidChange(value: trimmedValue)
   }
   
   func controlTextDidEndEditing(_ obj: Notification) {
-    if (obj.object as? NSTextField)?.stringValue.isEmpty ?? true { adjustEditing(withString: "") }
+    if (obj.object as? NSTextField)?.stringValue.isEmpty ?? true { adjustFieldsWidth(withString: "") }
     guard (obj.userInfo?["NSTextMovement"] as? Int) == 16 else { return }
     delegate?.serviceDidSelect()
   }
   
   func controlTextDidBeginEditing(_ obj: Notification) {
-    fullEditing()
+    hidePlaceholderField()
   }
   
   private func calculateSize(value: String) -> NSSize {
@@ -160,7 +179,7 @@ extension TonnerreFieldController: NSTextFieldDelegate {
   /**
    Make the editing area full length
    */
-  private func fullEditing() {
+  private func hidePlaceholderField() {
     let maxWidth: CGFloat = 610
     textFieldWidth.constant = maxWidth
     placeholderWidth.constant = 0
@@ -170,7 +189,7 @@ extension TonnerreFieldController: NSTextFieldDelegate {
    Make the editing area as long as the string
    - parameter string: current displaying value
    */
-  private func adjustEditing(withString string: String) {
+  private func adjustFieldsWidth(withString string: String) {
     let cellSize = calculateSize(value: string)
     let minSize = calculateSize(value: "Tonnerre")
     let width = min(string.isEmpty ? minSize.width : cellSize.width, 610)
