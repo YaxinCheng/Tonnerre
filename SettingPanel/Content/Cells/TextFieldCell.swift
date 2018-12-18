@@ -22,7 +22,7 @@ extension TextFieldCell: NSTextFieldDelegate {
     guard
       (obj.object as? NSTextField) === textField,
       let value = textField?.stringValue,
-      (obj.userInfo?["NSTextMovement"] as? NSTextMovement) == .return
+      (obj.userInfo?["NSTextMovement"] as? Int) == 16
     else { return }
     var textItem = item as? TextItem
     textItem?.settingValue = value

@@ -21,6 +21,12 @@ struct ProviderItem: SettingItem {
   func configure(displayCell: SettingCell) {
     displayCell.titleLabel.stringValue = name
     displayCell.contentLabel.stringValue = "(\(keyword)) \(content)"
+    (displayCell as? GeneralCell)?.switchControl.state = {
+      switch DisableManager.shared.isDisabled(providerID: id) {
+      case false: return .on
+      case true : return .off
+      }
+    }()
   }
   
   let displayIdentifier: NSUserInterfaceItemIdentifier = .generalCell

@@ -16,7 +16,7 @@ extension QueryHistory: LimitedDataProtocol {
     fetchRequest.predicate = NSPredicate(format: "identifier=%@", identifier)
     let context = getContext()
     let count = (try? context.count(for: fetchRequest)) ?? 0
-    if count > limit { removeOldest(sortingKey: "time", predicate: NSPredicate(format: "identifier=%@", identifier)) }
+    if count > limit { removeOldestEntries(sortingKey: "time", predicate: NSPredicate(format: "identifier=%@", identifier)) }
     let newHistory = QueryHistory(context: context)
     newHistory.identifier = identifier
     newHistory.query = query

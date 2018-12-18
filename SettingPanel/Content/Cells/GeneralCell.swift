@@ -11,6 +11,12 @@ import Cocoa
 class GeneralCell: SettingCell {
   
   @IBOutlet weak var deleteButton: NSButton!
+  @IBOutlet weak var switchControl: Switch! {
+    didSet {
+      switchControl.delegate = self
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
@@ -28,13 +34,6 @@ class GeneralCell: SettingCell {
     menu.addItem(NSMenuItem(title: "Set \"\(name)\" as Default Provider",
       action: #selector(setDefaultProvider(sender:)), keyEquivalent: ""))
     return menu
-  }
-  
-  @IBAction func buttonPressed(_ sender: NSButton) {
-    guard let key = item.settingKey else { return }
-    (sender.image, sender.alternateImage) = (sender.alternateImage, sender.image)
-    sender.tag = 1 - sender.tag
-    toggleAvailability(ofProvider: key, enable: sender.tag == 0)
   }
   
   @IBAction func deleteButtonPresesd(_ sender: Any) {
@@ -72,5 +71,15 @@ class GeneralCell: SettingCell {
   @objc private func setDefaultProvider(sender: Any) {
     guard let id = item.settingKey else { return }
     DefaultProvider.id = id
+  }
+}
+
+extension GeneralCell: SwitchDelegate {
+  func valueDidChange(sender: Any) {
+    guard
+      let key = item.settingKey,
+      let switchControl = sender as? Switch
+    else { return }
+    toggleAvailability(ofProvider: key, enable: switchControl.state == .on)
   }
 }

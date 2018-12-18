@@ -26,16 +26,12 @@ struct TextItem: SettingItem {
   
   var settingValue: String? {
     get {
-      guard let key = settingKey else { return nil }
-      let userDefault = UserDefaults.shared
-      return userDefault.string(forKey: key)
+      return TonnerreSettings.get(fromKey: id) as? String
     } set {
-      guard let key = settingKey else { return }
-      let userDefault = UserDefaults.shared
       if let value = newValue {
-        userDefault.set(value, forKey: key)
+        TonnerreSettings.set(value, forKey: id)
       } else {
-        userDefault.removeObject(forKey: key)
+        TonnerreSettings.remove(forKey: id)
       }
     }
   }

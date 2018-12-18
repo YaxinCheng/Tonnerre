@@ -29,18 +29,8 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S0b-ED-CCV">
-                    <rect key="frame" x="321" y="1" width="48" height="32"/>
-                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSMenuOnStateTemplate" imagePosition="overlaps" alignment="center" alternateImage="NSMenuMixedStateTemplate" state="on" borderStyle="border" inset="2" id="v5h-ID-Eaj">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="buttonPressed:" target="JaT-cC-ffW" id="llj-tG-zNd"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OaF-X7-H3I">
-                    <rect key="frame" x="274" y="1" width="51" height="32"/>
+                    <rect key="frame" x="258" y="3" width="51" height="32"/>
                     <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSTouchBarDeleteTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="vtc-mS-7Os">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -49,18 +39,24 @@
                         <action selector="deleteButtonPresesd:" target="JaT-cC-ffW" id="gCz-6n-twR"/>
                     </connections>
                 </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="aSG-Cf-EZq" customClass="Switch" customModule="SettingPanel" customModuleProvider="target">
+                    <rect key="frame" x="311" y="8" width="48" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="BHU-re-nxI"/>
+                        <constraint firstAttribute="width" constant="48" id="MDl-Nu-czk"/>
+                    </constraints>
+                </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="OaF-X7-H3I" firstAttribute="bottom" secondItem="S0b-ED-CCV" secondAttribute="bottom" id="9WO-gd-Lpa"/>
-                <constraint firstAttribute="bottom" secondItem="S0b-ED-CCV" secondAttribute="bottom" constant="8" id="BNO-hW-7Lg"/>
                 <constraint firstAttribute="trailing" secondItem="1Ij-p3-J6q" secondAttribute="trailing" constant="8" id="CNg-fr-JTt"/>
+                <constraint firstItem="aSG-Cf-EZq" firstAttribute="leading" secondItem="OaF-X7-H3I" secondAttribute="trailing" constant="8" id="DFL-EW-ssh"/>
                 <constraint firstItem="l2B-np-pgb" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="F2i-88-Wat"/>
                 <constraint firstItem="1Ij-p3-J6q" firstAttribute="top" secondItem="l2B-np-pgb" secondAttribute="bottom" id="JpE-Rg-dx9"/>
                 <constraint firstItem="l2B-np-pgb" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="L94-4r-osC"/>
-                <constraint firstItem="S0b-ED-CCV" firstAttribute="leading" secondItem="OaF-X7-H3I" secondAttribute="trailing" constant="8" id="P4k-m3-uah"/>
-                <constraint firstAttribute="trailing" secondItem="S0b-ED-CCV" secondAttribute="trailing" constant="12" id="aoa-iM-ZB2"/>
+                <constraint firstItem="OaF-X7-H3I" firstAttribute="centerY" secondItem="aSG-Cf-EZq" secondAttribute="centerY" id="XRS-el-dnA"/>
+                <constraint firstAttribute="trailing" secondItem="aSG-Cf-EZq" secondAttribute="trailing" constant="16" id="bII-OT-6UC"/>
                 <constraint firstItem="1Ij-p3-J6q" firstAttribute="leading" secondItem="l2B-np-pgb" secondAttribute="leading" id="hey-te-gmZ"/>
-                <constraint firstItem="S0b-ED-CCV" firstAttribute="top" secondItem="1Ij-p3-J6q" secondAttribute="bottom" constant="8" id="v3S-EM-Zcy"/>
+                <constraint firstAttribute="bottom" secondItem="aSG-Cf-EZq" secondAttribute="bottom" constant="8" id="vgY-sg-OX7"/>
             </constraints>
             <point key="canvasLocation" x="138.5" y="154"/>
         </customView>
@@ -68,14 +64,13 @@
             <connections>
                 <outlet property="contentLabel" destination="1Ij-p3-J6q" id="FG7-Jf-xAK"/>
                 <outlet property="deleteButton" destination="OaF-X7-H3I" id="Axq-1j-vPF"/>
+                <outlet property="switchControl" destination="aSG-Cf-EZq" id="REJ-Vf-QdP"/>
                 <outlet property="titleLabel" destination="l2B-np-pgb" id="vju-cW-Ist"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="2km-kZ-iK7"/>
             </connections>
         </customObject>
     </objects>
     <resources>
-        <image name="NSMenuMixedStateTemplate" width="10" height="2"/>
-        <image name="NSMenuOnStateTemplate" width="12" height="12"/>
         <image name="NSTouchBarDeleteTemplate" width="15" height="30"/>
     </resources>
 </document>

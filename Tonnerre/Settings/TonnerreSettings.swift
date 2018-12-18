@@ -17,11 +17,15 @@ struct TonnerreSettings {
   enum SettingKey: String {
     case python = "settings:python"
     case defaultProvider = "Tonnerre.Provider.Default"
+    case clipboardLimit = "Tonnerre.Provider.BuiltIn.ClipboardService:limit"
+    case warnBeforeExit = "settings:warnBeforeExit"
   }
   
   private static let defaultSettings: [(key: SettingKey, value: Any)] = [
      (.python, "/usr/bin/python"),
-     (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch")
+     (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch"),
+     (.clipboardLimit, 9),
+     (.warnBeforeExit, true)
   ]
   
   static func addDefaultSetting(reset: Bool = false) {
@@ -39,5 +43,9 @@ struct TonnerreSettings {
   
   static func get(fromKey key: SettingKey) -> Any? {
     return userDefault.object(forKey: key.rawValue)
+  }
+  
+  static func remove(forKey key: SettingKey) {
+    userDefault.removeObject(forKey: key.rawValue)
   }
 }

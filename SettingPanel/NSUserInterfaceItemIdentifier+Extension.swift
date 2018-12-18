@@ -12,4 +12,5 @@ extension NSUserInterfaceItemIdentifier {
   static let menuOption = NSUserInterfaceItemIdentifier("MenuOption")
   static let textCell = NSUserInterfaceItemIdentifier("TextFieldCell")
   static let generalCell = NSUserInterfaceItemIdentifier("GeneralCell")
+  static let boolCell = NSUserInterfaceItemIdentifier("BoolCell")
 }

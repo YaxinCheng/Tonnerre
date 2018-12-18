@@ -19,7 +19,8 @@ struct ClipboardService: BuiltInProvider {
   let defered: Bool = true
   
   static let monitor = ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
-    CBRecord.recordInsert(value: value, type: type.rawValue, limit: 9)
+    let limit = TonnerreSettings.get(fromKey: .clipboardLimit) as? Int ?? 9
+    CBRecord.recordInsert(value: value, type: type.rawValue, limit: max(limit, 1))
   }
   
   private func wrap(record: CBRecord) -> DisplayProtocol? {

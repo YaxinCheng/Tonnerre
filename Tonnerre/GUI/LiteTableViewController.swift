@@ -220,15 +220,16 @@ extension LiteTableViewController {
   /// When it is set to true, and cmd + Q is pressed again, the program quick
   private static var canExitFlag: Bool = false
   private func exitProgramProcess(withEvent event: NSEvent) {
-    if type(of: self).canExitFlag { // Double clicked cmd + Q
+    let warnBeforeExitEnabled = TonnerreSettings.get(fromKey: .warnBeforeExit) as? Bool ?? true
+    if !warnBeforeExitEnabled || type(of: self).canExitFlag { // Double clicked cmd + Q
       #if DEBUG
-      print("Double click trigered (\(String.CMD) + Q)")
+      print("Double click trigered (\(String.CMD) Q)")
       #else
       TonnerreHelper.terminate()
       exit(0)
       #endif
     } else {
-      delegate?.updatePlaceholder(string: " Double click \(String.CMD) + Q to exit")
+      delegate?.updatePlaceholder(string: " Double click \(String.CMD) Q to exit")
       type(of: self).canExitFlag = true
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
         self?.delegate?.updatePlaceholder(string: nil)

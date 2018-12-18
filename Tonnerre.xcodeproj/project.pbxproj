@@ -18,6 +18,11 @@
 		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in Apps copy */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		143551F12123A44F00D6080E /* SettingPanel.app in Apps copy */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
 		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
+		1438057321C84EEB00DD0685 /* BoolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057121C84EEB00DD0685 /* BoolCell.swift */; };
+		1438057421C84EEB00DD0685 /* BoolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057221C84EEB00DD0685 /* BoolCell.xib */; };
+		1438057621C8500300DD0685 /* BoolItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057521C8500300DD0685 /* BoolItem.swift */; };
+		1438057821C8707800DD0685 /* Switch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057721C8707800DD0685 /* Switch.xib */; };
+		1438057A21C8709600DD0685 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057921C8709600DD0685 /* Switch.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		14398FD12120D9C000F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
 		14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */; };
@@ -122,7 +127,6 @@
 		14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tne_icon.icns */; };
 		14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */; };
 		14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C4211A7093002BBBB2 /* VolumeService.swift */; };
-		14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6CD211A8F5B002BBBB2 /* Switch.json */; };
 		14AFE6D0211B9FC8002BBBB2 /* MathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */; };
 		14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6D1211BA111002BBBB2 /* MathError.swift */; };
 		14C4102C21826CCB00CEA1E9 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */; };
@@ -160,7 +164,6 @@
 		14F10999218BA2C7003A5E07 /* TonnerreFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F10998218BA2C7003A5E07 /* TonnerreFieldController.swift */; };
 		14F1099B218BA43C003A5E07 /* TonnerreFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F1099A218BA43C003A5E07 /* TonnerreFieldDelegate.swift */; };
 		14F2302D214206F100B7A0FB /* String+fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2302C214206F100B7A0FB /* String+fill.swift */; };
-		14F230302147467C00B7A0FB /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6DA211CDDCC002BBBB2 /* Settings.plist */; };
 		14F5701F21A9E7A000AE269B /* TonnerreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */; };
 		14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5702121ACA8B500AE269B /* MenuOption.swift */; };
 		14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14F5702221ACA8B500AE269B /* MenuOption.xib */; };
@@ -260,6 +263,11 @@
 		142C5940215C64F700D819F2 /* String+match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+match.swift"; sourceTree = "<group>"; };
 		142C5942215D842800D819F2 /* UpgradeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHandler.swift; sourceTree = "<group>"; };
 		143551F22123A49200D6080E /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		1438057121C84EEB00DD0685 /* BoolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolCell.swift; sourceTree = "<group>"; };
+		1438057221C84EEB00DD0685 /* BoolCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoolCell.xib; sourceTree = "<group>"; };
+		1438057521C8500300DD0685 /* BoolItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolItem.swift; sourceTree = "<group>"; };
+		1438057721C8707800DD0685 /* Switch.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Switch.xib; sourceTree = "<group>"; };
+		1438057921C8709600DD0685 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		14398FD02120D9C000F5AFCA /* NSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		14454D162197C04C008F1A8B /* ProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMap.swift; sourceTree = "<group>"; };
 		14454D182197C242008F1A8B /* TNEExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEExecutor.swift; sourceTree = "<group>"; };
@@ -358,10 +366,8 @@
 		14AFE6B62118FD99002BBBB2 /* tne_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tne_icon.icns; sourceTree = "<group>"; };
 		14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNib+Extension.swift"; sourceTree = "<group>"; };
 		14AFE6C4211A7093002BBBB2 /* VolumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeService.swift; sourceTree = "<group>"; };
-		14AFE6CD211A8F5B002BBBB2 /* Switch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Switch.json; sourceTree = "<group>"; };
 		14AFE6CF211B9FC8002BBBB2 /* MathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathParser.swift; sourceTree = "<group>"; };
 		14AFE6D1211BA111002BBBB2 /* MathError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathError.swift; sourceTree = "<group>"; };
-		14AFE6DA211CDDCC002BBBB2 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSettings.swift; sourceTree = "<group>"; };
 		14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		14C4102D21826D0F00CEA1E9 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
@@ -465,6 +471,15 @@
 				140A62CB20CB078500B759A4 /* DictionaryService.swift */,
 			);
 			path = Dictionary;
+			sourceTree = "<group>";
+		};
+		1438057B21C8709B00DD0685 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1438057921C8709600DD0685 /* Switch.swift */,
+				1438057721C8707800DD0685 /* Switch.xib */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		14398FB9211FCB4600F5AFCA /* TranslationRelated */ = {
@@ -583,6 +598,7 @@
 			children = (
 				146C054121BDBA490028B076 /* GeneralSettingLoader.swift */,
 				146C054521BDBBAB0028B076 /* TextItem.swift */,
+				1438057521C8500300DD0685 /* BoolItem.swift */,
 			);
 			path = GeneralSettings;
 			sourceTree = "<group>";
@@ -739,9 +755,7 @@
 		14AFE69B2112A4F1002BBBB2 /* SettingPanel */ = {
 			isa = PBXGroup;
 			children = (
-				14AFE6CD211A8F5B002BBBB2 /* Switch.json */,
 				14AFE69C2112A4F1002BBBB2 /* AppDelegate.swift */,
-				14AFE6DA211CDDCC002BBBB2 /* Settings.plist */,
 				14D5184721B4575000C93E7C /* SplitViewController.swift */,
 				14F5702021ACA89E00AE269B /* Menu */,
 				14D5184021B44E3600C93E7C /* Content */,
@@ -798,8 +812,11 @@
 				14D5184F21B4872400C93E7C /* TextFieldCell.swift */,
 				14D5185021B4872400C93E7C /* TextFieldCell.xib */,
 				14D5185321B4875B00C93E7C /* GeneralCell.swift */,
-				14D5185421B4875B00C93E7C /* GeneralCell.xib */,
 				14D5185E21B4996A00C93E7C /* CellView.swift */,
+				14D5185421B4875B00C93E7C /* GeneralCell.xib */,
+				1438057121C84EEB00DD0685 /* BoolCell.swift */,
+				1438057221C84EEB00DD0685 /* BoolCell.xib */,
+				1438057B21C8709B00DD0685 /* Components */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1110,13 +1127,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14AFE6CE211A8F5B002BBBB2 /* Switch.json in Resources */,
+				1438057421C84EEB00DD0685 /* BoolCell.xib in Resources */,
 				14AFE6A12112A4F4002BBBB2 /* Assets.xcassets in Resources */,
 				14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
 				14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */,
-				14F230302147467C00B7A0FB /* Settings.plist in Resources */,
 				14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */,
+				1438057821C8707800DD0685 /* Switch.xib in Resources */,
 				14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1265,6 +1282,7 @@
 				14398FD22120D9C400F5AFCA /* NSColor+Extension.swift in Sources */,
 				146C053921BDAF550028B076 /* String+fill.swift in Sources */,
 				146C053A21BDB10A0028B076 /* DisabledManager.swift in Sources */,
+				1438057321C84EEB00DD0685 /* BoolCell.swift in Sources */,
 				146C052521BC4D960028B076 /* Segue+Identifier.swift in Sources */,
 				14D5184821B4575000C93E7C /* SplitViewController.swift in Sources */,
 				146C052721BC4F200028B076 /* BuiltinProviderLoader.swift in Sources */,
@@ -1274,6 +1292,8 @@
 				146C052A21BC52D80028B076 /* ProviderItem.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
 				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,
+				1438057A21C8709600DD0685 /* Switch.swift in Sources */,
+				1438057621C8500300DD0685 /* BoolItem.swift in Sources */,
 				14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */,
 				146C053F21BDB6BF0028B076 /* DefaultProvider.swift in Sources */,
 				146C054621BDBBAB0028B076 /* TextItem.swift in Sources */,

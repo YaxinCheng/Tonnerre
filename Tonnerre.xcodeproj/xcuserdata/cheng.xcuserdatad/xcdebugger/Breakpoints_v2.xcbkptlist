@@ -78,14 +78,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SettingPanel/Content/GeneralSettings/TextItem.swift"
-            timestampString = "566086189.458385"
+            filePath = "TonnerreIndexHelper/CoreIndexing.swift"
+            timestampString = "566790177.110466"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "settingValue"
-            landmarkType = "24">
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "check()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

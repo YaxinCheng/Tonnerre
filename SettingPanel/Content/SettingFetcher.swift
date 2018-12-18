@@ -29,6 +29,12 @@ struct TNEProviderFetcher: SettingFetcher {
 struct GeneralSettingFetcher: SettingFetcher {
   func fetch() -> [SettingItem] {
     let loader = GeneralSettingLoader()
-    return loader.settings.map { TextItem(id: $0.0, name: $0.1, content: $0.2) }
+    return loader.settings.compactMap {
+      switch $0.3 {
+      case .textCell: return TextItem(id: $0.0, name: $0.1, content: $0.2)
+      case .boolCell: return BoolItem(id: $0.0, name: $0.1, content: $0.2)
+      default: return nil
+      }
+    }
   }
 }
