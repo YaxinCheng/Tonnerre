@@ -15,7 +15,7 @@ extension CBRecord: LimitedDataProtocol {
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     let context = getContext()
     let count = (try? context.count(for: fetchRequest)) ?? 0
-    if count >= limit { removeOldestEntries(count: limit, sortingKey: "time") }
+    if count >= limit { removeOldestEntries(count: count - limit + 1, sortingKey: "time") }
     #if RELEASE
     let newObject = CBRecord(context: context)
     newObject.type = type
