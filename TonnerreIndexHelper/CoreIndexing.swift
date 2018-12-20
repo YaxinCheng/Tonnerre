@@ -32,7 +32,9 @@ final class CoreIndexing {
   init() {
     let pathes: [String] = [SearchMode.default.targetFilePaths, SearchMode.name.targetFilePaths].reduce([], +).map({$0.path})
     if !pathes.isEmpty {
-      self.detector = TonnerreFSDetector(pathes: pathes, callback: self.detectedChanges)
+      self.detector = TonnerreFSDetector(pathes: pathes,
+                                         filterOptions: [.hidden, .inHidden, .inPackage],
+                                         callback: self.detectedChanges)
     }
     let centre = NotificationCenter.default
     centre.addObserver(self, selector: #selector(defaultIndexingDidFinish), name: .defaultIndexingDidFinish, object: nil)

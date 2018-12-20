@@ -57,6 +57,7 @@ final class TonnerreFieldController: NSViewController {
     get {
       return textField.stringValue
     } set {
+      if newValue.isEmpty { lastQuery = stringValue }
       textField.stringValue = newValue
     }
   }
