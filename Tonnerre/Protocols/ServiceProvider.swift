@@ -15,7 +15,7 @@ import Foundation
  */
 protocol ServiceProvider: DisplayProtocol {
   ///
-  /// a single unique id
+  /// a single unique id string used across the whole program
   ///
   /// The id may be used to locate/create/assign the provider
   ///

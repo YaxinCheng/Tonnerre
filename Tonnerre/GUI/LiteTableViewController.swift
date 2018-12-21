@@ -222,6 +222,7 @@ extension LiteTableViewController {
   }
   
   /// This is a flag defines if the cmd + Q is double clicked in a short time
+  ///
   /// When it is set to true, and cmd + Q is pressed again, the program quick
   private static var canExitFlag: Bool = false
   private func terminateProgramProcess() {

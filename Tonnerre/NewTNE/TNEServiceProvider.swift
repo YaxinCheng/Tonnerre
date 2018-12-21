@@ -37,10 +37,8 @@ struct TNEServiceProvider: ServiceProvider {
   var alterContent: String?
   let argLowerBound: Int
   let argUpperBound: Int
-  /**
-   Functionalities in the script are kept here
-  */
-  let executor: TNEExecutor
+  /// A TNE Script is executed through its executor
+  private let executor: TNEExecutor
   let placeholder: String
   var icon: NSImage {
     return iconPack.icon
@@ -64,6 +62,10 @@ struct TNEServiceProvider: ServiceProvider {
   }
   private let iconPack: IconPack
   
+  /// Build with a given TNE Script path
+  ///
+  /// - parameter scriptPath: The filePath to the given TNE Script
+  /// - note: construction may fail if the given TNE Script cannot be parsed correctly
   init?(scriptPath: URL) {
     do {
       executor = try TNEServiceProvider.createExecutor(basedOn: scriptPath)
@@ -94,7 +96,7 @@ struct TNEServiceProvider: ServiceProvider {
   }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
-    return executor.prepare(withInput: input, provider: self)
+    return [executor.prepare(withInput: input, provider: self)]
   }
   
   func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
@@ -159,6 +161,11 @@ struct TNEServiceProvider: ServiceProvider {
 }
 
 private extension TNEServiceProvider {
+  /// Build iconPack for a TNE Script with a its descriptionJSON and the filePath
+  /// - parameter descriptionJSON: descriptionJSON of the given TNE Script.
+  ///           The icon path may be stored within it
+  /// - parameter path: The file path of the TNE Script. Icons may be stored as icon.png
+  ///           files in this path
   private static func buildIconPack(descriptionJSON: JSON, path: URL) -> IconPack {
     let inTNELightIconURL = path.appendingPathComponent("icon.png")
     let inTNEDarkIconURL = path.appendingPathComponent("icon_dark.png")
@@ -178,6 +185,12 @@ private extension TNEServiceProvider {
     return IconPack(_iconLight: lightIcon, _iconDark: darkIcon)
   }
   
+  /// Create an executor for this TNE Script
+  /// - parameter scriptPath: The file path to this TNE Script.
+  ///             Different executor is created based on the script type
+  /// - throws:
+  ///   - **TNEExecutor.Error.unsupportedScriptType**: when the script is not supported
+  ///       to be executed
   private static func createExecutor(basedOn scriptPath: URL) throws -> TNEExecutor {
     let executor: TNEExecutor? =
       PyExecutor(scriptPath: scriptPath) ??

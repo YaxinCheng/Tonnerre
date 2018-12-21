@@ -32,11 +32,19 @@ extension String {
   
   static let CMD: String = "⌘"
   
+  /// Return a new string with leading spaces removed, and trailing spaces truncated to one
   var truncatedSpaces: String {
     return self.replacingOccurrences(of: "^\\s+", with: "", options: .regularExpression)
       .replacingOccurrences(of: "\\s\\s+", with: " ", options: .regularExpression)
   }
   
+  /// Form difference with the given string ignoring the case
+  ///
+  /// e.g.
+  ///   - `"String".formDifference(with: "str")` should return `ing`
+  ///   - `"String".formDifference(with: "")` should return `String`
+  ///   - `"String".formDifference(with: "stx")` should return an empty string
+  /// - parameter other: The second string that serves as the subtracted
   func formDifference(with other: String) -> String {
     let trimmedOther = other.truncatedSpaces
     guard !trimmedOther.isEmpty else { return self }

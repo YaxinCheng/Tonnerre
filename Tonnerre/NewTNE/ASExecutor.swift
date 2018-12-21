@@ -21,12 +21,12 @@ struct ASExecutor: TNEExecutor {
   
   func execute(withArguments args: Arguments) throws -> JSON? {
     switch args {
-    case .supply(input: _): return nil 
+    case .supply(input: _): break
     case .serve(choice: _):
       let task = try NSUserAppleScriptTask(url: scriptPath)
       task.execute()
-      return nil
     }
+    return nil
   }
 
 }
