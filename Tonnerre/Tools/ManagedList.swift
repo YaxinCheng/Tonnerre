@@ -24,6 +24,9 @@ final class ManagedList<T: Hashable> {
   }
   private var cache = IndexCache()
   var lock: DispatchSemaphore?
+  /// Call back function when the number of elements in the list is increased
+  ///
+  /// - parameter fromIndex: from which index, the list increased
   var listExpanded: ((_ fromIndex: Int) -> Void)?
   
   func append<C: Collection>(at item: T, elements: C) where C.Element == T {

@@ -20,11 +20,13 @@ final class TonnerreFieldController: NSViewController {
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
   private var lastQuery: String = ""
   
+  /// A string component on from the beginning of the stringValue in textField to the first space character
   var firstValue: String {
     guard let spaceIndex = stringValue.firstIndex(of: " ") else { return stringValue }
     return String(stringValue[..<spaceIndex])
   }
   
+  /// Reset the icon back to Tonnerre app icon. Used to reset the colour
   func resetIconView(check: Bool = false) {
     if iconView.image === #imageLiteral(resourceName: "tonnerre") || !check {
       iconView.image = #imageLiteral(resourceName: "tonnerre")
@@ -53,6 +55,7 @@ final class TonnerreFieldController: NSViewController {
     textField.window?.makeFirstResponder(nil)
   }
   
+  /// String value of the textField
   var stringValue: String {
     get {
       return textField.stringValue
@@ -62,6 +65,7 @@ final class TonnerreFieldController: NSViewController {
     }
   }
   
+  /// Placeholder value of the placeholderField
   var placeholderString: String? {
     get {
       return placeholderField.placeholderString
@@ -70,7 +74,16 @@ final class TonnerreFieldController: NSViewController {
     }
   }
   
-  func autoComplete(cmd: String, appendingSpace: Bool, hasKeyword: Bool) {
+  /// Complete the existing string to the first component of placeholder or
+  /// the name field
+  ///
+  /// e.g.:
+  ///   - "**Vis**ual Studio Code" -> "**Visual** Studio Code"
+  /// - parameter target: The given desired goal string value
+  /// - parameter appendingSpace: If true, append a space after word completion.
+  ///                         This is used specifically for keywords completion
+  ///                         of providers with lowerbound ≥ 1
+  func autoComplete(target: String, appendingSpace: Bool) {
     defer {
       textField.window?.makeFirstResponder(nil)
       hidePlaceholderField()
@@ -84,7 +97,7 @@ final class TonnerreFieldController: NSViewController {
     if let placeholder = placeholderString, !placeholder.isEmpty {
       complete(withPlaceholder: placeholder)
     } else {
-      complete(withTarget: cmd)
+      complete(withTarget: target)
     }
     if appendingSpace { stringValue = (stringValue + " ").truncatedSpaces }
   }
@@ -117,12 +130,16 @@ final class TonnerreFieldController: NSViewController {
     stringValue = completed + suffixSpace
   }
   
+  /// Restore last query into the textField
   func restore() {
     textField.stringValue = lastQuery
     adjustFieldsWidth(withString: lastQuery)
     textField.currentEditor()?.selectedRange = NSRange(location: lastQuery.count, length: 0)
   }
   
+  /// Display a warning information in the placeholder field
+  /// - parameter info: The warning information needs to be displayed.
+  ///                   If nil, then the placeholder field will be set to empty
   func display(info: String?) {
     if let placeholder = info {
       textFieldWidth.constant = 0

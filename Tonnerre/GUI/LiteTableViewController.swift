@@ -17,8 +17,8 @@ class LiteTableViewController: NSViewController {
       datasource.listExpanded = listExpanded
     }
   }
-  var tableView: LiteTableView {
-    return view as! LiteTableView
+  weak var tableView: LiteTableView! {
+    return view as? LiteTableView
   }
   private var highlightedIndex = -1
   weak var delegate: LiteTableVCDelegate?
@@ -82,6 +82,7 @@ class LiteTableViewController: NSViewController {
     return datasource[max(0, highlightedIndex)]
   }
   
+  /// Reset the LiteTableView as newly loaded
   private func completeViewReload() {
     highlightedIndex = -1
     tableView.reload()
@@ -93,7 +94,11 @@ class LiteTableViewController: NSViewController {
     delegate?.updatePlaceholder(service: datasource.first)
   }
   
+  /// Callback function when new elements are added from the given index
+  /// - parameter fromIndex: from which index, the new elements are inserted
   private func listExpanded(fromIndex index: Int) {
+    // Only refresh view when new elements are added to index 0 ... 9,
+    // because they are shown on screen
     guard index < 9 else { return }
     DispatchQueue.main.async { [weak self] in
       self?.completeViewReload()
@@ -111,20 +116,22 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func keyPressed(_ event: NSEvent) {
     switch event.keyCode {
     case 125, 126: // move down/up
-      upDownKeyPressed(withEvent: event)
+      upDownKeyPressed(withKeyCode: event.keyCode)
     case 48: // tab
-      tabPressed(withEvent: event)
+      tabPressed()
     case 36, 76: // enter
       enterPressed(withEvent: event)
     case 49: // space
       (tableView.highlightedCell as? ServiceCell)?.preview()
     case 53: // ESC
-      escPrssed(withEvent: event)
+      guard event.modifierFlags.rawValue == 256 else { return }
+      escPrssed()
     case 18...23, 25, 26, 28, 83...89, 91, 92:// ⌘ + number
-      quickSelect(withEvent: event)
+      guard event.modifierFlags.contains(.command) else { return }
+      quickSelect(withKeyCode: event.keyCode)
     case 12: // Q
       guard event.modifierFlags.contains(.command) else { return }
-      exitProgramProcess(withEvent: event)
+      terminateProgramProcess()
     default:
       break
     }
@@ -162,20 +169,20 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
 
 // MARK: - Keyboard events come here
 extension LiteTableViewController {
-  private func upDownKeyPressed(withEvent event: NSEvent) {
+  private func upDownKeyPressed(withKeyCode keyCode: UInt16) {
     PreviewPopover.shared.close()
-    if datasource.count == 0 && event.keyCode == 126 {
+    if datasource.count == 0 && keyCode == 126 {
       delegate?.retrieveLastQuery()
     }
     guard datasource.count > 0 else { return }
-    highlightedIndex += event.keyCode == 125 ? 1 : -1
+    highlightedIndex += keyCode == 125 ? 1 : -1
     highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
     let selectedService = datasource[max(highlightedIndex, 0)]
     delegate?.serviceHighlighted(service: selectedService)
     delegate?.updatePlaceholder(service: selectedService)
   }
   
-  private func tabPressed(withEvent event: NSEvent) {
+  private func tabPressed() {
     guard datasource.count > 0 else { return }
     let selectedService = datasource[max(highlightedIndex, 0)]
     delegate?.tabPressed(service: selectedService)
@@ -190,8 +197,7 @@ extension LiteTableViewController {
     delegate?.serve(servicePack, withCmd: withCmd)
   }
   
-  private func escPrssed(withEvent event: NSEvent) {
-    guard event.modifierFlags.rawValue == 256 else { return }
+  private func escPrssed() {
     if PreviewPopover.shared.isShown == true {
       PreviewPopover.shared.close()
     } else {
@@ -203,11 +209,10 @@ extension LiteTableViewController {
     }
   }
   
-  private func quickSelect(withEvent event: NSEvent) {
-    guard event.modifierFlags.contains(.command) else { return }
+  private func quickSelect(withKeyCode keyCode: UInt16) {
     let keyCodeMap: [UInt16: Int] = [18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
                                      83: 1, 84: 2, 85: 3, 86: 4, 87: 5, 88: 6, 89: 7, 91: 8, 92: 9]
-    let selectedIndex = keyCodeMap[event.keyCode]! - 1
+    let selectedIndex = keyCodeMap[keyCode]! - 1
     guard
       selectedIndex < tableView.visibleCells.count,
       let cell = tableView.visibleCells[selectedIndex] as? ServiceCell,
@@ -219,7 +224,7 @@ extension LiteTableViewController {
   /// This is a flag defines if the cmd + Q is double clicked in a short time
   /// When it is set to true, and cmd + Q is pressed again, the program quick
   private static var canExitFlag: Bool = false
-  private func exitProgramProcess(withEvent event: NSEvent) {
+  private func terminateProgramProcess() {
     let warnBeforeExitEnabled = TonnerreSettings.get(fromKey: .warnBeforeExit) as? Bool ?? true
     if !warnBeforeExitEnabled || type(of: self).canExitFlag { // Double clicked cmd + Q
       #if DEBUG

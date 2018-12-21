@@ -31,6 +31,7 @@ final class ServiceCell: LiteTableCell {
     }
   }
   
+  /// Display a popover next to the cell that presents the preview for this item
   func preview() {
     guard case .service(_, let service)? = displayItem else { return }
     let cellRect = view.convert(NSRect(x: -40, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height), to: view)

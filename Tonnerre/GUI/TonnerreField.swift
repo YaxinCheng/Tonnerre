@@ -20,6 +20,7 @@ final class TonnerreField: NSTextField {
   
   override func performKeyEquivalent(with event: NSEvent) -> Bool {
     switch event.keyCode {
+      // mute the sound for the several keys
     case 18...25, 36, 49, 53, 76, 125, 126: return true
     default: return super.performKeyEquivalent(with: event)
     }
@@ -27,27 +28,7 @@ final class TonnerreField: NSTextField {
   
   override func selectText(_ sender: Any?) {
     super.selectText(sender)
+    // Disable text select and keep editing possible
     currentEditor()?.selectedRange = NSRange(location: stringValue.count, length: 0)
-  }
-
-  override var mouseDownCanMoveWindow: Bool {
-    return true
-  }
-  
-  private let stringWithOperator = try! NSRegularExpression(pattern: "^.+?(\\s(AND|OR)\\s.+?)+", options: .anchorsMatchLines)
-  
-  override var intrinsicContentSize: NSSize {
-    let value = stringValue ?? "Tonnerre"
-    let cell = NSTextFieldCell(textCell: value)
-    let attributedString: NSAttributedString
-    if stringValue.isEmpty {
-      attributedString = NSAttributedString(string: value, attributes: [.font: font!])
-    } else {
-      attributedString = attributedStringValue
-    }
-    cell.attributedStringValue = attributedString
-    let extraLength: CGFloat = 110// Used to contain the next input word when it is using pinyin
-    let contentSize = NSSize(width: cell.cellSize.width + extraLength, height: cell.cellSize.height)
-    return contentSize
   }
 }
