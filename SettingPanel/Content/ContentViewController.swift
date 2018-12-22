@@ -11,7 +11,11 @@ import Cocoa
 final class ContentViewController: NSViewController {
   
   var items: [[SettingItem]] = []
-  @IBOutlet weak var collectionView: NSCollectionView!
+  @IBOutlet weak var collectionView: NSCollectionView! {
+    didSet {
+      (collectionView.collectionViewLayout as? WaterfallLayout)?.delegate = self
+    }
+  }
   
 }
 
@@ -24,7 +28,7 @@ extension ContentViewController: ContentViewDelegate {
   }
 }
 
-extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout {
+extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateWaterfallLayout {
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return items[section].count
   }
@@ -42,13 +46,17 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
     return cell
   }
   
-  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+  func numberOfColumns(in collectionView: NSCollectionView) -> Int {
+    return 2
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, heightForItemAt indexPath: IndexPath) -> CGFloat {
     let item = items[indexPath.section][indexPath.item]
     let defaultCellSize = NSSize(width: 360, height: 0)
     let nameSize = item.attributedName.boundingRect(with: defaultCellSize, options: [.usesFontLeading, .usesLineFragmentOrigin]).size
     let contentSize = item.attributedContent.boundingRect(with: defaultCellSize, options: [.usesFontLeading, .usesLineFragmentOrigin]).size
     let combinedHeight: CGFloat = 8 + nameSize.height + contentSize.height + 4 + 32 + 8
-    return NSSize(width: 370, height: combinedHeight)
+    return combinedHeight
   }
   
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

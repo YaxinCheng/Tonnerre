@@ -26,6 +26,9 @@
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144032FE21CDBF0C0026E822 /* JSONTest.swift */; };
 		1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */; };
+		1440330321CDCA850026E822 /* ManagedListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330221CDCA850026E822 /* ManagedListTest.swift */; };
+		1440330521CEC5EF0026E822 /* WaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330421CEC5EF0026E822 /* WaterfallLayout.swift */; };
+		1440330A21CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */; };
 		14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D162197C04C008F1A8B /* ProviderMap.swift */; };
 		14454D192197C242008F1A8B /* TNEExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D182197C242008F1A8B /* TNEExecutor.swift */; };
 		14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1A2197C795008F1A8B /* PyExecutor.swift */; };
@@ -268,6 +271,9 @@
 		1438057921C8709600DD0685 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		144032FE21CDBF0C0026E822 /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
 		1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIDTrieTest.swift; sourceTree = "<group>"; };
+		1440330221CDCA850026E822 /* ManagedListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedListTest.swift; sourceTree = "<group>"; };
+		1440330421CEC5EF0026E822 /* WaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallLayout.swift; sourceTree = "<group>"; };
+		1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCollectionViewDelegateWaterfallLayout.swift; sourceTree = "<group>"; };
 		14454D162197C04C008F1A8B /* ProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMap.swift; sourceTree = "<group>"; };
 		14454D182197C242008F1A8B /* TNEExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEExecutor.swift; sourceTree = "<group>"; };
 		14454D1A2197C795008F1A8B /* PyExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyExecutor.swift; sourceTree = "<group>"; };
@@ -488,6 +494,15 @@
 			name = TranslationRelated;
 			sourceTree = "<group>";
 		};
+		1440330821CEC6220026E822 /* WaterfallLayout */ = {
+			isa = PBXGroup;
+			children = (
+				1440330421CEC5EF0026E822 /* WaterfallLayout.swift */,
+				1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */,
+			);
+			path = WaterfallLayout;
+			sourceTree = "<group>";
+		};
 		14454D112197BD9D008F1A8B /* NewTNE */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,6 +671,7 @@
 			children = (
 				144032FE21CDBF0C0026E822 /* JSONTest.swift */,
 				1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */,
+				1440330221CDCA850026E822 /* ManagedListTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -794,6 +810,7 @@
 				146C053721BDAEB40028B076 /* ContentViewDelegate.swift */,
 				14D5184B21B460BF00C93E7C /* SettingItem.swift */,
 				14E49CDD21B87A8C0018527A /* SettingFetcher.swift */,
+				1440330821CEC6220026E822 /* WaterfallLayout */,
 				146C054021BDBA360028B076 /* GeneralSettings */,
 				146C052821BC52C80028B076 /* Providers */,
 				14D5185B21B4877D00C93E7C /* Cells */,
@@ -1250,6 +1267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */,
+				1440330321CDCA850026E822 /* ManagedListTest.swift in Sources */,
 				144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1282,6 +1300,8 @@
 				146C052721BC4F200028B076 /* BuiltinProviderLoader.swift in Sources */,
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				146C052F21BC6BDD0028B076 /* TNEProviderLoader.swift in Sources */,
+				1440330521CEC5EF0026E822 /* WaterfallLayout.swift in Sources */,
+				1440330A21CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift in Sources */,
 				146C054721BDBFFD0028B076 /* TonnerreSettings.swift in Sources */,
 				146C052A21BC52D80028B076 /* ProviderItem.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,

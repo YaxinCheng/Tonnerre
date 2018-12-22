@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -767,25 +768,22 @@
                     <scrollView key="view" wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="KS3-hg-DCK">
                         <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" copiesOnScroll="NO" id="lMz-Kr-ezC">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="lMz-Kr-ezC">
                             <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <collectionView selectable="YES" id="Sw1-ef-gEF">
                                     <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" id="5ZN-78-B7i">
-                                        <size key="itemSize" width="370" height="110"/>
-                                        <edgeInsets key="sectionInset" left="20" right="316" top="30" bottom="0.0"/>
-                                    </collectionViewFlowLayout>
-                                    <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <collectionViewLayout key="collectionViewLayout" id="p87-Oa-he3" customClass="WaterfallLayout" customModule="SettingPanel" customModuleProvider="target"/>
+                                    <color key="primaryBackgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <outlet property="dataSource" destination="j9y-8J-ePl" id="gVT-Lv-ftq"/>
                                         <outlet property="delegate" destination="j9y-8J-ePl" id="cu4-2b-t2k"/>
                                     </connections>
                                 </collectionView>
                             </subviews>
-                            <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yNv-ml-Ckx">
                             <rect key="frame" x="-100" y="-100" width="233" height="15"/>

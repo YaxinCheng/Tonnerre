@@ -36,7 +36,7 @@ final class ManagedList<T: Hashable> {
       listExpanded?((0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
       indices[item] = storage.count
-      storage.append(Array(elements))
+      storage.append([item] + Array(elements))
       listExpanded?(storage.count)
     }
     lock?.signal()
