@@ -94,11 +94,12 @@ struct ServiceIDTrie {
   mutating func remove(value: String, key: @autoclosure ()->String) {
     let keyword = key()
     if keyword.isEmpty { wildcards.remove(value); return }
+    rootNode.values.remove(value)
     var node = rootNode
     for char in keyword {
       guard let next = node.children[char] else { break }
-      node.values.remove(value)
       node = next
+      node.values.remove(value)
     }
   }
 }

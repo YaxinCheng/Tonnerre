@@ -767,7 +767,7 @@
                     <scrollView key="view" wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="KS3-hg-DCK">
                         <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" id="lMz-Kr-ezC">
+                        <clipView key="contentView" copiesOnScroll="NO" id="lMz-Kr-ezC">
                             <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -785,6 +785,7 @@
                                     </connections>
                                 </collectionView>
                             </subviews>
+                            <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yNv-ml-Ckx">
                             <rect key="frame" x="-100" y="-100" width="233" height="15"/>

@@ -24,13 +24,14 @@
 		1438057821C8707800DD0685 /* Switch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057721C8707800DD0685 /* Switch.xib */; };
 		1438057A21C8709600DD0685 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057921C8709600DD0685 /* Switch.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
+		144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144032FE21CDBF0C0026E822 /* JSONTest.swift */; };
+		1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */; };
 		14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D162197C04C008F1A8B /* ProviderMap.swift */; };
 		14454D192197C242008F1A8B /* TNEExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D182197C242008F1A8B /* TNEExecutor.swift */; };
 		14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1A2197C795008F1A8B /* PyExecutor.swift */; };
 		14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1C2197C7A0008F1A8B /* ASExecutor.swift */; };
 		14454D1F2197C7A7008F1A8B /* JSONExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */; };
 		14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D20219887C6008F1A8B /* TNEServiceProvider.swift */; };
-		14454D2321989E0D008F1A8B /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D2221989E0D008F1A8B /* Heap.swift */; };
 		14454D252198AB9F008F1A8B /* ServiceIDTrie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D242198AB9F008F1A8B /* ServiceIDTrie.swift */; };
 		14454D272198B83C008F1A8B /* TonnerreInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D262198B83C008F1A8B /* TonnerreInterpreter.swift */; };
 		1449E56B212A0FAC00500BF4 /* LimitedDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */; };
@@ -100,7 +101,6 @@
 		1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514320B1BEF900F6FBE8 /* AppDelegate.swift */; };
 		1470514620B1BEF900F6FBE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470514520B1BEF900F6FBE8 /* ViewController.swift */; };
 		1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1470514C20B1BEFB00F6FBE8 /* Main.storyboard */; };
-		1470515A20B1BEFB00F6FBE8 /* TonnerreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470515920B1BEFB00F6FBE8 /* TonnerreTests.swift */; };
 		1470516520B1BEFB00F6FBE8 /* TonnerreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */; };
 		1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470517220B1C29A00F6FBE8 /* Commons.swift */; };
 		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
@@ -266,13 +266,14 @@
 		1438057521C8500300DD0685 /* BoolItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolItem.swift; sourceTree = "<group>"; };
 		1438057721C8707800DD0685 /* Switch.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Switch.xib; sourceTree = "<group>"; };
 		1438057921C8709600DD0685 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		144032FE21CDBF0C0026E822 /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
+		1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIDTrieTest.swift; sourceTree = "<group>"; };
 		14454D162197C04C008F1A8B /* ProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMap.swift; sourceTree = "<group>"; };
 		14454D182197C242008F1A8B /* TNEExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEExecutor.swift; sourceTree = "<group>"; };
 		14454D1A2197C795008F1A8B /* PyExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyExecutor.swift; sourceTree = "<group>"; };
 		14454D1C2197C7A0008F1A8B /* ASExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASExecutor.swift; sourceTree = "<group>"; };
 		14454D1E2197C7A7008F1A8B /* JSONExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExecutor.swift; sourceTree = "<group>"; };
 		14454D20219887C6008F1A8B /* TNEServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEServiceProvider.swift; sourceTree = "<group>"; };
-		14454D2221989E0D008F1A8B /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
 		14454D242198AB9F008F1A8B /* ServiceIDTrie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIDTrie.swift; sourceTree = "<group>"; };
 		14454D262198B83C008F1A8B /* TonnerreInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreInterpreter.swift; sourceTree = "<group>"; };
 		1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedDataProtocol.swift; sourceTree = "<group>"; };
@@ -329,7 +330,6 @@
 		1470514F20B1BEFB00F6FBE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tonnerre.entitlements; sourceTree = "<group>"; };
 		1470515520B1BEFB00F6FBE8 /* TonnerreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonnerreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1470515920B1BEFB00F6FBE8 /* TonnerreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreTests.swift; sourceTree = "<group>"; };
 		1470515B20B1BEFB00F6FBE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1470516020B1BEFB00F6FBE8 /* TonnerreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonnerreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreUITests.swift; sourceTree = "<group>"; };
@@ -509,7 +509,6 @@
 				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 				145CF984218A5352003B9468 /* JSON.swift */,
 				14FF21382191279F00F505B3 /* ManagedList.swift */,
-				14454D2221989E0D008F1A8B /* Heap.swift */,
 				14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */,
 			);
 			path = Tools;
@@ -655,7 +654,8 @@
 		1470515820B1BEFB00F6FBE8 /* TonnerreTests */ = {
 			isa = PBXGroup;
 			children = (
-				1470515920B1BEFB00F6FBE8 /* TonnerreTests.swift */,
+				144032FE21CDBF0C0026E822 /* JSONTest.swift */,
+				1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -1219,7 +1219,6 @@
 				14F2302D214206F100B7A0FB /* String+fill.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
 				14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */,
-				14454D2321989E0D008F1A8B /* Heap.swift in Sources */,
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,
 				14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */,
@@ -1250,7 +1249,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1470515A20B1BEFB00F6FBE8 /* TonnerreTests.swift in Sources */,
+				1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */,
+				144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
