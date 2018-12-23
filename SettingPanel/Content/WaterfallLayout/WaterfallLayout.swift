@@ -26,9 +26,11 @@ final class WaterfallLayout: NSCollectionViewLayout {
       let contentInsets = (0..<collectionView.numberOfSections).map {
         connectedDelegate.collectionView(collectionView, layout: self, insetForSectionAt: $0)
       }
-      let minRight = contentInsets.map { $0.right }.min()!
-      return NSSize(width: collectionView.bounds.width - minRight,
-                    height: contentHeight)
+      let minRight  = contentInsets.map { $0.right }.min()!
+      let minLeft   = contentInsets.map { $0.left }.min()!
+      let maxBottom = contentInsets.map { $0.bottom }.max()!
+      return NSSize(width: collectionView.bounds.width - minRight - minLeft,
+                    height: contentHeight + maxBottom)
     } else {
       return super.collectionViewContentSize
     }
@@ -45,26 +47,29 @@ final class WaterfallLayout: NSCollectionViewLayout {
     }
     var column = 0
     let TopInset = delegate?.collectionView(collectionView, layout: self, insetForSectionAt: 0) ?? NSEdgeInsetsZero
-    var yOffsets = [CGFloat](repeating: TopInset.top, count: delegate?.numberOfColumns(in: collectionView) ?? 0)
+    let columnNum = delegate?.numberOfColumns(in: collectionView) ?? 1
+    var yOffsets = [CGFloat](repeating: TopInset.top, count: columnNum)
     for section in 0 ..< collectionView.numberOfSections {
       let inset = delegate?.collectionView(collectionView, layout: self, insetForSectionAt: section) ?? NSEdgeInsetsZero
       var cacheAtSection: [NSCollectionViewLayoutAttributes] = []
       for item in 0 ..< collectionView.numberOfItems(inSection: section) {
         let indexPath = IndexPath(item: item, section: section)
+        let attribute = NSCollectionViewLayoutAttributes(forItemWith: indexPath)
+        
         let itemHeight = delegate?.collectionView(collectionView, layout: self, heightForItemAt: indexPath) ?? 0
         let spacing = delegate?.collectionView(collectionView, layout: self, minimumInteritemSpacingForSectionAt: section) ?? 0
         let height = itemHeight + spacing * 2
-        let xPos = xOffsets[column] == 0 ? inset.left / 2 : xOffsets[column] + spacing
+        let xPos = xOffsets[column] + spacing + inset.left / 2
         let frame = NSRect(x: xPos, y: yOffsets[column], width: columnWidth, height: height)
         let insetsFrame = frame.insetBy(dx: spacing, dy: spacing)
-        let attribute = NSCollectionViewLayoutAttributes(forItemWith: indexPath)
+        
         attribute.frame = insetsFrame
         cacheAtSection.append(attribute)
         
         contentHeight = max(contentHeight, frame.maxY)
         yOffsets[column] += height
         
-        column = (column + 1) % (delegate?.numberOfColumns(in: collectionView) ?? 1)
+        column = yOffsets.enumerated().min { $0.element < $1.element }?.offset ?? 0
       }
       cache.append(cacheAtSection)
       guard let maxYOffSet = yOffsets.max() else { return }
