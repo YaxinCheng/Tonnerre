@@ -11,10 +11,10 @@ import LiteTableView
 
 class LiteTableViewController: NSViewController {
   
-  var datasource: ManagedList<ServicePack> = [] {
+  var datasource: TaggedList<ServicePack> = [] {
     didSet {
       completeViewReload()
-      datasource.listExpanded = listExpanded
+      datasource.listDidChange = listExpanded
     }
   }
   weak var tableView: LiteTableView! {

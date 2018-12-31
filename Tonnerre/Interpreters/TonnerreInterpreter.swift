@@ -22,7 +22,7 @@ final class TonnerreInterpreter {
     ClipboardService.monitor.start()
   }
   
-  func interpret(input: String) -> ManagedList<ServicePack> {
+  func interpret(input: String) -> TaggedList<ServicePack> {
     let tokens = tokenize(input: input)
     guard tokens.count > 0 else { return [] }
     
@@ -46,7 +46,7 @@ final class TonnerreInterpreter {
     }
     cache.previousRequest = input
     
-    let managedList = ManagedList<ServicePack>(array:
+    let managedList = TaggedList<ServicePack>(array:
       providers.map { .provider($0) }, filter: { !$0.provider.keyword.isEmpty }
     )
     managedList.lock = DispatchSemaphore(value: 1)
@@ -84,7 +84,7 @@ final class TonnerreInterpreter {
     return input.truncatedSpaces.components(separatedBy: .whitespacesAndNewlines)
   }
   
-  private func supply(fromProvider provider: ServiceProvider, requirements: [String], destination: ManagedList<ServicePack>) {
+  private func supply(fromProvider provider: ServiceProvider, requirements: [String], destination: TaggedList<ServicePack>) {
     destination.replace(at: .provider(provider),
                         elements: provider.prepare(withInput: requirements)
                           .map {

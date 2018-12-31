@@ -8,9 +8,9 @@
 
 import Foundation
 
-final class ManagedList<T: Hashable> {
+final class TaggedList<T: Hashable> {
   private var storage: [[T]] = []
-  private var indices: [T : Int] = [:]
+  private var tagToIndex: [T : Int] = [:]
   private class IndexCache {
     var prevRequest: Int
     var prevGroup: Int
@@ -27,42 +27,36 @@ final class ManagedList<T: Hashable> {
   /// Call back function when the number of elements in the list is increased
   ///
   /// - parameter fromIndex: from which index, the list increased
-  var listExpanded: ((_ fromIndex: Int) -> Void)?
+  var listDidChange: ((_ fromIndex: Int) -> Void)?
   
-  func append<C: Collection>(at item: T, elements: C) where C.Element == T {
+  func append<C: Collection>(at tag: T, elements: C) where C.Element == T {
     lock?.wait()
-    if let index = indices[item] {
+    if let index = tagToIndex[tag] {
       storage[index] += Array(elements)
-      listExpanded?((0..<index).map { storage[$0].count }.reduce(0, +))
+      listDidChange?((0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
-      indices[item] = storage.count
-      storage.append([item] + Array(elements))
-      listExpanded?(storage.count)
+      tagToIndex[tag] = storage.count
+      storage.append([tag] + Array(elements))
+      listDidChange?(storage.count)
     }
     lock?.signal()
   }
   
-  func replace<C: Collection>(at item: T, elements: C) where C.Element == T {
+  func replace<C: Collection>(at tag: T, elements: C) where C.Element == T {
     lock?.wait()
-    if let index = indices[item] {
+    if let index = tagToIndex[tag] {
       storage[index] = Array(elements)
-      listExpanded?((0..<index).map { storage[$0].count }.reduce(0, +))
+      listDidChange?((0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
-      indices[item] = storage.count
+      tagToIndex[tag] = storage.count
       storage.append(Array(elements))
-      listExpanded?(storage.count)
+      listDidChange?(storage.count)
     }
     lock?.signal()
-  }
-  
-  func peak(at item: T) -> [T]? {
-    if let index = indices[item] {
-      return storage[index]
-    } else { return nil }
   }
 }
 
-extension ManagedList: ExpressibleByArrayLiteral {
+extension TaggedList: ExpressibleByArrayLiteral {
   convenience init(arrayLiteral elements: T...) {
     self.init(array: elements)
   }
@@ -71,7 +65,7 @@ extension ManagedList: ExpressibleByArrayLiteral {
     self.init()
     for (index, element) in elements.enumerated() {
       storage.append([element])
-      indices[element] = index
+      tagToIndex[element] = index
     }
   }
   
@@ -83,12 +77,12 @@ extension ManagedList: ExpressibleByArrayLiteral {
       } else {
         storage.append([])
       }
-      indices[element] = index
+      tagToIndex[element] = index
     }
   }
 }
 
-extension ManagedList: Collection {
+extension TaggedList: Collection {
   subscript(position: Int) -> T {
     let diff = cache.prevRequest < 0 ? .min : position - cache.prevRequest
     var (group, item): (Int, Int)

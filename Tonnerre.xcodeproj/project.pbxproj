@@ -26,7 +26,7 @@
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144032FE21CDBF0C0026E822 /* JSONTest.swift */; };
 		1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */; };
-		1440330321CDCA850026E822 /* ManagedListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330221CDCA850026E822 /* ManagedListTest.swift */; };
+		1440330321CDCA850026E822 /* TaggedListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330221CDCA850026E822 /* TaggedListTest.swift */; };
 		1440330521CEC5EF0026E822 /* WaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330421CEC5EF0026E822 /* WaterfallLayout.swift */; };
 		1440330A21CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */; };
 		14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D162197C04C008F1A8B /* ProviderMap.swift */; };
@@ -174,7 +174,7 @@
 		14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
 		14FEE2742193D1A7009A4798 /* BuiltInProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2732193D1A7009A4798 /* BuiltInProviderMap.swift */; };
 		14FEE2782193D93B009A4798 /* DisableManager+Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2772193D93B009A4798 /* DisableManager+Provider.swift */; };
-		14FF21392191279F00F505B3 /* ManagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF21382191279F00F505B3 /* ManagedList.swift */; };
+		14FF21392191279F00F505B3 /* TaggedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF21382191279F00F505B3 /* TaggedList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,7 +271,7 @@
 		1438057921C8709600DD0685 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		144032FE21CDBF0C0026E822 /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
 		1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIDTrieTest.swift; sourceTree = "<group>"; };
-		1440330221CDCA850026E822 /* ManagedListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedListTest.swift; sourceTree = "<group>"; };
+		1440330221CDCA850026E822 /* TaggedListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedListTest.swift; sourceTree = "<group>"; };
 		1440330421CEC5EF0026E822 /* WaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallLayout.swift; sourceTree = "<group>"; };
 		1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCollectionViewDelegateWaterfallLayout.swift; sourceTree = "<group>"; };
 		14454D162197C04C008F1A8B /* ProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMap.swift; sourceTree = "<group>"; };
@@ -412,7 +412,7 @@
 		14FEE2712193CE62009A4798 /* DisabledManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledManager.swift; sourceTree = "<group>"; };
 		14FEE2732193D1A7009A4798 /* BuiltInProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInProviderMap.swift; sourceTree = "<group>"; };
 		14FEE2772193D93B009A4798 /* DisableManager+Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisableManager+Provider.swift"; sourceTree = "<group>"; };
-		14FF21382191279F00F505B3 /* ManagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedList.swift; sourceTree = "<group>"; };
+		14FF21382191279F00F505B3 /* TaggedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -523,7 +523,7 @@
 				1449E578212E173F00500BF4 /* Browser.swift */,
 				14257A0A216BD775008BE752 /* LocalNotification.swift */,
 				145CF984218A5352003B9468 /* JSON.swift */,
-				14FF21382191279F00F505B3 /* ManagedList.swift */,
+				14FF21382191279F00F505B3 /* TaggedList.swift */,
 				14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */,
 			);
 			path = Tools;
@@ -671,7 +671,7 @@
 			children = (
 				144032FE21CDBF0C0026E822 /* JSONTest.swift */,
 				1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */,
-				1440330221CDCA850026E822 /* ManagedListTest.swift */,
+				1440330221CDCA850026E822 /* TaggedListTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -1187,7 +1187,7 @@
 				1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */,
 				146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */,
 				146E874E21A76334001CF246 /* DisplayOrder.swift in Sources */,
-				14FF21392191279F00F505B3 /* ManagedList.swift in Sources */,
+				14FF21392191279F00F505B3 /* TaggedList.swift in Sources */,
 				14561B8C20C444470057B4C1 /* ServicePack.swift in Sources */,
 				14F015C720F999E300537160 /* PlaceholderField.swift in Sources */,
 				146AAE6620BDD7FF009AC9C6 /* BuiltInProvider.swift in Sources */,
@@ -1267,7 +1267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */,
-				1440330321CDCA850026E822 /* ManagedListTest.swift in Sources */,
+				1440330321CDCA850026E822 /* TaggedListTest.swift in Sources */,
 				144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

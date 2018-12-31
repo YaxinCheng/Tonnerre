@@ -1,5 +1,5 @@
 //
-//  ManagedListTest.swift
+//  TaggedListTest.swift
 //  TonnerreTests
 //
 //  Created by Yaxin Cheng on 2018-12-21.
@@ -9,9 +9,9 @@
 import XCTest
 @testable import Tonnerre
 
-class ManagedListTest: XCTestCase {
+class TaggedListTest: XCTestCase {
   
-  var list: ManagedList<String>!
+  var list: TaggedList<String>!
   
   override func setUp() {
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -56,13 +56,6 @@ class ManagedListTest: XCTestCase {
     XCTAssertEqual(list[originalCount], "Cambodia")
   }
   
-  func testPeak() {
-    let canada = list.peak(at: "Canada")
-    XCTAssertNotNil(canada)
-    XCTAssertEqual(canada!.count, 1)
-    XCTAssertEqual(canada![0], "Canada")
-  }
-  
   func testSkipEmpty() {
     let originalCount = list.count
     list.replace(at: "China", elements: [])
@@ -76,5 +69,18 @@ class ManagedListTest: XCTestCase {
       if index == 0 { XCTAssertEqual(value, "Canada") }
       else if index == 1 { XCTAssertEqual(value, "Czech") }
     }
+  }
+  
+  func testListChangeCallback() {
+    var expectedIndex: Int = -1
+    list.listDidChange = { fromIndex in
+      XCTAssertEqual(expectedIndex, fromIndex)
+    }
+    expectedIndex = 1
+    list.append(at: "China", elements: ["Vietnam"])
+    expectedIndex = 0
+    list.append(at: "Canada", elements: ["Mexico"])
+    expectedIndex = 2
+    list.append(at: "China", elements: ["Laos"])
   }
 }
