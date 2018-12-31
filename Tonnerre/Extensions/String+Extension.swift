@@ -52,4 +52,11 @@ extension String {
     guard commonPrefix.count == trimmedOther.count else { return "" }
     return String(self[commonPrefix.endIndex...])
   }
+  
+  func match(regex: NSRegularExpression) -> Substring? {
+    guard
+      let firstMatch = regex.firstMatch(in: self, options: .anchored, range: NSRange(location: 0, length: self.count))
+      else { return nil }
+    return self[Range(firstMatch.range, in: self)!]
+  }
 }
