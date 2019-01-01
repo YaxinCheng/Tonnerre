@@ -44,11 +44,19 @@ struct FileTypeControl {
   }
   
   func isInControl(file: URL) -> Bool {
-    let identifier = file.typeIdentifier as CFString
-    for type in controlTypes {
-      for uti in type.UTIs {
-        if UTTypeConformsTo(identifier, uti) { return true }
+    do {
+      let resource = try file.resourceValues(forKeys: [.typeIdentifierKey])
+      guard
+        let typeID = resource.typeIdentifier
+      else { return false }
+      let identifier = typeID as CFString
+      for type in controlTypes {
+        for uti in type.UTIs {
+          if UTTypeConformsTo(identifier, uti) { return true }
+        }
       }
+    } catch {
+      
     }
     return false
   }

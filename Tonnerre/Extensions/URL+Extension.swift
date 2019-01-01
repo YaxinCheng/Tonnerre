@@ -18,22 +18,4 @@ extension URL {
     let otherComponents = url.pathComponents
     return zip(selfComponents, otherComponents).map(==).reduce(true, { $0 && $1 })
   }
-  
-  var isDirectory: Bool {
-    let value = try? resourceValues(forKeys: [.isDirectoryKey, .isPackageKey])
-    guard let isDir = value?.isDirectory, let isPack = value?.isPackage else { return false }
-    return isDir && !isPack
-  }
-  
-  var isSymlink: Bool {
-    let value = try? resourceValues(forKeys: [.isSymbolicLinkKey, .isAliasFileKey])
-    guard let isSymlink = value?.isSymbolicLink, let isAlias = value?.isAliasFile else { return false }
-    return isSymlink || isAlias
-  }
-  
-  var typeIdentifier: String {
-    let value = try? resourceValues(forKeys: [.typeIdentifierKey])
-    guard let typeID = value?.typeIdentifier else { return "" }
-    return typeID
-  }
 }

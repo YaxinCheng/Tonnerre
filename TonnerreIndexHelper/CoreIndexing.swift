@@ -30,15 +30,20 @@ final class CoreIndexing {
   private var detector: TonnerreFSDetector! = nil
   
   init() {
-    let pathes: [String] = [SearchMode.default.targetFilePaths, SearchMode.name.targetFilePaths].reduce([], +).map({$0.path})
+    let pathes: [String] = [SearchMode.default.targetFilePaths, SearchMode.name.targetFilePaths]
+      .reduce([], +).map { $0.path }
     if !pathes.isEmpty {
       self.detector = TonnerreFSDetector(pathes: pathes,
                                          filterOptions: [.hidden, .inHidden, .inPackage],
-                                         callback: self.detectedChanges)
+                                         callback: detectedChanges)
     }
     let centre = NotificationCenter.default
-    centre.addObserver(self, selector: #selector(defaultIndexingDidFinish), name: .defaultIndexingDidFinish, object: nil)
-    centre.addObserver(self, selector: #selector(documentIndexingDidFinish), name: .documentIndexingDidFinish, object: nil)
+    centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main) { _ in
+      UserDefaults.standard.set(true, forKey: .defaultInxFinished)
+    }
+    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main) { _ in
+      UserDefaults.standard.set(true, forKey: .documentInxFinished)
+    }
   }
   
   private func lostIndeces() -> [SearchMode] {
@@ -52,7 +57,7 @@ final class CoreIndexing {
     set {
       UserDefaults.standard.set(newValue, forKey: .defaultInxFinished)
       if newValue == true && documentFinished {
-        detector.start()
+        listenToChanges()
       }
     } get {
       return UserDefaults.standard.bool(forKey: .defaultInxFinished)
@@ -63,7 +68,7 @@ final class CoreIndexing {
     set {
       UserDefaults.standard.set(newValue, forKey: .documentInxFinished)
       if newValue == true && defaultFinished {
-        detector.start()
+        listenToChanges()
       }
     } get {
       return UserDefaults.standard.bool(forKey: .documentInxFinished)
@@ -105,13 +110,12 @@ final class CoreIndexing {
     guard let targetPaths: [URL] = modes.first?.targetFilePaths else { return }
     let queue = DispatchQueue.global(qos: .utility)
     let notificationCentre = NotificationCenter.default
-    let beginNotification = modes.contains(.default) ? Notification(name: .defaultIndexingDidBegin) : Notification(name: .documentIndexingDidBegin)
-    let endNotification = modes.contains(.default) ? Notification(name: .defaultIndexingDidFinish) : Notification(name: .documentIndexingDidFinish)
+    let notification = modes.contains(.default) ?
+      Notification(name: .defaultIndexingDidFinish) : Notification(name: .documentIndexingDidFinish)
     queue.async { [unowned self] in
-      notificationCentre.post(beginNotification)
       let indeces = modes.compactMap({ self.indexes[$0, true] })
       for beginURL in targetPaths { self.addContent(in: beginURL, modes: modes, indexes: indeces) }
-      notificationCentre.post(endNotification)
+      notificationCentre.post(notification)
       if modes.contains(.default) {
        self.defaultFinished = true
       } else {
@@ -135,38 +139,55 @@ final class CoreIndexing {
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
    */
   private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
-    if path.isSymlink || path.typeIdentifier.starts(with: "dyn") { return }
-    for (mode, index) in zip(searchModes, indexes) where mode.canInclude(fileURL: path) {
-      _ = try? index.addDocument(atPath: path, additionalNote: getAlias(path: path))
-    }
-    // Prevent FileManager from indexing what's inside apps
-    let isPackage = (try? path.resourceValues(forKeys: [.isPackageKey]))?.isPackage ?? false
-    guard
-      !isPackage,
-      let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
-    else { return }
-    for case let fileURL as URL in enumerator {
-      for (mode, index) in zip(searchModes, indexes) {
-        guard
-          mode.canInclude(fileURL: fileURL),
-          !fileURL.typeIdentifier.starts(with: "dyn"),
-          !FileTypeControl.isExcludedURL(url: fileURL),
-          !FileTypeControl.isExcludedDir(url: fileURL)
-        else { continue }
-        _ = try? index.addDocument(atPath: fileURL, additionalNote: self.getAlias(path: fileURL))
-        #if DEBUG
-        print(fileURL)
-        #endif
+    do {
+      let resource = try path.resourceValues(forKeys: [.isPackageKey])
+      try add(fileURL: path, searchModes: searchModes, indexes: indexes)
+      let isPackage = resource.isPackage ?? false
+      guard
+        !isPackage,
+        let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
+      else { return }
+      for case let fileURL as URL in enumerator {
+        try? add(fileURL: fileURL, searchModes: searchModes, indexes: indexes)
       }
+    } catch {
+      #if DEBUG
+      print("addContent error", error)
+      #endif
     }
   }
   
-  @objc private func defaultIndexingDidFinish() {
-    UserDefaults.standard.set(true, forKey: .defaultInxFinished)
+  /// Add fileURL to sepcific indices with specific search modes
+  /// - parameter fileURL: the URL needs to be added
+  /// - parameter searchModes: the search mode associated with the indexes
+  /// - parameter indexes: the index candidates
+  /// - throws: TonnerreIndexError.fileNotExist if file does not exist
+  private func add(fileURL: URL, searchModes: [SearchMode], indexes: [TonnerreIndex]) throws {
+    guard !shouldIgnore(path: fileURL) else { return }
+    for (mode, index) in zip(searchModes, indexes) where mode.canInclude(fileURL: fileURL) {
+      #if DEBUG
+      let result = try index.addDocument(atPath: fileURL, additionalNote: getAlias(path: fileURL))
+      print("\(result ? "SUCCESS:" : "FAIL:")", fileURL)
+      #else
+      _ = try index.addDocument(atPath: fileURL, additionalNote: getAlias(path: fileURL))
+      #endif
+    }
   }
   
-  @objc private func documentIndexingDidFinish() {
-    UserDefaults.standard.set(true, forKey: .documentInxFinished)
+  /// Returns true if the given path should not be included in the index files
+  private func shouldIgnore(path: URL) -> Bool {
+    let pathPropertyIsNotAccepted: Bool
+    do {
+      let resource = try path.resourceValues(forKeys:
+        [.isHiddenKey, .typeIdentifierKey, .isAliasFileKey, .isSymbolicLinkKey])
+      let symbolicOrAlias = resource.isAliasFile == true || resource.isSymbolicLink == true
+      let isDynamicFile = (resource.typeIdentifier ?? "").starts(with: "dyn")
+      pathPropertyIsNotAccepted = symbolicOrAlias || isDynamicFile
+    } catch { pathPropertyIsNotAccepted = true }
+    let excludedBySystem = {
+      FileTypeControl.isExcludedDir(url: path)
+        || FileTypeControl.isExcludedURL(url: path) }
+    return pathPropertyIsNotAccepted || excludedBySystem()
   }
   
   // MARK: - File System Change detection
@@ -181,15 +202,13 @@ final class CoreIndexing {
    Based on the path url, identify which search mode it belongs to
   */
   private func identify(path: URL) -> [SearchMode] {
-    if FileTypeControl.isExcludedURL(url: path) { return [] }
-    if FileTypeControl.isExcludedDir(url: path) { return [] }
-    if path.typeIdentifier.starts(with: "dyn") { return [] }
+    guard !shouldIgnore(path: path) else { return [] }
     let defaultDir = Set(SearchMode.default.targetFilePaths)
     if defaultDir.contains(path) { return [.default] }
     let documentDir = Set(SearchMode.name.targetFilePaths)
     let exclusions = FileTypeControl(types: .media, .image)
     let extensionAnalyze: (URL) -> [SearchMode] = { path in
-      if path.isDirectory || exclusions.isInControl(file: path) { return [.name] }
+      if path.hasDirectoryPath || exclusions.isInControl(file: path) { return [.name] }
       return [.name, .content]
     }
     if documentDir.contains(path) {

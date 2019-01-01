@@ -50,4 +50,16 @@ class StringExtensionTest: XCTestCase {
     let mixString = "    string    "
     XCTAssertEqual(mixString.truncatedSpaces, "string ")
   }
+  
+  func testRegexMatchExist() {
+    let base = "hello world"
+    let matched = base.match(regex: try! NSRegularExpression(pattern: "\\w+o"))
+    XCTAssertNotNil(matched)
+  }
+  
+  func testRegexMatchCorrectness() {
+    let base = "hello world"
+    let matched = base.match(regex: try! NSRegularExpression(pattern: "\\w+o"))!
+    XCTAssertEqual(matched, "hello")
+  }
 }

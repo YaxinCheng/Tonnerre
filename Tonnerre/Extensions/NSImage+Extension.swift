@@ -10,26 +10,30 @@ import Cocoa
 
 extension NSImage {
   static var safari: NSImage {
-    return NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns") ?? #imageLiteral(resourceName: "notFound")
+    return fetchApplicationIcon(by: "com.apple.safari" as CFString) ?? #imageLiteral(resourceName: "notFound")
   }
-  
-  static var terminal: NSImage {
-    return NSImage(contentsOfFile: "/Applications/Utilities/Terminal.app/Contents/Resources/Terminal.icns") ?? #imageLiteral(resourceName: "notFound")
-  }
-  
+
   static var finder: NSImage {
-    return NSImage(contentsOfFile: "/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.icns") ?? #imageLiteral(resourceName: "notFound")
+    return fetchApplicationIcon(by: "com.apple.finder" as CFString) ?? #imageLiteral(resourceName: "notFound")
   }
   
   static var dictionary: NSImage {
-    return NSImage(contentsOfFile: "/Applications/Dictionary.app/Contents/Resources/Dictionary.icns") ?? #imageLiteral(resourceName: "notFound")
+    return fetchApplicationIcon(by: "com.apple.dictionary" as CFString) ?? #imageLiteral(resourceName: "notFound")
   }
   
   static var calculator: NSImage {
-    return NSImage(contentsOfFile: "/Applications/Calculator.app/Contents/Resources/AppIcon.icns") ?? #imageLiteral(resourceName: "notFound")
+    return fetchApplicationIcon(by: "com.apple.calculator" as CFString) ?? #imageLiteral(resourceName: "notFound")
   }
   
   static var notes: NSImage? {
-    return NSImage(contentsOfFile: "/Applications/Notes.app/Contents/Resources/AppIcon.icns")
+    return fetchApplicationIcon(by: "com.apple.calculator" as CFString)
+  }
+  
+  fileprivate static func fetchApplicationIcon(by bundleID: CFString) -> NSImage? {
+    guard let appURL = (LSCopyApplicationURLsForBundleIdentifier(bundleID, nil)?
+      .takeRetainedValue() as? [URL])?.first else { return nil }
+    let icon = NSWorkspace.shared.icon(forFile: appURL.path)
+    icon.size = NSSize(width: 40, height: 40)
+    return icon
   }
 }
