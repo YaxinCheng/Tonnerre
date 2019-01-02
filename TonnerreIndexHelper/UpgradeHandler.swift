@@ -16,12 +16,7 @@ final class UpgradeHandler {
   private var lastSystemVersion: String {
     get {
       let userDefault = UserDefaults.standard
-      if let versionString = userDefault.string(forKey: "SystemVersion") {
-        return versionString
-      } else {
-        userDefault.set(currentSystemVersion, forKey: "SystemVersion")
-        return currentSystemVersion
-      }
+      return userDefault.string(forKey: "SystemVersion") ?? currentSystemVersion
     } set {
       let userDefault = UserDefaults.standard
       userDefault.set(newValue, forKey: "SystemVersion")

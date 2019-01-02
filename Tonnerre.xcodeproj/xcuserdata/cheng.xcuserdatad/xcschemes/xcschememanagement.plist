@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>TonnerreHelperTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>TonnerreIndexHelper.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -32,6 +37,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1440331B21DD76B30026E822</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>146AD8C320C9C09300D9E591</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1470513F20B1BEF900F6FBE8</key>
 		<dict>
 			<key>primary</key>

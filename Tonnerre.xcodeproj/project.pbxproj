@@ -29,6 +29,9 @@
 		1440330521CEC5EF0026E822 /* WaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330421CEC5EF0026E822 /* WaterfallLayout.swift */; };
 		1440330A21CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */; };
 		1440330E21DADD4B0026E822 /* StringExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330D21DADD4B0026E822 /* StringExtensionTest.swift */; };
+		1440331021DD5FC30026E822 /* URLExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330F21DD5FC30026E822 /* URLExtensionTest.swift */; };
+		1440331421DD6FCD0026E822 /* PathIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440331321DD6FCD0026E822 /* PathIterator.swift */; };
+		1440332621DD76C30026E822 /* PathIteratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440331621DD75760026E822 /* PathIteratorTest.swift */; };
 		14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D162197C04C008F1A8B /* ProviderMap.swift */; };
 		14454D192197C242008F1A8B /* TNEExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D182197C242008F1A8B /* TNEExecutor.swift */; };
 		14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14454D1A2197C795008F1A8B /* PyExecutor.swift */; };
@@ -178,6 +181,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1440332121DD76B40026E822 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1470513820B1BEF900F6FBE8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 146AD8C320C9C09300D9E591;
+			remoteInfo = TonnerreIndexHelper;
+		};
 		1470515620B1BEFB00F6FBE8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1470513820B1BEF900F6FBE8 /* Project object */;
@@ -274,6 +284,11 @@
 		1440330421CEC5EF0026E822 /* WaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallLayout.swift; sourceTree = "<group>"; };
 		1440330921CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCollectionViewDelegateWaterfallLayout.swift; sourceTree = "<group>"; };
 		1440330D21DADD4B0026E822 /* StringExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTest.swift; sourceTree = "<group>"; };
+		1440330F21DD5FC30026E822 /* URLExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensionTest.swift; sourceTree = "<group>"; };
+		1440331321DD6FCD0026E822 /* PathIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathIterator.swift; sourceTree = "<group>"; };
+		1440331621DD75760026E822 /* PathIteratorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathIteratorTest.swift; sourceTree = "<group>"; };
+		1440331C21DD76B40026E822 /* TonnerreHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonnerreHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1440332021DD76B40026E822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14454D162197C04C008F1A8B /* ProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMap.swift; sourceTree = "<group>"; };
 		14454D182197C242008F1A8B /* TNEExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNEExecutor.swift; sourceTree = "<group>"; };
 		14454D1A2197C795008F1A8B /* PyExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyExecutor.swift; sourceTree = "<group>"; };
@@ -416,6 +431,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1440331921DD76B30026E822 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		146AD8C120C9C09300D9E591 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -503,6 +525,15 @@
 			path = WaterfallLayout;
 			sourceTree = "<group>";
 		};
+		1440331D21DD76B40026E822 /* TonnerreHelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				1440331621DD75760026E822 /* PathIteratorTest.swift */,
+				1440332021DD76B40026E822 /* Info.plist */,
+			);
+			path = TonnerreHelperTests;
+			sourceTree = "<group>";
+		};
 		14454D112197BD9D008F1A8B /* NewTNE */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,6 +605,7 @@
 				14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */,
 				146AD8DB20C9C10200D9E591 /* Notification+Names.swift */,
 				146AD8DD20C9C12A00D9E591 /* Common.swift */,
+				1440331321DD6FCD0026E822 /* PathIterator.swift */,
 				146AD8CB20C9C09400D9E591 /* Assets.xcassets */,
 				146AD8CD20C9C09400D9E591 /* MainMenu.xib */,
 				146AD8D020C9C09400D9E591 /* Info.plist */,
@@ -625,6 +657,7 @@
 				1470516320B1BEFB00F6FBE8 /* TonnerreUITests */,
 				146AD8C520C9C09300D9E591 /* TonnerreIndexHelper */,
 				14AFE69B2112A4F1002BBBB2 /* SettingPanel */,
+				1440331D21DD76B40026E822 /* TonnerreHelperTests */,
 				1470514120B1BEF900F6FBE8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -637,6 +670,7 @@
 				1470516020B1BEFB00F6FBE8 /* TonnerreUITests.xctest */,
 				146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */,
 				14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */,
+				1440331C21DD76B40026E822 /* TonnerreHelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -673,6 +707,7 @@
 				1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */,
 				1440330221CDCA850026E822 /* TaggedListTest.swift */,
 				1440330D21DADD4B0026E822 /* StringExtensionTest.swift */,
+				1440330F21DD5FC30026E822 /* URLExtensionTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -921,6 +956,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1440331B21DD76B30026E822 /* TonnerreHelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1440332321DD76B40026E822 /* Build configuration list for PBXNativeTarget "TonnerreHelperTests" */;
+			buildPhases = (
+				1440331821DD76B30026E822 /* Sources */,
+				1440331921DD76B30026E822 /* Frameworks */,
+				1440331A21DD76B30026E822 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1440332221DD76B40026E822 /* PBXTargetDependency */,
+			);
+			name = TonnerreHelperTests;
+			productName = TonnerreHelperTests;
+			productReference = 1440331C21DD76B40026E822 /* TonnerreHelperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		146AD8C320C9C09300D9E591 /* TonnerreIndexHelper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 146AD8D220C9C09400D9E591 /* Build configuration list for PBXNativeTarget "TonnerreIndexHelper" */;
@@ -1019,10 +1072,14 @@
 		1470513820B1BEF900F6FBE8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Yaxin Cheng";
 				TargetAttributes = {
+					1440331B21DD76B30026E822 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 146AD8C320C9C09300D9E591;
+					};
 					146AD8C320C9C09300D9E591 = {
 						CreatedOnToolsVersion = 9.4;
 						LastSwiftMigration = 1000;
@@ -1089,11 +1146,19 @@
 				1470515F20B1BEFB00F6FBE8 /* TonnerreUITests */,
 				146AD8C320C9C09300D9E591 /* TonnerreIndexHelper */,
 				14AFE6992112A4F1002BBBB2 /* SettingPanel */,
+				1440331B21DD76B30026E822 /* TonnerreHelperTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1440331A21DD76B30026E822 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		146AD8C220C9C09300D9E591 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1154,6 +1219,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1440331821DD76B30026E822 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1440332621DD76C30026E822 /* PathIteratorTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		146AD8C020C9C09300D9E591 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1165,6 +1238,7 @@
 				146AD8DE20C9C12A00D9E591 /* Common.swift in Sources */,
 				146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */,
 				146AD8D920C9C0C600D9E591 /* IndexStorage.swift in Sources */,
+				1440331421DD6FCD0026E822 /* PathIterator.swift in Sources */,
 				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,
 				146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */,
 				1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
@@ -1267,6 +1341,7 @@
 			files = (
 				1440330E21DADD4B0026E822 /* StringExtensionTest.swift in Sources */,
 				1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */,
+				1440331021DD5FC30026E822 /* URLExtensionTest.swift in Sources */,
 				1440330321CDCA850026E822 /* TaggedListTest.swift in Sources */,
 				144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */,
 			);
@@ -1327,6 +1402,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1440332221DD76B40026E822 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 146AD8C320C9C09300D9E591 /* TonnerreIndexHelper */;
+			targetProxy = 1440332121DD76B40026E822 /* PBXContainerItemProxy */;
+		};
 		1470515720B1BEFB00F6FBE8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1470513F20B1BEF900F6FBE8 /* Tonnerre */;
@@ -1367,6 +1447,53 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1440332421DD76B40026E822 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SC2G2H5LRL;
+				INFOPLIST_FILE = TonnerreHelperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreHelperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TonnerreIndexHelper.app/Contents/MacOS/TonnerreIndexHelper";
+			};
+			name = Debug;
+		};
+		1440332521DD76B40026E822 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SC2G2H5LRL;
+				INFOPLIST_FILE = TonnerreHelperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.TonnerreHelperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TonnerreIndexHelper.app/Contents/MacOS/TonnerreIndexHelper";
+			};
+			name = Release;
+		};
 		146AD8D320C9C09400D9E591 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1731,6 +1858,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1440332321DD76B40026E822 /* Build configuration list for PBXNativeTarget "TonnerreHelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1440332421DD76B40026E822 /* Debug */,
+				1440332521DD76B40026E822 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		146AD8D220C9C09400D9E591 /* Build configuration list for PBXNativeTarget "TonnerreIndexHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
