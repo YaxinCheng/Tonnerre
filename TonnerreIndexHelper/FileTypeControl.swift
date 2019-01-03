@@ -70,7 +70,19 @@ struct FileTypeControl {
     if self.rawList.isEmpty { loadRawList() }
     let control = self.rawList["path"] ?? []
     let homeDir = FileManager.default.homeDirectoryForCurrentUser
-    let exclusionURL = Set(control.map( homeDir.appendingPathComponent ))
+    let (withoutTilde, withTilde) = control.reduce(([], [])) {
+    (result, urlStr) -> ([String], [String]) in
+      if urlStr.starts(with: "~/") {
+        return (result.0, result.1 + [urlStr])
+      } else {
+        return (result.0 + [urlStr], result.1)
+      }
+    }
+    let expandedTildeURLs = withTilde
+            .map { String($0.dropFirst(2)) }
+            .map(homeDir.appendingPathComponent)
+    let exclusionURL = Set(withoutTilde.map { URL(fileURLWithPath: $0) }
+                          + expandedTildeURLs)
     if exclusionURL.contains(url) { return true }
     for exURL in exclusionURL {
       if url.isChildOf(url: exURL) { return true }

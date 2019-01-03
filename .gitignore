@@ -67,3 +67,7 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+.DS_Store
+Cartfile.resolved
+Carthage/
+Tonnerre.xcodeproj/xcshareddata/

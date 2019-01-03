@@ -136,21 +136,8 @@ final class CoreIndexing {
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
    */
   private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
-    do {
-      let resource = try path.resourceValues(forKeys: [.isPackageKey])
-      try add(fileURL: path, searchModes: searchModes, indexes: indexes)
-      let isPackage = resource.isPackage ?? false
-      guard
-        !isPackage,
-        let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey, .typeIdentifierKey], options: [.skipsHiddenFiles, .skipsPackageDescendants], errorHandler: nil)
-      else { return }
-      for case let fileURL as URL in enumerator {
-        try? add(fileURL: fileURL, searchModes: searchModes, indexes: indexes)
-      }
-    } catch {
-      #if DEBUG
-      print("addContent error", error)
-      #endif
+    for fileURL in PathIterator(beginURL: path, options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+      try? add(fileURL: fileURL, searchModes: searchModes, indexes: indexes)
     }
   }
   
@@ -199,7 +186,11 @@ final class CoreIndexing {
    Based on the path url, identify which search mode it belongs to
   */
   private func identify(path: URL) -> [SearchMode] {
-    guard !shouldIgnore(path: path) else { return [] }
+    guard
+      !path.isHiddenDescendent(),
+      !path.isPackageDescendent(),
+      !shouldIgnore(path: path)
+    else { return [] }
     let defaultDir = Set(SearchMode.default.targetFilePaths)
     if defaultDir.contains(path) { return [.default] }
     let documentDir = Set(SearchMode.name.targetFilePaths)
