@@ -23,6 +23,7 @@
 		1438057821C8707800DD0685 /* Switch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057721C8707800DD0685 /* Switch.xib */; };
 		1438057A21C8709600DD0685 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057921C8709600DD0685 /* Switch.swift */; };
 		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
+		143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143EF11321E0004A00CC8632 /* IndexFactory.swift */; };
 		144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144032FE21CDBF0C0026E822 /* JSONTest.swift */; };
 		1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */; };
 		1440330321CDCA850026E822 /* TaggedListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330221CDCA850026E822 /* TaggedListTest.swift */; };
@@ -52,7 +53,6 @@
 		1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E5872133521A00500BF4 /* NSImage+Tint.swift */; };
 		144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E0C1720EEA5F100E4F2DA /* ClipboardMonitor.swift */; };
 		144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C420B5FF75006A16BC /* Notification+Extension.swift */; };
-		144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F80C820B712F2006A16BC /* IndexStorage.swift */; };
 		14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14561B8820C35F2C0057B4C1 /* HotKey.framework */; };
 		14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14561B8820C35F2C0057B4C1 /* HotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14561B8C20C444470057B4C1 /* ServicePack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B8B20C444470057B4C1 /* ServicePack.swift */; };
@@ -83,7 +83,6 @@
 		146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452251F20B4A794001E0D52 /* URL+Extension.swift */; };
 		146AD8E120C9C28000D9E591 /* Tonnerre.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */; };
 		146AD8E320C9C29300D9E591 /* TonnerreIndexHelper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8C820C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodeld */; };
-		146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
 		146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 140F8C6E20B3668C00C69C25 /* exclusionList.plist */; };
 		146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
 		146AD8EE20CA12C200D9E591 /* alias.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1470518B20B1FE8100F6FBE8 /* alias.plist */; };
@@ -108,7 +107,6 @@
 		1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1470514C20B1BEFB00F6FBE8 /* Main.storyboard */; };
 		1470516520B1BEFB00F6FBE8 /* TonnerreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */; };
 		1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470517220B1C29A00F6FBE8 /* Commons.swift */; };
-		1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518420B1DEDF00F6FBE8 /* SearchMode.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* ApplicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* ApplicationService.swift */; };
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
@@ -277,6 +275,7 @@
 		1438057521C8500300DD0685 /* BoolItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolItem.swift; sourceTree = "<group>"; };
 		1438057721C8707800DD0685 /* Switch.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Switch.xib; sourceTree = "<group>"; };
 		1438057921C8709600DD0685 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		143EF11321E0004A00CC8632 /* IndexFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexFactory.swift; sourceTree = "<group>"; };
 		144032FE21CDBF0C0026E822 /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
 		1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIDTrieTest.swift; sourceTree = "<group>"; };
 		1440330221CDCA850026E822 /* TaggedListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedListTest.swift; sourceTree = "<group>"; };
@@ -571,8 +570,7 @@
 		146AAE6420BDD7C2009AC9C6 /* IndexRelated */ = {
 			isa = PBXGroup;
 			children = (
-				144F80C820B712F2006A16BC /* IndexStorage.swift */,
-				1470518420B1DEDF00F6FBE8 /* SearchMode.swift */,
+				143EF11321E0004A00CC8632 /* IndexFactory.swift */,
 			);
 			path = IndexRelated;
 			sourceTree = "<group>";
@@ -599,7 +597,9 @@
 		146AD8C520C9C09300D9E591 /* TonnerreIndexHelper */ = {
 			isa = PBXGroup;
 			children = (
+				144F80C820B712F2006A16BC /* IndexStorage.swift */,
 				146AD8C620C9C09300D9E591 /* AppDelegate.swift */,
+				1470518420B1DEDF00F6FBE8 /* SearchMode.swift */,
 				142C5942215D842800D819F2 /* UpgradeHandler.swift */,
 				1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */,
 				14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */,
@@ -1279,7 +1279,6 @@
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
-				144F80C920B712F3006A16BC /* IndexStorage.swift in Sources */,
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayableContainer.swift in Sources */,
@@ -1305,19 +1304,18 @@
 				1449E5882133521A00500BF4 /* NSImage+Tint.swift in Sources */,
 				14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* DisplayProtocol.swift in Sources */,
-				1470518520B1DEDF00F6FBE8 /* SearchMode.swift in Sources */,
 				14F2302D214206F100B7A0FB /* String+Extension.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
 				14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */,
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,
 				14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */,
-				146AD8E420C9C2A900D9E591 /* FileTypeControl.swift in Sources */,
 				145D056020CE1FDD0027F8DF /* CurrencyService.swift in Sources */,
 				14AFE6D2211BA111002BBBB2 /* MathError.swift in Sources */,
 				1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14C410342187ACCC00CEA1E9 /* PreviewPopover.swift in Sources */,
+				143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,
@@ -1732,6 +1730,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SC2G2H5LRL;
 				INFOPLIST_FILE = TonnerreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1752,6 +1751,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SC2G2H5LRL;
 				INFOPLIST_FILE = TonnerreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1771,6 +1771,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SC2G2H5LRL;
 				INFOPLIST_FILE = TonnerreUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1790,6 +1791,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SC2G2H5LRL;
 				INFOPLIST_FILE = TonnerreUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -46,10 +46,10 @@ final class TonnerreInterpreter {
     }
     cache.previousRequest = input
     
-    let managedList = TaggedList<ServicePack>(array:
+    let taggedList = TaggedList<ServicePack>(array:
       providers.map { .provider($0) }, filter: { !$0.provider.keyword.isEmpty }
     )
-    managedList.lock = DispatchSemaphore(value: 1)
+    taggedList.lock = DispatchSemaphore(value: 1)
     
     for provider in providers {
       let keywordCount = provider.keyword.isEmpty ? 0 : 1
@@ -58,16 +58,16 @@ final class TonnerreInterpreter {
         tokens.count - keywordCount <= provider.argUpperBound
       else { continue }
       let passinContent = Array(tokens[keywordCount...])
-      supply(fromProvider: provider, requirements: passinContent, destination: managedList)
+      supply(fromProvider: provider, requirements: passinContent, destination: taggedList)
     }
-    if managedList.count == 0 &&
-      !input.isEmpty { // If no service is available, use default
+    if taggedList.count == 0 && !input.isEmpty {
+      // If no service is available, use default
       let defaultProvider = ProviderMap.shared.defaultProvider ?? GoogleSearch()
-      guard tokens.count <= defaultProvider.argUpperBound else { return managedList }
-      supply(fromProvider: defaultProvider, requirements: tokens, destination: managedList)
+      guard tokens.count <= defaultProvider.argUpperBound else { return taggedList }
+      supply(fromProvider: defaultProvider, requirements: tokens, destination: taggedList)
     }
     
-    return managedList
+    return taggedList
   }
   
   func clearCache() {

@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         #endif
       }
+      centre.delegate = self
     } else {
       // Fallback on earlier versions
       NSUserNotificationCenter.default.delegate = self
@@ -158,5 +159,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 extension AppDelegate: NSUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
     return true
+  }
+}
+
+@available(OSX, introduced: 10.14)
+extension AppDelegate: UNUserNotificationCenterDelegate {
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    completionHandler([.badge, .sound, .alert])
   }
 }

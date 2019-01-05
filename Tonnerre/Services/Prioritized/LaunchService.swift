@@ -21,10 +21,10 @@ struct LaunchService: BuiltInProvider {
   }()
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
-    let indexStorage = IndexStorage()
-    let index = indexStorage[.default]
+    guard let index = IndexFactory.default else { return [] }
     let query = input.joined(separator: " ")
-    return index.search(query: query + "*", limit: 5 * 9, options: .default).map {
+    let result = index.search(query: query + "*", limit: 5 * 9, options: .default)
+    return result.map {
       let fileName: String = $0.deletingPathExtension().lastPathComponent
       let name: String
       if $0.pathExtension == "prefPane" {

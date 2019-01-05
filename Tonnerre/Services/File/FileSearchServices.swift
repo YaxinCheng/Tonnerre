@@ -7,9 +7,10 @@
 //
 
 import Cocoa
+import TonnerreSearch
 
 protocol FileSearchService: BuiltInProvider {
-  var associatedMode: SearchMode { get }
+  var associatedIndex: TonnerreIndex? { get }
 }
 
 extension FileSearchService {
@@ -22,9 +23,7 @@ extension FileSearchService {
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     guard !(input.first?.isEmpty ?? false) else { return [self] }
     let query = input.joined(separator: " ") + "*"
-    let indexStorage = IndexStorage()
-    let index = indexStorage[associatedMode]
-    return index.search(query: query, limit: 5 * 9, options: .default).map {
+    return (associatedIndex?.search(query: query, limit: 5 * 9, options: .default) ?? []).map {
       DisplayableContainer(name: $0.deletingPathExtension().lastPathComponent, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0, placeholder: $0.deletingPathExtension().lastPathComponent)
     }
   }
@@ -42,14 +41,18 @@ extension FileSearchService {
 
 struct FileNameSearchService: FileSearchService {
   let name = "Search files by names"
-  
-  let associatedMode: SearchMode = .name
   let keyword = "file"
+  
+  var associatedIndex: TonnerreIndex? {
+    return IndexFactory.name
+  }
 }
 
 struct FileContentSearchService: FileSearchService {
   let name = "Search files by content"
-  
-  let associatedMode: SearchMode = .content
   let keyword = "content"
+  
+  var associatedIndex: TonnerreIndex? {
+    return IndexFactory.content
+  }
 }

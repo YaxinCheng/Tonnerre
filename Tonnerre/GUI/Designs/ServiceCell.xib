@@ -75,6 +75,6 @@
         </collectionViewItem>
     </objects>
     <resources>
-        <image name="tonnerre" width="128" height="128"/>
+        <image name="tonnerre" width="48" height="48"/>
     </resources>
 </document>
