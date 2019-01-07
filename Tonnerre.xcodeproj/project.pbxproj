@@ -169,6 +169,8 @@
 		14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14F5702221ACA8B500AE269B /* MenuOption.xib */; };
 		14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5702521ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift */; };
 		14FA02C821E3F8CE0058E936 /* IndexStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02C721E3F8CE0058E936 /* IndexStorage.swift */; };
+		14FA02CA21E40C3A0058E936 /* BuiltInProviderMapTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02C921E40C3A0058E936 /* BuiltInProviderMapTest.swift */; };
+		14FA02CC21E40E620058E936 /* ProviderMapTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02CB21E40E620058E936 /* ProviderMapTest.swift */; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 		14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE26F21938529009A4798 /* ServiceProvider.swift */; };
 		14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
@@ -420,6 +422,8 @@
 		14F5702221ACA8B500AE269B /* MenuOption.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuOption.xib; sourceTree = "<group>"; };
 		14F5702521ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
 		14FA02C721E3F8CE0058E936 /* IndexStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStorage.swift; sourceTree = "<group>"; };
+		14FA02C921E40C3A0058E936 /* BuiltInProviderMapTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInProviderMapTest.swift; sourceTree = "<group>"; };
+		14FA02CB21E40E620058E936 /* ProviderMapTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMapTest.swift; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 		14FEE26F21938529009A4798 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		14FEE2712193CE62009A4798 /* DisabledManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledManager.swift; sourceTree = "<group>"; };
@@ -708,6 +712,8 @@
 				1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */,
 				1440330221CDCA850026E822 /* TaggedListTest.swift */,
 				1440330D21DADD4B0026E822 /* StringExtensionTest.swift */,
+				14FA02C921E40C3A0058E936 /* BuiltInProviderMapTest.swift */,
+				14FA02CB21E40E620058E936 /* ProviderMapTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -1337,6 +1343,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1440330E21DADD4B0026E822 /* StringExtensionTest.swift in Sources */,
+				14FA02CC21E40E620058E936 /* ProviderMapTest.swift in Sources */,
+				14FA02CA21E40C3A0058E936 /* BuiltInProviderMapTest.swift in Sources */,
 				1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */,
 				1440330321CDCA850026E822 /* TaggedListTest.swift in Sources */,
 				144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */,

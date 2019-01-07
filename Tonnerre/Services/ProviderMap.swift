@@ -9,6 +9,10 @@
 import Foundation
 import TonnerreSearch
 
+enum ProviderMapError: Error {
+  case idExists(id: String)
+}
+
 final class ProviderMap {
   static let shared = ProviderMap()
   private(set) var registeredProviders: [String: ServiceProvider] = [:]
@@ -26,12 +30,12 @@ final class ProviderMap {
         for fileURL in contents where fileURL.pathExtension == "tne" {
           guard let provider = TNEServiceProvider(scriptPath: fileURL) else { continue }
           self.pathWithService[fileURL.path] = provider
-          self.register(provider: provider)
+          try self.register(provider: provider)
           TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
         }
       } catch {
         #if DEBUG
-        print("Load scripting failed")
+        print("Load scripting failed", error)
         #endif
       }
     }
@@ -45,7 +49,10 @@ final class ProviderMap {
     listener.stop()
   }
   
-  func register(provider: ServiceProvider) {
+  func register(provider: ServiceProvider) throws {
+    if registeredProviders[provider.id] != nil {
+      throw ProviderMapError.idExists(id: provider.id)
+    }
     registeredProviders[provider.id] = provider
   }
   
@@ -68,9 +75,15 @@ final class ProviderMap {
         self.pathWithService[$0.path] == nil,
         let provider = TNEServiceProvider(scriptPath: $0)
       else { return }
-      self.pathWithService[$0.path] = provider
-      self.register(provider: provider)
-      TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
+      do {
+        try self.register(provider: provider)
+        self.pathWithService[$0.path] = provider
+        TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
+      } catch {
+        #if DEBUG
+        print("file change add error", error)
+        #endif
+      }
     }
     
     let remove: (URL)->Void = {

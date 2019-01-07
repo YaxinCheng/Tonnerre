@@ -8,6 +8,13 @@
 
 import Foundation
 
+protocol TaggedListDelegate: class {
+  /// Call back function when the number of elements in the list is changed
+  ///
+  /// - parameter index: from which index, the list increased/decreased
+  func listDidChange(from index: Int)
+}
+
 final class TaggedList<T: Hashable> {
   private var storage: [[T]] = []
   private var tagToIndex: [T : Int] = [:]
@@ -24,20 +31,18 @@ final class TaggedList<T: Hashable> {
   }
   private var cache = IndexCache()
   var lock: DispatchSemaphore?
-  /// Call back function when the number of elements in the list is increased
-  ///
-  /// - parameter fromIndex: from which index, the list increased
-  var listDidChange: ((_ fromIndex: Int) -> Void)?
+  
+  weak var delegate: TaggedListDelegate?
   
   func append<C: Collection>(at tag: T, elements: C) where C.Element == T {
     lock?.wait()
     if let index = tagToIndex[tag] {
       storage[index] += Array(elements)
-      listDidChange?((0..<index).map { storage[$0].count }.reduce(0, +))
+      delegate?.listDidChange(from: (0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
       tagToIndex[tag] = storage.count
       storage.append([tag] + Array(elements))
-      listDidChange?(storage.count)
+      delegate?.listDidChange(from: storage.count)
     }
     lock?.signal()
   }
@@ -46,11 +51,11 @@ final class TaggedList<T: Hashable> {
     lock?.wait()
     if let index = tagToIndex[tag] {
       storage[index] = Array(elements)
-      listDidChange?((0..<index).map { storage[$0].count }.reduce(0, +))
+      delegate?.listDidChange(from: (0..<index).map { storage[$0].count }.reduce(0, +))
     } else {
       tagToIndex[tag] = storage.count
       storage.append(Array(elements))
-      listDidChange?(storage.count)
+      delegate?.listDidChange(from: storage.count)
     }
     lock?.signal()
   }

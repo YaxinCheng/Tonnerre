@@ -14,7 +14,7 @@ class LiteTableViewController: NSViewController {
   var datasource: TaggedList<ServicePack> = [] {
     didSet {
       completeViewReload()
-      datasource.listDidChange = listExpanded
+      datasource.delegate = self
     }
   }
   weak var tableView: LiteTableView! {
@@ -93,12 +93,10 @@ class LiteTableViewController: NSViewController {
     }
     delegate?.updatePlaceholder(service: datasource.first)
   }
-  
-  /// Callback function when new elements are added from the given index
-  /// - parameter fromIndex: from which index, the new elements are inserted
-  private func listExpanded(fromIndex index: Int) {
-    // Only refresh view when new elements are added to index 0 ... 9,
-    // because they are shown on screen
+}
+
+extension LiteTableViewController: TaggedListDelegate {
+  func listDidChange(from index: Int) {
     guard index < 9 else { return }
     DispatchQueue.main.async { [weak self] in
       self?.completeViewReload()

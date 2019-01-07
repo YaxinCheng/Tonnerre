@@ -72,15 +72,21 @@ class TaggedListTest: XCTestCase {
   }
   
   func testListChangeCallback() {
-    var expectedIndex: Int = -1
-    list.listDidChange = { fromIndex in
-      XCTAssertEqual(expectedIndex, fromIndex)
+    final class delegateTest: TaggedListDelegate {
+      var expectedIndex: Int!
+      
+      func listDidChange(from index: Int) {
+        XCTAssertEqual(expectedIndex, index)
+      }
     }
-    expectedIndex = 1
+    
+    let tester = delegateTest()
+    list.delegate = tester
+    tester.expectedIndex = 1
     list.append(at: "China", elements: ["Vietnam"])
-    expectedIndex = 0
+    tester.expectedIndex = 0
     list.append(at: "Canada", elements: ["Mexico"])
-    expectedIndex = 2
+    tester.expectedIndex = 2
     list.append(at: "China", elements: ["Laos"])
   }
 }
