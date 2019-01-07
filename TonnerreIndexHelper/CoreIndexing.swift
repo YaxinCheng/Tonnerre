@@ -38,11 +38,21 @@ final class CoreIndexing {
                                          callback: detectedChanges)
     }
     let centre = NotificationCenter.default
-    centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main) { _ in
+    centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main) { [weak self] _ in
+      self?.indexes[.default]?.close()
       UserDefaults.standard.set(true, forKey: .defaultInxFinished)
     }
-    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main) { _ in
+    centre.addObserver(forName: .documentIndexingDidFinish, object: nil, queue: .main) { [weak self] _ in
+      self?.indexes[.content]?.close()
+      self?.indexes[.name]?.close()
       UserDefaults.standard.set(true, forKey: .documentInxFinished)
+    }
+    loadIndices(modes: [.default, .name, .content])
+  }
+  
+  private func loadIndices(modes: [SearchMode]) {
+    for mode in modes {
+      indexes[mode] = TonnerreIndex(filePath: mode.indexFileURL, indexType: mode.indexType, writable: true)
     }
   }
   
@@ -110,8 +120,7 @@ final class CoreIndexing {
     let notification = modes.contains(.default) ?
       Notification(name: .defaultIndexingDidFinish) : Notification(name: .documentIndexingDidFinish)
     queue.async { [unowned self] in
-      let indeces = modes.compactMap({ self.indexes[$0, true] })
-      for beginURL in targetPaths { self.addContent(in: beginURL, modes: modes, indexes: indeces) }
+      for beginURL in targetPaths { self.addContent(in: beginURL, modes: modes) }
       notificationCentre.post(notification)
       if modes.contains(.default) {
        self.defaultFinished = true
@@ -126,8 +135,8 @@ final class CoreIndexing {
    - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
    */
-  private func addContent(in path: URL, modes searchModes: SearchMode..., indexes: [TonnerreIndex]) {
-    addContent(in: path, modes: searchModes, indexes: indexes)
+  private func addContent(in path: URL, modes searchModes: SearchMode...) {
+    addContent(in: path, modes: searchModes)
   }
   
   /**
@@ -135,9 +144,9 @@ final class CoreIndexing {
    - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
    */
-  private func addContent(in path: URL, modes searchModes: [SearchMode], indexes: [TonnerreIndex]) {
+  private func addContent(in path: URL, modes searchModes: [SearchMode]) {
     for fileURL in PathIterator(beginURL: path, options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
-      try? add(fileURL: fileURL, searchModes: searchModes, indexes: indexes)
+      try? add(fileURL: fileURL, searchModes: searchModes)
     }
   }
   
@@ -146,14 +155,15 @@ final class CoreIndexing {
   /// - parameter searchModes: the search mode associated with the indexes
   /// - parameter indexes: the index candidates
   /// - throws: TonnerreIndexError.fileNotExist if file does not exist
-  private func add(fileURL: URL, searchModes: [SearchMode], indexes: [TonnerreIndex]) throws {
+  private func add(fileURL: URL, searchModes: [SearchMode]) throws {
     guard !shouldIgnore(path: fileURL) else { return }
+    let indexes = searchModes.map { self.indexes[$0] }
     for (mode, index) in zip(searchModes, indexes) where mode.canInclude(fileURL: fileURL) {
       #if DEBUG
-      let result = try index.addDocument(atPath: fileURL, additionalNote: getAlias(path: fileURL))
-      print("\(result ? "SUCCESS:" : "FAIL:")", fileURL)
+      let result = try index?.addDocument(atPath: fileURL, additionalNote: getAlias(path: fileURL))
+      print("\((result ?? false) ? "SUCCESS:" : "FAIL:")", fileURL)
       #else
-      _ = try index.addDocument(atPath: fileURL, additionalNote: getAlias(path: fileURL))
+      _ = try index?.addDocument(atPath: fileURL, additionalNote: getAlias(path: fileURL))
       #endif
     }
   }
@@ -219,11 +229,11 @@ final class CoreIndexing {
       let pathURL = URL(fileURLWithPath: path)
       let relatedModes = identify(path: pathURL)
       guard !relatedModes.isEmpty else { return }
-      let relatedIndexes = relatedModes.map { indexes[$0, true] }
+      let relatedIndexes = relatedModes.map { indexes[$0] }
       if flags.contains(.created) {
         for (mode, index) in zip(relatedModes, relatedIndexes)
           where mode.canInclude(fileURL: pathURL) {
-          _ = try? index.addDocument(atPath: pathURL)
+          _ = try? index?.addDocument(atPath: pathURL)
         }
       } else if flags.contains(.renamed) {
         let fileManager = FileManager.default
@@ -231,15 +241,15 @@ final class CoreIndexing {
           where mode.canInclude(fileURL: pathURL) {
           let exist = fileManager.fileExists(atPath: path)
           if exist == false {
-            _ = index.removeDocument(atPath: pathURL)
+            _ = index?.removeDocument(atPath: pathURL)
           } else {
-            _ = try? index.addDocument(atPath: pathURL)
+            _ = try? index?.addDocument(atPath: pathURL)
           }
         }
       } else if flags.contains(.removed) {
         for (mode, index) in zip(relatedModes, relatedIndexes)
           where mode.canInclude(fileURL: pathURL) {
-          _ = index.removeDocument(atPath: pathURL)
+          _ = index?.removeDocument(atPath: pathURL)
         }
       }
     }

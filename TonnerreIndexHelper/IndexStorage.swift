@@ -1,31 +1,22 @@
 //
-//  IndexManage.swift
-//  Tonnerre
+//  IndexStorage.swift
+//  TonnerreIndexHelper
 //
-//  Created by Yaxin Cheng on 2018-05-24.
-//  Copyright © 2018 Yaxin Cheng. All rights reserved.
+//  Created by Yaxin Cheng on 2019-01-07.
+//  Copyright © 2019 Yaxin Cheng. All rights reserved.
 //
 
 import Foundation
 import TonnerreSearch
 
 struct IndexStorage {
-  private static var storedIndexes = [TonnerreIndex?](repeating: nil, count: 3)
+  private var storageMap: [SearchMode: TonnerreIndex] = [:]
   
-  subscript(index: SearchMode) -> TonnerreIndex {
-    return self[index, false]
-  }
-  
-  subscript(index: SearchMode, writable: Bool) -> TonnerreIndex {
+  subscript(key: SearchMode) -> TonnerreIndex? {
     get {
-      if let indexFile = IndexStorage.storedIndexes[index.storedInt] {
-        IndexStorage.storedIndexes[index.storedInt] = indexFile
-        return indexFile
-      } else {
-        return TonnerreIndex(filePath: index.indexFileURL, indexType: index.indexType, writable: writable)!
-      }
+      return storageMap[key]
     } set {
-      IndexStorage.storedIndexes[index.storedInt] = newValue
+      storageMap[key] = newValue
     }
   }
 }
