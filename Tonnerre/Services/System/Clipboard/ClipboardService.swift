@@ -30,34 +30,47 @@ struct ClipboardService: BuiltInProvider {
       let time = record.time
     else { return nil }
     let stringValue = value.string.replacingOccurrences(of: "\n|\r", with: "\\\\n", options: .regularExpression)
+    let dateFmt = DateFormatter()
+    dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
+    let timestamp = "Copied at \(dateFmt.string(from: time))"
     if type == "public.file-url" {
-      guard
-        let url = URL(string: stringValue),
-        FileManager.default.fileExists(atPath: url.path)
-      else { return nil }
-      let name = stringValue.components(separatedBy: "/").last?
-        .removingPercentEncoding ?? ""
-      let content = url.path
-      let alterContent = "Show file in Finder"
-      let icon = NSWorkspace.shared.icon(forFile: url.path)
-      return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url, placeholder: "")
+      return wrapFileURLRecord(value: stringValue)
     } else if stringValue.lowercased().starts(with: "http://")
       || stringValue.lowercased().starts(with: "https://") {
-      guard
-        let url = URL(string: stringValue)
-      else { return nil }
-      let dateFmt = DateFormatter()
-      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-      let content = "Copied at \(dateFmt.string(from: time))"
-      let alterContent = "Open copied URL in default browser"
-      let browser: Browser = .default
-      return DisplayableContainer(name: stringValue, content: content, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
+      return wrapHttpURLRecord(value: stringValue, timestamp: timestamp)
+    } else if value.containsAttachments == true {
+      return wrapImageRecord(value: stringValue, timestamp: timestamp, image: value)
     } else {
-      let dateFmt = DateFormatter()
-      dateFmt.dateFormat = "HH:mm, MMM dd, YYYY"
-      let content = "Copied at \(dateFmt.string(from: time))"
-      return DisplayableContainer(name: stringValue, content: content, icon: #imageLiteral(resourceName: "text"), innerItem: value, placeholder: "")
+      return DisplayableContainer(name: stringValue, content: timestamp, icon: #imageLiteral(resourceName: "text"), innerItem: value, placeholder: "")
     }
+  }
+  
+  private func wrapFileURLRecord(value: String) -> DisplayProtocol? {
+    guard
+      let url = URL(string: value),
+      FileManager.default.fileExists(atPath: url.path)
+    else { return nil }
+    let name = value.components(separatedBy: "/").last?
+      .removingPercentEncoding ?? ""
+    let content = url.path
+    let alterContent = "Show file in Finder"
+    let icon = NSWorkspace.shared.icon(forFile: url.path)
+    return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url, placeholder: "")
+  }
+  
+  private func wrapHttpURLRecord(value: String, timestamp: String) -> DisplayProtocol? {
+    guard
+      let url = URL(string: value)
+    else { return nil }
+    let alterContent = "Open copied URL in default browser"
+    let browser: Browser = .default
+    return DisplayableContainer(name: value, content: timestamp, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
+  }
+  
+  private func wrapImageRecord(value: String, timestamp: String, image: NSAttributedString) -> DisplayProtocol? {
+    let strippedString = String(value.unicodeScalars.filter { $0.isASCII })
+    let title = strippedString.isEmpty ? "Copied Image" : strippedString
+    return DisplayableContainer(name: title, content: timestamp, icon: #imageLiteral(resourceName: "image"), innerItem: image, placeholder: "")
   }
   
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
