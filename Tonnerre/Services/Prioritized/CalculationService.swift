@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import StringEvaluator
 
 struct CalculationService: BuiltInProvider {
   let keyword: String = ""
@@ -15,20 +16,18 @@ struct CalculationService: BuiltInProvider {
   let alterContent: String? = "Open calculator with this value in"
   let content: String = "A quick access to calculator. Select to copy to clipboard"
   let icon: NSImage = .calculator
-  private let tokenizer = MathTokenizer()
   private let parser = MathParser()
 
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let rawExpression = input.joined()
     do {
-      let tokens = try tokenizer.tokenize(expression: rawExpression)
-      let calculationResult = try parser.parse(tokens: tokens)
-      return [DisplayableContainer<Int>(name: "\(calculationResult.value)", content: rawExpression, icon: icon)]
-    } catch MathError.zeroDivision {
+      let calculationResult = try parser.parse(expression: rawExpression)
+      return [DisplayableContainer<Int>(name: "\(calculationResult)", content: rawExpression, icon: icon)]
+    } catch EvaluationError.zeroDivision {
       return [DisplayableContainer<Error>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
-    } catch MathError.unclosedBracket {
+    } catch EvaluationError.unclosedBracket {
       return [DisplayableContainer<Error>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
-    } catch MathError.missingBracket {
+    } catch EvaluationError.missingBracket {
       return [DisplayableContainer<Error>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
     } catch {
       return []

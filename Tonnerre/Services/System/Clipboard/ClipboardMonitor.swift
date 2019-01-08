@@ -16,8 +16,9 @@ final class ClipboardMonitor {
   private let callback: (NSAttributedString, NSPasteboard.PasteboardType)->Void
   private var timer: Timer?
   
-  init(interval: TimeInterval, repeat: Bool = false, callback: @escaping (NSAttributedString, NSPasteboard.PasteboardType)->Void) {
-    pasteboard = NSPasteboard.general
+  init(clipboard: NSPasteboard? = nil, interval: TimeInterval, repeat: Bool = false,
+       callback: @escaping (NSAttributedString, NSPasteboard.PasteboardType)->Void) {
+    pasteboard = clipboard ?? .general
     changedCount = pasteboard.changeCount
     self.`repeat` = `repeat`
     self.interval = interval
