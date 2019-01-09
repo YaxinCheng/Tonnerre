@@ -169,8 +169,8 @@
 		14FA02CA21E40C3A0058E936 /* BuiltInProviderMapTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02C921E40C3A0058E936 /* BuiltInProviderMapTest.swift */; };
 		14FA02CC21E40E620058E936 /* ProviderMapTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02CB21E40E620058E936 /* ProviderMapTest.swift */; };
 		14FA02CE21E43CD00058E936 /* ClipboardMonitorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02CD21E43CCF0058E936 /* ClipboardMonitorTest.swift */; };
-		14FA030221E56F420058E936 /* StringEvaluator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA030121E56F420058E936 /* StringEvaluator.framework */; };
-		14FA030321E56F420058E936 /* StringEvaluator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA030121E56F420058E936 /* StringEvaluator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		14FA033321E58EF10058E936 /* MathParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA033221E58EF00058E936 /* MathParser.framework */; };
+		14FA033421E58EF10058E936 /* MathParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA033221E58EF00058E936 /* MathParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 		14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE26F21938529009A4798 /* ServiceProvider.swift */; };
 		14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
@@ -224,7 +224,7 @@
 				14CC56FC217BC78F0015540A /* LiteTableView.framework in Embed Frameworks */,
 				14E72EAC2176A01600FA41F8 /* TonnerreSearch.framework in Embed Frameworks */,
 				14561B8A20C35F2C0057B4C1 /* HotKey.framework in Embed Frameworks */,
-				14FA030321E56F420058E936 /* StringEvaluator.framework in Embed Frameworks */,
+				14FA033421E58EF10058E936 /* MathParser.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,7 +423,7 @@
 		14FA02C921E40C3A0058E936 /* BuiltInProviderMapTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInProviderMapTest.swift; sourceTree = "<group>"; };
 		14FA02CB21E40E620058E936 /* ProviderMapTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMapTest.swift; sourceTree = "<group>"; };
 		14FA02CD21E43CCF0058E936 /* ClipboardMonitorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitorTest.swift; sourceTree = "<group>"; };
-		14FA030121E56F420058E936 /* StringEvaluator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StringEvaluator.framework; path = Carthage/Build/Mac/StringEvaluator.framework; sourceTree = "<group>"; };
+		14FA033221E58EF00058E936 /* MathParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MathParser.framework; path = Carthage/Build/Mac/MathParser.framework; sourceTree = "<group>"; };
 		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 		14FEE26F21938529009A4798 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		14FEE2712193CE62009A4798 /* DisabledManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledManager.swift; sourceTree = "<group>"; };
@@ -455,7 +455,7 @@
 				14561B8920C35F2C0057B4C1 /* HotKey.framework in Frameworks */,
 				14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */,
 				14CC56FB217BC78F0015540A /* LiteTableView.framework in Frameworks */,
-				14FA030221E56F420058E936 /* StringEvaluator.framework in Frameworks */,
+				14FA033321E58EF10058E936 /* MathParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,7 +655,7 @@
 		1470513720B1BEF900F6FBE8 = {
 			isa = PBXGroup;
 			children = (
-				14FA030121E56F420058E936 /* StringEvaluator.framework */,
+				14FA033221E58EF00058E936 /* MathParser.framework */,
 				14CC56FA217BC78F0015540A /* LiteTableView.framework */,
 				14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */,
 				14561B8820C35F2C0057B4C1 /* HotKey.framework */,

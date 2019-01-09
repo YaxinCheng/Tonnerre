@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import StringEvaluator
+import MathParser
 
 struct CalculationService: BuiltInProvider {
   let keyword: String = ""
@@ -23,11 +23,11 @@ struct CalculationService: BuiltInProvider {
     do {
       let calculationResult = try parser.parse(expression: rawExpression)
       return [DisplayableContainer<Int>(name: "\(calculationResult)", content: rawExpression, icon: icon)]
-    } catch EvaluationError.zeroDivision {
+    } catch MathParserError.zeroDivision {
       return [DisplayableContainer<Error>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
-    } catch EvaluationError.unclosedBracket {
+    } catch MathParserError.unclosedBracket {
       return [DisplayableContainer<Error>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
-    } catch EvaluationError.missingBracket {
+    } catch MathParserError.missingBracket {
       return [DisplayableContainer<Error>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
     } catch {
       return []
