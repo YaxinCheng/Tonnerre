@@ -14,10 +14,10 @@ enum SearchMode: String {
   case name
   case content
   
-  var indexType: TonnerreIndexType {
+  var contentType: TonnerreIndex.ContentType {
     switch self {
-    case .content: return .metadata
-    default: return .nameOnly
+    case .content: return .fileContent
+    default: return .fileName
     }
   }
   
@@ -26,17 +26,6 @@ enum SearchMode: String {
     let appSupportDir = userDefault.url(forKey: .appSupportDir)!
     let indecesFolder = appSupportDir.appendingPathComponent("Indices")
     return indecesFolder.appendingPathComponent(self.rawValue + ".tnidx")
-  }
-  
-  /**
-   Value used to identify the type in indexStorage
-  */
-  var storedInt: Int {
-    switch self {
-    case .default: return 0
-    case .name: return 1
-    case .content: return 2
-    }
   }
   
   var targetFilePaths: [URL] {

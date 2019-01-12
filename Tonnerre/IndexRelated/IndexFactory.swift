@@ -21,18 +21,10 @@ struct IndexFactory {
       let indecesFolder = appSupportDir.appendingPathComponent("Indices")
       return indecesFolder.appendingPathComponent(rawValue + ".tnidx")
     }
-    
-    var indexType: TonnerreIndexType {
-      switch self {
-      case .content: return .metadata
-      default: return .nameOnly
-      }
-    }
   }
   
   private static func load(index: IndexOption) -> TonnerreIndex? {
-    return TonnerreIndex(filePath: index.filePath,
-                         indexType: index.indexType)
+    return try? TonnerreIndex.open(path: index.filePath)
   }
   
   static var `default`: TonnerreIndex? {

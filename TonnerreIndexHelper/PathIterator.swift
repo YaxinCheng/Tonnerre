@@ -29,6 +29,8 @@ extension PathIterator {
     let options: Options
     private var firstCall: Bool = true
     private lazy var enumerator: FileManager.DirectoryEnumerator? = {
+      let resource = try? beginURL.resourceValues(forKeys: [.isPackageKey])
+      if resource?.isPackage == true && options.contains(.skipsPackageDescendants) { return nil }
       return FileManager.default.enumerator(at: beginURL,
                                             includingPropertiesForKeys: [.isAliasFileKey, .isSymbolicLinkKey],
                                             options: options)

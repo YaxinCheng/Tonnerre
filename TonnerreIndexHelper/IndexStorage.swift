@@ -19,4 +19,13 @@ struct IndexStorage {
       storageMap[key] = newValue
     }
   }
+  
+  mutating func populate(_ mode: SearchMode) {
+    let fileExists = FileManager.default.fileExists(atPath: mode.indexFileURL.path)
+    if fileExists {
+      storageMap[mode] = try? TonnerreIndex.open(path: mode.indexFileURL, mode: .writeAndRead)
+    } else {
+      storageMap[mode] = try? TonnerreIndex.create(path: mode.indexFileURL)
+    }
+  }
 }

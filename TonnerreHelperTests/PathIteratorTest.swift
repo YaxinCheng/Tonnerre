@@ -16,6 +16,7 @@ class PathIteratorTest: XCTestCase {
   private var hiddenPaths: Set<URL>!
   private var packagePaths: Set<URL>!
   private var testPath: URL!
+  private var packagePath: URL!
   
   override func setUp() {
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -39,6 +40,7 @@ class PathIteratorTest: XCTestCase {
     FileManager.default.createFile(atPath: hiddenDescendant.path, contents: nil, attributes: nil)
     
     let package = URL(fileURLWithPath: "/private/tmp/test/subdir/package.tne/")
+    packagePath = package
     try! FileManager.default.createDirectory(at: package, withIntermediateDirectories: true, attributes: nil)
     let packageDescendant = package.appendingPathComponent("packageDescendant")
     FileManager.default.createFile(atPath: packageDescendant.path, contents: nil, attributes: nil)
@@ -79,7 +81,7 @@ class PathIteratorTest: XCTestCase {
   
   func testIterateAllLevelWithHiddenFiles() {
     let iterator = PathIterator(beginURL: testPath,
-                                options: [.skipsPackageDescendants])
+                                options: .skipsPackageDescendants)
     var shouldAppearPaths = firstLevelPaths
                               .union(secondLevelPaths)
                               .union(hiddenPaths)
@@ -101,5 +103,18 @@ class PathIteratorTest: XCTestCase {
       shouldAppearPaths.remove(fileURL)
     }
     XCTAssertTrue(shouldAppearPaths.isEmpty)
+  }
+  
+  func testIterateFromPackage() {
+    let iterator = PathIterator(beginURL: packagePath,
+                                options: .skipsPackageDescendants)
+    let appearedPath = iterator.map { $0 }
+    XCTAssertEqual(appearedPath.count, 1)
+  }
+  
+  func testIteratoeFromPackageWithoutFilter() {
+    let iterator = PathIterator(beginURL: packagePath)
+    let appearedPath = iterator.map { $0 }
+    XCTAssertEqual(appearedPath.count, 2)
   }
 }
