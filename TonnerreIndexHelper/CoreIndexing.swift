@@ -34,7 +34,7 @@ final class CoreIndexing {
       .reduce([], +).map { $0.path }
     if !pathes.isEmpty {
       self.detector = TonnerreFSDetector(pathes: pathes,
-                                         filterOptions: [.hidden, .inHidden, .inPackage],
+                                         filterOptions: [.skipHiddenItems, .skipHiddenDescendants, .skipPakcageDescendants],
                                          callback: detectedChanges)
     }
     let centre = NotificationCenter.default
@@ -176,7 +176,7 @@ final class CoreIndexing {
       let symbolicOrAlias = resource.isAliasFile == true || resource.isSymbolicLink == true
       let isDynamicFile = (resource.typeIdentifier ?? "").starts(with: "dyn")
       pathPropertyIsNotAccepted = symbolicOrAlias || isDynamicFile
-    } catch { pathPropertyIsNotAccepted = true }
+    } catch { pathPropertyIsNotAccepted = false }
     let excludedBySystem = {
       FileTypeControl.isExcludedDir(url: path)
         || FileTypeControl.isExcludedURL(url: path) }

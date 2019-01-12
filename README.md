@@ -32,6 +32,7 @@ Or you can download a built version here: [Tonnerre.app](https://github.com/Yaxi
 - [HotKey](https://github.com/soffes/HotKey) - Simple global shortcuts in macOS
 - [TonnerreSearch](https://github.com/YaxinCheng/TonnerreSearch) - A necessary component for building your own Spotlight on macOS with Swift
 - [LiteTableView](https://github.com/YaxinCheng/LiteTableView) - A faster and simpler table view for macOS
+- [MathParser](https://github.com/YaxinCheng/MathParser) - A swift library parsing string typed math expressions to its evaluated result
 
 ## Functionality
 
