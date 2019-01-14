@@ -43,7 +43,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       let serviceFolderURL = appSupDir.appendingPathComponent("Services")
       for url in urls {
         do {
-          try fileManager.moveItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))
+          try fileManager.copyItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))
+          try? fileManager.trashItem(at: url, resultingItemURL: nil)
           successCount += 1
         } catch {
           LocalNotification.send(title: "\(url.lastPathComponent): Installation Failed", content: "\(error)")

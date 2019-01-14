@@ -30,6 +30,19 @@ extension String {
     }
   }
   
+  /**
+   Fill in parameters into the given string template
+   - parameter arg: arguments used to replace the placeholders
+   - parameter separator: a separator used to join all components. " " by default
+   - returns: a new string with the placeholders replaced by the arguments.
+   
+   - If the number of arguments is more than the number of placeholders, then the last a few arguments will be joined to one to fill one placeholder.
+   - If the number of arguments is less than the number of placeholders, then the template will be returned without filling.
+   */
+  func filled(arguments args: String..., separator: String = " ") -> String {
+    return filled(arguments: args, separator: separator)
+  }
+  
   static let CMD: String = "⌘"
   
   /// Return a new string with leading spaces removed, and trailing spaces truncated to one
@@ -43,8 +56,9 @@ extension String {
   /// e.g.
   ///   - `"String".formDifference(with: "str")` should return `ing`
   ///   - `"String".formDifference(with: "")` should return `String`
-  ///   - `"String".formDifference(with: "stx")` should return an empty string
+  ///   - `"String".formDifference(with: "ing")` should return an empty string
   /// - parameter other: The second string that serves as the subtracted
+  /// - returns: the string difference
   func formDifference(with other: String) -> String {
     let trimmedOther = other.truncatedSpaces
     guard !trimmedOther.isEmpty else { return self }
@@ -53,6 +67,9 @@ extension String {
     return String(self[commonPrefix.endIndex...])
   }
   
+  /// Match string with a given regular expression
+  /// - parameter regex: the given regular expression to be matched
+  /// - returns: nil if nothing matches; the first substring matched with the regex
   func match(regex: NSRegularExpression) -> Substring? {
     guard
       let firstMatch = regex.firstMatch(in: self, options: .anchored, range: NSRange(location: 0, length: self.count))

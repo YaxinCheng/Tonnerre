@@ -97,7 +97,7 @@ final class TonnerreFieldController: NSViewController {
     if let placeholder = placeholderString, !placeholder.isEmpty {
       complete(withPlaceholder: placeholder)
     } else {
-      complete(withTarget: target)
+      stringValue = target
     }
     if appendingSpace { stringValue = (stringValue + " ").truncatedSpaces }
   }
@@ -112,22 +112,6 @@ final class TonnerreFieldController: NSViewController {
       firstValue += " " + components.removeFirst()
     }
     stringValue += firstValue + (components.count > 1 ? " " : "")
-  }
-  
-  /// Replace the last component separated by whitespace with the first component
-  /// of the given target
-  /// - parameter target: the target string whose first part will be replacing to the
-  ///      last component of the existing stringValue
-  private func complete(withTarget target: String) {
-    let finishedCompletion = stringValue.range(of: target, options: .caseInsensitive) != nil
-    guard !finishedCompletion else { return }
-    let existingComponents = stringValue.truncatedSpaces.components(separatedBy: .whitespaces)
-    let completeComponents = target.components(separatedBy: .whitespaces)
-    let existingExceptLast = existingComponents.dropLast().joined(separator: " ")
-    let appendingPart = completeComponents.first!
-    let completed = (existingExceptLast + " " + appendingPart).truncatedSpaces
-    let suffixSpace = completeComponents.count > 1 ? " " : ""
-    stringValue = completed + suffixSpace
   }
   
   /// Restore last query into the textField

@@ -14,7 +14,6 @@
 		<string>locales</string>
 		<string>log</string>
 		<string>logs</string>
-		<string>plugin</string>
 		<string>__pycache__</string>
 		<string>venv</string>
 		<string>cache</string>

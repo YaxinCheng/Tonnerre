@@ -26,8 +26,7 @@ extension WebService {
   }
   
   var content: String {
-    guard contentTemplate.contains("%@") else { return contentTemplate }
-    return String(format: contentTemplate, "")
+    return contentTemplate.filled(arguments: "")
   }
   
   private func fillInTemplate(input: [String]) -> URL? {
@@ -58,7 +57,7 @@ extension WebService {
         readableContent = $0.removingPercentEncoding ?? $0
       }
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
-      let content = contentTemplate.filled(arguments: ["\(readableContent)"])
+      let content = contentTemplate.filled(arguments: "\(readableContent)")
       return DisplayableContainer(name: readableContent, content: content, icon: icon, innerItem: url)
     }
   }
@@ -73,7 +72,7 @@ extension WebService {
     let queryURL = fillInTemplate(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ")
-    let content = contentTemplate.filled(arguments: ["\(queryContent)"])
+    let content = contentTemplate.filled(arguments: "\(queryContent)")
     guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
     let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     return [originalSearch]
@@ -84,7 +83,7 @@ extension WebService {
     guard
       !suggestionTemplate.isEmpty,
       let query = queryContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-      let suggestionURL = URL(string: suggestionTemplate.filled(arguments: [query]))
+      let suggestionURL = URL(string: suggestionTemplate.filled(arguments: query))
     else {
       callback([])
       return

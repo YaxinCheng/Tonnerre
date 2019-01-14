@@ -71,10 +71,10 @@ final class BaseWindow: NSPanel {
     
     isMovableByWindowBackground = true
     isMovable = true
-    level = .mainMenu
-    isOpaque = false
+    level = .floating
+    hasShadow = true
     backgroundColor = .clear
-    collectionBehavior.insert(.canJoinAllSpaces)
+    collectionBehavior = [.ignoresCycle, .canJoinAllSpaces]
     
     folderChecks()
     setupCache()

@@ -56,7 +56,9 @@ struct FileTypeControl {
         }
       }
     } catch {
-      
+      #if DEBUG
+      print("isInControl: Unable to get URL Resource: \(file)")
+      #endif
     }
     return false
   }
@@ -90,9 +92,10 @@ struct FileTypeControl {
     return false
   }
   
-  static func isExcludedDir(url: URL) -> Bool {
+  static func hasExcludedDirName(url: URL) -> Bool {
     if self.rawList.isEmpty { loadRawList() }
     let control = Set(self.rawList["directory"] ?? [])
-    return control.contains(url.lastPathComponent.lowercased())
+    let components = Set(url.pathComponents.map { $0.lowercased() } )
+    return control.intersection(components).count > 0
   }
 }

@@ -143,6 +143,7 @@ final class CoreIndexing {
    */
   private func addContent(in path: URL, modes searchModes: [SearchMode]) {
     for fileURL in PathIterator(beginURL: path, options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+      guard !fileTypeControlExclude(path: fileURL) else { continue }
       try? add(fileURL: fileURL, searchModes: searchModes)
     }
   }
@@ -159,7 +160,7 @@ final class CoreIndexing {
       #if DEBUG
       let result = try index?.addDocument(atPath: fileURL, contentType: mode.contentType,
                                           additionalNote: getAlias(path: fileURL))
-      print("\((result ?? false) ? "SUCCESS:" : "FAIL:")", fileURL)
+      print("\((result ?? false) ? "SUCCESS:" : "FAIL:")", fileURL.path)
       #else
       _ = try index?.addDocument(atPath: fileURL, contentType: mode.contentType,
                                  additionalNote: getAlias(path: fileURL))
@@ -177,10 +178,12 @@ final class CoreIndexing {
       let isDynamicFile = (resource.typeIdentifier ?? "").starts(with: "dyn")
       pathPropertyIsNotAccepted = symbolicOrAlias || isDynamicFile
     } catch { pathPropertyIsNotAccepted = false }
-    let excludedBySystem = {
-      FileTypeControl.isExcludedDir(url: path)
-        || FileTypeControl.isExcludedURL(url: path) }
-    return pathPropertyIsNotAccepted || excludedBySystem()
+    return pathPropertyIsNotAccepted || fileTypeControlExclude(path: path)
+  }
+  
+  private func fileTypeControlExclude(path: URL) -> Bool {
+    return FileTypeControl.hasExcludedDirName(url: path)
+      || FileTypeControl.isExcludedURL(url: path)
   }
   
   // MARK: - File System Change detection
@@ -228,31 +231,37 @@ final class CoreIndexing {
       let pathURL = URL(fileURLWithPath: path)
       let relatedModes = identify(path: pathURL)
       guard !relatedModes.isEmpty else { return }
-      let relatedIndexes = relatedModes.map { indexes[$0] }
+      var result: Bool?? = nil
       if flags.contains(.created) {
-        for (mode, index) in zip(relatedModes, relatedIndexes)
+        for mode in relatedModes
           where mode.canInclude(fileURL: pathURL) {
-          _ = try? index?.addDocument(atPath: pathURL,
+            let index = indexes[mode]
+            result = try? index?.addDocument(atPath: pathURL,
                                       contentType: mode.contentType)
         }
       } else if flags.contains(.renamed) {
         let fileManager = FileManager.default
-        for (mode, index) in zip(relatedModes, relatedIndexes)
+        for mode in relatedModes
           where mode.canInclude(fileURL: pathURL) {
+          let index = indexes[mode]
           let exist = fileManager.fileExists(atPath: path)
           if exist == false {
-            _ = index?.removeDocument(atPath: pathURL)
+            result = index?.removeDocument(atPath: pathURL)
           } else {
-            _ = try? index?.addDocument(atPath: pathURL,
+            result = try? index?.addDocument(atPath: pathURL,
                                         contentType: mode.contentType)
           }
         }
       } else if flags.contains(.removed) {
-        for (mode, index) in zip(relatedModes, relatedIndexes)
+        for mode in relatedModes
           where mode.canInclude(fileURL: pathURL) {
-          _ = index?.removeDocument(atPath: pathURL)
+          let index = indexes[mode]
+          result = index?.removeDocument(atPath: pathURL)
         }
       }
+      #if DEBUG
+      print(result as Any)
+      #endif
     }
   }
   

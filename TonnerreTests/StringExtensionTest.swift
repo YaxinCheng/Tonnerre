@@ -28,7 +28,7 @@ class StringExtensionTest: XCTestCase {
 
   func testFilledWithLessArgs() {
     let template = "%@=%@"
-    XCTAssertEqual(template.filled(arguments: ["Key"]), template)
+    XCTAssertEqual(template.filled(arguments: "Key"), template)
   }
   
   func testTruncatedLeadingSpaces() {
@@ -61,5 +61,23 @@ class StringExtensionTest: XCTestCase {
     let base = "hello world"
     let matched = base.match(regex: try! NSRegularExpression(pattern: "\\w+o"))!
     XCTAssertEqual(matched, "hello")
+  }
+  
+  func testStringDifferenceSuccess() {
+    let base = "hello"
+    let difference = base.formDifference(with: "he")
+    XCTAssertEqual(difference, "llo")
+  }
+  
+  func testStringDifferenceEmpty() {
+    let base = "hello"
+    let empty = base.formDifference(with: "llo")
+    XCTAssertEqual("", empty)
+  }
+  
+  func testStringDifferenceWithEmpty() {
+    let base = "hello"
+    let difference = base.formDifference(with: "")
+    XCTAssertEqual(base, difference)
   }
 }
