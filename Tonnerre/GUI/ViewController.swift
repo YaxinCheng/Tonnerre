@@ -34,7 +34,7 @@ final class ViewController: NSViewController {
     // Do any additional setup after loading the view.
     view.wantsLayer = true
     view.layer?.masksToBounds = true
-    view.layer?.cornerRadius = 10
+    view.layer?.cornerRadius = 7
     
     loadField()
     loadTableView()

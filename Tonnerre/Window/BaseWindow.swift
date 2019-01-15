@@ -72,7 +72,6 @@ final class BaseWindow: NSPanel {
     isMovableByWindowBackground = true
     isMovable = true
     level = .floating
-    hasShadow = true
     backgroundColor = .clear
     collectionBehavior = [.ignoresCycle, .canJoinAllSpaces]
     
