@@ -132,15 +132,6 @@ final class CoreIndexing {
    - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
    - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
    */
-  private func addContent(in path: URL, modes searchModes: SearchMode...) {
-    addContent(in: path, modes: searchModes)
-  }
-  
-  /**
-   The key function to recursively iterate through the file system structure and add files to index files
-   - parameter path: the path to begin. This path and its children content (if path is a directory) will be added to the index files
-   - parameter searchModes: the search modes are used to find the correct exclusion lists and correct index files
-   */
   private func addContent(in path: URL, modes searchModes: [SearchMode]) {
     for fileURL in PathIterator(beginURL: path, options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
       guard !fileTypeControlExclude(path: fileURL) else { continue }

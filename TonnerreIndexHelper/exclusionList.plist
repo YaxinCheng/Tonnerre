@@ -8,6 +8,7 @@
 	</array>
 	<key>directory</key>
 	<array>
+		<string>node_modules</string>
 		<string>bin</string>
 		<string>lib</string>
 		<string>locale</string>

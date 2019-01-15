@@ -95,7 +95,9 @@ struct FileTypeControl {
   static func hasExcludedDirName(url: URL) -> Bool {
     if self.rawList.isEmpty { loadRawList() }
     let control = Set(self.rawList["directory"] ?? [])
-    let components = Set(url.pathComponents.map { $0.lowercased() } )
-    return control.intersection(components).count > 0
+    for component in url.pathComponents {
+      if control.contains(component) { return true }
+    }
+    return false
   }
 }
