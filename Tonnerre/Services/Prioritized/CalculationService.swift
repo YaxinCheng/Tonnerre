@@ -20,6 +20,7 @@ struct CalculationService: BuiltInProvider {
 
   func prepare(withInput input: [String]) -> [DisplayProtocol] {
     let rawExpression = input.joined()
+    guard !rawExpression.isEmpty else { return [] }
     do {
       let calculationResult = try parser.parse(expression: rawExpression)
       return [DisplayableContainer<Int>(name: "\(calculationResult)", content: rawExpression, icon: icon)]
@@ -29,6 +30,8 @@ struct CalculationService: BuiltInProvider {
       return [DisplayableContainer<Error>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
     } catch MathParserError.missingBracket {
       return [DisplayableContainer<Error>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
+    } catch MathParserError.extraToken {
+      return [DisplayableContainer<Error>(name: "Error: invalid expression", content: rawExpression, icon: icon, placeholder: "")]
     } catch {
       return []
     }
