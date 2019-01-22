@@ -16,9 +16,7 @@ struct IndexFactory {
     case content
     
     var filePath: URL {
-      let userDefault = UserDefaults.shared
-      let appSupportDir = userDefault.url(forKey: .appSupportDir)!
-      let indecesFolder = appSupportDir.appendingPathComponent("Indices")
+      let indecesFolder = SupportFolders.indices.path
       return indecesFolder.appendingPathComponent(rawValue + ".tnidx")
     }
   }

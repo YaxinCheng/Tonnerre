@@ -17,16 +17,16 @@ final class ProviderMap {
   static let shared = ProviderMap()
   private(set) var registeredProviders: [String: ServiceProvider] = [:]
   
-  private let path = UserDefaults.shared.url(forKey: .appSupportDir)!.appendingPathComponent("Services")
+  private let serviceFolder: SupportFolders = .services
   private lazy var listener: TonnerreFSDetector = {
-    return TonnerreFSDetector(pathes: path.path, callback: filesDidChange)
+    return TonnerreFSDetector(pathes: serviceFolder.path.path, callback: filesDidChange)
   }()
   private var pathWithService = Dictionary<String, TNEServiceProvider>()
   private let queue = DispatchQueue(label: "Tonnerre.TNEHub")
   private init() {
     queue.async { [unowned self] in
       do {
-        let contents = try FileManager.default.contentsOfDirectory(at: self.path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
+        let contents = try FileManager.default.contentsOfDirectory(at: self.serviceFolder.path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
         for fileURL in contents where fileURL.pathExtension == "tne" {
           guard let provider = TNEServiceProvider(scriptPath: fileURL) else { continue }
           self.pathWithService[fileURL.path] = provider

@@ -10,15 +10,8 @@ import Foundation
 import Cocoa
 
 enum StoredKey: String {// Keys used in UserDefault
-  case appSupportDir
   case designatedX
   case designatedY
-  
-  case generalProviders
-  case delayedProviders
-  case prioriProviders
-  
-  case defaultServices
 }
 
 func getContext() -> NSManagedObjectContext {

@@ -54,9 +54,8 @@ class GeneralCell: SettingCell {
       let id = item.settingKey
     else { return }
     let lastComponent = id.replacingOccurrences(of: "Tonnerre.Provider.Extension.", with: "")
-    let userDefault = UserDefaults.shared
-    let serviceURL = userDefault.url(forKey: "appSupportDir")!
-      .appendingPathComponent("Services/\(lastComponent).tne")
+    let servicesFolder = SupportFolders.services.path
+    let serviceURL = servicesFolder.appendingPathComponent("\(lastComponent).tne")
     try FileManager.default.removeItem(at: serviceURL)
   }
   

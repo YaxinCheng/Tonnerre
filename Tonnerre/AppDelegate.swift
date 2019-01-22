@@ -34,13 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var successCount = 0
     DispatchQueue.global(qos: .userInitiated).sync {
       let fileManager = FileManager.default
-      guard
-        let appSupDir = UserDefaults.shared.url(forKey: .appSupportDir)
-      else {
-        LocalNotification.send(title: "Installation Failed", content: "No application support folder is found. Please try again later")
-        return
-      }
-      let serviceFolderURL = appSupDir.appendingPathComponent("Services")
+      let serviceFolderURL = SupportFolders.services.path
       for url in urls {
         do {
           try fileManager.copyItem(at: url, to: serviceFolderURL.appendingPathComponent(url.lastPathComponent))

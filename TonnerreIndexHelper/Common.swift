@@ -14,9 +14,6 @@ func getContext() -> NSManagedObjectContext {
 }
 
 enum StoredKey: String {// Keys used in UserDefault
-  case appSupportDir
   case documentInxFinished
   case defaultInxFinished
-  case designatedX
-  case designatedY
 }

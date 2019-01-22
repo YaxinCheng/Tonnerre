@@ -82,38 +82,25 @@ final class BaseWindow: NSPanel {
   }
   
   private func folderChecks() {
-    let fileManager = FileManager.default
-    guard
-      let appSupportPath = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first,
-      let bundleID = Bundle.main.bundleIdentifier
-      else { return }
-    let dataFolderPath = appSupportPath.appendingPathComponent(bundleID)
-    let userDefault = UserDefaults.shared
-    userDefault.set(dataFolderPath, forKey: .appSupportDir)
-    let indexFolder = dataFolderPath.appendingPathComponent("Indices")
-    let servicesFolder = dataFolderPath.appendingPathComponent("Services")
-    let cacheFolder = dataFolderPath.appendingPathComponent("Cache")
-    
-    for path in [indexFolder, servicesFolder, cacheFolder] {
-      if !fileManager.fileExists(atPath: path.path) {
-        do {
-          try fileManager.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-          #if DEBUG
-          print(error)
-          #endif
-        }
+    let folders: [SupportFolders] = [.base, .indices, .services, .cache]
+    for folder in folders {
+      do {
+        guard !folder.exists else { continue }
+        try folder.create()
+      } catch {
+        #if DEBUG
+        print("Create folder error", error)
+        #endif
       }
     }
   }
   
   private func setupCache() {
-    let cache = URLCache(memoryCapacity: 1024 * 1024 * 5, diskCapacity: 1024 * 1024 * 25, diskPath: {
-      let userDefault = UserDefaults.shared
-      let appSupFolder = userDefault.url(forKey: .appSupportDir)!
-      return appSupFolder.appendingPathComponent("Cache").path
-    }())
-    URLCache.shared = cache
+    URLCache.shared = URLCache(
+        memoryCapacity: 1024 * 1024 * 5,
+        diskCapacity: 1024 * 1024 * 25,
+        diskPath: SupportFolders.cache.path.path
+    )
   }
   
   @objc private func launchHelper() {

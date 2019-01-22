@@ -26,8 +26,8 @@ final class UpgradeHandler {
   func handle() {
     guard currentSystemVersion != lastSystemVersion else { return }
     let fileManager = FileManager.default
-    let appSupDir = UserDefaults.shared.url(forKey: .appSupportDir)!
-    let defaultIndexPath = appSupDir.appendingPathComponent("Indices/default.tnidx")
+    let indicesPath = SupportFolders.indices.path
+    let defaultIndexPath = indicesPath.appendingPathComponent("default.tnidx")
     do {
       try fileManager.removeItem(at: defaultIndexPath)
       lastSystemVersion = currentSystemVersion

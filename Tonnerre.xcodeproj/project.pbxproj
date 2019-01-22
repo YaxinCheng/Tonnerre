@@ -136,6 +136,9 @@
 		14CC56FB217BC78F0015540A /* LiteTableView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CC56FA217BC78F0015540A /* LiteTableView.framework */; };
 		14CC56FC217BC78F0015540A /* LiteTableView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14CC56FA217BC78F0015540A /* LiteTableView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14CD694721F6BAB000FE6205 /* ContainerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD694621F6BAB000FE6205 /* ContainerConfig.swift */; };
+		14CD694C21F7C85C00FE6205 /* SupportFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD694B21F7C85C00FE6205 /* SupportFolders.swift */; };
+		14CD694D21F7CA8B00FE6205 /* SupportFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD694B21F7C85C00FE6205 /* SupportFolders.swift */; };
+		14CD694E21F7CA8C00FE6205 /* SupportFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD694B21F7C85C00FE6205 /* SupportFolders.swift */; };
 		14D5184821B4575000C93E7C /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5184721B4575000C93E7C /* SplitViewController.swift */; };
 		14D5184C21B460BF00C93E7C /* SettingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5184B21B460BF00C93E7C /* SettingItem.swift */; };
 		14D5184E21B486F900C93E7C /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5184D21B486F900C93E7C /* SettingCell.swift */; };
@@ -395,6 +398,7 @@
 		14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTableVCDelegate.swift; sourceTree = "<group>"; };
 		14CC56FA217BC78F0015540A /* LiteTableView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LiteTableView.framework; path = Carthage/Build/Mac/LiteTableView.framework; sourceTree = "<group>"; };
 		14CD694621F6BAB000FE6205 /* ContainerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerConfig.swift; sourceTree = "<group>"; };
+		14CD694B21F7C85C00FE6205 /* SupportFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFolders.swift; sourceTree = "<group>"; };
 		14D5184721B4575000C93E7C /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		14D5184B21B460BF00C93E7C /* SettingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItem.swift; sourceTree = "<group>"; };
 		14D5184D21B486F900C93E7C /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -565,6 +569,7 @@
 				145CF984218A5352003B9468 /* JSON.swift */,
 				14FF21382191279F00F505B3 /* TaggedList.swift */,
 				14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */,
+				14CD694B21F7C85C00FE6205 /* SupportFolders.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1261,6 +1266,7 @@
 				1440331421DD6FCD0026E822 /* PathIterator.swift in Sources */,
 				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,
 				146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */,
+				14CD694D21F7CA8B00FE6205 /* SupportFolders.swift in Sources */,
 				14FA02C821E3F8CE0058E936 /* IndexStorage.swift in Sources */,
 				1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
 				1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */,
@@ -1342,6 +1348,7 @@
 				14F1099B218BA43C003A5E07 /* TonnerreFieldDelegate.swift in Sources */,
 				14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */,
 				14CC56D6217AB0160015540A /* LiteTableVCDelegate.swift in Sources */,
+				14CD694C21F7C85C00FE6205 /* SupportFolders.swift in Sources */,
 				14454D192197C242008F1A8B /* TNEExecutor.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
@@ -1396,6 +1403,7 @@
 				1440330521CEC5EF0026E822 /* WaterfallLayout.swift in Sources */,
 				1440330A21CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift in Sources */,
 				146C054721BDBFFD0028B076 /* TonnerreSettings.swift in Sources */,
+				14CD694E21F7CA8C00FE6205 /* SupportFolders.swift in Sources */,
 				146C052A21BC52D80028B076 /* ProviderItem.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
 				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,

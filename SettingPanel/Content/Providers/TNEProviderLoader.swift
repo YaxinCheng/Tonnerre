@@ -9,7 +9,7 @@
 import Foundation
 
 struct TNEProviderLoader {
-  private let path = UserDefaults.shared.url(forKey: "appSupportDir")!.appendingPathComponent("Services")
+  private let path = SupportFolders.services.path
   
   var providers: [(String, String, String, String)] {
     do {

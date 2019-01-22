@@ -22,9 +22,7 @@ enum SearchMode: String {
   }
   
   var indexFileURL: URL {
-    let userDefault = UserDefaults.shared
-    let appSupportDir = userDefault.url(forKey: .appSupportDir)!
-    let indecesFolder = appSupportDir.appendingPathComponent("Indices")
+    let indecesFolder = SupportFolders.indices.path
     return indecesFolder.appendingPathComponent(self.rawValue + ".tnidx")
   }
   
