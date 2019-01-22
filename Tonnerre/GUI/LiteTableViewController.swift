@@ -150,17 +150,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   
   func prepareCell(_ tableView: LiteTableView, at index: Int) -> LiteTableCell {
     let cell = tableView.dequeueCell(withIdentifier: .ServiceCell) as! ServiceCell
-    let data = datasource[index]
-    cell.iconView.image = data.icon
-    cell.serviceLabel.stringValue = data.name
-    cell.introLabel.stringValue = data.content
-    cell.cmdLabel.stringValue = "⌘\(index % 9 + 1)"
-    cell.displayItem = data
-    if case .service(_, let value) = data {
-      if let asyncedData = value as? AsyncDisplayable {
-        asyncedData.asyncUpdate?(cell)
-      }
-    }
+    reset(cell: cell, dataIndex: index)
     return cell
   }
 }
@@ -173,11 +163,24 @@ extension LiteTableViewController {
       delegate?.retrieveLastQuery()
     }
     guard datasource.count > 0 else { return }
+    if let cell = tableView.highlightedCell as? ServiceCell {
+      reset(cell: cell, dataIndex: highlightedIndex)
+    }
     highlightedIndex += keyCode == 125 ? 1 : -1
     highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
     let selectedService = datasource[max(highlightedIndex, 0)]
     delegate?.serviceHighlighted(service: selectedService)
     delegate?.updatePlaceholder(service: selectedService)
+  }
+
+  private func reset(cell: ServiceCell, dataIndex: Int) {
+    let data = datasource[dataIndex]
+    cell.iconView.image = data.icon
+    cell.serviceLabel.stringValue = data.name
+    cell.introLabel.stringValue = data.content
+    cell.displayItem = data
+    cell.cmdLabel.stringValue = "⌘\(dataIndex % 9 + 1)"
+    data.updateFunction?(cell)
   }
   
   private func tabPressed() {
@@ -214,8 +217,8 @@ extension LiteTableViewController {
     guard
       selectedIndex < tableView.visibleCells.count,
       let cell = tableView.visibleCells[selectedIndex] as? ServiceCell,
-      let servicePack = cell.displayItem
-      else { return }
+      let servicePack = cell.displayItem as? ServicePack
+    else { return }
     delegate?.serve(servicePack, withCmd: false)
   }
   

@@ -13,7 +13,7 @@ import Foundation
  
  Each service provider should provide services based on user inputs
  */
-protocol ServiceProvider: DisplayProtocol {
+protocol ServiceProvider: DisplayItem {
   ///
   /// a single unique id string used across the whole program
   ///
@@ -39,7 +39,7 @@ protocol ServiceProvider: DisplayProtocol {
    - parameter input: the user input excluding the keyword
    - returns: an array of displayable items each represent a specific service
    */
-  func prepare(withInput input: [String]) -> [DisplayProtocol]
+  func prepare(withInput input: [String]) -> [DisplayItem]
   /**
    This function loads services asynchronizingly. All the heavy loading work should be put here.
    - note: This function will be run in a separate thread, so there's no need to dispatch to another
@@ -48,13 +48,13 @@ protocol ServiceProvider: DisplayProtocol {
    - parameter callback: accepts an array of displayable items each represent a specific service
    - parameter services: a list of services loaded asynchronizingly
    */
-  func supply(withInput input: [String], callback: @escaping (_ services: [DisplayProtocol]) -> Void)
+  func supply(withInput input: [String], callback: @escaping (_ services: [DisplayItem]) -> Void)
   /**
    The function that serves the user with the service it selected
    - parameter source: the user selected service
    - parameter withCmd: a flag indicates whether the user selected the service with cmd key modifier
    */
-  func serve(service: DisplayProtocol, withCmd: Bool)
+  func serve(service: DisplayItem, withCmd: Bool)
   ///
   /// This flag marks a provider will only be shown when keywords match exactly
   ///
@@ -66,7 +66,7 @@ protocol ServiceProvider: DisplayProtocol {
 
 extension ServiceProvider {
   var defered: Bool { return false }
-  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+  func supply(withInput input: [String], callback: @escaping ([DisplayItem])->Void) {
     return
   }
 }

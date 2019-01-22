@@ -17,10 +17,10 @@ class ProviderMapTest: XCTestCase {
     let keyword: String = ""
     let argLowerBound: Int = 0
     let argUpperBound: Int = 0
-    func prepare(withInput input: [String]) -> [DisplayProtocol] {
+    func prepare(withInput input: [String]) -> [DisplayItem] {
       return []
     }
-    func serve(service: DisplayProtocol, withCmd: Bool) {
+    func serve(service: DisplayItem, withCmd: Bool) {
     }
     let icon = NSImage()
     let placeholder: String = ""

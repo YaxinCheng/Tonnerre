@@ -23,7 +23,7 @@ struct ClipboardService: BuiltInProvider {
     CBRecord.recordInsert(value: value, type: type.rawValue, limit: max(limit, 1))
   }
   
-  private func wrap(record: CBRecord) -> DisplayProtocol? {
+  private func wrap(record: CBRecord) -> DisplayItem? {
     guard
       let type = record.type,
       let value = record.value as? NSAttributedString,
@@ -41,11 +41,11 @@ struct ClipboardService: BuiltInProvider {
     } else if value.containsAttachments == true {
       return wrapImageRecord(value: stringValue, timestamp: timestamp, image: value)
     } else {
-      return DisplayableContainer(name: stringValue, content: timestamp, icon: #imageLiteral(resourceName: "text"), innerItem: value, placeholder: "")
+      return DisplayContainer(name: stringValue, content: timestamp, icon: #imageLiteral(resourceName: "text"), innerItem: value, placeholder: "")
     }
   }
   
-  private func wrapFileURLRecord(value: String) -> DisplayProtocol? {
+  private func wrapFileURLRecord(value: String) -> DisplayItem? {
     guard
       let url = URL(string: value),
       FileManager.default.fileExists(atPath: url.path)
@@ -55,38 +55,38 @@ struct ClipboardService: BuiltInProvider {
     let content = url.path
     let alterContent = "Show file in Finder"
     let icon = NSWorkspace.shared.icon(forFile: url.path)
-    return DisplayableContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url, placeholder: "")
+    return DisplayContainer(name: name, content: content, icon: icon, alterContent: alterContent, innerItem: url, placeholder: "")
   }
   
-  private func wrapHttpURLRecord(value: String, timestamp: String) -> DisplayProtocol? {
+  private func wrapHttpURLRecord(value: String, timestamp: String) -> DisplayItem? {
     guard
       let url = URL(string: value)
     else { return nil }
     let alterContent = "Open copied URL in default browser"
     let browser: Browser = .default
-    return DisplayableContainer(name: value, content: timestamp, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
+    return DisplayContainer(name: value, content: timestamp, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
   }
   
-  private func wrapImageRecord(value: String, timestamp: String, image: NSAttributedString) -> DisplayProtocol? {
+  private func wrapImageRecord(value: String, timestamp: String, image: NSAttributedString) -> DisplayItem? {
     let strippedString = String(value.unicodeScalars.filter { $0.isASCII })
     let title = strippedString.isEmpty ? "Copied Image" : strippedString
-    return DisplayableContainer(name: title, content: timestamp, icon: #imageLiteral(resourceName: "image"), innerItem: image, placeholder: "")
+    return DisplayContainer(name: title, content: timestamp, icon: #imageLiteral(resourceName: "image"), innerItem: image, placeholder: "")
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
-    let copy: [DisplayProtocol]
+  func prepare(withInput input: [String]) -> [DisplayItem] {
+    let copy: [DisplayItem]
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
       let text = query ?? "..."
-      copy = [ DisplayableContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query, placeholder: "") ]
+      copy = [ DisplayContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query, placeholder: "") ]
     } else { copy = [] }
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
     let context = getContext()
     do {
       let clipboardRecords = try context.fetch(fetchRequest)
       let context = getContext()
-      var displayableRecords: [DisplayProtocol] = []
+      var displayableRecords: [DisplayItem] = []
       for record in clipboardRecords {
         if let wrapped = wrap(record: record) {
           displayableRecords.append(wrapped)
@@ -101,11 +101,11 @@ struct ClipboardService: BuiltInProvider {
     }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     let pasteboard = NSPasteboard.general
     pasteboard.clearContents()
     switch service {
-    case let item as DisplayableContainer<URL> where item.innerItem != nil:
+    case let item as DisplayContainer<URL> where item.innerItem != nil:
       let url = item.innerItem!
       switch (FileManager.default.fileExists(atPath: url.path), withCmd) {
       case (true, true): NSWorkspace.shared.activateFileViewerSelecting([url])
@@ -113,9 +113,9 @@ struct ClipboardService: BuiltInProvider {
       case (false, true): NSWorkspace.shared.open(url)
       case (false, false): pasteboard.setString(url.absoluteString, forType: .string)
       }
-    case let item as DisplayableContainer<NSAttributedString> where item.innerItem != nil:
+    case let item as DisplayContainer<NSAttributedString> where item.innerItem != nil:
       pasteboard.writeObjects([item.innerItem!])
-    case let item as DisplayableContainer<String> where item.innerItem != nil:
+    case let item as DisplayContainer<String> where item.innerItem != nil:
       let attributed = NSAttributedString(string: item.innerItem!, attributes: [.font: NSFont.systemFont(ofSize: 17),
                                                                                 .foregroundColor: NSColor.labelColor])
       pasteboard.writeObjects([attributed])

@@ -11,7 +11,7 @@ import Cocoa
 /**
  Base protocol for any item that needs to be displayed in the collectionView
 */
-protocol DisplayProtocol {
+protocol DisplayItem {
   /**
    The icon shown on the left side of the displayable item
   */
@@ -38,7 +38,7 @@ protocol DisplayProtocol {
   var placeholder: String { get }
 }
 
-extension DisplayProtocol {
+extension DisplayItem {
   var name: String { return "\(Self.self)" }
   var content: String { return "" }
   var alterContent: String? { return nil }

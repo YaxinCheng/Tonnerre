@@ -28,20 +28,20 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     return NSDictionary(contentsOfFile: emojiFile) as! [String: String]
   }()
 
-  private func generateAuto(query: String) -> [DisplayableContainer<URL>] {
+  private func generateAuto(query: String) -> [DisplayContainer<URL>] {
     guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return [] }
     let contentTemplate = "Translate \"\(query)\" from %@ to %@"
     if let currentLangCode = Locale.current.languageCode {
       let prefix = "🖥 ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
       let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
-      let translator = DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)), placeholder: "from to content")
+      let translator = DisplayContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "#auto", currentLangCode, encodedContent)), placeholder: "from to content")
       return [translator]
     } else { return [] }
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     var firstArg = input.first!.lowercased()
-    let example = DisplayableContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
+    let example = DisplayContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
     let rawQuery = input.joined(separator: " ")
     let autoTranslator = generateAuto(query: rawQuery)
     let history = histories().map { $0.components(separatedBy: "/") }.compactMap { formContents(query: rawQuery, fromLangue: $0[0], toLangue: $0[1]) }
@@ -64,19 +64,19 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     return [translator] + autoTranslator + history
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     guard
-      let item = service as? DisplayableContainer<URL>,
+      let item = service as? DisplayContainer<URL>,
       let request = item.innerItem
     else { return }
-    if let requestedLangues = item.extraContent as? String,
+    if case .string(let requestedLangues)? = item.config,
       !requestedLangues.starts(with: "auto") {
       appendHistory(query: requestedLangues, unique: true)
     }
     NSWorkspace.shared.open(request)
   }
   
-  private func formContents(query: String, fromLangue: String, toLangue: String) -> DisplayableContainer<URL>? {
+  private func formContents(query: String, fromLangue: String, toLangue: String) -> DisplayContainer<URL>? {
     guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
     let contentTemplate = "Translate \"\(query)\" from %@ to %@"
     let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
@@ -84,6 +84,6 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     let url = URL(string: String(format: template, regionCode ?? "com", "#" + fromLangue, toLangue, encodedContent))
     let localizedFromLangue = NSLocale(localeIdentifier: fromLangue).displayName(forKey: .identifier, value: fromLangue) ?? "..."
     let localizedToLangue = NSLocale(localeIdentifier: toLangue).displayName(forKey: .identifier, value: toLangue) ?? "..."
-    return DisplayableContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url, extraContent: "\(fromLangue)/\(toLangue)")
+    return DisplayContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url, config: .string("\(fromLangue)/\(toLangue)"))
   }
 }

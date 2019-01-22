@@ -18,28 +18,28 @@ struct CalculationService: BuiltInProvider {
   let icon: NSImage = .calculator
   private let parser = MathParser()
 
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     let rawExpression = input.joined()
     guard !rawExpression.isEmpty else { return [] }
     do {
       let calculationResult = try parser.parse(expression: rawExpression)
-      return [DisplayableContainer<Int>(name: "\(calculationResult)", content: rawExpression, icon: icon)]
+      return [DisplayContainer<Int>(name: "\(calculationResult)", content: rawExpression, icon: icon)]
     } catch MathParserError.zeroDivision {
-      return [DisplayableContainer<Error>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayContainer<Error>(name: "Error: 0 cannot be a denominator", content: rawExpression, icon: icon, placeholder: "")]
     } catch MathParserError.unclosedBracket {
-      return [DisplayableContainer<Error>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayContainer<Error>(name: "Error: A bracket is not closed", content: rawExpression, icon: icon, placeholder: "")]
     } catch MathParserError.missingBracket {
-      return [DisplayableContainer<Error>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayContainer<Error>(name: "Error: functions must be followed by brackets", content: rawExpression, icon: icon, placeholder: "")]
     } catch MathParserError.extraToken {
-      return [DisplayableContainer<Error>(name: "Error: invalid expression", content: rawExpression, icon: icon, placeholder: "")]
+      return [DisplayContainer<Error>(name: "Error: invalid expression", content: rawExpression, icon: icon, placeholder: "")]
     } catch {
       return []
     }
   }
 
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     guard
-      let result = service as? DisplayableContainer<Int>,
+      let result = service as? DisplayContainer<Int>,
       let _ = Double(result.name)
     else { return }
     if !withCmd {

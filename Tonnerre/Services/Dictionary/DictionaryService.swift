@@ -23,14 +23,14 @@ struct DictionarySerivce: BuiltInProvider {
     spellChecker.automaticallyIdentifiesLanguages = true
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     guard input.count > 0, !input[0].isEmpty else { return [self] }
     let text = input.joined(separator: " ")
-    let notFoundItem = DisplayableContainer(name: text, content: "Cannot find definition for \"\(text)\"", icon: icon, innerItem: URL(string: "dict://\(text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"))
+    let notFoundItem = DisplayContainer(name: text, content: "Cannot find definition for \"\(text)\"", icon: icon, innerItem: URL(string: "dict://\(text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"))
     return [buildService(basedOn: text, defaultService: notFoundItem)!]
   }
   
-  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+  func supply(withInput input: [String], callback: @escaping ([DisplayItem])->Void) {
     guard input.count > 0, !input[0].isEmpty else {
       callback([])
       return
@@ -41,8 +41,8 @@ struct DictionarySerivce: BuiltInProvider {
     callback(filteredSuggestions.compactMap { buildService(basedOn: $0, defaultService: nil) } )
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let request = service as? DisplayableContainer<URL>, let url = request.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let request = service as? DisplayContainer<URL>, let url = request.innerItem else { return }
     NSWorkspace.shared.open(url)
   }
   
@@ -59,7 +59,7 @@ struct DictionarySerivce: BuiltInProvider {
   }
   
   private func buildService(basedOn query: String,
-                    defaultService: @autoclosure ()->DisplayableContainer<URL>?) -> DisplayableContainer<URL>?
+                    defaultService: @autoclosure ()->DisplayContainer<URL>?) -> DisplayContainer<URL>?
   {
     guard
       let (foundTerm, definition) = define(query),
@@ -67,6 +67,6 @@ struct DictionarySerivce: BuiltInProvider {
     else { return defaultService() }
     let headWord = foundTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foundTerm
     let dictURL = URL(string: String(format: "dict://%@", headWord))!
-    return DisplayableContainer(name: foundTerm, content: definition, icon: icon, innerItem: dictURL)
+    return DisplayContainer(name: foundTerm, content: definition, icon: icon, innerItem: dictURL)
   }
 }

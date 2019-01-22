@@ -16,11 +16,11 @@ struct SettingService: BuiltInProvider {
   let argUpperBound: Int = 0
   let icon: NSImage = #imageLiteral(resourceName: "settings")
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
-    return [DisplayableContainer<Int>(name: name, content: content, icon: icon, placeholder: keyword)]
+  func prepare(withInput input: [String]) -> [DisplayItem] {
+    return [DisplayContainer<Int>(name: name, content: content, icon: icon, placeholder: keyword)]
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     let settingLocation = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/SettingPanel.app")
     let workspace = NSWorkspace.shared
     _ = try? workspace.launchApplication(at: settingLocation, options: .default, configuration: [:])

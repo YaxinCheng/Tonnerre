@@ -56,7 +56,7 @@ struct CurrencyService: BuiltInProvider {
     return (fromCurrency, toCurrency, amount)
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     guard let (fromCurrency, toCurrency, amount) = extractInfomation(from: input) else { return [] }
     // The async function to setup the view
     let label = "\(amount) \(fromCurrency) = %@ "
@@ -77,8 +77,9 @@ struct CurrencyService: BuiltInProvider {
             else { return }
             DispatchQueue.main.async {
               guard
-                case .service(_, let item)? = cell.displayItem,
-                item is AsyncDisplayable
+                case .service(_, let item)? = cell.displayItem as? ServicePack,
+                let container = item as? DisplayContainer<URL>,
+                case .updateFunction(_)? = container.config
               else { return }
               cell.serviceLabel.stringValue = String(format: label, "\(rate * amount)")
             }
@@ -86,15 +87,15 @@ struct CurrencyService: BuiltInProvider {
       }
     }
     let populars = popularCurrencies.filter { $0 != fromCurrency && $0 != toCurrency }
-    return ([toCurrency] + populars).map {
+    return ([toCurrency] + populars).compactMap {
+      guard let asyncViewSetup = viewSetupGenerator(fromCurrency, $0, label + $0) else { return nil }
       let googleURL = URL(string: "https://google.com/search?q=\(amount)+\(fromCurrency)+\($0)")!
-      let asyncViewSetup = viewSetupGenerator(fromCurrency, $0, label + $0)
-      return AsyncedDisplayableContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: googleURL, viewSetup: asyncViewSetup)
+      return DisplayContainer(name: String(format: label + $0, "..."), content: String(format: content, fromCurrency, $0), icon: icon, innerItem: googleURL, config: .updateFunction(asyncViewSetup))
     }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let innerItem = (service as? AsyncedDisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let innerItem = (service as? DisplayContainer<URL>)?.innerItem else { return }
     NSWorkspace.shared.open(innerItem)
   }
 }

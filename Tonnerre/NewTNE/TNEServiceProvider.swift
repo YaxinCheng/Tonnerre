@@ -95,11 +95,11 @@ struct TNEServiceProvider: ServiceProvider {
     }
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     return [executor.prepare(withInput: input, provider: self)]
   }
   
-  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+  func supply(withInput input: [String], callback: @escaping ([DisplayItem])->Void) {
     do {
       guard
         !(argLowerBound == argUpperBound && argUpperBound == 0),
@@ -108,7 +108,7 @@ struct TNEServiceProvider: ServiceProvider {
         callback([])
         return
       }
-      let result: [DisplayProtocol] = returnedJSON.compactMap { _, value in
+      let result: [DisplayItem] = returnedJSON.compactMap { _, value in
         guard
           let dict = value as? [String: Any],
           let name      = dict["name"] as? String,
@@ -119,11 +119,11 @@ struct TNEServiceProvider: ServiceProvider {
         if let stringInner = innerItem as? String,
           (stringInner.starts(with: "http://") || stringInner.starts(with: "https://")),
           let urlInner = URL(string: stringInner) {
-          return DisplayableContainer(name: name, content: content, icon: icon,
+          return DisplayContainer(name: name, content: content, icon: icon,
                                       alterContent: alterContent ?? self.alterContent,
                                       innerItem: urlInner, placeholder: name)
         } else {
-          return DisplayableContainer(name: name, content: content, icon: icon,
+          return DisplayContainer(name: name, content: content, icon: icon,
                                       alterContent: alterContent ?? self.alterContent,
                                       alterIcon: alterIcon, innerItem: innerItem, placeholder: name)
         }
@@ -135,15 +135,15 @@ struct TNEServiceProvider: ServiceProvider {
       #if DEBUG
       print("error during prepare: \n\(error)\ninput: \(input)\n")
       #endif
-      callback([DisplayableContainer(name: "Error", content: "\(error)", icon: icon, innerItem: error, placeholder: "")])
+      callback([DisplayContainer(name: "Error", content: "\(error)", icon: icon, innerItem: error, placeholder: "")])
     }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     let inner: Any?
-    if let anyInner = (service as? DisplayableContainer<Any>)?.innerItem {
+    if let anyInner = (service as? DisplayContainer<Any>)?.innerItem {
       inner = anyInner
-    } else if let urlInner = (service as? DisplayableContainer<URL>)?.innerItem {
+    } else if let urlInner = (service as? DisplayContainer<URL>)?.innerItem {
       inner = urlInner.absoluteString
     } else {
       inner = nil

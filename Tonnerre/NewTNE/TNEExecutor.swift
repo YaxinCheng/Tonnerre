@@ -37,7 +37,7 @@ protocol TNEExecutor {
   /// - parameter input: The user input query passed to the TNE Script
   /// - parameter provider: The TNE Script which is called
   /// - returns: a placeholder service based on the input and provider
-  func prepare(withInput input: [String], provider: TNEServiceProvider) -> DisplayProtocol
+  func prepare(withInput input: [String], provider: TNEServiceProvider) -> DisplayItem
   /// Execute the TNE Script and return the result as a JSON
   /// - parameter args: The type of execution and the input from user
   /// - returns: An array-styled JSON returned from the TNE running result.
@@ -47,16 +47,16 @@ protocol TNEExecutor {
 }
 
 extension TNEExecutor {
-  func prepare(withInput input: [String], provider: TNEServiceProvider) -> DisplayProtocol {
+  func prepare(withInput input: [String], provider: TNEServiceProvider) -> DisplayItem {
     if provider.argLowerBound == provider.argUpperBound &&
       provider.argUpperBound == 0 {
-      return DisplayableContainer<Any>(name: provider.name,
+      return DisplayContainer<Any>(name: provider.name,
                                         content: provider.content,
                                         icon: provider.icon,
                                         placeholder: provider.keyword)
       
     } else {
-      return DisplayableContainer<Any>(name: provider.name.filled(arguments: input)
+      return DisplayContainer<Any>(name: provider.name.filled(arguments: input)
         , content: provider.content.filled(arguments: input), icon: provider.icon,
           placeholder: provider.keyword)
     }

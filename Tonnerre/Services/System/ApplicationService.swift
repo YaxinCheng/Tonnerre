@@ -18,20 +18,20 @@ struct ApplicationService: BuiltInProvider {
   let argLowerBound: Int = 0
   let defered: Bool = true
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let value = (service as? DisplayableContainer<NSRunningApplication>)?.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let value = (service as? DisplayContainer<NSRunningApplication>)?.innerItem else { return }
     if withCmd { value.forceTerminate() }
     else { value.terminate() }
   }
 
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     let workspace = NSWorkspace.shared
     let runningApps = workspace.runningApplications.filter { $0.activationPolicy == .regular }
     if input.isEmpty || (input.first?.isEmpty ?? false) {
-      return runningApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
+      return runningApps.map { DisplayContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
     } else {
       let filteredApps = runningApps.filter { match(appName: $0.localizedName!, query: input) }
-      return filteredApps.map { DisplayableContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
+      return filteredApps.map { DisplayContainer(name: "Quit \($0.localizedName!)", content: $0.bundleURL!.path, icon: $0.icon!, innerItem: $0, placeholder: $0.localizedName!) }
     }
   }
   

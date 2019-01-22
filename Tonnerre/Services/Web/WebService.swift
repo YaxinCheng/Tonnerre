@@ -46,7 +46,7 @@ extension WebService {
     return URL(string: rawURL)
   }
   
-  func present(rawElements: [String]) -> [DisplayProtocol] {
+  func present(rawElements: [String]) -> [DisplayItem] {
     return rawElements.compactMap {
       let readableContent: String
       let htmlEncodeDetect = try! NSRegularExpression(pattern: "(&#\\d+;)+")
@@ -58,27 +58,27 @@ extension WebService {
       }
       guard let url = fillInTemplate(input: [readableContent]) else { return nil }
       let content = contentTemplate.filled(arguments: "\(readableContent)")
-      return DisplayableContainer(name: readableContent, content: content, icon: icon, innerItem: url)
+      return DisplayContainer(name: readableContent, content: content, icon: icon, innerItem: url)
     }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let request = (service as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let request = (service as? DisplayContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     workspace.open(request)
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     let queryURL = fillInTemplate(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ")
     let content = contentTemplate.filled(arguments: "\(queryContent)")
-    guard argLowerBound > 0 else { return [DisplayableContainer(name: name, content: content, icon: icon, innerItem: url)] }
-    let originalSearch = DisplayableContainer(name: queryContent, content: content, icon: icon, innerItem: url)
+    guard argLowerBound > 0 else { return [DisplayContainer(name: name, content: content, icon: icon, innerItem: url)] }
+    let originalSearch = DisplayContainer(name: queryContent, content: content, icon: icon, innerItem: url)
     return [originalSearch]
   }
   
-  func supply(withInput input: [String], callback: @escaping ([DisplayProtocol])->Void) {
+  func supply(withInput input: [String], callback: @escaping ([DisplayItem])->Void) {
     let queryContent = input.joined(separator: " ")
     guard
       !suggestionTemplate.isEmpty,
@@ -101,7 +101,7 @@ extension WebService {
       let lowerQuery = queryContent.lowercased()
       let processedData = self.parse(suggestionData: data).filter { $0.lowercased() != lowerQuery }
       suggestions.addObjects(from: self.present(rawElements: processedData))
-      callback(suggestions as? [DisplayProtocol] ?? [])
+      callback(suggestions as? [DisplayItem] ?? [])
     }.resume()
   }
 }

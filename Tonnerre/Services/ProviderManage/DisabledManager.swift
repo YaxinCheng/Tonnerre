@@ -8,10 +8,14 @@
 
 import Foundation
 
+/// Service Providers are enabled and disabled through this class
+/// . Use the shared instance to access the information
 final class DisableManager {
+  /// Shared instance of a disable manager
   static let shared = DisableManager()
   
   private let disabledIDsKey = "Tonnerre.Providers.Disabled.IDs"
+  /// A set of ids of providers that are disabled
   private(set) var disabledIDs: Set<String> {
     get {
       let userDefault = UserDefaults.shared

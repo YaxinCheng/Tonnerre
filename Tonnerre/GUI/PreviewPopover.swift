@@ -50,7 +50,7 @@ final class PreviewPopover: NSPopover, NSPopoverDelegate {
   /// - parameter item: The item that needs to be previewed
   /// - parameter positioningRect: The rectangle within positioningView relative to which the popover should be positioned. Normally set to the bounds of positioningView. May be an empty rectangle, which will default to the bounds of positioningView.
   /// - parameter positioningView: The view relative to which the popover should be positioned. Causes the method to raise invalidArgumentException if nil.
-  func present(item: DisplayProtocol, relativeTo positioningRect: NSRect, of positioningView: NSView) {
+  func present(item: DisplayItem, relativeTo positioningRect: NSRect, of positioningView: NSView) {
     guard
       !isShown,
       let displayView = buildView(fromItem: item)
@@ -63,16 +63,13 @@ final class PreviewPopover: NSPopover, NSPopoverDelegate {
 }
 
 private extension PreviewPopover {
-  private func buildView(fromItem item: DisplayProtocol) -> NSView? {
+  private func buildView(fromItem item: DisplayItem) -> NSView? {
     let displayView: NSView
     switch item {
-    case let urlItem as AsyncedDisplayableContainer<URL>
-      where urlItem.innerItem != nil:
-      displayView = QLPreview(title: urlItem.name, url: urlItem.innerItem!)
-    case let urlItem as DisplayableContainer<URL>
+    case let urlItem as DisplayContainer<URL>
       where urlItem.innerItem != nil && urlItem.innerItem?.scheme != "dict":
       displayView = QLPreview(title: urlItem.name, url: urlItem.innerItem!)
-    case let errorItem as DisplayableContainer<Error>
+    case let errorItem as DisplayContainer<Error>
       where errorItem.innerItem != nil:
       let text = NSMutableAttributedString(string: "Error",
                                            attributes: [.font: NSFont.systemFont(ofSize: 23, weight: .black),
@@ -82,7 +79,7 @@ private extension PreviewPopover {
                      .foregroundColor: NSColor.labelColor])
       text.append(content)
       displayView = TextView(text: text)
-    case let stringItem as DisplayableContainer<NSAttributedString>
+    case let stringItem as DisplayContainer<NSAttributedString>
       where stringItem.innerItem != nil:
       displayView = TextView(text: stringItem.innerItem!)
     case let anyItem where anyItem.content.count > 20:

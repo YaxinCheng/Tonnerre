@@ -20,16 +20,16 @@ extension FileSearchService {
   var argUpperBound: Int { return Int.max }
   var argLowerBound: Int { return 1 }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     guard !(input.first?.isEmpty ?? false) else { return [self] }
     let query = input.joined(separator: " ") + "*"
     return (associatedIndex?.search(query: query, limit: 5 * 9, options: .default) ?? []).map {
-      DisplayableContainer(name: $0.deletingPathExtension().lastPathComponent, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0, placeholder: $0.deletingPathExtension().lastPathComponent)
+      DisplayContainer(name: $0.deletingPathExtension().lastPathComponent, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0, placeholder: $0.deletingPathExtension().lastPathComponent)
     }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let fileURL = (service as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let fileURL = (service as? DisplayContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
       workspace.activateFileViewerSelecting([fileURL])

@@ -16,10 +16,10 @@ struct VolumeService: BuiltInProvider {
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     let workspace = NSWorkspace.shared
     let queue = DispatchQueue.global(qos: .userInitiated)
-    if let allVolumes = (service as? DisplayableContainer<[URL]>)?.innerItem {
+    if let allVolumes = (service as? DisplayContainer<[URL]>)?.innerItem {
       queue.async {
         var errorCount = 0
         for volume in allVolumes {
@@ -34,7 +34,7 @@ struct VolumeService: BuiltInProvider {
           LocalNotification.send(title: "Eject Successfully", content: "Successfully ejected all volumes", muted: true)
         }
       }
-    } else if let specificVolume = (service as? DisplayableContainer<URL>)?.innerItem {
+    } else if let specificVolume = (service as? DisplayContainer<URL>)?.innerItem {
       queue.async {
         do {
           try workspace.unmountAndEjectDevice(at: specificVolume)
@@ -46,7 +46,7 @@ struct VolumeService: BuiltInProvider {
     }
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     let fileManager = FileManager.default
     let semaphore = DispatchSemaphore(value: 0)
     var volumeURLs: [URL] = []
@@ -55,15 +55,15 @@ struct VolumeService: BuiltInProvider {
       semaphore.signal()
     }
     _ = semaphore.wait(timeout: .now() + 0.2)
-    let noEjectable = DisplayableContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon, placeholder: keyword)
+    let noEjectable = DisplayContainer<Int?>(name: "Eject Service", content: "No ejectable volumes", icon: icon, placeholder: keyword)
     guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }
     guard !externalVolumes.isEmpty else { return [noEjectable] }
     let volumeRequest = externalVolumes.map {
-      DisplayableContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
+      DisplayContainer<URL>(name: $0.lastPathComponent, content: $0.path, icon: workspace.icon(forFile: $0.path), innerItem: $0)
     }
-    let ejectAllRequest = DisplayableContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: icon, innerItem: externalVolumes)
+    let ejectAllRequest = DisplayContainer<[URL]>(name: "Eject All", content: "Safely eject all external volumes", icon: icon, innerItem: externalVolumes)
     return [ejectAllRequest] + volumeRequest
   }
 }

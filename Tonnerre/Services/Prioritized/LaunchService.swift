@@ -20,7 +20,7 @@ struct LaunchService: BuiltInProvider {
     return NSDictionary(contentsOfFile: aliasFile) as! [String: String]
   }()
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     guard let index = IndexFactory.default else { return [] }
     let query = input.joined(separator: " ")
     let result = index.search(query: query + "*", limit: 5 * 9, options: .default)
@@ -41,16 +41,16 @@ struct LaunchService: BuiltInProvider {
           }
         }]
       } else { name = fileName }
-      return DisplayableContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path),innerItem: $0)
+      return DisplayContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path),innerItem: $0)
     }.sorted {
-      let firstTime = LaunchOrder.retrieveTime(with: ($0 as! DisplayableContainer<URL>).innerItem!.absoluteString)
-      let secondTime = LaunchOrder.retrieveTime(with: ($1 as! DisplayableContainer<URL>).innerItem!.absoluteString)
+      let firstTime = LaunchOrder.retrieveTime(with: ($0 as! DisplayContainer<URL>).innerItem!.absoluteString)
+      let secondTime = LaunchOrder.retrieveTime(with: ($1 as! DisplayContainer<URL>).innerItem!.absoluteString)
       return firstTime > secondTime
     }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let appURL = (service as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let appURL = (service as? DisplayContainer<URL>)?.innerItem else { return }
     LaunchOrder.save(with: appURL.absoluteString)
     let workspace = NSWorkspace.shared
     if withCmd {

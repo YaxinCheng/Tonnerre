@@ -35,8 +35,8 @@ struct GoogleMapService: WebService {
     return icon
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
-    guard let request = (service as? DisplayableContainer<URL>)?.innerItem else { return }
+  func serve(service: DisplayItem, withCmd: Bool) {
+    guard let request = (service as? DisplayContainer<URL>)?.innerItem else { return }
     let workspace = NSWorkspace.shared
     if withCmd {
       let appleMapURL = request.absoluteString.replacingOccurrences(of: "maps\\.google\\.\\w+?\\/", with: "maps.apple.com/", options: .regularExpression)

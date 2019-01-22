@@ -15,7 +15,7 @@ struct URLService: BuiltInProvider {
   let content: String = "Open typed URL in a browser"
   private let urlRegex = try! NSRegularExpression(pattern: "^(https?:\\/\\/)?(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&/.]*)*", options: .caseInsensitive)
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     guard let query = input.first, input.count == 1 else { return [] }
     let isURL = query.starts(with: "http://") ||
       query.starts(with: "https://") ||
@@ -27,14 +27,15 @@ struct URLService: BuiltInProvider {
     let browsers: [Browser] = [.safari, .chrome]
         .filter { $0.appURL != nil }
         .sorted { LaunchOrder.retrieveTime(with: $0.name) > LaunchOrder.retrieveTime(with: $1.name) }
-    return browsers.map { DisplayableContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, innerItem: url, extraContent: $0) }
+    return browsers.map {
+      DisplayContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, innerItem: url, config: .browser($0)) }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     guard
-      let service = service as? DisplayableContainer<URL>,
+      let service = service as? DisplayContainer<URL>,
       let request = service.innerItem,
-      let browser = service.extraContent as? Browser,
+      case .browser(let browser)? = service.config,
       let browserURL = browser.appURL
     else { return }
     LaunchOrder.save(with: browser.name)

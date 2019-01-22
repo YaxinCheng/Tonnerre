@@ -35,26 +35,26 @@ extension BookMarkService {
     return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound")
   }
   
-  func prepare(withInput input: [String]) -> [DisplayProtocol] {
+  func prepare(withInput input: [String]) -> [DisplayItem] {
     let bookMarks: [BookMark]
     do {
       bookMarks = try parseFile()
     } catch {
       let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
       let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
-      let errorMsg = DisplayableContainer<Error>(name: errorTitle, content: errorContent, icon: icon, innerItem: error, placeholder: "")
+      let errorMsg = DisplayContainer<Error>(name: errorTitle, content: errorContent, icon: icon, innerItem: error, placeholder: "")
       return [errorMsg]
     }
     let regex = try! NSRegularExpression(pattern: ".*?\(input.joined(separator: ".*?")).*?", options: .caseInsensitive)
     let filteredBMs = bookMarks.filter {
       regex.numberOfMatches(in: $0.title, options: .withoutAnchoringBounds, range: NSRange($0.title.startIndex..<$0.title.endIndex, in: $0.title)) >= 1
     }
-    return filteredBMs.map { DisplayableContainer(name: $0.title, content: $0.url.absoluteString, icon: icon, innerItem: $0.url, placeholder: $0.title) }
+    return filteredBMs.map { DisplayContainer(name: $0.title, content: $0.url.absoluteString, icon: icon, innerItem: $0.url, placeholder: $0.title) }
   }
   
-  func serve(service: DisplayProtocol, withCmd: Bool) {
+  func serve(service: DisplayItem, withCmd: Bool) {
     if let browserURL = Self.browser.appURL,
-    let innerItem = (service as? DisplayableContainer<URL>)?.innerItem {
+    let innerItem = (service as? DisplayContainer<URL>)?.innerItem {
       do {
         _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])
       } catch {
@@ -62,7 +62,7 @@ extension BookMarkService {
         print("Browser open bookmarks:", error)
         #endif
       }
-    } else if service is DisplayableContainer<Error> {
+    } else if service is DisplayContainer<Error> {
       guard
         let settingPanelURL = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")
       else { return }
