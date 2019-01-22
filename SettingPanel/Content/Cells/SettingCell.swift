@@ -34,5 +34,4 @@ class SettingCell: NSCollectionViewItem {
       return shadow
     }()
   }
-  
 }
