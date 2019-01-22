@@ -781,10 +781,9 @@
 			isa = PBXGroup;
 			children = (
 				1470514520B1BEF900F6FBE8 /* ViewController.swift */,
+				14C410332187ACCC00CEA1E9 /* PreviewPopover.swift */,
 				14F1099D218BEC53003A5E07 /* TableView */,
 				14F1099E218BEC6A003A5E07 /* TonnerreField */,
-				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
-				14C410332187ACCC00CEA1E9 /* PreviewPopover.swift */,
 				14F1099C218BC1C1003A5E07 /* Designs */,
 			);
 			path = GUI;
@@ -931,6 +930,7 @@
 		14F1099D218BEC53003A5E07 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */,
 				14CC56D5217AB0160015540A /* LiteTableVCDelegate.swift */,
 				14CC56D1217930510015540A /* LiteTableViewController.swift */,
 			);

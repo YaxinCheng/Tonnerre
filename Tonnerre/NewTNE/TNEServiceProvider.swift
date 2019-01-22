@@ -110,7 +110,7 @@ struct TNEServiceProvider: ServiceProvider {
       }
       let result: [DisplayItem] = returnedJSON.compactMap { _, value in
         guard
-          let dict = value as? [String: Any],
+          let dict      = value as? [String: Any],
           let name      = dict["name"] as? String,
           let content   = dict["content"] as? String,
           let innerItem = dict["innerItem"]

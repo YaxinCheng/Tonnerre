@@ -36,7 +36,7 @@ struct DisplayOrder {
   
   private static func getLastVisitScore(identifier: String) -> UInt8 {
     let lastVisit = LaunchOrder.retrieveTime(with: identifier)
-    let timeDiffScore = 100 + max(lastVisit.timeIntervalSinceNow / 60, -100)
+    let timeDiffScore = 100 + max(lastVisit.timeIntervalSinceNow/(30 * 24 * 60 * 60) * 100, -100)
     return UInt8(timeDiffScore)
   }
   
