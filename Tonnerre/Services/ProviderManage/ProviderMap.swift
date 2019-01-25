@@ -22,7 +22,7 @@ final class ProviderMap {
     return TonnerreFSDetector(pathes: serviceFolder.path.path, callback: filesDidChange)
   }()
   private var pathWithService = Dictionary<String, TNEServiceProvider>()
-  private let queue = DispatchQueue(label: "Tonnerre.TNEHub")
+  private let queue = DispatchQueue(label: "Tonnerre.ProviderMap")
   private init() {
     queue.async { [unowned self] in
       do {

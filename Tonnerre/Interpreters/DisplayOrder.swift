@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DisplayOrder {
+enum DisplayOrder {
   
   private static func levenshteinScore(source: String, target: String) -> UInt8 {
     let distanceToScore: (Int) -> UInt8 = {

@@ -8,10 +8,10 @@
 
 import Cocoa
 
-struct TonnerreHelper {
-  private init() {}
-  
-  static let identifier = "com.ycheng.Tonnerre.helper"
+enum TonnerreHelper {
+  static var identifier: String {
+    return "com.ycheng.Tonnerre.helper"
+  }
   
   weak static var instance: NSRunningApplication? {
     return NSRunningApplication.runningApplications(withBundleIdentifier: identifier).first

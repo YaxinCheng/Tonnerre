@@ -30,7 +30,7 @@ final class BaseWindow: NSPanel {
           self.orderFrontRegardless()
         }
       }
-      launchHelper()
+      TonnerreHelper.launch()
       #endif
     }
   }
@@ -71,17 +71,19 @@ final class BaseWindow: NSPanel {
     
     isMovableByWindowBackground = true
     isMovable = true
-    level = .floating
+    level = .screenSaver
     backgroundColor = .clear
     collectionBehavior = [.ignoresCycle, .canJoinAllSpaces]
     
-    folderChecks()
+    createSupportFolders()
     setupCache()
-    launchHelper()
     setupSettings()
+    #if RELEASE
+    TonnerreHelper.launch()
+    #endif
   }
   
-  private func folderChecks() {
+  private func createSupportFolders() {
     let folders: [SupportFolders] = [.base, .indices, .services, .cache]
     for folder in folders {
       do {
@@ -101,12 +103,6 @@ final class BaseWindow: NSPanel {
         diskCapacity: 1024 * 1024 * 25,
         diskPath: SupportFolders.cache.path.path
     )
-  }
-  
-  @objc private func launchHelper() {
-    #if RELEASE
-    TonnerreHelper.launch()
-    #endif
   }
   
   private func setupSettings() {

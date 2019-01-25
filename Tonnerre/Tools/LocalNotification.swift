@@ -9,9 +9,7 @@
 import Foundation
 import UserNotifications
 
-final class LocalNotification {
-  private init () {}
-  
+enum LocalNotification {
   static func send(title: String, content: String, muted: Bool = false) {
     if #available(OSX 10.14, *) {
       let notification = UNMutableNotificationContent()

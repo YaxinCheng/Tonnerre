@@ -25,15 +25,15 @@ struct IndexFactory {
     return try? TonnerreIndex.open(path: index.filePath)
   }
   
-  static var `default`: TonnerreIndex? {
+  static weak var `default`: TonnerreIndex? {
     return load(index: .default)
   }
   
-  static var name: TonnerreIndex? {
+  static weak var name: TonnerreIndex? {
     return load(index: .name)
   }
   
-  static var content: TonnerreIndex? {
+  static weak var content: TonnerreIndex? {
     return load(index: .content)
   }
 }
