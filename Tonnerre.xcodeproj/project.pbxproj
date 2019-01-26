@@ -569,6 +569,7 @@
 				145CF984218A5352003B9468 /* JSON.swift */,
 				14FF21382191279F00F505B3 /* TaggedList.swift */,
 				14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */,
+				143EF11321E0004A00CC8632 /* IndexFactory.swift */,
 				14CD694B21F7C85C00FE6205 /* SupportFolders.swift */,
 			);
 			path = Tools;
@@ -580,14 +581,6 @@
 				143551F22123A49200D6080E /* SettingService.swift */,
 			);
 			path = Tonnere;
-			sourceTree = "<group>";
-		};
-		146AAE6420BDD7C2009AC9C6 /* IndexRelated */ = {
-			isa = PBXGroup;
-			children = (
-				143EF11321E0004A00CC8632 /* IndexFactory.swift */,
-			);
-			path = IndexRelated;
 			sourceTree = "<group>";
 		};
 		146AAE6A20BDE0A4009AC9C6 /* Services */ = {
@@ -696,7 +689,6 @@
 				14AFE6AD21164E74002BBBB2 /* Protocols */,
 				14F23035214B324000B7A0FB /* Interpreters */,
 				146AAE6A20BDE0A4009AC9C6 /* Services */,
-				146AAE6420BDD7C2009AC9C6 /* IndexRelated */,
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
 				14AEB2D820BEF4A800D10D44 /* GUI */,
 				145CF983218A5341003B9468 /* Tools */,

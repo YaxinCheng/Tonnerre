@@ -8,10 +8,21 @@
 
 import CoreData
 
-protocol LimitedDataProtocol {
+/// Used with NSManagedObject providing functions to manage
+/// the number of data records
+/// - warning: implements this protocol to non-NSManagedObject
+///           will crash the program
+protocol LimitedDataProtocol: class {
 }
 
 extension LimitedDataProtocol {
+  /// Remove the number of oldest data entries
+  /// - parameter count: the number of entries sorted by
+  ///                   creation time
+  /// - parameter sortingKey: the date attribute name that
+  ///                   sorting depends on
+  /// - parameter predicate: a predicate to limit the data
+  ///                   to a certain subset
   static func removeOldestEntries(
                            count: Int = 1,
                            sortingKey: String,
@@ -33,6 +44,8 @@ extension LimitedDataProtocol {
     }
   }
   
+  /// Remove all data records with given predicate
+  /// - parameter predicate: groups the data that needs to be removed
   static func removeAll(predicate: NSPredicate) {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(Self.self)")
     fetchRequest.predicate = predicate

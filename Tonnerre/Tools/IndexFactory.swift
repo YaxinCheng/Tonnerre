@@ -9,7 +9,8 @@
 import Foundation
 import TonnerreSearch
 
-struct IndexFactory {
+/// The single location to get TonnerreIndex for Tonnerre
+enum IndexFactory {
   enum IndexOption: String {
     case `default`
     case name
@@ -25,14 +26,17 @@ struct IndexFactory {
     return try? TonnerreIndex.open(path: index.filePath)
   }
   
+  /// Default index. Used by LaunchService
   static weak var `default`: TonnerreIndex? {
     return load(index: .default)
   }
   
+  /// Name index. Used by FileNameSearchService
   static weak var name: TonnerreIndex? {
     return load(index: .name)
   }
   
+  /// Content index. Used by FileContentSearchService
   static weak var content: TonnerreIndex? {
     return load(index: .content)
   }

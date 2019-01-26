@@ -9,8 +9,12 @@
 import Foundation
 import UserNotifications
 
-enum LocalNotification {
-  static func send(title: String, content: String, muted: Bool = false) {
+struct LocalNotification {
+  let title: String
+  let content: String
+  var muted: Bool = false
+  
+  func send() {
     if #available(OSX 10.14, *) {
       let notification = UNMutableNotificationContent()
       notification.title = title

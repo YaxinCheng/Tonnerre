@@ -41,14 +41,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
           try? fileManager.trashItem(at: url, resultingItemURL: nil)
           successCount += 1
         } catch {
-          LocalNotification.send(title: "\(url.lastPathComponent): Installation Failed", content: "\(error)")
+          LocalNotification(title: "\(url.lastPathComponent): Installation Failed", content: "\(error)", muted: false).send()
         }
       }
     }
     guard successCount > 0 else { return }
     let title = (successCount > 1 ? "Services" : "Service") + " Installed"
     let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
-    LocalNotification.send(title: title, content: informativeText, muted: true)
+    LocalNotification(title: title, content: informativeText, muted: true).send()
   }
 
   // MARK: - Core Data stack
