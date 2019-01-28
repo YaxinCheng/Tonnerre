@@ -147,6 +147,7 @@
 		14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185321B4875B00C93E7C /* GeneralCell.swift */; };
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
 		14D5185F21B4996A00C93E7C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185E21B4996A00C93E7C /* CellView.swift */; };
+		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
 		14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB560821BDCE88006C26C0 /* TintedImageView.swift */; };
 		14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
@@ -407,6 +408,7 @@
 		14D5185321B4875B00C93E7C /* GeneralCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCell.swift; sourceTree = "<group>"; };
 		14D5185421B4875B00C93E7C /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
 		14D5185E21B4996A00C93E7C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
+		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
 		14DB560821BDCE88006C26C0 /* TintedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImageView.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 				14F5701E21A9E7A000AE269B /* TonnerreHelper.swift */,
 				143EF11321E0004A00CC8632 /* IndexFactory.swift */,
 				14CD694B21F7C85C00FE6205 /* SupportFolders.swift */,
+				14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1346,6 +1349,7 @@
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
 				145DA17420DC243D00C1E804 /* TonnerreSession.swift in Sources */,
 				14CC56D3217930510015540A /* LiteTableViewController.swift in Sources */,
+				14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */,
 				14F10999218BA2C7003A5E07 /* TonnerreFieldController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

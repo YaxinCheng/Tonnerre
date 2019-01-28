@@ -26,6 +26,8 @@ class LiteTableViewController: NSViewController {
   let CellHeight: CGFloat = 56
   private var HeightConstraint: NSLayoutConstraint!
   
+  private var cmdQDoubleClick = MultiClickDetector(keyCode: 12, numberOfClicks: 2)
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
@@ -42,6 +44,12 @@ class LiteTableViewController: NSViewController {
     tableView.register(nib: NSNib(nibNamed: "ServiceCell", bundle: .main)!, withIdentifier: .ServiceCell)
     let allowedKeys: [UInt16] = [12, 48, 53, 36, 76, 49, 25, 26, 28, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
+    
+    cmdQDoubleClick.setFailedCallback {
+      DispatchQueue.main.async { [weak self] in
+        self?.delegate?.updatePlaceholder(string: nil)
+      }
+    }
   }
   
   private var modifierMonitor: Any?
@@ -222,26 +230,20 @@ extension LiteTableViewController {
     delegate?.serve(servicePack, withCmd: false)
   }
   
-  /// This is a flag defines if the cmd + Q is double clicked in a short time
-  ///
-  /// When it is set to true, and cmd + Q is pressed again, the program quick
-  private static var canExitFlag: Bool = false
   private func terminateProgramProcess() {
     let warnBeforeExitEnabled = TonnerreSettings.get(fromKey: .warnBeforeExit) as? Bool ?? true
-    if !warnBeforeExitEnabled || type(of: self).canExitFlag { // Double clicked cmd + Q
+    let state = cmdQDoubleClick.click()
+    switch (state, warnBeforeExitEnabled) {
+    case (.completed, _), (_, false):
       #if DEBUG
       print("Double click trigered (\(String.CMD) Q)")
       #else
       TonnerreHelper.terminate()
       exit(0)
       #endif
-    } else {
+    case (.ongoing(count: let count), _) where count == 1:
       delegate?.updatePlaceholder(string: " Double click \(String.CMD) Q to exit")
-      type(of: self).canExitFlag = true
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
-        self?.delegate?.updatePlaceholder(string: nil)
-        LiteTableViewController.canExitFlag = false
-      }
+    default: break
     }
   }
 }

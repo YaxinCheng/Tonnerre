@@ -42,19 +42,22 @@ final class PreviewPopover: NSPopover, NSPopoverDelegate {
   }
   
   func popoverDidClose(_ notification: Notification) {
+    releasePopover()
+  }
+  
+  private func releasePopover() {
     PreviewPopover.shared = PreviewPopover()
     contentViewController = nil
   }
   
   /// Show the preview popover
   /// - parameter item: The item that needs to be previewed
-  /// - parameter positioningRect: The rectangle within positioningView relative to which the popover should be positioned. Normally set to the bounds of positioningView. May be an empty rectangle, which will default to the bounds of positioningView.
+  /// - parameter positioningRect: The rectangle within positioningView relative to which the popover should be positioned.
+  ///           Normally set to the bounds of positioningView. May be an empty rectangle, which will default to the bounds of positioningView.
   /// - parameter positioningView: The view relative to which the popover should be positioned. Causes the method to raise invalidArgumentException if nil.
   func present(item: DisplayItem, relativeTo positioningRect: NSRect, of positioningView: NSView) {
-    guard
-      !isShown,
-      let displayView = buildView(fromItem: item)
-    else { return }
+    if isShown { close() }
+    guard let displayView = buildView(fromItem: item) else { return }
     let viewController = NSViewController()
     viewController.view = displayView
     contentViewController = viewController
