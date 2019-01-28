@@ -6,18 +6,20 @@
 //  Copyright © 2019 Yaxin Cheng. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 final class MultiClickDetector {
   let keyCode: UInt16
+  let modifiers: NSEvent.ModifierFlags
   let numberOfClicks: UInt8
   let duration: Double
   private var clickState: State = .waiting
   private var failedCallback: (()->())?
-  private let queue = DispatchQueue(label: "MultiClickDetector.thread")
+  private let queue = DispatchQueue.main
   
-  init(keyCode: UInt16, numberOfClicks: UInt8, duration: Double = 0.35, failedCallback: (()->())? = nil) {
+  init(keyCode: UInt16, modifiers: NSEvent.ModifierFlags, numberOfClicks: UInt8, duration: Double = 0.35, failedCallback: (()->())? = nil) {
     self.keyCode = keyCode
+    self.modifiers = modifiers
     self.numberOfClicks = numberOfClicks
     self.duration = duration
     self.failedCallback = failedCallback
@@ -27,7 +29,14 @@ final class MultiClickDetector {
     failedCallback = callback
   }
   
-  func click() -> State {
+  func click(_ event: NSEvent) -> State {
+    guard
+      event.keyCode == keyCode &&
+      event.modifierFlags.contains(modifiers)
+    else {
+      clickState = .waiting
+      return clickState
+    }
     switch clickState {
     case .waiting, .completed:
       beginDetecting()

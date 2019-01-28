@@ -26,7 +26,7 @@ class LiteTableViewController: NSViewController {
   let CellHeight: CGFloat = 56
   private var HeightConstraint: NSLayoutConstraint!
   
-  private var cmdQDoubleClick = MultiClickDetector(keyCode: 12, numberOfClicks: 2)
+  private var cmdQDoubleClick = MultiClickDetector(keyCode: 12, modifiers: .command, numberOfClicks: 2)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -45,10 +45,8 @@ class LiteTableViewController: NSViewController {
     let allowedKeys: [UInt16] = [12, 48, 53, 36, 76, 49, 25, 26, 28, 91, 92] + Array(18...23) + Array(83...89)
     tableView.allowedKeyCodes.formUnion(allowedKeys)
     
-    cmdQDoubleClick.setFailedCallback {
-      DispatchQueue.main.async { [weak self] in
+    cmdQDoubleClick.setFailedCallback { [weak self] in
         self?.delegate?.updatePlaceholder(string: nil)
-      }
     }
   }
   
@@ -137,7 +135,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
       quickSelect(withKeyCode: event.keyCode)
     case 12: // Q
       guard event.modifierFlags.contains(.command) else { return }
-      terminateProgramProcess()
+      terminateProgramProcess(event)
     default:
       break
     }
@@ -230,9 +228,9 @@ extension LiteTableViewController {
     delegate?.serve(servicePack, withCmd: false)
   }
   
-  private func terminateProgramProcess() {
+  private func terminateProgramProcess(_ event: NSEvent) {
     let warnBeforeExitEnabled = TonnerreSettings.get(fromKey: .warnBeforeExit) as? Bool ?? true
-    let state = cmdQDoubleClick.click()
+    let state = cmdQDoubleClick.click(event)
     switch (state, warnBeforeExitEnabled) {
     case (.completed, _), (_, false):
       #if DEBUG
