@@ -26,7 +26,12 @@ struct TextItem: SettingItem {
   
   var settingValue: String? {
     get {
-      return TonnerreSettings.get(fromKey: id) as? String
+      guard let value = TonnerreSettings.get(fromKey: id) else { return nil }
+      if let stringValue = value as? String {
+        return stringValue
+      } else {
+        return String(reflecting: value)
+      }
     } set {
       if let value = newValue {
         TonnerreSettings.set(value, forKey: id)
