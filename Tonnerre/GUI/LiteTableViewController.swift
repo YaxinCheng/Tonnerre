@@ -157,6 +157,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func prepareCell(_ tableView: LiteTableView, at index: Int) -> LiteTableCell {
     let cell = tableView.dequeueCell(withIdentifier: .ServiceCell) as! ServiceCell
     reset(cell: cell, dataIndex: index)
+    cell.cmdLabel.stringValue = "⌘\(index % 9 + 1)"
     return cell
   }
 }
@@ -185,7 +186,6 @@ extension LiteTableViewController {
     cell.serviceLabel.stringValue = data.name
     cell.introLabel.stringValue = data.content
     cell.displayItem = data
-    cell.cmdLabel.stringValue = "⌘\(dataIndex % 9 + 1)"
     data.updateFunction?(cell)
   }
   
