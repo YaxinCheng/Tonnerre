@@ -156,7 +156,8 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   
   func prepareCell(_ tableView: LiteTableView, at index: Int) -> LiteTableCell {
     let cell = tableView.dequeueCell(withIdentifier: .ServiceCell) as! ServiceCell
-    reset(cell: cell, dataIndex: index)
+    reset(cell: cell, source: datasource[index])
+    cell.cmdLabel.stringValue = "⌘\(index % 9 + 1)"
     return cell
   }
 }
@@ -170,7 +171,7 @@ extension LiteTableViewController {
     }
     guard datasource.count > 0 else { return }
     if let cell = tableView.highlightedCell as? ServiceCell {
-      reset(cell: cell, dataIndex: highlightedIndex)
+      reset(cell: cell, source: datasource[highlightedIndex])
     }
     highlightedIndex += keyCode == 125 ? 1 : -1
     highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)

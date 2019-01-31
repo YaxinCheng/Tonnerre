@@ -107,11 +107,15 @@ final class TonnerreFieldController: NSViewController {
   /// - parameter placeholder: given placeholder
   private func complete(withPlaceholder placeholder: String) {
     var components = placeholder.components(separatedBy: .whitespaces)
-    var firstValue = components.removeFirst()
-    while firstValue.isEmpty && components.count > 0 {
-      firstValue += " " + components.removeFirst()
+    var appendingComponent = components.removeFirst()
+    let characterSet = CharacterSet(charactersIn: "!@#$%^&*()-=+_[]{}\\|:\"'<>/?,.`~")
+    let isAcceptable: (String) -> Bool = {
+      !$0.isEmpty && !characterSet.contains($0.unicodeScalars.last!)
     }
-    stringValue += firstValue + (components.count > 1 ? " " : "")
+    while !isAcceptable(appendingComponent) && components.count > 0 {
+      appendingComponent += " " + components.removeFirst()
+    }
+    stringValue += appendingComponent + (components.count > 1 ? " " : "")
   }
   
   /// Restore last query into the textField
