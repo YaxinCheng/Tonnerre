@@ -10,33 +10,31 @@ import Cocoa
 
 class GeneralCell: SettingCell {
   
-  @IBOutlet weak var deleteButton: NSButton!
   @IBOutlet weak var switchControl: Switch! {
     didSet {
       switchControl.delegate = self
     }
   }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do view setup here.
-  }
-  
+
   override func viewWillAppear() {
     super.viewWillAppear()
     
-    deleteButton.isHidden = indexPath.section == 0
+//    deleteButton.isHidden = indexPath.section == 0
     view.menu = createMenu(withName: item.name)
   }
   
   private func createMenu(withName name: String) -> NSMenu {
     let menu = NSMenu(title: "Setting")
     menu.addItem(NSMenuItem(title: "Set \"\(name)\" as Default Provider",
-      action: #selector(setDefaultProvider(sender:)), keyEquivalent: ""))
+      action: #selector(setDefaultProvider(_:)), keyEquivalent: ""))
+    if indexPath.section > 0 {
+      menu.addItem(NSMenuItem(title: "Delete \"\(name)\"",
+        action: #selector(deleteProvider(_:)), keyEquivalent: ""))
+    }
     return menu
   }
-  
-  @IBAction func deleteButtonPresesd(_ sender: Any) {
+
+  @objc func deleteProvider(_ sender: Any) {
     do {
       try removeFile()
       delegate?.remove(cell: self)
@@ -67,7 +65,7 @@ class GeneralCell: SettingCell {
     }
   }
   
-  @objc private func setDefaultProvider(sender: Any) {
+  @objc private func setDefaultProvider(_ sender: Any) {
     guard let id = item.settingKey else { return }
     DefaultProvider.id = id
   }

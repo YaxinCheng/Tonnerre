@@ -11,9 +11,13 @@ import Foundation
 enum DefaultProvider {
   static var id: String? {
     set {
-      TonnerreSettings.set(newValue ?? "", forKey: .defaultProvider)
+      if let value = newValue {
+        TonnerreSettings.set(.string(value), forKey: .defaultProvider)
+      } else {
+        TonnerreSettings.remove(forKey: .defaultProvider)
+      }
     } get {
-      return TonnerreSettings.get(fromKey: .defaultProvider) as? String
+      return TonnerreSettings.get(fromKey: .defaultProvider)?.rawValue as? String
     }
   }
 }

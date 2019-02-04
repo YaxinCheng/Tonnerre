@@ -30,9 +30,9 @@ struct BoolItem: SettingItem {
   
   var settingValue: Bool {
     get {
-      return TonnerreSettings.get(fromKey: id) as? Bool ?? false
+      return TonnerreSettings.get(fromKey: id)?.rawValue as? Bool ?? false
     } set {
-      TonnerreSettings.set(newValue, forKey: id)
+      TonnerreSettings.set(.bool(newValue), forKey: id)
     }
   }
 }

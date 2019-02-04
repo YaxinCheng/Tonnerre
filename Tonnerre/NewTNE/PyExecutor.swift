@@ -47,7 +47,7 @@ struct PyExecutor: TNEExecutor {
     
     let dynamicServiceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/Scripts/DynamicServiceExec.py")
     let arguments = [dynamicServiceURL.path, args.argumentType, scriptPath.path]
-    let pythonPath = (TonnerreSettings.get(fromKey: .python) as? String) ?? "/usr/bin/python"
+    let pythonPath = (TonnerreSettings.get(fromKey: .python)?.rawValue as? String) ?? "/usr/bin/python"
     process.executableURL = URL(fileURLWithPath: pythonPath)
     process.arguments = arguments
     

@@ -16,7 +16,6 @@ final class ContentViewController: NSViewController {
       (collectionView.collectionViewLayout as? WaterfallLayout)?.delegate = self
     }
   }
-  
 }
 
 extension ContentViewController: ContentViewDelegate {

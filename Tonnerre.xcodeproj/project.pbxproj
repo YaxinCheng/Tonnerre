@@ -148,6 +148,8 @@
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
 		14D5185F21B4996A00C93E7C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185E21B4996A00C93E7C /* CellView.swift */; };
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
+		14DAE5C82208E4E2001009CA /* SettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingType.swift */; };
+		14DAE5C92208FF21001009CA /* SettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingType.swift */; };
 		14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB560821BDCE88006C26C0 /* TintedImageView.swift */; };
 		14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
@@ -409,6 +411,7 @@
 		14D5185421B4875B00C93E7C /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
 		14D5185E21B4996A00C93E7C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
+		14DAE5C72208E4E2001009CA /* SettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingType.swift; sourceTree = "<group>"; };
 		14DB560821BDCE88006C26C0 /* TintedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImageView.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
@@ -874,6 +877,7 @@
 				146C053721BDAEB40028B076 /* ContentViewDelegate.swift */,
 				14D5184B21B460BF00C93E7C /* SettingItem.swift */,
 				14E49CDD21B87A8C0018527A /* SettingFetcher.swift */,
+				14DAE5C72208E4E2001009CA /* SettingType.swift */,
 				1440330821CEC6220026E822 /* WaterfallLayout */,
 				146C054021BDBA360028B076 /* GeneralSettings */,
 				146C052821BC52C80028B076 /* Providers */,
@@ -1313,6 +1317,7 @@
 				1405334420F66D2E00C289CF /* ClipboardService.swift in Sources */,
 				14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */,
 				14F015D421010ABB00537160 /* ChromeBMService.swift in Sources */,
+				14DAE5C92208FF21001009CA /* SettingType.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
@@ -1382,6 +1387,7 @@
 			files = (
 				146C054221BDBA490028B076 /* GeneralSettingLoader.swift in Sources */,
 				14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */,
+				14DAE5C82208E4E2001009CA /* SettingType.swift in Sources */,
 				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146C053821BDAEB50028B076 /* ContentViewDelegate.swift in Sources */,
 				14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */,

@@ -228,7 +228,7 @@ extension LiteTableViewController {
   }
   
   private func terminateProgramProcess(_ event: NSEvent) {
-    let warnBeforeExitEnabled = TonnerreSettings.get(fromKey: .warnBeforeExit) as? Bool ?? true
+    let warnBeforeExitEnabled = TonnerreSettings.get(fromKey: .warnBeforeExit)?.rawValue as? Bool ?? true
     let state = cmdQDoubleClick.click(event)
     switch (state, warnBeforeExitEnabled) {
     case (.completed, _), (_, false):
