@@ -180,14 +180,12 @@ extension LiteTableViewController {
     delegate?.updatePlaceholder(service: selectedService)
   }
 
-  private func reset(cell: ServiceCell, dataIndex: Int) {
-    let data = datasource[dataIndex]
-    cell.iconView.image = data.icon
-    cell.serviceLabel.stringValue = data.name
-    cell.introLabel.stringValue = data.content
-    cell.displayItem = data
-    cell.cmdLabel.stringValue = "⌘\(dataIndex % 9 + 1)"
-    data.updateFunction?(cell)
+  private func reset(cell: ServiceCell, source: DisplayItem) {
+    cell.iconView.image = source.icon
+    cell.serviceLabel.stringValue = source.name
+    cell.introLabel.stringValue = source.content
+    cell.displayItem = source
+    (source as? ServicePack)?.updateFunction?(cell)
   }
   
   private func tabPressed() {
