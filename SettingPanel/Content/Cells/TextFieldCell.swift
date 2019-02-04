@@ -25,6 +25,10 @@ extension TextFieldCell: NSTextFieldDelegate {
       (obj.userInfo?["NSTextMovement"] as? Int) == 16
     else { return }
     var textItem = item as? TextItem
-    textItem?.settingValue = value
+    if let intVal = Int(value) {
+      textItem?.settingValue = .int(intVal)
+    } else {
+      textItem?.settingValue = .string(value)
+    }
   }
 }

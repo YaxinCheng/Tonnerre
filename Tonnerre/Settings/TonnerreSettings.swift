@@ -21,7 +21,7 @@ struct TonnerreSettings {
     case warnBeforeExit = "settings:warnBeforeExit"
   }
   
-  private static let defaultSettings: [(key: SettingKey, value: Any)] = [
+  private static let defaultSettings: [(key: SettingKey, value: SettingType)] = [
      (.python, "/usr/bin/python"),
      (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch"),
      (.clipboardLimit, 9),
@@ -37,12 +37,18 @@ struct TonnerreSettings {
     userDefault.set(true, forKey: "settings:finished")
   }
   
-  static func set(_ value: Any, forKey key: SettingKey) {
-    userDefault.set(value, forKey: key.rawValue)
+  static func set(_ value: SettingType, forKey key: SettingKey) {
+    userDefault.set(value.rawValue, forKey: key.rawValue)
   }
   
-  static func get(fromKey key: SettingKey) -> Any? {
-    return userDefault.object(forKey: key.rawValue)
+  static func get(fromKey key: SettingKey) -> SettingType? {
+    guard let value = userDefault.value(forKey: key.rawValue) else { return nil }
+    switch value {
+    case let boolVal as Bool: return .bool(boolVal)
+    case let intVal as Int: return .int(intVal)
+    case let stringVal as String: return .string(stringVal)
+    default: return nil
+    }
   }
   
   static func remove(forKey key: SettingKey) {
