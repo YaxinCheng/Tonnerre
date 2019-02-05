@@ -19,6 +19,15 @@ class SettingCell: NSCollectionViewItem {
   }
   var indexPath: IndexPath!
   weak var delegate: ContentViewDelegate?
+  private var originalFrame: NSRect!
+  private var shrinkedFrame: NSRect {
+    let ratio: CGFloat = 0.96
+    let shrinkedSize = NSSize(width: originalFrame.size.width * ratio, height: originalFrame.size.height * ratio)
+    let movedX = originalFrame.size.width * (1 - ratio)/2
+    let movedY = originalFrame.size.height * (1 - ratio)/2
+    let movedOrigin  = NSPoint(x: originalFrame.origin.x + movedX, y: originalFrame.origin.y + movedY)
+    return NSRect(origin: movedOrigin, size: shrinkedSize)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,5 +42,37 @@ class SettingCell: NSCollectionViewItem {
       shadow.shadowOffset = NSSize(width: 5, height: -10)
       return shadow
     }()
+  }
+  
+  override func viewDidAppear() {
+    super.viewDidAppear()
+    
+    originalFrame = view.frame
+  }
+  
+  override func mouseDown(with event: NSEvent) {
+    shrinkSize()
+    super.mouseDown(with: event)
+  }
+  
+  override func mouseUp(with event: NSEvent) {
+    resetSize()
+    super.mouseUp(with: event)
+  }
+  
+  private func shrinkSize() {
+    let targetFrame = shrinkedFrame
+    NSAnimationContext.runAnimationGroup { [weak self] (context) in
+      context.duration = 0.7
+      self?.view.animator().frame = targetFrame
+    }
+  }
+  
+  private func resetSize() {
+    let targetFrame = originalFrame!
+    NSAnimationContext.runAnimationGroup { [weak self] (context) in
+      context.duration = 0.7
+      self?.view.animator().frame = targetFrame
+    }
   }
 }

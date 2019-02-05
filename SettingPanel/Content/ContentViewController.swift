@@ -55,6 +55,7 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
     let nameSize = item.attributedName.boundingRect(with: defaultCellSize, options: [.usesFontLeading, .usesLineFragmentOrigin]).size
     let contentSize = item.attributedContent.boundingRect(with: defaultCellSize, options: [.usesFontLeading, .usesLineFragmentOrigin]).size
     let combinedHeight: CGFloat = 8 + nameSize.height + contentSize.height + 4 + 32 + 8
+    print(combinedHeight)
     return combinedHeight
   }
   
