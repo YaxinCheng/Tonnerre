@@ -59,6 +59,11 @@ final class TaggedList<T: Hashable> {
     }
     lock?.signal()
   }
+  
+  var last: T? {
+    if endIndex >= self.count { return nil }
+    return self[endIndex - 1]
+  }
 }
 
 extension TaggedList: ExpressibleByArrayLiteral {

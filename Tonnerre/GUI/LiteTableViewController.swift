@@ -120,7 +120,11 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   func keyPressed(_ event: NSEvent) {
     switch event.keyCode {
     case 125, 126: // move down/up
-      upDownKeyPressed(withKeyCode: event.keyCode)
+      if !event.modifierFlags.contains(.command) {
+        upDownKeyPressed(withKeyCode: event.keyCode)
+      } else {
+        moveToTopOrBottom(top: event.keyCode == 126)
+      }
     case 48: // tab
       tabPressed()
     case 36, 76: // enter
@@ -133,8 +137,7 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
     case 18...23, 25, 26, 28, 83...89, 91, 92:// ⌘ + number
       guard event.modifierFlags.contains(.command) else { return }
       quickSelect(withKeyCode: event.keyCode)
-    case 12: // Q
-      guard event.modifierFlags.contains(.command) else { return }
+    case 12 where event.modifierFlags.contains(.command): // Q
       terminateProgramProcess(event)
     default:
       break
@@ -176,6 +179,18 @@ extension LiteTableViewController {
     highlightedIndex += keyCode == 125 ? 1 : -1
     highlightedIndex = min(max(highlightedIndex, -1), datasource.count - 1)
     let selectedService = datasource[max(highlightedIndex, 0)]
+    delegate?.serviceHighlighted(service: selectedService)
+    delegate?.updatePlaceholder(service: selectedService)
+  }
+  
+  private func moveToTopOrBottom(top: Bool) {
+    PreviewPopover.shared.close()
+    guard datasource.count > 0 else { return }
+    if let cell = tableView.highlightedCell as? ServiceCell {
+      reset(cell: cell, source: datasource[highlightedIndex])
+    }
+    highlightedIndex = top ? 0 : (datasource.count - 1)
+    let selectedService = top ? datasource.first : datasource.last
     delegate?.serviceHighlighted(service: selectedService)
     delegate?.updatePlaceholder(service: selectedService)
   }
