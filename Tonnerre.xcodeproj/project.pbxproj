@@ -63,7 +63,6 @@
 		14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14561B9620C4892D0057B4C1 /* WikipediaSearch.swift */; };
 		145CF985218A5352003B9468 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CF984218A5352003B9468 /* JSON.swift */; };
 		145CF987218BA1C3003B9468 /* LiteTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CF986218BA1C3003B9468 /* LiteTableViewController.storyboard */; };
-		145D056020CE1FDD0027F8DF /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145D055F20CE1FDD0027F8DF /* CurrencyService.swift */; };
 		145DA16920DAD70100C1E804 /* BingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145DA16820DAD70100C1E804 /* BingSearch.swift */; };
 		145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145DA16A20DADA2800C1E804 /* DuckDuckGo.swift */; };
 		145DA17420DC243D00C1E804 /* TonnerreSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145DA17320DC243D00C1E804 /* TonnerreSession.swift */; };
@@ -323,7 +322,6 @@
 		14561B9620C4892D0057B4C1 /* WikipediaSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaSearch.swift; sourceTree = "<group>"; };
 		145CF984218A5352003B9468 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		145CF986218BA1C3003B9468 /* LiteTableViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LiteTableViewController.storyboard; sourceTree = "<group>"; };
-		145D055F20CE1FDD0027F8DF /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		145DA16820DAD70100C1E804 /* BingSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BingSearch.swift; sourceTree = "<group>"; };
 		145DA16A20DADA2800C1E804 /* DuckDuckGo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGo.swift; sourceTree = "<group>"; };
 		145DA17320DC243D00C1E804 /* TonnerreSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSession.swift; sourceTree = "<group>"; };
@@ -773,7 +771,6 @@
 			isa = PBXGroup;
 			children = (
 				14AEB2FC20BF824E00D10D44 /* LaunchService.swift */,
-				145D055F20CE1FDD0027F8DF /* CurrencyService.swift */,
 				1484148F20C84589008FD68E /* CalculationService.swift */,
 				148414A620C8675F008FD68E /* URLService.swift */,
 			);
@@ -1337,7 +1334,6 @@
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,
 				14454D1D2197C7A0008F1A8B /* ASExecutor.swift in Sources */,
-				145D056020CE1FDD0027F8DF /* CurrencyService.swift in Sources */,
 				1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */,
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14C410342187ACCC00CEA1E9 /* PreviewPopover.swift in Sources */,

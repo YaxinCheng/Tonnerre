@@ -13,7 +13,6 @@ struct BuiltInProviderMap {
   static let IDtoKeyword: [String: String] = [
       "Tonnerre.Provider.BuiltIn.URLService"               : ""
     , "Tonnerre.Provider.BuiltIn.CalculationService"       : ""
-    , "Tonnerre.Provider.BuiltIn.CurrencyService"          : ""
     , "Tonnerre.Provider.BuiltIn.LaunchService"            : ""
     , "Tonnerre.Provider.BuiltIn.GoogleSearch"             : "google"
     , "Tonnerre.Provider.BuiltIn.GoogleImageSearch"        : "image"
@@ -38,7 +37,6 @@ struct BuiltInProviderMap {
   static let IDtoStruct: [String: BuiltInProvider.Type] = [
       "Tonnerre.Provider.BuiltIn.URLService"               : URLService.self
     , "Tonnerre.Provider.BuiltIn.CalculationService"       : CalculationService.self
-    , "Tonnerre.Provider.BuiltIn.CurrencyService"          : CurrencyService.self
     , "Tonnerre.Provider.BuiltIn.LaunchService"            : LaunchService.self
     , "Tonnerre.Provider.BuiltIn.GoogleSearch"             : GoogleSearch.self
     , "Tonnerre.Provider.BuiltIn.GoogleImageSearch"        : GoogleImageSearch.self

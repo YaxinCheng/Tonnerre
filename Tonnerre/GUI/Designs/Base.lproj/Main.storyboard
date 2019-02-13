@@ -686,7 +686,7 @@
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="BaseWindowController" customModule="Tonnerre" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA" customClass="BaseWindow" customModule="Tonnerre" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" nonactivatingPanel="YES" fullSizeContentView="YES"/>
+                        <windowStyleMask key="styleMask" utility="YES" nonactivatingPanel="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="479" y="817" width="760" height="56"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>

@@ -200,7 +200,6 @@ extension LiteTableViewController {
     cell.serviceLabel.stringValue = source.name
     cell.introLabel.stringValue = source.content
     cell.displayItem = source
-    (source as? ServicePack)?.updateFunction?(cell)
   }
   
   private func tabPressed() {

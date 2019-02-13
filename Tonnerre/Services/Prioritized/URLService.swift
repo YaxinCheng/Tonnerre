@@ -21,9 +21,10 @@ struct URLService: BuiltInProvider {
       query.starts(with: "https://") ||
       urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
     guard isURL else { return [] }
+    let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
     let url: URL
-    if query.starts(with: "http") { url = URL(string: query)! }
-    else { url = URL(string: "https://\(query)")! }
+    if query.starts(with: "http") { url = URL(string: encodedQuery)! }
+    else { url = URL(string: "https://\(encodedQuery)")! }
     let browsers: [Browser] = [.safari, .chrome]
         .filter { $0.appURL != nil }
         .sorted { LaunchOrder.retrieveTime(with: $0.name) > LaunchOrder.retrieveTime(with: $1.name) }

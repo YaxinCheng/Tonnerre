@@ -86,19 +86,6 @@ enum ServicePack: DisplayItem {
   init(provider: ServiceProvider, service: DisplayItem) {
     self = .service(provider: provider, content: service)
   }
-  
-  /// Async update function for the cell from the container
-  var updateFunction: ((_ cell: ServiceCell) -> Void)? {
-    switch self {
-    case .provider(_): return nil
-    case .service(provider: _, content: let value):
-      guard
-        let container = value as? DisplayContainer<URL>,
-        case .updateFunction(let function)? = container.config
-      else { return nil }
-      return function
-    }
-  }
 }
 
 extension ServicePack: Hashable {
