@@ -67,5 +67,6 @@ protocol ServiceProvider: DisplayItem {
 extension ServiceProvider {
   var defered: Bool { return false }
   func supply(withInput input: [String], callback: @escaping ([DisplayItem])->Void) {
+    callback([])
   }
 }

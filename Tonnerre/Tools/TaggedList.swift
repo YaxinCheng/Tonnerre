@@ -18,6 +18,9 @@ protocol TaggedListDelegate: class {
 final class TaggedList<T: Hashable> {
   private var storage: [[T]] = []
   private var tagToIndex: [T : Int] = [:]
+  var tags: [T] {
+    return Array(tagToIndex.keys)
+  }
   private class IndexCache {
     var prevRequest: Int
     var prevGroup: Int
@@ -63,6 +66,14 @@ final class TaggedList<T: Hashable> {
   var last: T? {
     if endIndex >= self.count { return nil }
     return self[endIndex - 1]
+  }
+  
+  subscript(tag: T) -> [T] {
+    guard
+      let index = tagToIndex[tag],
+      index < storage.count
+    else { return [] }
+    return storage[index]
   }
 }
 

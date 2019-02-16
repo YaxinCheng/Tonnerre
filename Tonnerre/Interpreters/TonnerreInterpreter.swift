@@ -16,6 +16,7 @@ final class TonnerreInterpreter {
   private let cache = Cache()
   static var serviceIDTrie = ServiceIDTrie(array: BuiltInProviderMap.IDtoKeyword.map { ($1, $0) })
   private let session = TonnerreSession.shared
+  private weak var previousList: TaggedList<ServicePack>?
   
   init() {
     ProviderMap.shared.start()
@@ -24,32 +25,17 @@ final class TonnerreInterpreter {
   
   func interpret(input: String) -> TaggedList<ServicePack> {
     let tokens = tokenize(input: input)
-    guard tokens.count > 0 else { return [] }
+    guard !(tokens.first?.isEmpty ?? false) else { return [] }
     
     session.cancel()
-    let providers: [ServiceProvider]
-    if cache.previousRequest == tokens.first! {
-      providers = cache.previousProvider
-    } else {
-      providers = TonnerreInterpreter.serviceIDTrie
-        .find(basedOn: tokens.first!.lowercased())
-        .compactMap { ProviderMap.shared.retrieve(byID: $0) }
-        .filter { !DisableManager.shared.isDisabled(provider: $0) }
-        .filter { !$0.defered || $0.keyword == tokens.first! }
-        .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
-        .sorted {
-          DisplayOrder.sortingScore(baseString: $0.keyword, query: tokens.first!, timeIdentifier: $0.id)
-            >
-          DisplayOrder.sortingScore(baseString: $1.keyword, query: tokens.first!, timeIdentifier: $1.id)
-        }
-      cache.previousProvider = providers
-    }
+    let providers = fetchProviders(tokens: tokens)
     cache.previousRequest = input
     
     let taggedList = TaggedList<ServicePack>(array:
       providers.map { .provider($0) }, filter: { !$0.provider.keyword.isEmpty }
     )
     taggedList.lock = DispatchSemaphore(value: 1)
+    defer { previousList = taggedList }
     
     for provider in providers {
       let keywordCount = provider.keyword.isEmpty ? 0 : 1
@@ -75,6 +61,30 @@ final class TonnerreInterpreter {
     cache.previousRequest = nil
   }
   
+  private func fetchProviders(tokens: [String]) -> [ServiceProvider] {
+    let providers: [ServiceProvider]
+    if cache.previousRequest == tokens.first! {
+      providers = cache.previousProvider
+        .filter { tokens.count >= $0.argLowerBound }
+        .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
+    } else {
+      providers = TonnerreInterpreter.serviceIDTrie
+        .find(basedOn: tokens.first!.lowercased())
+        .compactMap { ProviderMap.shared.retrieve(byID: $0) }
+        .filter { !DisableManager.shared.isDisabled(provider: $0) }
+        .filter { !$0.defered || $0.keyword == tokens.first! }
+        .filter { tokens.count >= $0.argLowerBound }
+        .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
+        .sorted {
+          DisplayOrder.sortingScore(baseString: $0.keyword, query: tokens.first!, timeIdentifier: $0.id)
+            >
+          DisplayOrder.sortingScore(baseString: $1.keyword, query: tokens.first!, timeIdentifier: $1.id)
+      }
+      cache.previousProvider = providers
+    }
+    return providers
+  }
+  
   /**
    Tokenize user input
    - parameter input: user input
@@ -85,26 +95,34 @@ final class TonnerreInterpreter {
   }
   
   private func supply(fromProvider provider: ServiceProvider, requirements: [String], destination: TaggedList<ServicePack>) {
+    let preparedServices: [ServicePack] = provider.prepare(withInput: requirements).map {
+        if let provider = $0 as? ServiceProvider { return .provider(provider) }
+        else { return .service(provider: provider, content: $0) }
+      }
     destination.replace(at: .provider(provider),
-                        elements: provider.prepare(withInput: requirements)
-                          .map {
-                            if let provider = $0 as? ServiceProvider { return .provider(provider) }
-                            else { return .service(provider: provider, content: $0) }
-                        })
+                        elements: preparedServices)
+    restorePreviousServices(toList: destination, from: .provider(provider))
     let asyncTask = DispatchWorkItem { [requirements, provider] in
       provider.supply(withInput: requirements) {
         let services: [ServicePack] = $0.map {
           if let provider = $0 as? ServiceProvider { return .provider(provider) }
           else { return .service(provider: provider, content: $0) }
         }
-        guard services.count > 0 else { return }
         if !(provider is BuiltInProvider) {
-          destination.replace(at: .provider(provider), elements: services)
+          if services.count > 0 {
+            destination.replace(at: .provider(provider), elements: services)
+          }
         } else {
+          destination.replace(at: .provider(provider), elements: preparedServices)
           destination.append(at: .provider(provider), elements: services)
         }
       }
     }
     session.enqueue(task: asyncTask)
+  }
+  
+  private func restorePreviousServices(toList target: TaggedList<ServicePack>, from tag: ServicePack) {
+    guard let previousList = previousList else { return }
+    target.append(at: tag, elements: previousList[tag].dropFirst())
   }
 }
