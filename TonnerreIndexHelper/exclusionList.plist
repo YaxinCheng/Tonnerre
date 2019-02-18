@@ -4,6 +4,7 @@
 <dict>
 	<key>path</key>
 	<array>
+		<string>/Applications/Tonnerre.app</string>
 		<string>~/Music/iTunes/Album Artwork</string>
 	</array>
 	<key>directory</key>

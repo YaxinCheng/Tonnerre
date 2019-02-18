@@ -101,7 +101,10 @@ final class TonnerreInterpreter {
       }
     destination.replace(at: .provider(provider),
                         elements: preparedServices)
-    restorePreviousServices(toList: destination, from: .provider(provider))
+    let previousServices = fetchPreviousServices(at: .provider(provider))
+    if previousServices.count > preparedServices.count {
+      destination.append(at: .provider(provider), elements: previousServices)
+    }
     let asyncTask = DispatchWorkItem { [requirements, provider] in
       provider.supply(withInput: requirements) {
         let services: [ServicePack] = $0.map {
@@ -121,8 +124,8 @@ final class TonnerreInterpreter {
     session.enqueue(task: asyncTask, waitTime: 0.1)
   }
   
-  private func restorePreviousServices(toList target: TaggedList<ServicePack>, from tag: ServicePack) {
-    guard let previousList = previousList else { return }
-    target.append(at: tag, elements: previousList[tag].dropFirst())
+  private func fetchPreviousServices(at tag: ServicePack) -> ArraySlice<ServicePack> {
+    guard let previousList = previousList else { return [] }
+    return previousList[tag].dropFirst()
   }
 }
