@@ -63,7 +63,7 @@ final class ViewController: NSViewController {
 
 extension ViewController: TonnerreFieldDelegate {
   func textDidChange(value: String) {
-    asyncSession.cancel()
+    asyncSession.cancelAll()
     tableVC.datasource = interpreter.interpret(input: value)
     guard value.isEmpty else { return }
     interpreter.clearCache()// Essential to prevent showing unnecessary placeholders

@@ -9,7 +9,7 @@
 import Foundation
 
 final class TonnerreSession {
-  private let lock: DispatchSemaphore
+  private let enqueueLock: DispatchSemaphore
   
   /**
    Returns the shared instance of TonnerreSession
@@ -17,37 +17,48 @@ final class TonnerreSession {
   static let shared = TonnerreSession()
   
   private let queue: DispatchQueue
-  private var taskQueue: [DispatchWorkItem] = [] {
+  private var taskQueue: [(DispatchWorkItem, Double)] = [] {
     didSet {
       var task: DispatchWorkItem! = nil
+      var time: Double = 0
       while taskQueue.count > 0 {
-        task = taskQueue.removeFirst()
+        let dequeued = taskQueue.removeFirst()
+        task = dequeued.0
+        time = dequeued.1
         if !task.isCancelled { break }
       }
-      lock.signal()
-      guard task != nil else { return }
-      queue.async(execute: task)
+      guard task != nil && !task.isCancelled else { return }
+      queue.asyncAfter(deadline: .now() + time) { [unowned self] in
+        guard task != nil && !task.isCancelled else { return }
+        self.queue.async(execute: task)
+      }
     }
   }
   
   private init() {
     queue = DispatchQueue(label: "Tonnerre.Session.Queue", qos: .userInteractive, attributes: .concurrent)
-    lock  = DispatchSemaphore(value: 1)
+    enqueueLock  = DispatchSemaphore(value: 1)
   }
   
   init(queue: DispatchQueue) {
     self.queue = queue
-    lock = DispatchSemaphore(value: 1)
+    enqueueLock = DispatchSemaphore(value: 1)
   }
   
-  func enqueue(task: DispatchWorkItem) {
-    lock.wait()
-    taskQueue.append(task)
+  func enqueue(task: DispatchWorkItem, waitTime: Double = 0) {
+    enqueueLock.wait()
+    taskQueue.append((task, waitTime))
+    enqueueLock.signal()
   }
   
-  func cancel() {
-    lock.wait()
+  func cancel(task: DispatchWorkItem) {
+    task.cancel()
+  }
+  
+  func cancelAll() {
+    enqueueLock.wait()
+    taskQueue.forEach { $0.0.cancel() }
     taskQueue.removeAll()
+    enqueueLock.signal()
   }
-
 }

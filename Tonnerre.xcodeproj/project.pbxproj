@@ -15,6 +15,7 @@
 		140BE56821ED3553001DC045 /* FileTypeControlTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140BE56721ED3553001DC045 /* FileTypeControlTest.swift */; };
 		14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14257A0A216BD775008BE752 /* LocalNotification.swift */; };
 		142C5943215D842800D819F2 /* UpgradeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C5942215D842800D819F2 /* UpgradeHandler.swift */; };
+		143276322218C05A00A56E19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		143551F02123A44A00D6080E /* TonnerreIndexHelper.app in Apps copy */ = {isa = PBXBuildFile; fileRef = 146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */; };
 		143551F12123A44F00D6080E /* SettingPanel.app in Apps copy */ = {isa = PBXBuildFile; fileRef = 14AFE69A2112A4F1002BBBB2 /* SettingPanel.app */; };
 		143551F32123A49200D6080E /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143551F22123A49200D6080E /* SettingService.swift */; };
@@ -23,7 +24,6 @@
 		1438057621C8500300DD0685 /* BoolItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057521C8500300DD0685 /* BoolItem.swift */; };
 		1438057821C8707800DD0685 /* Switch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057721C8707800DD0685 /* Switch.xib */; };
 		1438057A21C8709600DD0685 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057921C8709600DD0685 /* Switch.swift */; };
-		14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A02112A4F4002BBBB2 /* Assets.xcassets */; };
 		143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143EF11321E0004A00CC8632 /* IndexFactory.swift */; };
 		144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144032FE21CDBF0C0026E822 /* JSONTest.swift */; };
 		1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */; };
@@ -150,7 +150,6 @@
 		14DAE5C82208E4E2001009CA /* SettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingType.swift */; };
 		14DAE5C92208FF21001009CA /* SettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingType.swift */; };
 		14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB560821BDCE88006C26C0 /* TintedImageView.swift */; };
-		14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -1187,6 +1186,7 @@
 				146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */,
 				146AD8CF20C9C09400D9E591 /* MainMenu.xib in Resources */,
 				146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */,
+				143276322218C05A00A56E19 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1195,7 +1195,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
-				14398FB7211F945A00F5AFCA /* Assets.xcassets in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 				14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
@@ -1230,7 +1229,6 @@
 				14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
 				14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */,
-				14DB560B21BDD0B8006C26C0 /* Assets.xcassets in Resources */,
 				1438057821C8707800DD0685 /* Switch.xib in Resources */,
 				14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */,
 			);

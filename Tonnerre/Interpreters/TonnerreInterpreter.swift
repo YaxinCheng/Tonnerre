@@ -27,7 +27,7 @@ final class TonnerreInterpreter {
     let tokens = tokenize(input: input)
     guard !(tokens.first?.isEmpty ?? false) else { return [] }
     
-    session.cancel()
+    session.cancelAll()
     let providers = fetchProviders(tokens: tokens)
     cache.previousRequest = input
     
@@ -118,7 +118,7 @@ final class TonnerreInterpreter {
         }
       }
     }
-    session.enqueue(task: asyncTask)
+    session.enqueue(task: asyncTask, waitTime: 0.1)
   }
   
   private func restorePreviousServices(toList target: TaggedList<ServicePack>, from tag: ServicePack) {
