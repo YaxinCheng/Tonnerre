@@ -24,7 +24,7 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dbW-Nc-29m">
                     <rect key="frame" x="6" y="23" width="358" height="17"/>
-                    <textFieldCell key="cell" selectable="YES" title="Multiline Content" id="u7s-0V-TQu">
+                    <textFieldCell key="cell" title="Multiline Content" id="u7s-0V-TQu">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
