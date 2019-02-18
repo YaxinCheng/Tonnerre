@@ -12,11 +12,12 @@ final class TonnerreInterpreter {
   private class Cache {
     var previousRequest: String?
     var previousProvider: [ServiceProvider] = []
+    weak var previousList: TaggedList<ServicePack>? = nil
   }
+  
   private let cache = Cache()
   static var serviceIDTrie = ServiceIDTrie(array: BuiltInProviderMap.IDtoKeyword.map { ($1, $0) })
   private let session = TonnerreSession.shared
-  private weak var previousList: TaggedList<ServicePack>?
   
   init() {
     ProviderMap.shared.start()
@@ -35,7 +36,7 @@ final class TonnerreInterpreter {
       providers.map { .provider($0) }, filter: { !$0.provider.keyword.isEmpty }
     )
     taggedList.lock = DispatchSemaphore(value: 1)
-    defer { previousList = taggedList }
+    defer { cache.previousList = taggedList }
     
     for provider in providers {
       let keywordCount = provider.keyword.isEmpty ? 0 : 1
@@ -59,6 +60,7 @@ final class TonnerreInterpreter {
   func clearCache() {
     cache.previousProvider = []
     cache.previousRequest = nil
+    cache.previousList = nil
   }
   
   private func fetchProviders(tokens: [String]) -> [ServiceProvider] {
@@ -105,7 +107,7 @@ final class TonnerreInterpreter {
     if previousServices.count > preparedServices.count {
       destination.append(at: .provider(provider), elements: previousServices)
     }
-    let asyncTask = DispatchWorkItem { [requirements, provider] in
+    let asyncTask = DispatchWorkItem { [requirements, provider, preparedServices] in
       provider.supply(withInput: requirements) {
         let services: [ServicePack] = $0.map {
           if let provider = $0 as? ServiceProvider { return .provider(provider) }
@@ -121,11 +123,11 @@ final class TonnerreInterpreter {
         }
       }
     }
-    session.enqueue(task: asyncTask, waitTime: 0.1)
+    session.enqueue(task: asyncTask, waitTime: provider is WebService ? 0.1 : 0)
   }
   
   private func fetchPreviousServices(at tag: ServicePack) -> ArraySlice<ServicePack> {
-    guard let previousList = previousList else { return [] }
+    guard let previousList = cache.previousList else { return [] }
     return previousList[tag].dropFirst()
   }
 }

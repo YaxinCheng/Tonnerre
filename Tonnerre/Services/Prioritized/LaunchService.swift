@@ -28,20 +28,10 @@ struct LaunchService: BuiltInProvider {
       let fileName: String = $0.deletingPathExtension().lastPathComponent
       let name: String
       if $0.pathExtension == "prefPane" {
-        name = LaunchService.aliasDict[fileName, default: fileName.unicodeScalars.reduce("") {
-          if CharacterSet.uppercaseLetters.contains($1) {
-            if $0.isEmpty { return String($1) }
-            else if CharacterSet.uppercaseLetters.contains($0.unicodeScalars.last!) {
-              return $0 + String($1)
-            } else {
-              return $0 + " " + String($1)
-            }
-          } else {
-            return $0 + String($1)
-          }
-        }]
+        name = LaunchService.aliasDict[fileName, default:
+          splitCamelCaseNames(name: fileName).joined(separator: " ")]
       } else { name = fileName }
-      return DisplayContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path),innerItem: $0)
+      return DisplayContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0)
     }.sorted {
       let firstTime = LaunchOrder.retrieveTime(with: ($0 as! DisplayContainer<URL>).innerItem!.absoluteString)
       let secondTime = LaunchOrder.retrieveTime(with: ($1 as! DisplayContainer<URL>).innerItem!.absoluteString)
@@ -58,5 +48,25 @@ struct LaunchService: BuiltInProvider {
     } else {
       workspace.open(appURL)
     }
+  }
+  
+  /// Split camel case names to individual words
+  /// - parameter name: the name needs to be splitted
+  /// - returns: an array of words from the name
+  ///
+  /// E.g.: "camelCase" -> "camel Case"
+  private func splitCamelCaseNames(name: String) -> [String] {
+    var names: [Substring] = []
+    var startIndex = name.startIndex
+    var endIndex = name.index(after: startIndex)
+    while endIndex != name.endIndex {
+      if CharacterSet.uppercaseLetters.contains(name.unicodeScalars[endIndex]) {
+        names.append(name[startIndex ..< endIndex])
+        startIndex = endIndex
+      }
+      endIndex = name.index(after: endIndex)
+    }
+    names.append(name[startIndex...])
+    return names.map(String.init)
   }
 }
