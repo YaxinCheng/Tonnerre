@@ -1021,6 +1021,7 @@
 				1470518820B1EA6000F6FBE8 /* Embed Frameworks */,
 				14AFE6AB2114D087002BBBB2 /* Apps copy */,
 				14E70E0321753C0000413C13 /* Scripts copy */,
+				14327633221B38BD00A56E19 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1235,6 +1236,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		14327633221B38BD00A56E19 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#rm ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg\n# create-dmg --volname Tonnerre --volicon /Users/cheng/Developer/ScriptTools/CreateDMG/installer.icns --background /Users/cheng/Developer/ScriptTools/CreateDMG/background.png --app-drop-link 450 170 --window-size 550 330 --icon Tonnerre 100 170 ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg ${CONFIGURATION_BUILD_DIR}/Tonnerre.app\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1440331821DD76B30026E822 /* Sources */ = {
