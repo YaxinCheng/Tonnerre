@@ -25,7 +25,7 @@ open Tonnerre.xcodeproj
 
 After open in Xcode, you can add a new scheme `Tonnerre` and it will build the `Tonnerre.app`
 
-Or you can download a built version here: [Tonnerre.app](https://github.com/YaxinCheng/Tonnerre/releases/download/1.0.0/Tonnerre.app.zip)
+Or you can download a built version here: [Tonnerre.dmg](https://github.com/YaxinCheng/Tonnerre/releases/download/1.0.5/Tonnerre.dmg.zip)
 
 ### Built With
 
