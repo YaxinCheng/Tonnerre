@@ -21,7 +21,7 @@ final class BaseWindowController: NSWindowController, NSWindowDelegate {
       window?.setFrameOrigin(NSPoint(x: max(x, 0), y: max(y, 0)))
     } else {
       guard
-        let screenSize = NSScreen.screens.first(where: { NSMouseInRect(NSEvent.mouseLocation, $0.frame, false) })?.frame.size,
+        let screenSize = NSScreen.main,
         let myWindow = window
       else { return }
       let x = screenSize.width / 2 - myWindow.frame.width / 2
