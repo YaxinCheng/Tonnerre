@@ -19,13 +19,16 @@ struct TonnerreSettings {
     case defaultProvider = "Tonnerre.Provider.Default"
     case clipboardLimit = "Tonnerre.Provider.BuiltIn.ClipboardService:limit"
     case warnBeforeExit = "settings:warnBeforeExit"
+    case disabledServices = "Tonnerre.Providers.Disabled.IDs"
   }
   
   private static let defaultSettings: [(key: SettingKey, value: SettingType)] = [
      (.python, "/usr/bin/python"),
      (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch"),
      (.clipboardLimit, 9),
-     (.warnBeforeExit, true)
+     (.warnBeforeExit, true),
+     (.disabledServices, ["Tonnerre.Provider.BuiltIn.SafariBMService",
+                          "Tonnerre.Provider.BuiltIn.ChromeBMService"])
   ]
   
   static func addDefaultSetting(reset: Bool = false) {
@@ -47,6 +50,7 @@ struct TonnerreSettings {
     case let boolVal as Bool: return .bool(boolVal)
     case let intVal as Int: return .int(intVal)
     case let stringVal as String: return .string(stringVal)
+    case let arrayVal as [Any]: return .array(arrayVal)
     default: return nil
     }
   }

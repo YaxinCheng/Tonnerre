@@ -12,12 +12,14 @@ enum SettingType {
   case int(_ value: Int)
   case string(_ value: String)
   case bool(_ value: Bool)
+  case array(_ value: [Any])
   
   var rawValue: Any {
     switch self {
     case .int(let value): return value
     case .bool(let value): return value
     case .string(let value): return value
+    case .array(let value): return value
     }
   }
   
@@ -26,6 +28,7 @@ enum SettingType {
     case let stringVal as String: self = .string(stringVal)
     case let intVal as Int: self = .int(intVal)
     case let boolVal as Bool: self = .bool(boolVal)
+    case let arrayVal as [Any]: self = .array(arrayVal)
     default: return nil
     }
   }
@@ -46,5 +49,11 @@ extension SettingType: ExpressibleByIntegerLiteral {
 extension SettingType: ExpressibleByBooleanLiteral {
   init(booleanLiteral value: Bool) {
     self = .bool(value)
+  }
+}
+
+extension SettingType: ExpressibleByArrayLiteral {
+  init(arrayLiteral elements: Any...) {
+    self = .array(elements)
   }
 }
