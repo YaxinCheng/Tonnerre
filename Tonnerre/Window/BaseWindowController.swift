@@ -21,13 +21,11 @@ final class BaseWindowController: NSWindowController, NSWindowDelegate {
       window?.setFrameOrigin(NSPoint(x: max(x, 0), y: max(y, 0)))
     } else {
       guard
-        let screenSize = NSScreen.main,
+        let screenSize = NSScreen.main?.frame.size,
         let myWindow = window
       else { return }
       let x = screenSize.width / 2 - myWindow.frame.width / 2
       let y = screenSize.height * 5 / 6
-      userDefault.set(screenSize.width, forKey: "screenWidth")
-      userDefault.set(screenSize.height, forKey: "screenHeight")
       myWindow.setFrameOrigin(NSPoint(x: x, y: y))
     }
     #endif

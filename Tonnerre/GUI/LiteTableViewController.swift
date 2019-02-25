@@ -250,7 +250,7 @@ extension LiteTableViewController {
       print("Double click trigered (\(String.CMD) Q)")
       #else
       TonnerreHelper.terminate()
-      exit(0)
+      NSApp.terminate(self)
       #endif
     case (.ongoing(count: let count), _) where count == 1:
       delegate?.updatePlaceholder(string: " Double click \(String.CMD) Q to exit")

@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let centre = NotificationCenter.default
     let notifyAndExit: (Notification) -> Void = { [unowned self] _ in
       if self.indexingManager.documentFinished && self.indexingManager.defaultFinished {
-        exit(0)
+        NSApp.terminate(self)
       }
     }
     centre.addObserver(forName: .defaultIndexingDidFinish, object: nil, queue: .main, using: notifyAndExit)
