@@ -14,16 +14,15 @@ final class DisableManager {
   /// Shared instance of a disable manager
   static let shared = DisableManager()
   
-  private let disabledIDsKey = "Tonnerre.Providers.Disabled.IDs"
   /// A set of ids of providers that are disabled
   private(set) var disabledIDs: Set<String> {
     get {
-      let userDefault = UserDefaults.shared
-      let ids = (userDefault.array(forKey: disabledIDsKey) as? [String]) ?? []
-      return Set(ids)
+      switch TonnerreSettings.get(fromKey: .disabledServices) {
+      case .array(let value)? where value is [String]: return Set(value as! [String])
+      default: return []
+      }
     } set {
-      let userDefault = UserDefaults.shared
-      userDefault.set(Array(newValue), forKey: disabledIDsKey)
+      TonnerreSettings.set(.array(Array(newValue)), forKey: .disabledServices)
     }
   }
   
