@@ -184,10 +184,6 @@ struct JSON {
   func serialized() throws -> Data {
     return try JSONSerialization.data(withJSONObject: rawValue, options: .prettyPrinted)
   }
-  
-  func mapValue<T>(_ transform: (_ value: Any) throws -> T) rethrows -> [T] {
-    return try self.map { try transform($0.value) }
-  }
 }
 
 // MARK: - Subscripts & traverse

@@ -18,9 +18,7 @@ protocol TaggedListDelegate: class {
 final class TaggedList<T: Hashable> {
   private var storage: [[T]] = []
   private var tagToIndex: [T : Int] = [:]
-  var tags: [T] {
-    return Array(tagToIndex.keys)
-  }
+  
   private class IndexCache {
     var prevRequest: Int
     var prevGroup: Int

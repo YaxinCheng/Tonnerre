@@ -20,12 +20,6 @@ final class TonnerreFieldController: NSViewController {
   @IBOutlet weak var placeholderWidth: NSLayoutConstraint!
   private var lastQuery: String = ""
   
-  /// A string component on from the beginning of the stringValue in textField to the first space character
-  var firstValue: String {
-    guard let spaceIndex = stringValue.firstIndex(of: " ") else { return stringValue }
-    return String(stringValue[..<spaceIndex])
-  }
-  
   /// Reset the icon back to Tonnerre app icon. Used to reset the colour
   func resetIconView(check: Bool = false) {
     if iconView.image === #imageLiteral(resourceName: "tonnerre") || !check {

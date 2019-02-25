@@ -25,10 +25,6 @@ extension NSImage {
     return fetchApplicationIcon(by: "com.apple.calculator" as CFString) ?? #imageLiteral(resourceName: "notFound")
   }
   
-  static var notes: NSImage? {
-    return fetchApplicationIcon(by: "com.apple.calculator" as CFString)
-  }
-  
   fileprivate static func fetchApplicationIcon(by bundleID: CFString) -> NSImage? {
     guard let appURL = (LSCopyApplicationURLsForBundleIdentifier(bundleID, nil)?
       .takeRetainedValue() as? [URL])?.first else { return nil }
