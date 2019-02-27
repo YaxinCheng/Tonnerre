@@ -66,4 +66,8 @@ struct BuiltInProviderMap {
   static func retrieveType(baseOnID id: String) -> BuiltInProvider.Type? {
     return IDtoStruct[id]
   }
+  
+  static func extractID(from provider: BuiltInProvider.Type) -> String {
+    return "Tonnerre.Provider.BuiltIn.\(provider.self)"
+  }
 }

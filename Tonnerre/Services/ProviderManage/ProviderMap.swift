@@ -13,7 +13,7 @@ enum ProviderMapError: Error {
   case idExists(id: String)
 }
 
-final class ProviderMap {
+final class ProviderMap: EnvService {
   static let shared = ProviderMap()
   private(set) var registeredProviders: [String: ServiceProvider] = [:]
   
@@ -41,11 +41,11 @@ final class ProviderMap {
     }
   }
   
-  func start() {
+  func setup() {
     listener.start()
   }
   
-  func stop() {
+  func tearDown() {
     listener.stop()
   }
   

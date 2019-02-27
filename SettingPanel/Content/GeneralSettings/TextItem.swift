@@ -12,7 +12,7 @@ struct TextItem: SettingItem {
   var settingKey: String? {
     return id.rawValue
   }
-  let id: TonnerreSettings.SettingKey
+  let id: SettingKey
   let name: String
   let content: String
 
@@ -24,7 +24,7 @@ struct TextItem: SettingItem {
 
   let displayIdentifier: NSUserInterfaceItemIdentifier = .textCell
 
-  var settingValue: SettingType? {
+  var settingValue: SettingValue? {
     get {
       return TonnerreSettings.get(fromKey: id)
     } set {

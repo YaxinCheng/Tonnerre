@@ -12,7 +12,7 @@ struct BoolItem: SettingItem {
   var settingKey: String? {
     return id.rawValue
   }
-  let id: TonnerreSettings.SettingKey
+  let id: SettingKey
   let name: String
   let content: String
   

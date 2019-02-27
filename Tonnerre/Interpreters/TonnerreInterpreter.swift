@@ -19,11 +19,6 @@ final class TonnerreInterpreter {
   static var serviceIDTrie = ServiceIDTrie(array: BuiltInProviderMap.IDtoKeyword.map { ($1, $0) })
   private let session = TonnerreSession.shared
   
-  init() {
-    ProviderMap.shared.start()
-    ClipboardService.monitor.start()
-  }
-  
   func interpret(input: String) -> TaggedList<ServicePack> {
     let tokens = tokenize(input: input)
     guard !(tokens.first?.isEmpty ?? false) else { return [] }

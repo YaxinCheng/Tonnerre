@@ -19,14 +19,16 @@ class GeneralCell: SettingCell {
   override func viewWillAppear() {
     super.viewWillAppear()
     
-//    deleteButton.isHidden = indexPath.section == 0
     view.menu = createMenu(withName: item.name)
   }
   
   private func createMenu(withName name: String) -> NSMenu {
     let menu = NSMenu(title: "Setting")
-    menu.addItem(NSMenuItem(title: "Set \"\(name)\" as Default Provider",
-      action: #selector(setDefaultProvider(_:)), keyEquivalent: ""))
+    if let id = item.settingKey,
+      !DisableManager.shared.isDisabled(providerID: id) {
+      menu.addItem(NSMenuItem(title: "Set \"\(name)\" as Default Provider",
+        action: #selector(setDefaultProvider(_:)), keyEquivalent: ""))
+    }
     if indexPath.section > 0 {
       menu.addItem(NSMenuItem(title: "Delete \"\(name)\"",
         action: #selector(deleteProvider(_:)), keyEquivalent: ""))
@@ -66,7 +68,10 @@ class GeneralCell: SettingCell {
   }
   
   @objc private func setDefaultProvider(_ sender: Any) {
-    guard let id = item.settingKey else { return }
+    guard
+      let id = item.settingKey,
+      !DisableManager.shared.isDisabled(providerID: id)
+    else { return }
     DefaultProvider.id = id
   }
 }

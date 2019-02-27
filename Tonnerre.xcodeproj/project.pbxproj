@@ -112,6 +112,17 @@
 		148414A520C85AC3008FD68E /* DisplayContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A420C85AC3008FD68E /* DisplayContainer.swift */; };
 		148414A720C8675F008FD68E /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148414A620C8675F008FD68E /* URLService.swift */; };
 		148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */; };
+		14A0740C2225F1B500609A57 /* SettingSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0740B2225F1B500609A57 /* SettingSubscriber.swift */; };
+		14A0740E2226347F00609A57 /* SettingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0740D2226347F00609A57 /* SettingObserver.swift */; };
+		14A074102226386200609A57 /* SettingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0740F2226386200609A57 /* SettingKey.swift */; };
+		14A074112226387100609A57 /* SettingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0740F2226386200609A57 /* SettingKey.swift */; };
+		14A07413222639B200609A57 /* SettingSubscriberTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A07412222639B200609A57 /* SettingSubscriberTest.swift */; };
+		14A074172226D52800609A57 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074162226D52800609A57 /* Environment.swift */; };
+		14A074192226D65000609A57 /* EnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074182226D65000609A57 /* EnvService.swift */; };
+		14A0741C2226DF7300609A57 /* CacheEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741B2226DF7300609A57 /* CacheEnvService.swift */; };
+		14A0741E2226DFDE00609A57 /* SupportFoldersEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741D2226DFDE00609A57 /* SupportFoldersEnvService.swift */; };
+		14A074202226E1A300609A57 /* DefaultSettingsEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741F2226E1A300609A57 /* DefaultSettingsEnvService.swift */; };
+		14A074222226E27300609A57 /* HelperEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074212226E27300609A57 /* HelperEnvService.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
 		14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */; };
@@ -147,8 +158,8 @@
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
 		14D5185F21B4996A00C93E7C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185E21B4996A00C93E7C /* CellView.swift */; };
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
-		14DAE5C82208E4E2001009CA /* SettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingType.swift */; };
-		14DAE5C92208FF21001009CA /* SettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingType.swift */; };
+		14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
+		14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB560821BDCE88006C26C0 /* TintedImageView.swift */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
@@ -371,6 +382,16 @@
 		148414A420C85AC3008FD68E /* DisplayContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayContainer.swift; sourceTree = "<group>"; };
 		148414A620C8675F008FD68E /* URLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
 		148DF5D420CB234E00A2E23E /* GoogleTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateService.swift; sourceTree = "<group>"; };
+		14A0740B2225F1B500609A57 /* SettingSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSubscriber.swift; sourceTree = "<group>"; };
+		14A0740D2226347F00609A57 /* SettingObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingObserver.swift; sourceTree = "<group>"; };
+		14A0740F2226386200609A57 /* SettingKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingKey.swift; sourceTree = "<group>"; };
+		14A07412222639B200609A57 /* SettingSubscriberTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSubscriberTest.swift; sourceTree = "<group>"; };
+		14A074162226D52800609A57 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		14A074182226D65000609A57 /* EnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvService.swift; sourceTree = "<group>"; };
+		14A0741B2226DF7300609A57 /* CacheEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheEnvService.swift; sourceTree = "<group>"; };
+		14A0741D2226DFDE00609A57 /* SupportFoldersEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFoldersEnvService.swift; sourceTree = "<group>"; };
+		14A0741F2226E1A300609A57 /* DefaultSettingsEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsEnvService.swift; sourceTree = "<group>"; };
+		14A074212226E27300609A57 /* HelperEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperEnvService.swift; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
 		14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
@@ -408,7 +429,7 @@
 		14D5185421B4875B00C93E7C /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
 		14D5185E21B4996A00C93E7C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
-		14DAE5C72208E4E2001009CA /* SettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingType.swift; sourceTree = "<group>"; };
+		14DAE5C72208E4E2001009CA /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
 		14DB560821BDCE88006C26C0 /* TintedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImageView.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
@@ -695,6 +716,7 @@
 				14AEB2F920BF5E6600D10D44 /* Extensions */,
 				14AEB2D820BEF4A800D10D44 /* GUI */,
 				145CF983218A5341003B9468 /* Tools */,
+				14A0741A2226D69F00609A57 /* Environment */,
 				146C052B21BC68BD0028B076 /* Window */,
 				14DB560A21BDCF99006C26C0 /* Settings */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
@@ -718,6 +740,7 @@
 				14FA02C921E40C3A0058E936 /* BuiltInProviderMapTest.swift */,
 				14FA02CB21E40E620058E936 /* ProviderMapTest.swift */,
 				14FA02CD21E43CCF0058E936 /* ClipboardMonitorTest.swift */,
+				14A07412222639B200609A57 /* SettingSubscriberTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -774,6 +797,19 @@
 				148414A620C8675F008FD68E /* URLService.swift */,
 			);
 			path = Prioritized;
+			sourceTree = "<group>";
+		};
+		14A0741A2226D69F00609A57 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				14A074182226D65000609A57 /* EnvService.swift */,
+				14A074162226D52800609A57 /* Environment.swift */,
+				14A0741B2226DF7300609A57 /* CacheEnvService.swift */,
+				14A0741D2226DFDE00609A57 /* SupportFoldersEnvService.swift */,
+				14A0741F2226E1A300609A57 /* DefaultSettingsEnvService.swift */,
+				14A074212226E27300609A57 /* HelperEnvService.swift */,
+			);
+			path = Environment;
 			sourceTree = "<group>";
 		};
 		14AEB2D820BEF4A800D10D44 /* GUI */ = {
@@ -873,7 +909,6 @@
 				146C053721BDAEB40028B076 /* ContentViewDelegate.swift */,
 				14D5184B21B460BF00C93E7C /* SettingItem.swift */,
 				14E49CDD21B87A8C0018527A /* SettingFetcher.swift */,
-				14DAE5C72208E4E2001009CA /* SettingType.swift */,
 				1440330821CEC6220026E822 /* WaterfallLayout */,
 				146C054021BDBA360028B076 /* GeneralSettings */,
 				146C052821BC52C80028B076 /* Providers */,
@@ -902,6 +937,10 @@
 			isa = PBXGroup;
 			children = (
 				14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */,
+				14A0740F2226386200609A57 /* SettingKey.swift */,
+				14DAE5C72208E4E2001009CA /* SettingValue.swift */,
+				14A0740B2225F1B500609A57 /* SettingSubscriber.swift */,
+				14A0740D2226347F00609A57 /* SettingObserver.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1293,6 +1332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14A074202226E1A300609A57 /* DefaultSettingsEnvService.swift in Sources */,
 				14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */,
 				14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */,
 				14FEE2782193D93B009A4798 /* DisableManager+Provider.swift in Sources */,
@@ -1315,8 +1355,10 @@
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
 				144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */,
+				14A0741C2226DF7300609A57 /* CacheEnvService.swift in Sources */,
 				14F5701F21A9E7A000AE269B /* TonnerreHelper.swift in Sources */,
 				1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */,
+				14A074102226386200609A57 /* SettingKey.swift in Sources */,
 				14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */,
 				14454D21219887C6008F1A8B /* TNEServiceProvider.swift in Sources */,
 				14CD694721F6BAB000FE6205 /* ContainerConfig.swift in Sources */,
@@ -1333,8 +1375,9 @@
 				1405334420F66D2E00C289CF /* ClipboardService.swift in Sources */,
 				14454D172197C04C008F1A8B /* ProviderMap.swift in Sources */,
 				14F015D421010ABB00537160 /* ChromeBMService.swift in Sources */,
-				14DAE5C92208FF21001009CA /* SettingType.swift in Sources */,
+				14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
+				14A074222226E27300609A57 /* HelperEnvService.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
@@ -1346,6 +1389,9 @@
 				146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */,
 				1449E5882133521A00500BF4 /* NSImage+Tint.swift in Sources */,
 				14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */,
+				14A0740C2225F1B500609A57 /* SettingSubscriber.swift in Sources */,
+				14A0741E2226DFDE00609A57 /* SupportFoldersEnvService.swift in Sources */,
+				14A0740E2226347F00609A57 /* SettingObserver.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* DisplayItem.swift in Sources */,
 				14F2302D214206F100B7A0FB /* String+Extension.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
@@ -1357,6 +1403,7 @@
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14C410342187ACCC00CEA1E9 /* PreviewPopover.swift in Sources */,
 				143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */,
+				14A074192226D65000609A57 /* EnvService.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,
@@ -1367,6 +1414,7 @@
 				14454D192197C242008F1A8B /* TNEExecutor.swift in Sources */,
 				14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146AAE6820BDE096009AC9C6 /* FileSearchServices.swift in Sources */,
+				14A074172226D52800609A57 /* Environment.swift in Sources */,
 				145DA17420DC243D00C1E804 /* TonnerreSession.swift in Sources */,
 				14CC56D3217930510015540A /* LiteTableViewController.swift in Sources */,
 				14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */,
@@ -1378,6 +1426,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14A07413222639B200609A57 /* SettingSubscriberTest.swift in Sources */,
 				14FA02CE21E43CD00058E936 /* ClipboardMonitorTest.swift in Sources */,
 				1440330E21DADD4B0026E822 /* StringExtensionTest.swift in Sources */,
 				14FA02CC21E40E620058E936 /* ProviderMapTest.swift in Sources */,
@@ -1402,7 +1451,7 @@
 			files = (
 				146C054221BDBA490028B076 /* GeneralSettingLoader.swift in Sources */,
 				14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */,
-				14DAE5C82208E4E2001009CA /* SettingType.swift in Sources */,
+				14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */,
 				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146C053821BDAEB50028B076 /* ContentViewDelegate.swift in Sources */,
 				14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */,
@@ -1410,6 +1459,7 @@
 				14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */,
 				1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */,
 				146C053921BDAF550028B076 /* String+Extension.swift in Sources */,
+				14A074112226387100609A57 /* SettingKey.swift in Sources */,
 				146C053A21BDB10A0028B076 /* DisabledManager.swift in Sources */,
 				1438057321C84EEB00DD0685 /* BoolCell.swift in Sources */,
 				146C052521BC4D960028B076 /* Segue+Identifier.swift in Sources */,

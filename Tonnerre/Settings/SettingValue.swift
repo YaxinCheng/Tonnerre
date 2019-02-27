@@ -1,5 +1,5 @@
 //
-//  SettingType.swift
+//  SettingValue.swift
 //  SettingPanel
 //
 //  Created by Yaxin Cheng on 2019-02-04.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SettingType {
+enum SettingValue {
   case int(_ value: Int)
   case string(_ value: String)
   case bool(_ value: Bool)
@@ -34,25 +34,25 @@ enum SettingType {
   }
 }
 
-extension SettingType: ExpressibleByStringLiteral {
+extension SettingValue: ExpressibleByStringLiteral {
   init(stringLiteral value: String) {
     self = .string(value)
   }
 }
 
-extension SettingType: ExpressibleByIntegerLiteral {
+extension SettingValue: ExpressibleByIntegerLiteral {
   init(integerLiteral value: Int) {
     self = .int(value)
   }
 }
 
-extension SettingType: ExpressibleByBooleanLiteral {
+extension SettingValue: ExpressibleByBooleanLiteral {
   init(booleanLiteral value: Bool) {
     self = .bool(value)
   }
 }
 
-extension SettingType: ExpressibleByArrayLiteral {
+extension SettingValue: ExpressibleByArrayLiteral {
   init(arrayLiteral elements: Any...) {
     self = .array(elements)
   }

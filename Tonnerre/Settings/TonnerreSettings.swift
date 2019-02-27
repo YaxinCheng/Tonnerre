@@ -8,43 +8,15 @@
 
 import Foundation
 
-/**
- Add default setting values to the UserDefault
-*/
+/// Add default setting values to the UserDefault
 struct TonnerreSettings {
   private static let userDefault = UserDefaults.shared
   
-  enum SettingKey: String {
-    case python = "settings:python"
-    case defaultProvider = "Tonnerre.Provider.Default"
-    case clipboardLimit = "Tonnerre.Provider.BuiltIn.ClipboardService:limit"
-    case warnBeforeExit = "settings:warnBeforeExit"
-    case disabledServices = "Tonnerre.Providers.Disabled.IDs"
-  }
-  
-  private static let defaultSettings: [(key: SettingKey, value: SettingType)] = [
-     (.python, "/usr/bin/python"),
-     (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch"),
-     (.clipboardLimit, 9),
-     (.warnBeforeExit, true),
-     (.disabledServices, ["Tonnerre.Provider.BuiltIn.SafariBMService",
-                          "Tonnerre.Provider.BuiltIn.ChromeBMService"])
-  ]
-  
-  static func addDefaultSetting(reset: Bool = false) {
-    let doneExecuting = userDefault.bool(forKey: "settings:finished") || reset
-    guard !doneExecuting else { return }
-    for (key, value) in defaultSettings {
-      set(value, forKey: key)
-    }
-    userDefault.set(true, forKey: "settings:finished")
-  }
-  
-  static func set(_ value: SettingType, forKey key: SettingKey) {
+  static func set(_ value: SettingValue, forKey key: SettingKey) {
     userDefault.set(value.rawValue, forKey: key.rawValue)
   }
   
-  static func get(fromKey key: SettingKey) -> SettingType? {
+  static func get(fromKey key: SettingKey) -> SettingValue? {
     guard let value = userDefault.value(forKey: key.rawValue) else { return nil }
     switch value {
     case let boolVal as Bool: return .bool(boolVal)

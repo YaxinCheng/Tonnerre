@@ -35,6 +35,11 @@ final class BaseWindow: NSPanel {
   }
   
   let hotkey: HotKey
+  static let env: Environment = {
+    let env = Environment()
+    env.setup()
+    return env
+  }()
   
   override func setFrameOrigin(_ point: NSPoint) {
     super.setFrameOrigin(point)
@@ -54,38 +59,5 @@ final class BaseWindow: NSPanel {
     level = .screenSaver
     backgroundColor = .clear
     collectionBehavior = [.ignoresCycle, .canJoinAllSpaces]
-    
-    createSupportFolders()
-    setupCache()
-    setupSettings()
-    #if RELEASE
-    TonnerreHelper.launch()
-    #endif
-  }
-  
-  private func createSupportFolders() {
-    let folders: [SupportFolders] = [.base, .indices, .services, .cache]
-    for folder in folders {
-      do {
-        guard !folder.exists else { continue }
-        try folder.create()
-      } catch {
-        #if DEBUG
-        print("Create folder error", error)
-        #endif
-      }
-    }
-  }
-  
-  private func setupCache() {
-    URLCache.shared = URLCache(
-        memoryCapacity: 1024 * 1024 * 5,
-        diskCapacity: 1024 * 1024 * 25,
-        diskPath: SupportFolders.cache.path.path
-    )
-  }
-  
-  private func setupSettings() {
-    TonnerreSettings.addDefaultSetting()
   }
 }
