@@ -1,5 +1,5 @@
 //
-//  EnvService.swift
+//  EnvArg.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2019-02-27.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol EnvService {
+protocol EnvArg {
   func setup()
   func tearDown()
 }
 
-extension EnvService {
+extension EnvArg {
   func tearDown() {}
 }

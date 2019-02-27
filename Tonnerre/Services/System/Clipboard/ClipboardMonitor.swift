@@ -8,7 +8,7 @@
 
 import Cocoa
 
-final class ClipboardMonitor: EnvService {
+final class ClipboardMonitor {
   private let pasteboard: NSPasteboard
   private var changedCount: Int
   private let `repeat`: Bool
@@ -25,7 +25,11 @@ final class ClipboardMonitor: EnvService {
     self.callback = callback
   }
   
-  func setup() {
+  deinit {
+    stop()
+  }
+  
+  func start() {
     guard !(timer?.isValid ?? false) else { return }
     timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: `repeat`) { [weak self] _ in
       guard
@@ -46,7 +50,7 @@ final class ClipboardMonitor: EnvService {
     timer?.fire()
   }
   
-  func tearDown() {
+  func stop() {
     guard timer?.isValid ?? false else { return }
     timer?.invalidate()
     timer = nil

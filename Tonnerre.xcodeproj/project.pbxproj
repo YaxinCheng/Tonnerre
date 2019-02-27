@@ -118,11 +118,13 @@
 		14A074112226387100609A57 /* SettingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0740F2226386200609A57 /* SettingKey.swift */; };
 		14A07413222639B200609A57 /* SettingSubscriberTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A07412222639B200609A57 /* SettingSubscriberTest.swift */; };
 		14A074172226D52800609A57 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074162226D52800609A57 /* Environment.swift */; };
-		14A074192226D65000609A57 /* EnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074182226D65000609A57 /* EnvService.swift */; };
-		14A0741C2226DF7300609A57 /* CacheEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741B2226DF7300609A57 /* CacheEnvService.swift */; };
-		14A0741E2226DFDE00609A57 /* SupportFoldersEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741D2226DFDE00609A57 /* SupportFoldersEnvService.swift */; };
-		14A074202226E1A300609A57 /* DefaultSettingsEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741F2226E1A300609A57 /* DefaultSettingsEnvService.swift */; };
-		14A074222226E27300609A57 /* HelperEnvService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074212226E27300609A57 /* HelperEnvService.swift */; };
+		14A074192226D65000609A57 /* EnvArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074182226D65000609A57 /* EnvArg.swift */; };
+		14A0741C2226DF7300609A57 /* CacheArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741B2226DF7300609A57 /* CacheArg.swift */; };
+		14A0741E2226DFDE00609A57 /* SupportFoldersArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741D2226DFDE00609A57 /* SupportFoldersArg.swift */; };
+		14A074202226E1A300609A57 /* DefaultSettingsArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0741F2226E1A300609A57 /* DefaultSettingsArg.swift */; };
+		14A074222226E27300609A57 /* HelperArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074212226E27300609A57 /* HelperArg.swift */; };
+		14A0742422271ED500609A57 /* ClipboardArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0742322271ED500609A57 /* ClipboardArg.swift */; };
+		14A07426222722C300609A57 /* ProviderMapArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A07425222722C300609A57 /* ProviderMapArg.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
 		14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */; };
@@ -387,11 +389,13 @@
 		14A0740F2226386200609A57 /* SettingKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingKey.swift; sourceTree = "<group>"; };
 		14A07412222639B200609A57 /* SettingSubscriberTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSubscriberTest.swift; sourceTree = "<group>"; };
 		14A074162226D52800609A57 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		14A074182226D65000609A57 /* EnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvService.swift; sourceTree = "<group>"; };
-		14A0741B2226DF7300609A57 /* CacheEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheEnvService.swift; sourceTree = "<group>"; };
-		14A0741D2226DFDE00609A57 /* SupportFoldersEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFoldersEnvService.swift; sourceTree = "<group>"; };
-		14A0741F2226E1A300609A57 /* DefaultSettingsEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsEnvService.swift; sourceTree = "<group>"; };
-		14A074212226E27300609A57 /* HelperEnvService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperEnvService.swift; sourceTree = "<group>"; };
+		14A074182226D65000609A57 /* EnvArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvArg.swift; sourceTree = "<group>"; };
+		14A0741B2226DF7300609A57 /* CacheArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheArg.swift; sourceTree = "<group>"; };
+		14A0741D2226DFDE00609A57 /* SupportFoldersArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFoldersArg.swift; sourceTree = "<group>"; };
+		14A0741F2226E1A300609A57 /* DefaultSettingsArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsArg.swift; sourceTree = "<group>"; };
+		14A074212226E27300609A57 /* HelperArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperArg.swift; sourceTree = "<group>"; };
+		14A0742322271ED500609A57 /* ClipboardArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardArg.swift; sourceTree = "<group>"; };
+		14A07425222722C300609A57 /* ProviderMapArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMapArg.swift; sourceTree = "<group>"; };
 		14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreIconView.swift; sourceTree = "<group>"; };
 		14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
@@ -802,12 +806,14 @@
 		14A0741A2226D69F00609A57 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
-				14A074182226D65000609A57 /* EnvService.swift */,
 				14A074162226D52800609A57 /* Environment.swift */,
-				14A0741B2226DF7300609A57 /* CacheEnvService.swift */,
-				14A0741D2226DFDE00609A57 /* SupportFoldersEnvService.swift */,
-				14A0741F2226E1A300609A57 /* DefaultSettingsEnvService.swift */,
-				14A074212226E27300609A57 /* HelperEnvService.swift */,
+				14A074182226D65000609A57 /* EnvArg.swift */,
+				14A0741B2226DF7300609A57 /* CacheArg.swift */,
+				14A0741D2226DFDE00609A57 /* SupportFoldersArg.swift */,
+				14A0741F2226E1A300609A57 /* DefaultSettingsArg.swift */,
+				14A074212226E27300609A57 /* HelperArg.swift */,
+				14A0742322271ED500609A57 /* ClipboardArg.swift */,
+				14A07425222722C300609A57 /* ProviderMapArg.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -1332,7 +1338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14A074202226E1A300609A57 /* DefaultSettingsEnvService.swift in Sources */,
+				14A074202226E1A300609A57 /* DefaultSettingsArg.swift in Sources */,
 				14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */,
 				14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */,
 				14FEE2782193D93B009A4798 /* DisableManager+Provider.swift in Sources */,
@@ -1354,8 +1360,9 @@
 				1484148520C70263008FD68E /* ApplicationService.swift in Sources */,
 				14AEB30720C210EB00D10D44 /* BaseWindowController.swift in Sources */,
 				14561B9520C4803A0057B4C1 /* AmazonSearch.swift in Sources */,
+				14A0742422271ED500609A57 /* ClipboardArg.swift in Sources */,
 				144E0C1820EEA5F100E4F2DA /* ClipboardMonitor.swift in Sources */,
-				14A0741C2226DF7300609A57 /* CacheEnvService.swift in Sources */,
+				14A0741C2226DF7300609A57 /* CacheArg.swift in Sources */,
 				14F5701F21A9E7A000AE269B /* TonnerreHelper.swift in Sources */,
 				1449E56D212A2AB000500BF4 /* UserDefaults+Extension.swift in Sources */,
 				14A074102226386200609A57 /* SettingKey.swift in Sources */,
@@ -1364,6 +1371,7 @@
 				14CD694721F6BAB000FE6205 /* ContainerConfig.swift in Sources */,
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
+				14A07426222722C300609A57 /* ProviderMapArg.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
@@ -1377,7 +1385,7 @@
 				14F015D421010ABB00537160 /* ChromeBMService.swift in Sources */,
 				14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */,
 				1470514420B1BEF900F6FBE8 /* AppDelegate.swift in Sources */,
-				14A074222226E27300609A57 /* HelperEnvService.swift in Sources */,
+				14A074222226E27300609A57 /* HelperArg.swift in Sources */,
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
@@ -1390,7 +1398,7 @@
 				1449E5882133521A00500BF4 /* NSImage+Tint.swift in Sources */,
 				14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */,
 				14A0740C2225F1B500609A57 /* SettingSubscriber.swift in Sources */,
-				14A0741E2226DFDE00609A57 /* SupportFoldersEnvService.swift in Sources */,
+				14A0741E2226DFDE00609A57 /* SupportFoldersArg.swift in Sources */,
 				14A0740E2226347F00609A57 /* SettingObserver.swift in Sources */,
 				14AEB2E220BF0F3400D10D44 /* DisplayItem.swift in Sources */,
 				14F2302D214206F100B7A0FB /* String+Extension.swift in Sources */,
@@ -1403,7 +1411,7 @@
 				14561B9320C4686C0057B4C1 /* GoogleSearch.swift in Sources */,
 				14C410342187ACCC00CEA1E9 /* PreviewPopover.swift in Sources */,
 				143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */,
-				14A074192226D65000609A57 /* EnvService.swift in Sources */,
+				14A074192226D65000609A57 /* EnvArg.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,

@@ -11,6 +11,13 @@ import UserNotifications
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+  
+  let env = Environment()
+  
+  func applicationWillFinishLaunching(_ notification: Notification) {
+    env.setup()
+  }
+  
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
     if #available(OSX 10.14, *) {

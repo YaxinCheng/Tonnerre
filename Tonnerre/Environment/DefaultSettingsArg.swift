@@ -1,5 +1,5 @@
 //
-//  DefaultSettingsEnvService.swift
+//  DefaultSettingsArg.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2019-02-27.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DefaultSettingEnvService: EnvService {
+struct DefaultSettingArg: EnvArg {
   let defaultSettings: [(key: SettingKey, value: SettingValue)] = [
     (.python, "/usr/bin/python"),
     (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch"),

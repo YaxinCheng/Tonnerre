@@ -18,13 +18,6 @@ struct ClipboardService: BuiltInProvider {
   let icon: NSImage = #imageLiteral(resourceName: "clipboard")
   let defered: Bool = true
   
-  static let monitor: ClipboardMonitor = {
-    return ClipboardMonitor(interval: 1, repeat: true) { (value, type) in
-      let limit = TonnerreSettings.get(fromKey: .clipboardLimit)?.rawValue as? Int ?? 9
-      CBRecord.recordInsert(value: value, type: type.rawValue, limit: max(limit, 1))
-    }
-  }()
-  
   private func wrap(record: CBRecord) -> DisplayItem? {
     guard
       let type = record.type,

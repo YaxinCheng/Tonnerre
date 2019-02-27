@@ -35,11 +35,6 @@ final class BaseWindow: NSPanel {
   }
   
   let hotkey: HotKey
-  static let env: Environment = {
-    let env = Environment()
-    env.setup()
-    return env
-  }()
   
   override func setFrameOrigin(_ point: NSPoint) {
     super.setFrameOrigin(point)
