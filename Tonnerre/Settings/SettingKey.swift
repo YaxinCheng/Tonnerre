@@ -14,4 +14,5 @@ enum SettingKey: String {
   case clipboardLimit = "Tonnerre.Provider.BuiltIn.ClipboardService:limit"
   case warnBeforeExit = "settings:warnBeforeExit"
   case disabledServices = "Tonnerre.Providers.Disabled.IDs"
+  case helperDidExit = "Tonnerre.helper.didExit"
 }

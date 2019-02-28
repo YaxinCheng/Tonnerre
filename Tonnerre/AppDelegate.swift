@@ -57,6 +57,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let informativeText = "\(successCount) " + (successCount > 1 ? "services" : "service") + " installed successfully"
     LocalNotification(title: title, content: informativeText, muted: true).send()
   }
+  
+  func applicationWillTerminate(_ notification: Notification) {
+    TonnerreHelper.terminate()
+  }
 
   // MARK: - Core Data stack
 

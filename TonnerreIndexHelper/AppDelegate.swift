@@ -32,6 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationWillTerminate(_ aNotification: Notification) {
     // Insert code here to tear down your application
+    TonnerreSettings.set(true, forKey: .helperDidExit)
   }
 
   // MARK: - Core Data stack

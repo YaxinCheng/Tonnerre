@@ -125,6 +125,9 @@
 		14A074222226E27300609A57 /* HelperArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A074212226E27300609A57 /* HelperArg.swift */; };
 		14A0742422271ED500609A57 /* ClipboardArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0742322271ED500609A57 /* ClipboardArg.swift */; };
 		14A07426222722C300609A57 /* ProviderMapArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A07425222722C300609A57 /* ProviderMapArg.swift */; };
+		14A074272228898700609A57 /* TonnerreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */; };
+		14A074282228899100609A57 /* SettingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A0740F2226386200609A57 /* SettingKey.swift */; };
+		14A074292228899400609A57 /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */; };
 		14AEB2D720BEEFF700D10D44 /* TonnerreIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D620BEEFF700D10D44 /* TonnerreIconView.swift */; };
 		14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB2D920BEFDA900D10D44 /* ServiceCell.swift */; };
@@ -1319,9 +1322,12 @@
 			files = (
 				146AD8D820C9C0C400D9E591 /* SearchMode.swift in Sources */,
 				142C5943215D842800D819F2 /* UpgradeHandler.swift in Sources */,
+				14A074282228899100609A57 /* SettingKey.swift in Sources */,
 				146AD8DC20C9C10200D9E591 /* Notification+Names.swift in Sources */,
 				146AD8D520C9C0B200D9E591 /* CoreIndexing.swift in Sources */,
+				14A074292228899400609A57 /* SettingValue.swift in Sources */,
 				146AD8DE20C9C12A00D9E591 /* Common.swift in Sources */,
+				14A074272228898700609A57 /* TonnerreSettings.swift in Sources */,
 				146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */,
 				1440331421DD6FCD0026E822 /* PathIterator.swift in Sources */,
 				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,

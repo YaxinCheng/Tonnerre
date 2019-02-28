@@ -26,6 +26,7 @@ enum TonnerreHelper {
     let path = Bundle.main.bundleURL.appendingPathComponent("/Contents/Applications/TonnerreIndexHelper.app")
     do {
       try NSWorkspace.shared.launchApplication(at: path, options: .andHide, configuration: [:])
+      TonnerreSettings.remove(forKey: .helperDidExit)
     } catch {
       #if DEBUG
       print("TonnerreHelper launch error: ", error)
@@ -36,5 +37,6 @@ enum TonnerreHelper {
   static func terminate() {
     guard let runningInstance = instance else { return }
     runningInstance.terminate()
+    TonnerreSettings.set(true, forKey: .helperDidExit)
   }
 }

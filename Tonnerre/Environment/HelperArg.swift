@@ -8,7 +8,9 @@
 
 import Foundation
 
-class HelperArg: EnvArg {
+class HelperArg: EnvArg, SettingSubscriber {
+  let subscribedKey: SettingKey = .helperDidExit
+  
   func setup() {
     #if RELEASE
     TonnerreHelper.launch()
@@ -19,5 +21,14 @@ class HelperArg: EnvArg {
     #if RELEASE
     TonnerreHelper.terminate()
     #endif
+  }
+  
+  func settingDidChange(_ changes: [NSKeyValueChangeKey : Any]) {
+    switch changes[.newKey] {
+    case let exitFlag as Bool:
+      if exitFlag == true { setup() }
+      else { tearDown() }
+    default: return
+    }
   }
 }
