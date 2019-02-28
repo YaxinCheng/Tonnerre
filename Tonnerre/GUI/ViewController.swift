@@ -136,14 +136,20 @@ extension ViewController: LiteTableVCDelegate {
   }
   
   func serve(_ servicePack: ServicePack, withCmd: Bool) {
-    guard case .service(provider: let provider, content: let service) = servicePack else { return }
-    DispatchQueue.global(qos: .userInitiated).async { [provider, service, withCmd] in
-      provider.serve(service: service, withCmd: withCmd)
-    }
-    DispatchQueue.main.async { [weak self, provider] in // hide the window, and avoid the beeping sound
-      (self?.view.window as? BaseWindow)?.isHidden = true
-      self?.fieldVC.stringValue = ""
-      LaunchOrder.save(with: provider.id)
+    switch servicePack {
+    case .provider(let provider):
+      fieldVC.updateField(text: provider.keyword + (provider.argLowerBound > 0 ? " " : ""))
+      _ = fieldVC.becomeFirstResponder()
+      textDidChange(value: fieldVC.stringValue)
+    case .service(provider: let provider, content: let service):
+      DispatchQueue.global(qos: .userInitiated).async { [provider, service, withCmd] in
+        provider.serve(service: service, withCmd: withCmd)
+      }
+      DispatchQueue.main.async { [weak self, provider] in // hide the window, and avoid the beeping sound
+        (self?.view.window as? BaseWindow)?.isHidden = true
+        self?.fieldVC.stringValue = ""
+        LaunchOrder.save(with: provider.id)
+      }
     }
   }
 }

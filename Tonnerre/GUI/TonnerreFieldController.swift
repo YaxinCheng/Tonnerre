@@ -96,6 +96,19 @@ final class TonnerreFieldController: NSViewController {
     if appendingSpace { stringValue = (stringValue + " ").truncatedSpaces }
   }
   
+  /// Update the textField with given string
+  ///
+  /// This method replaces the textField content, and adjust the placeholderField
+  /// - parameter text: the target text needs to be changed to
+  func updateField(text: String) {
+    defer {
+      textField.window?.makeFirstResponder(nil)
+      hidePlaceholderField()
+      controlTextDidChange(Notification(name: .init(""), object: textField))
+    }
+    stringValue = text
+  }
+  
   /// Append the first non-empty string component separated by whitespace of
   /// the placeholder to the existing stringValue
   /// - parameter placeholder: given placeholder
