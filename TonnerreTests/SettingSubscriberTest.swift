@@ -15,9 +15,17 @@ class SettingSubscriberTest: XCTestCase {
   
   private class mockSubscriber: SettingSubscriber {
     let subscribedKey: SettingKey = SettingSubscriberTest.testSubscribedKey
+    var count = 0
     
     func settingDidChange(_ changes: [NSKeyValueChangeKey : Any]) {
-      XCTAssertTrue(changes[.newKey] is String && changes[.kindKey] is Bool)
+      if count == 0 {
+        XCTAssertTrue(changes[.newKey] is Bool && changes[.kindKey] is Bool)
+      } else if count == 1 {
+        XCTAssertTrue(changes[.newKey] is String && changes[.kindKey] is Bool)
+      } else {
+        XCTFail("Weird too many attempts")
+      }
+      count += 1
     }
   }
   

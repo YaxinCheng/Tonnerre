@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Existing keys for settings
 enum SettingKey: String {
   case python = "settings:python"
   case defaultProvider = "Tonnerre.Provider.Default"

@@ -8,11 +8,14 @@
 
 import Foundation
 
+/// The class that actually listens to changes in the setting
+/// and calls the subscribers
 class SettingObserver: NSObject {
-  private class WeakRef<T: SettingSubscriber>: SettingSubscriber {
-    weak var value: T!
+  /// Weak reference wrap. Used to wrap subscribers
+  private class WeakRef: SettingSubscriber {
+    weak var value: SettingSubscriber!
     
-    init(_ value: T) {
+    init(_ value: SettingSubscriber) {
       self.value = value
     }
     
@@ -25,13 +28,17 @@ class SettingObserver: NSObject {
     }
   }
   
+  /// All the subscribers registered
   private var subscribers: [SettingKey : [SettingSubscriber]] = [:]
   private let userDefault = UserDefaults.shared
   
-  func register<T: SettingSubscriber>(subscriber: T) {
-    subscribers[subscriber.subscribedKey, default: []].append(subscriber)
-    guard (subscribers[subscriber.subscribedKey] ?? []).count == 1 else { return }
-    userDefault.addObserver(self, forKeyPath: subscriber.subscribedKey.rawValue,
+  /// Register subscriber with the key is listens to
+  /// - parameter subscriber: subscriber that listens to a certain key
+  func register(subscriber: SettingSubscriber) {
+    let weakWrapped = WeakRef(subscriber)
+    subscribers[subscriber.subscribedKey, default: []].append(weakWrapped)
+    guard (subscribers[weakWrapped.subscribedKey] ?? []).count == 1 else { return }
+    userDefault.addObserver(self, forKeyPath: weakWrapped.subscribedKey.rawValue,
                             options: [.new, .initial], context: nil)
   }
   
@@ -41,5 +48,11 @@ class SettingObserver: NSObject {
       let settingKey = SettingKey(rawValue: keyPath)
     else { return }
     subscribers[settingKey]?.forEach { $0.settingDidChange(change ?? [:]) }
+  }
+  
+  deinit {
+    for key in subscribers.keys {
+      userDefault.removeObserver(self, forKeyPath: key.rawValue)
+    }
   }
 }

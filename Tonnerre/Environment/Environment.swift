@@ -8,16 +8,27 @@
 
 import Foundation
 
+/// System setup environment
 struct Environment {
-  private let services: [EnvArg]
+  /// Arguments in the environment
+  private let args: [EnvArg]
+  /// Setting observer
+  private let settingObserver: SettingObserver
   
   init() {
-    services = [CacheArg(), SupportFoldersArg(),
+    args = [CacheArg(), SupportFoldersArg(),
                 DefaultSettingArg(), HelperArg(),
                 ProviderMapArg(), ClipboardArg()]
+    settingObserver = SettingObserver()
   }
   
+  /// Setup environment with arguments
   func setup() {
-    services.forEach { $0.setup() }
+    for arg in args {
+      if let subscriber = arg as? SettingSubscriber {
+        settingObserver.register(subscriber: subscriber)
+      }
+      arg.setup()
+    }
   }
 }
