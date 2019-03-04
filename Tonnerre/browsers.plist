@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Safari</key>
+	<string>com.apple.safari</string>
+	<key>Google Chrome</key>
+	<string>com.google.chrome</string>
+	<key>FireFox</key>
+	<string>org.mozilla.firefox</string>
+	<key>Opera</key>
+	<string>com.operasoftware.Opera</string>
+	<key>Chromium</key>
+	<string>org.chromium.Chromium</string>
+	<key>QQBrowser</key>
+	<string>com.tencent.QQBrowser</string>
+</dict>
+</plist>

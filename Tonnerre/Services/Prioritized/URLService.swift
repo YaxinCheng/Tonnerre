@@ -25,8 +25,8 @@ struct URLService: BuiltInProvider {
     let url: URL
     if query.starts(with: "http") { url = URL(string: encodedQuery)! }
     else { url = URL(string: "https://\(encodedQuery)")! }
-    let browsers: [Browser] = [.safari, .chrome]
-        .filter { $0.appURL != nil }
+    let browsers = Browser.allCases
+        .filter { $0.installed }
         .sorted { LaunchOrder.retrieveTime(with: $0.name) > LaunchOrder.retrieveTime(with: $1.name) }
     return browsers.map {
       DisplayContainer(name: url.absoluteString, content: "Open URL in \($0.name)", icon: $0.icon!, innerItem: url, config: .browser($0)) }

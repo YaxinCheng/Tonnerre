@@ -12,56 +12,62 @@ import CoreData
 /**
 Common browsers on mac, with possible URL paths and bookmarks URLs and icons
 */
-enum Browser {
-  /**
-  Safari browser
-  */
+enum Browser: String, CaseIterable {
   case safari
-  /**
-  Google Chrome browser
-  */
-  case chrome
-  /**
-  Default browser of the system
-  */
-  case `default`
+  case chrome = "Google Chrome"
+  case fireFox
+  case chromium
+  case opera
+  case qqBrowser
+  
+  /// Fetch the default browser. If not supported, then use safari
+  static var `default`: Browser {
+    guard
+      let defaultBrowserURL = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!)
+    else { return .safari }
+    let name = defaultBrowserURL.deletingPathExtension().lastPathComponent
+    return Browser(rawValue: name) ?? .safari
+  }
+  
+  init?(rawValue: String) {
+    switch rawValue.lowercased() {
+    case "safari": self = .safari
+    case "chrome", "google chrome": self = .chrome
+    case "firefox": self = .fireFox
+    case "opera": self = .opera
+    case "qqbrowser": self = .qqBrowser
+    default: return nil
+    }
+  }
+  
+  private static let bundleIds: [String : String] = {
+    guard
+      let bundleFile = Bundle.main.url(forResource: "browsers", withExtension: "plist"),
+      let fileData = try? Data(contentsOf: bundleFile),
+      let plistContent = try? PropertyListSerialization.propertyList(from: fileData, format: nil)
+    else { return [:] }
+    return (plistContent as? [String : String]) ?? [:]
+  }()
 
-  /**
-  The URL locates the browser application
-  - Note: the appURL can be nil when the browser is not installed in the system
-  */
+  /// The URL locates the browser application
+  /// - Note: the appURL can be nil when the browser is not installed in the system
   var appURL: URL? {
-    let bundleID: CFString
-    switch self {
-    case .safari:
-      bundleID = "com.apple.safari" as CFString
-    case .chrome:
-      bundleID = "com.google.chrome" as CFString
-    case .default:
-      return NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!)
-    }
-    return (LSCopyApplicationURLsForBundleIdentifier(bundleID, nil)?
-      .takeRetainedValue() as? [URL])?.first
+    guard let bundleId = Browser.bundleIds[rawValue.capitalized] else { return nil }
+    return AppFetcher.fetchURL(bundleID: bundleId)
   }
   
-  /**
-  icon image for this browser
-  */
+  /// Indicator for if the browser is installed
+  var installed: Bool {
+    return appURL != nil
+  }
+  
+  /// icon image for this browser
   var icon: NSImage? {
-    guard let url = appURL else { return nil }
-    switch self {
-    case .safari:
-      return .safari
-    case .chrome:
-      return NSImage(contentsOf: url.appendingPathComponent("Contents/Resources/app.icns"))
-    case .default:
-      return NSWorkspace.shared.icon(forFile: url.path)
-    }
+    guard let bundleId = Browser.bundleIds[rawValue.capitalized] else { return nil }
+    return AppFetcher.fetchIcon(bundleID: bundleId)
   }
   
-  /**
-  the URL where the bookmarks file is stored
-  */
+  /// the URL where the bookmarks file is stored
   var bookMarksFile: URL? {
     guard appURL != nil else { return nil }
     switch self {
@@ -71,25 +77,12 @@ enum Browser {
     case .chrome:
       let appSupDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
       return appSupDir?.appendingPathComponent("Google/Chrome/Default/Bookmarks")
-    case .default:
-      guard let url = appURL else { return nil }
-      switch url.deletingPathExtension().lastPathComponent.lowercased() {
-      case "Safari": return Browser.safari.bookMarksFile
-      case "Chrome": return Browser.chrome.bookMarksFile
-      default: return nil
-      }
+    default: return nil
     }
   }
   
-  /**
-  The browser name
-  */
+  /// The browser name
   var name: String {
-    guard let url = appURL else { return "Not Found" }
-    switch self {
-    case .safari: return "Safari"
-    case .chrome: return "Google Chrome"
-    case .default: return url.deletingPathExtension().lastPathComponent
-    }
+    return rawValue.capitalized
   }
 }

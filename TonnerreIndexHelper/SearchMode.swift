@@ -17,7 +17,8 @@ enum SearchMode: String {
   var contentType: TonnerreIndex.ContentType {
     switch self {
     case .content: return .fileContent
-    default: return .fileName
+    case .default: return .cleanedFileName
+    case .name: return .fileName
     }
   }
   

@@ -29,6 +29,7 @@ final class BaseWindow: NSPanel {
           self.orderFrontRegardless()
         }
       }
+      TonnerreHelper.launch()
       #endif
     }
   }
