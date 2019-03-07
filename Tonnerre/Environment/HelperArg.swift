@@ -7,28 +7,12 @@
 //
 
 import Foundation
+import os
 
-class HelperArg: EnvArg, SettingSubscriber {
-  let subscribedKey: SettingKey = .helperDidExit
-  
+class HelperArg: EnvArg {
   func setup() {
     #if RELEASE
     TonnerreHelper.launch()
     #endif
-  }
-  
-  func tearDown() {
-    #if RELEASE
-    TonnerreHelper.terminate()
-    #endif
-  }
-  
-  func settingDidChange(_ changes: [NSKeyValueChangeKey : Any]) {
-    switch changes[.newKey] {
-    case let exitFlag as Bool:
-      if exitFlag == true { setup() }
-      else { tearDown() }
-    default: return
-    }
   }
 }

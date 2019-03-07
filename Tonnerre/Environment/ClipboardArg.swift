@@ -23,16 +23,12 @@ final class ClipboardArg: EnvArg, SettingSubscriber {
     clipboardMonitor.start()
   }
   
-  func tearDown() {
-    clipboardMonitor.stop()
-  }
-  
   func settingDidChange(_ changes: [NSKeyValueChangeKey : Any]) {
     switch changes[.newKey] {
     case let disabledIds as [String]:
       if disabledIds.contains(BuiltInProviderMap.extractID(from: ClipboardService.self)) {
         setup()
-      } else { tearDown() }
+      } else { clipboardMonitor.stop() }
     default: return
     }
   }

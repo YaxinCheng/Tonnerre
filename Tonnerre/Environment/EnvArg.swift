@@ -12,10 +12,4 @@ import Foundation
 protocol EnvArg {
   /// Set up the environment for this parameter
   func setup()
-  /// Remove the function from the environment
-  func tearDown()
-}
-
-extension EnvArg {
-  func tearDown() {}
 }

@@ -21,11 +21,13 @@ struct Browser: Hashable {
     return Array(bundleList.values)
   }()
   
+  /// Installed identifiable browsers
   private(set) static var installed: Set<Browser> = {
     let browsers = Browser.bundleIds.compactMap { Browser(bundleId: $0) }
     return Set(browsers)
   }()
   
+  /// Default browser on this mac
   static var `default`: Browser? {
     guard
       let defaultBrowserURL = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!),
@@ -35,10 +37,12 @@ struct Browser: Hashable {
     return defaultBrowser
   }
   
+  /// Safari browser
   static var safari: Browser? {
     return Browser(bundleId: "com.apple.safari")
   }
   
+  /// Chrome browser
   static var chrome: Browser? {
     return Browser(bundleId: "com.google.chrome")
   }
@@ -50,6 +54,7 @@ struct Browser: Hashable {
     return NSWorkspace.shared.icon(forFile: appURL.path)
   }
   
+  /// The file stores the bookmarks of this browser
   var bookMarksFile: URL? {
     switch bundleId {
     case "com.apple.safari":

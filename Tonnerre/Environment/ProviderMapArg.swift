@@ -12,8 +12,4 @@ struct ProviderMapArg: EnvArg {
   func setup() {
     ProviderMap.shared.start()
   }
-  
-  func tearDown() {
-    ProviderMap.shared.stop()
-  }
 }
