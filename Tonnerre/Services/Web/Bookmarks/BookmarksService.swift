@@ -19,7 +19,7 @@ protocol BookMarkService: BuiltInProvider {
   /**
    The browser which stores the bookmarks
   */
-  static var browser: Browser { get }
+  static var browser: Browser? { get }
   /**
    Read bookmarks data from the browser's file
    
@@ -32,15 +32,16 @@ extension BookMarkService {
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return Int.max }
   var icon: NSImage {
-    return type(of: self).browser.icon ?? #imageLiteral(resourceName: "notFound")
+    return type(of: self).browser?.icon ?? #imageLiteral(resourceName: "notFound")
   }
   
   func prepare(withInput input: [String]) -> [DisplayItem] {
+    guard let browser = Self.browser else { return [] }
     let bookMarks: [BookMark]
     do {
       bookMarks = try parseFile()
     } catch {
-      let errorTitle   = "Error loading \(type(of: self).browser.name) bookmarks"
+      let errorTitle   = "Error loading \(browser.name) bookmarks"
       let errorContent = "Please add `Tonnerre.app` to System Preference - Security & Privacy - Full Disk Access"
       let errorMsg = DisplayContainer<Error>(name: errorTitle, content: errorContent, icon: icon, innerItem: error, placeholder: "")
       return [errorMsg]
@@ -53,7 +54,7 @@ extension BookMarkService {
   }
   
   func serve(service: DisplayItem, withCmd: Bool) {
-    if let browserURL = Self.browser.appURL,
+    if let browserURL = Self.browser?.appURL,
     let innerItem = (service as? DisplayContainer<URL>)?.innerItem {
       do {
         _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])

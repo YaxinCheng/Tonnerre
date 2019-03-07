@@ -9,14 +9,14 @@
 import Cocoa
 
 struct SafariBMService: BookMarkService {
-  static let browser: Browser = .safari
+  static let browser: Browser? = .safari
   let name: String = "Safari BookMarks"
   let content: String = "Quick launch Safari Bookmarks"
   let keyword: String = "safari"
   let defered: Bool = true
   
   func parseFile() throws -> [BookMarkService.BookMark] {
-    guard let bookmarkFile = type(of: self).browser.bookMarksFile else { return [] }
+    guard let bookmarkFile = type(of: self).browser?.bookMarksFile else { return [] }
     let bookmarkData = try Data(contentsOf: bookmarkFile)
     let plistObject = try PropertyListSerialization.propertyList(from: bookmarkData, options: .mutableContainersAndLeaves, format: nil)
     guard let plist = plistObject as? Dictionary<String, Any> else { return [] }

@@ -13,12 +13,12 @@ struct ChromeBMService: BookMarkService {
   let content: String = "Quick launch Chrome Bookmarks"
   let keyword: String = "chrome"
   let defered: Bool = true
-  static let browser: Browser = .chrome
+  static let browser: Browser? = .chrome
   
   init() {
     let disableManager = DisableManager.shared
     let isDisabled = disableManager.isDisabled(provider: self)
-    if !ChromeBMService.browser.installed || isDisabled {
+    if ChromeBMService.browser != nil || isDisabled {
       disableManager.disable(providerID: id)
     } else {
       disableManager.enable(providerID: id)
@@ -26,7 +26,7 @@ struct ChromeBMService: BookMarkService {
   }
   
   func parseFile() throws -> [BookMarkService.BookMark] {
-    guard let bmFile = type(of: self).browser.bookMarksFile else { return [] }
+    guard let bmFile = type(of: self).browser?.bookMarksFile else { return [] }
     let jsonData = try Data(contentsOf: bmFile)
     guard let jsonObject = JSON(data: jsonData) else { return [] }
     let bookmarBar = (jsonObject["roots", "bookmark_bar", "children"] as? [Dictionary<String, Any>]) ?? []

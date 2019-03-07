@@ -9,80 +9,82 @@
 import Cocoa
 import CoreData
 
-/**
-Common browsers on mac, with possible URL paths and bookmarks URLs and icons
-*/
-enum Browser: String, CaseIterable {
-  case safari
-  case chrome = "Google Chrome"
-  case fireFox
-  case chromium
-  case opera
-  case qqBrowser
-  
-  /// Fetch the default browser. If not supported, then use safari
-  static var `default`: Browser {
-    guard
-      let defaultBrowserURL = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!)
-    else { return .safari }
-    let name = defaultBrowserURL.deletingPathExtension().lastPathComponent
-    return Browser(rawValue: name) ?? .safari
-  }
-  
-  init?(rawValue: String) {
-    switch rawValue.lowercased() {
-    case "safari": self = .safari
-    case "chrome", "google chrome": self = .chrome
-    case "firefox": self = .fireFox
-    case "opera": self = .opera
-    case "qqbrowser": self = .qqBrowser
-    default: return nil
-    }
-  }
-  
-  private static let bundleIds: [String : String] = {
+/// Common browsers on mac, with possible URL paths and bookmarks URLs and icons
+struct Browser: Hashable {
+  private static let bundleIds: [String] = {
     guard
       let bundleFile = Bundle.main.url(forResource: "browsers", withExtension: "plist"),
       let fileData = try? Data(contentsOf: bundleFile),
       let plistContent = try? PropertyListSerialization.propertyList(from: fileData, format: nil)
-    else { return [:] }
-    return (plistContent as? [String : String]) ?? [:]
+      else { return [] }
+    let bundleList = (plistContent as? [String : String]) ?? [:]
+    return Array(bundleList.values)
   }()
-
-  /// The URL locates the browser application
-  /// - Note: the appURL can be nil when the browser is not installed in the system
-  var appURL: URL? {
-    guard let bundleId = Browser.bundleIds[rawValue.capitalized] else { return nil }
-    return AppFetcher.fetchURL(bundleID: bundleId)
+  
+  private(set) static var installed: Set<Browser> = {
+    let browsers = Browser.bundleIds.compactMap { Browser(bundleId: $0) }
+    return Set(browsers)
+  }()
+  
+  static var `default`: Browser? {
+    guard
+      let defaultBrowserURL = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://google.ca")!),
+      let defaultBrowser = Browser(url: defaultBrowserURL)
+    else { return nil }
+    installed.insert(defaultBrowser)
+    return defaultBrowser
   }
   
-  /// Indicator for if the browser is installed
-  var installed: Bool {
-    return appURL != nil
+  static var safari: Browser? {
+    return Browser(bundleId: "com.apple.safari")
   }
   
-  /// icon image for this browser
-  var icon: NSImage? {
-    guard let bundleId = Browser.bundleIds[rawValue.capitalized] else { return nil }
-    return AppFetcher.fetchIcon(bundleID: bundleId)
+  static var chrome: Browser? {
+    return Browser(bundleId: "com.google.chrome")
   }
   
-  /// the URL where the bookmarks file is stored
+  let name: String
+  let bundleId: String
+  let appURL: URL
+  var icon: NSImage {
+    return NSWorkspace.shared.icon(forFile: appURL.path)
+  }
+  
   var bookMarksFile: URL? {
-    guard appURL != nil else { return nil }
-    switch self {
-    case .safari:
+    switch bundleId {
+    case "com.apple.safari":
       let homeDir = FileManager.default.homeDirectoryForCurrentUser
       return homeDir.appendingPathComponent("/Library/Safari/Bookmarks.plist")
-    case .chrome:
+    case "com.google.chrome":
       let appSupDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
       return appSupDir?.appendingPathComponent("Google/Chrome/Default/Bookmarks")
     default: return nil
     }
   }
+
+  private init?(bundleId: String) {
+    guard
+      let browserURL = AppFetcher.fetchURL(bundleID: bundleId)
+    else { return nil }
+    self.name = browserURL.deletingPathExtension().lastPathComponent
+    self.bundleId = bundleId
+    self.appURL = browserURL
+  }
   
-  /// The browser name
-  var name: String {
-    return rawValue.capitalized
+  private init?(url: URL) {
+    guard
+      let bundleId = Bundle(url: url)?.bundleIdentifier
+    else { return nil }
+    self.bundleId = bundleId
+    self.name = url.deletingPathExtension().lastPathComponent
+    self.appURL = url
+  }
+  
+  var hashValue: Int {
+    return bundleId.hashValue
+  }
+  
+  var hash: Int {
+    return bundleId.hash
   }
 }

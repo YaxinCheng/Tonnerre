@@ -58,8 +58,8 @@ struct ClipboardService: BuiltInProvider {
       let url = URL(string: value)
     else { return nil }
     let alterContent = "Open copied URL in default browser"
-    let browser: Browser = .default
-    return DisplayContainer(name: value, content: timestamp, icon: browser.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
+    let browser: Browser? = .default
+    return DisplayContainer(name: value, content: timestamp, icon: browser?.icon ?? .safari, alterContent: alterContent, innerItem: url, placeholder: "")
   }
   
   private func wrapImageRecord(value: String, timestamp: String, image: NSAttributedString) -> DisplayItem? {
