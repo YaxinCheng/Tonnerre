@@ -57,7 +57,10 @@ extension WebService {
       requestingTemplate = template
     }
     guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
-    let urlEncoded = input.compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed )}
+    let urlEncoded = input.compactMap {
+      $0.addingPercentEncoding(withAllowedCharacters: .urlUserAllowed)?
+        .replacingOccurrences(of: "&", with: "%26")
+    }
     guard urlEncoded.count >= input.count else { return nil }
     let rawURL = requestingTemplate.filled(arguments: urlEncoded, separator: "+")
     return URL(string: rawURL)
@@ -98,7 +101,9 @@ extension WebService {
     let queryContent = input.joined(separator: " ")
     guard
       !suggestionTemplate.isEmpty,
-      let query = queryContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+      let query = queryContent
+        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)?
+        .replacingOccurrences(of: "&", with: "%26"),
       let suggestionURL = URL(string: suggestionTemplate.filled(arguments: query))
     else {
       callback([])
