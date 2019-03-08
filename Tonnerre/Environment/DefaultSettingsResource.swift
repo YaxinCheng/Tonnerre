@@ -1,5 +1,5 @@
 //
-//  DefaultSettingsArg.swift
+//  DefaultSettingsResource.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2019-02-27.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DefaultSettingArg: EnvArg {
+struct DefaultSettingResource: EnvResource {
   let defaultSettings: [(key: SettingKey, value: SettingValue)] = [
     (.python, "/usr/bin/python"),
     (.defaultProvider, "Tonnerre.Provider.BuiltIn.GoogleSearch"),
@@ -18,7 +18,7 @@ struct DefaultSettingArg: EnvArg {
                          "Tonnerre.Provider.BuiltIn.ChromeBMService"])
   ]
   
-  func setup() {
+  func export(to env: Environment) {
     let doneExecuting = UserDefaults.standard.bool(forKey: "settings:finished")
     guard !doneExecuting else { return }
     for (key, value) in defaultSettings {

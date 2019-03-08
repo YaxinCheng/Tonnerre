@@ -1,5 +1,5 @@
 //
-//  SupportFoldersArg.swift
+//  SupportFoldersResource.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2019-02-27.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct SupportFoldersArg: EnvArg {
-  func setup() {
+struct SupportFoldersResource: EnvResource {
+  func export(to env: Environment) {
     let folders: [SupportFolders] = [.base, .indices, .services, .cache]
     for folder in folders {
       do {

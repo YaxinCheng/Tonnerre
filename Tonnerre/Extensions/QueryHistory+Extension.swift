@@ -10,7 +10,7 @@ import Cocoa
 import CoreData
 
 extension QueryHistory: LimitedDataProtocol {
-  static func queryInsert(identifier: String, query: String, limit: Int, unique: Bool = false) {
+  static func insert(identifier: String, query: String, limit: Int, unique: Bool = false) {
     if unique { removeAll(predicate: NSPredicate(format: "identifier=%@ AND query=%@", identifier, query)) }
     let fetchRequest = NSFetchRequest<QueryHistory>(entityName: "QueryHistory")
     fetchRequest.predicate = NSPredicate(format: "identifier=%@", identifier)

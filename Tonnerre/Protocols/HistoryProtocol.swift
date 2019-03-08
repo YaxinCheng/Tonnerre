@@ -38,7 +38,7 @@ protocol HistoryProtocol {
 extension HistoryProtocol {
   func appendHistory(query: String, unique: Bool = false) {
     guard historyLimit > 0 else { return }
-    QueryHistory.queryInsert(identifier: identifier, query: query, limit: historyLimit, unique: unique)
+    QueryHistory.insert(identifier: identifier, query: query, limit: historyLimit, unique: unique)
   }
   
   func histories() -> [String] {

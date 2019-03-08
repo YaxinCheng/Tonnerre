@@ -1,5 +1,5 @@
 //
-//  CacheArg.swift
+//  CacheResource.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2019-02-27.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct CacheArg: EnvArg {
-  func setup() {
+struct CacheResource: EnvResource {
+  func export(to env: Environment) {
     URLCache.shared = URLCache(
       memoryCapacity: 1024 * 1024 * 5,
       diskCapacity: 1024 * 1024 * 25,

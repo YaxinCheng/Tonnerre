@@ -9,26 +9,25 @@
 import Foundation
 
 /// System setup environment
-struct Environment {
+final class Environment {
   /// Arguments in the environment
-  private let args: [EnvArg]
+  private var resourceTypes: [EnvResource.Type]
+  /// Resources have futher functions should be kept here to avoid being released
+  var persistedResource: [EnvResource] = []
   /// Setting observer
-  private let settingObserver: SettingObserver
+  let settingObserver: SettingObserver
   
   init() {
-    args = [CacheArg(), SupportFoldersArg(),
-                DefaultSettingArg(), HelperArg(),
-                ProviderMapArg(), ClipboardArg()]
+    resourceTypes = [CacheResource.self, SupportFoldersResource.self,
+                DefaultSettingResource.self, HelperResource.self,
+                ProviderMapResource.self, ClipboardResource.self]
     settingObserver = SettingObserver()
   }
   
-  /// Setup environment with arguments
+  /// Setup environment resources
   func setup() {
-    for arg in args {
-      if let subscriber = arg as? SettingSubscriber {
-        settingObserver.register(subscriber: subscriber)
-      }
-      arg.setup()
+    while !resourceTypes.isEmpty {
+      resourceTypes.removeFirst().init().export(to: self)
     }
   }
 }

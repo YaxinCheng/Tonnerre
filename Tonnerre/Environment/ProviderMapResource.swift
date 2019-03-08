@@ -1,5 +1,5 @@
 //
-//  HelperArg.swift
+//  ProviderMapResource.swift
 //  Tonnerre
 //
 //  Created by Yaxin Cheng on 2019-02-27.
@@ -7,12 +7,9 @@
 //
 
 import Foundation
-import os
 
-class HelperArg: EnvArg {
-  func setup() {
-    #if RELEASE
-    TonnerreHelper.launch()
-    #endif
+struct ProviderMapResource: EnvResource {
+  func export(to env: Environment) {
+    ProviderMap.shared.start()
   }
 }

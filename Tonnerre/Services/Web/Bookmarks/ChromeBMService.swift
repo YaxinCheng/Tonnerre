@@ -18,7 +18,7 @@ struct ChromeBMService: BookMarkService {
   init() {
     let disableManager = DisableManager.shared
     let isDisabled = disableManager.isDisabled(provider: self)
-    if ChromeBMService.browser != nil || isDisabled {
+    if ChromeBMService.browser == nil || isDisabled {
       disableManager.disable(providerID: id)
     } else {
       disableManager.enable(providerID: id)

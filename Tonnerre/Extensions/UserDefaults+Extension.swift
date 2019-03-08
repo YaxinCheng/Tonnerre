@@ -9,14 +9,6 @@
 import Foundation
 
 extension UserDefaults {
-  func url(forKey key: StoredKey) -> URL? {
-    return url(forKey: key.rawValue)
-  }
-  
-  func object(forKey key: StoredKey) -> Any? {
-    return object(forKey: key.rawValue)
-  }
-  
   func value(forKey key: StoredKey) -> Any? {
     return value(forKey: key.rawValue)
   }
@@ -31,13 +23,5 @@ extension UserDefaults {
   
   func bool(forKey key: StoredKey) -> Bool {
     return bool(forKey: key.rawValue)
-  }
-  
-  func dictionary(forKey key: StoredKey) -> [String: Any]? {
-    return dictionary(forKey: key.rawValue)
-  }
-  
-  func array<T>(forKey key: StoredKey) -> [T]? {
-    return array(forKey: key.rawValue) as? [T]
   }
 }

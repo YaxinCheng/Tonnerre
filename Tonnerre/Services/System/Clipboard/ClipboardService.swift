@@ -73,7 +73,7 @@ struct ClipboardService: BuiltInProvider {
     let query = input.joined(separator: " ")
     let fetchRequest = NSFetchRequest<CBRecord>(entityName: "CBRecord")
     if input.count > 0 {// If any content, copy to clipboard
-      let text = query ?? "..."
+      let text = query.isEmpty ? "..." : query
       copy = [ DisplayContainer<String>(name: "Copy: " + text, content: "Copy the text content to clipboard", icon: icon, innerItem: query, placeholder: "") ]
     } else { copy = [] }
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "time", ascending: false)]
