@@ -24,15 +24,17 @@ class GeneralCell: SettingCell {
   
   private func createMenu(withName name: String) -> NSMenu {
     let menu = NSMenu(title: "Setting")
-    if let id = item.settingKey,
-      !DisableManager.shared.isDisabled(providerID: id) {
-      menu.addItem(NSMenuItem(title: "Set \"\(name)\" as Default Provider",
-        action: #selector(setDefaultProvider(_:)), keyEquivalent: ""))
-    }
-    if indexPath.section > 0 {
-      menu.addItem(NSMenuItem(title: "Delete \"\(name)\"",
-        action: #selector(deleteProvider(_:)), keyEquivalent: ""))
-    }
+    menu.autoenablesItems = false
+    let defaultItem = NSMenuItem(title: "Set \"\(name)\" as Default Provider",
+      action: #selector(setDefaultProvider(_:)), keyEquivalent: "")
+    defaultItem.tag = 0
+    
+    let deleteItem = NSMenuItem(title: "Delete \"\(name)\"",
+      action: #selector(deleteProvider(_:)), keyEquivalent: "")
+    deleteItem.tag = 1
+    
+    menu.addItem(defaultItem)
+    menu.addItem(deleteItem)
     return menu
   }
 
@@ -73,6 +75,16 @@ class GeneralCell: SettingCell {
       !DisableManager.shared.isDisabled(providerID: id)
     else { return }
     DefaultProvider.id = id
+  }
+  
+  override func menuWillOpen(view: NSView, menu: NSMenu, with event: NSEvent) {
+    for menuItem in menu.items {
+      if menuItem.tag == 0, let id = item.settingKey {
+        menuItem.isEnabled = !DisableManager.shared.isDisabled(providerID: id)
+      } else if menuItem.tag == 1 {
+        menuItem.isEnabled = indexPath.section != 0
+      }
+    }
   }
 }
 

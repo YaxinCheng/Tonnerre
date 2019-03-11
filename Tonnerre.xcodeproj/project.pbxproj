@@ -10,6 +10,7 @@
 		1404E6BE222DCFF900F27F7C /* browsers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1404E6BD222DCFF800F27F7C /* browsers.plist */; };
 		1404E6C4222DE40400F27F7C /* AppFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404E6C3222DE40400F27F7C /* AppFetcher.swift */; };
 		1404E6C62233361E00F27F7C /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */; };
+		1404E6C82236FF7D00F27F7C /* SettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404E6C72236FF7D00F27F7C /* SettingCellView.swift */; };
 		1405334420F66D2E00C289CF /* ClipboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1405334320F66D2E00C289CF /* ClipboardService.swift */; };
 		1405334620F66F7400C289CF /* CBRecord+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1405334520F66F7400C289CF /* CBRecord+Extension.swift */; };
 		1405CB8421777C3200FC7044 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -163,7 +164,6 @@
 		14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185021B4872400C93E7C /* TextFieldCell.xib */; };
 		14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185321B4875B00C93E7C /* GeneralCell.swift */; };
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
-		14D5185F21B4996A00C93E7C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185E21B4996A00C93E7C /* CellView.swift */; };
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
 		14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
@@ -291,6 +291,7 @@
 /* Begin PBXFileReference section */
 		1404E6BD222DCFF800F27F7C /* browsers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = browsers.plist; sourceTree = "<group>"; };
 		1404E6C3222DE40400F27F7C /* AppFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFetcher.swift; sourceTree = "<group>"; };
+		1404E6C72236FF7D00F27F7C /* SettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellView.swift; sourceTree = "<group>"; };
 		1405334320F66D2E00C289CF /* ClipboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardService.swift; sourceTree = "<group>"; };
 		1405334520F66F7400C289CF /* CBRecord+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBRecord+Extension.swift"; sourceTree = "<group>"; };
 		140A62CB20CB078500B759A4 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
@@ -438,7 +439,6 @@
 		14D5185021B4872400C93E7C /* TextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
 		14D5185321B4875B00C93E7C /* GeneralCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCell.swift; sourceTree = "<group>"; };
 		14D5185421B4875B00C93E7C /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
-		14D5185E21B4996A00C93E7C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
 		14DAE5C72208E4E2001009CA /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
 		14DB560821BDCE88006C26C0 /* TintedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImageView.swift; sourceTree = "<group>"; };
@@ -935,11 +935,11 @@
 		14D5185B21B4877D00C93E7C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1404E6C72236FF7D00F27F7C /* SettingCellView.swift */,
 				14D5184D21B486F900C93E7C /* SettingCell.swift */,
 				14D5184F21B4872400C93E7C /* TextFieldCell.swift */,
 				14D5185021B4872400C93E7C /* TextFieldCell.xib */,
 				14D5185321B4875B00C93E7C /* GeneralCell.swift */,
-				14D5185E21B4996A00C93E7C /* CellView.swift */,
 				14D5185421B4875B00C93E7C /* GeneralCell.xib */,
 				1438057121C84EEB00DD0685 /* BoolCell.swift */,
 				1438057221C84EEB00DD0685 /* BoolCell.xib */,
@@ -1472,6 +1472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				146C054221BDBA490028B076 /* GeneralSettingLoader.swift in Sources */,
+				1404E6C82236FF7D00F27F7C /* SettingCellView.swift in Sources */,
 				14F5702321ACA8B500AE269B /* MenuOption.swift in Sources */,
 				14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */,
 				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
@@ -1495,7 +1496,6 @@
 				14CD694E21F7CA8C00FE6205 /* SupportFolders.swift in Sources */,
 				146C052A21BC52D80028B076 /* ProviderItem.swift in Sources */,
 				14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */,
-				14D5185F21B4996A00C93E7C /* CellView.swift in Sources */,
 				1438057A21C8709600DD0685 /* Switch.swift in Sources */,
 				1438057621C8500300DD0685 /* BoolItem.swift in Sources */,
 				14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */,

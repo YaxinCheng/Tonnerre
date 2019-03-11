@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SettingCell: NSCollectionViewItem {
+class SettingCell: NSCollectionViewItem, SettingCellViewDelegate {
   
   @IBOutlet weak var titleLabel: NSTextField!
   @IBOutlet weak var contentLabel: NSTextField!
@@ -33,5 +33,8 @@ class SettingCell: NSCollectionViewItem {
       shadow.shadowOffset = NSSize(width: 5, height: -10)
       return shadow
     }()
+  }
+  
+  func menuWillOpen(view: NSView, menu: NSMenu, with event: NSEvent) {
   }
 }

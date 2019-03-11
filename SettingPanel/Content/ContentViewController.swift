@@ -40,6 +40,7 @@ extension ContentViewController: NSCollectionViewDelegate, NSCollectionViewDataS
     let item = items[indexPath.section][indexPath.item]
     let cell = collectionView.makeItem(withIdentifier: item.displayIdentifier, for: indexPath) as! SettingCell
     cell.item = item
+    (cell.view as? SettingCellView)?.delegate = cell
     cell.indexPath = indexPath
     cell.delegate = self
     return cell
