@@ -8,11 +8,7 @@
 
 import Cocoa
 
-protocol SwitchDelegate: class {
-  func valueDidChange(sender: Any)
-}
-
-final class Switch: NSView {
+final class Switch: NSControl {
   
   enum State {
     case on
@@ -29,12 +25,11 @@ final class Switch: NSView {
   var state: State = .off {
     didSet {
       toggleSwitch()
-      delegate?.valueDidChange(sender: self)
+      sendAction(action, to: target)
     }
   }
   
   var highlightColour: NSColor
-  weak var delegate: SwitchDelegate?
   
   private let handleView: NSView
   private var handleViewLeadingConstraint: NSLayoutConstraint!

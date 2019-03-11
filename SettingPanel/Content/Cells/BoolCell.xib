@@ -39,6 +39,9 @@
                         <constraint firstAttribute="height" constant="24" id="CwT-6w-hzX"/>
                         <constraint firstAttribute="width" constant="48" id="UFn-nS-spi"/>
                     </constraints>
+                    <connections>
+                        <action selector="valueDidChangeWithSender:" target="6f2-u6-aEw" id="01x-pN-vr9"/>
+                    </connections>
                 </customView>
             </subviews>
             <constraints>

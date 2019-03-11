@@ -26,7 +26,6 @@
 		1438057321C84EEB00DD0685 /* BoolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057121C84EEB00DD0685 /* BoolCell.swift */; };
 		1438057421C84EEB00DD0685 /* BoolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057221C84EEB00DD0685 /* BoolCell.xib */; };
 		1438057621C8500300DD0685 /* BoolItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057521C8500300DD0685 /* BoolItem.swift */; };
-		1438057821C8707800DD0685 /* Switch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1438057721C8707800DD0685 /* Switch.xib */; };
 		1438057A21C8709600DD0685 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438057921C8709600DD0685 /* Switch.swift */; };
 		143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143EF11321E0004A00CC8632 /* IndexFactory.swift */; };
 		144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144032FE21CDBF0C0026E822 /* JSONTest.swift */; };
@@ -304,7 +303,6 @@
 		1438057121C84EEB00DD0685 /* BoolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolCell.swift; sourceTree = "<group>"; };
 		1438057221C84EEB00DD0685 /* BoolCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoolCell.xib; sourceTree = "<group>"; };
 		1438057521C8500300DD0685 /* BoolItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolItem.swift; sourceTree = "<group>"; };
-		1438057721C8707800DD0685 /* Switch.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Switch.xib; sourceTree = "<group>"; };
 		1438057921C8709600DD0685 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		143EF11321E0004A00CC8632 /* IndexFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexFactory.swift; sourceTree = "<group>"; };
 		144032FE21CDBF0C0026E822 /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
@@ -547,7 +545,6 @@
 			isa = PBXGroup;
 			children = (
 				1438057921C8709600DD0685 /* Switch.swift */,
-				1438057721C8707800DD0685 /* Switch.xib */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1285,7 +1282,6 @@
 				14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */,
 				14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */,
 				14F5702421ACA8B500AE269B /* MenuOption.xib in Resources */,
-				1438057821C8707800DD0685 /* Switch.xib in Resources */,
 				14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

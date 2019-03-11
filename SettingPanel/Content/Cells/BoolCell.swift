@@ -8,15 +8,11 @@
 
 import Cocoa
 
-class BoolCell: SettingCell, SwitchDelegate {
+class BoolCell: SettingCell {
   
-  @IBOutlet weak var switchControl: Switch! {
-    didSet {
-      switchControl.delegate = self
-    }
-  }
+  @IBOutlet weak var switchControl: Switch!
   
-  func valueDidChange(sender: Any) {
+  @IBAction func valueDidChange(sender: Any) {
     guard
       let switchSender = sender as? Switch,
       switchSender === switchControl,
