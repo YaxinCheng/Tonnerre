@@ -15,14 +15,11 @@ class GeneralCell: SettingCell {
   override func viewWillAppear() {
     super.viewWillAppear()
     
-    view.menu = createMenu(withName: item.name)
-  }
-  
-  private func createMenu(withName name: String) -> NSMenu {
-    let menu = NSMenu(title: "Setting")
-    menu.autoenablesItems = false
-    
-    return menu
+    view.menu = {
+      let menu = NSMenu(title: "Setting")
+      menu.autoenablesItems = false
+      return menu
+    }()
   }
 
   @objc func deleteProvider(_ sender: Any) {
