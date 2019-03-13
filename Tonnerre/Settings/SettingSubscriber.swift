@@ -15,5 +15,5 @@ protocol SettingSubscriber: class {
   /// The function called when the subscribed key has been changed
   /// - parameter changes: a dictionary returned from KVO which contains
   ///     the changes and the original value
-  func settingDidChange(_ changes: [NSKeyValueChangeKey : Any])
+  func settingDidChange()
 }

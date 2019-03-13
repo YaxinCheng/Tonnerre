@@ -25,10 +25,10 @@ final class ClipboardResource: EnvResource, SettingSubscriber {
     env.persistedResource.append(self)
   }
   
-  func settingDidChange(_ changes: [NSKeyValueChangeKey : Any]) {
-    switch changes[.newKey] {
-    case let disabledIds as [String]:
-      if disabledIds.contains(BuiltInProviderMap.extractID(from: ClipboardService.self)) {
+  func settingDidChange() {
+    switch TonnerreSettings.get(fromKey: subscribedKey) {
+    case .array(let disabledIds)? where disabledIds is [String]:
+      if (disabledIds as! [String]).contains(BuiltInProviderMap.extractID(from: ClipboardService.self)) {
         clipboardMonitor.start()
       } else { clipboardMonitor.stop() }
     default: return

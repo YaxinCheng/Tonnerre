@@ -14,6 +14,11 @@ struct TonnerreSettings {
   
   static func set(_ value: SettingValue, forKey key: SettingKey) {
     userDefault.set(value.rawValue, forKey: key.rawValue)
+    guard
+      let subscribedKeys = userDefault.array(forKey: "subscribedKeys") as? [String],
+      subscribedKeys.contains(key.rawValue)
+    else { return }
+    DistributedNotificationCenter.default().post(name: .settingDidChange, object: key.rawValue)
   }
   
   static func get(fromKey key: SettingKey) -> SettingValue? {

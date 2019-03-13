@@ -12,6 +12,7 @@ import Cocoa
 enum StoredKey: String {// Keys used in UserDefault
   case designatedX
   case designatedY
+  case subscribedKeys
 }
 
 func getContext() -> NSManagedObjectContext {

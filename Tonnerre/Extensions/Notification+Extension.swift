@@ -9,5 +9,6 @@
 import Foundation
 
 extension Notification.Name {
-  static let windowIsHiding = Notification.Name("windowIsHiding")
+  static let windowIsHiding = Notification.Name(rawValue: "windowIsHiding")
+  static let settingDidChange = Notification.Name(rawValue: "SettingDidChange")
 }
