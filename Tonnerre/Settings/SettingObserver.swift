@@ -29,20 +29,23 @@ class SettingObserver {
   }
   
   /// All the subscribers registered
-  private var subscribers: [SettingKey : [SettingSubscriber]] = [:]
+  private var subscribers: [SettingKey : SettingSubscriber] = [:]
   
   /// Register subscriber with the key is listens to
   /// - parameter subscriber: subscriber that listens to a certain key
   func register(subscriber: SettingSubscriber) {
     let weakWrapped = WeakRef(subscriber)
-    if subscribers[subscriber.subscribedKey] == nil {
-      store(newKey: subscriber.subscribedKey)
-    }
-    subscribers[subscriber.subscribedKey, default: []].append(weakWrapped)
+    subscribers[subscriber.subscribedKey] = weakWrapped
+    updateKeys()
   }
   
-  private func store(newKey: SettingKey) {
-    let keys = (Array(subscribers.keys) + [newKey]).map { $0.rawValue }
+  func unregister(subscriber: SettingSubscriber) {
+    subscribers[subscriber.subscribedKey] = nil
+    updateKeys()
+  }
+  
+  private func updateKeys() {
+    let keys = Array(subscribers.keys).map { $0.rawValue }
     UserDefaults.shared.set(keys, forKey: .subscribedKeys)
   }
   
@@ -51,7 +54,7 @@ class SettingObserver {
       let objectKey = notification.object as? String,
       let settingKey = SettingKey(rawValue: objectKey)
     else { return }
-    subscribers[settingKey]?.forEach { $0.settingDidChange() }
+    subscribers[settingKey]?.settingDidChange()
   }
   
   init() {
