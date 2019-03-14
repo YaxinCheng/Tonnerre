@@ -43,6 +43,7 @@ class SettingSubscriberTest: XCTestCase {
   }
   
   override func tearDown() {
+    observer.unregister(subscriber: subscriber)
     observer = nil
     TonnerreSettings.set(SettingSubscriberTest.originalValue, forKey: SettingSubscriberTest.testSubscribedKey)
   }
