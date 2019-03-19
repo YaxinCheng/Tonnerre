@@ -78,7 +78,7 @@ struct Browser: Hashable {
   
   private init?(url: URL) {
     guard
-      let bundleId = Bundle(url: url)?.bundleIdentifier
+      let bundleId = Bundle(url: url)?.bundleIdentifier?.lowercased()
     else { return nil }
     self.bundleId = bundleId
     self.name = url.deletingPathExtension().lastPathComponent
