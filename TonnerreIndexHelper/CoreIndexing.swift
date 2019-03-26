@@ -227,8 +227,8 @@ final class CoreIndexing {
         for mode in relatedModes
           where mode.canInclude(fileURL: pathURL) {
             let index = indexes[mode]
-            result = try? index?.addDocument(atPath: pathURL,
-                                      contentType: mode.contentType)
+            result = ((try? index?.addDocument(atPath: pathURL,
+                                      contentType: mode.contentType)) as Bool??)
         }
       } else if flags.contains(.renamed) {
         let fileManager = FileManager.default
@@ -239,8 +239,8 @@ final class CoreIndexing {
           if exist == false {
             result = index?.removeDocument(atPath: pathURL)
           } else {
-            result = try? index?.addDocument(atPath: pathURL,
-                                        contentType: mode.contentType)
+            result = ((try? index?.addDocument(atPath: pathURL,
+                                        contentType: mode.contentType)) as Bool??)
           }
         }
       } else if flags.contains(.removed) {

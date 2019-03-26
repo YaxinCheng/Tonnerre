@@ -234,11 +234,11 @@ extension JSON {
   }
   
   subscript<T>(key: Int, default defaultMethod: @autoclosure ()->T) -> T {
-    return self[.number(key), default: defaultMethod]
+    return self[.number(key), default: defaultMethod()]
   }
   
   subscript<T>(key: String, default defaultMethod: @autoclosure ()->T) -> T {
-    return self[.string(key), default: defaultMethod]
+    return self[.string(key), default: defaultMethod()]
   }
   
   subscript(key: Int) -> Any? {

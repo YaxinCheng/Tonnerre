@@ -10,7 +10,7 @@ These instruction will get you a copy of the project up and running on your loca
 
 - from macOS High Sierra (10.13) 
 - Git
-- Xcode with the latest Swift version (4.2)
+- Xcode with the latest Swift version (5)
 - Carthage
 
 ### Installing
@@ -25,7 +25,7 @@ open Tonnerre.xcodeproj
 
 After open in Xcode, you can add a new scheme `Tonnerre` and it will build the `Tonnerre.app`
 
-Or you can download a built version here: [Tonnerre.dmg](https://github.com/YaxinCheng/Tonnerre/releases/download/1.0.5/Tonnerre.dmg.zip)
+Or you can download a built version here: [Tonnerre.dmg](https://github.com/YaxinCheng/Tonnerre/releases/download/1.0.6/Tonnerre.dmg)
 
 ### Built With
 

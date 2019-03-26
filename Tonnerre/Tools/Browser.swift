@@ -85,10 +85,6 @@ struct Browser: Hashable {
     self.appURL = url
   }
   
-  var hashValue: Int {
-    return bundleId.hashValue
-  }
-  
   var hash: Int {
     return bundleId.hash
   }
