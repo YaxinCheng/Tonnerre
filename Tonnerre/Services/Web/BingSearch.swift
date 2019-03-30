@@ -11,8 +11,6 @@ import Cocoa
 // NOTE: The suggestionTemplate may not be stable in the future
 struct BingSearch: WebService {
   let name: String = "Bing"
-  let template: String = "https://www.bing.com/search?q=%@"
-  let suggestionTemplate: String = "https://www.bing.com/AS/Suggestions?qry=%@&cvid=FE7921BDBFFB47FBBC57F3B4F078A12D"
   let contentTemplate: String = "Search \"%@\" on Bing"
   let keyword: String = "bing"
   let argLowerBound: Int = 1

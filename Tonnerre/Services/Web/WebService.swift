@@ -46,6 +46,14 @@ extension WebService {
     return contentTemplate.filled(arguments: "")
   }
   
+  var template: String {
+    return WebServiceList.shared[self, .serviceTemplate]
+  }
+  
+  var suggestionTemplate: String {
+    return WebServiceList.shared[self, .suggestionsTemplate]
+  }
+  
   private func fillInTemplate(input: [String]) -> URL? {
     let requestingTemplate: String
     if hasLocaleInTemplate {

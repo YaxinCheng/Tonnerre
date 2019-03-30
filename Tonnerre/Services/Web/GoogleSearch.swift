@@ -8,14 +8,11 @@
 
 import Cocoa
 
-protocol Google: WebService {
+fileprivate protocol Google: WebService {
 }
 
 extension Google {
   var icon: NSImage { return #imageLiteral(resourceName: "google") }
-  var suggestionTemplate: String {
-    return "https://suggestqueries.google.com/complete/search?client=safari&q=%@"
-  }
   var argLowerBound: Int { return 1 }
   var argUpperBound: Int { return .max }
   
@@ -33,22 +30,18 @@ extension Google {
 struct GoogleSearch: Google {
   let name: String = "Google"
   let contentTemplate: String = "Search \"%@\" on Google"
-  let template: String = "https://google.%@/search?q=%@"
   let keyword: String = "google"
 }
 
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
   let contentTemplate: String = "Search \"%@\" on Google Image"
-  let template: String = "https://google.%@/search?q=%@&tbm=isch"
   let keyword: String = "image"
 }
 
 struct YoutubeSearch: Google {
-  let suggestionTemplate: String = "https://clients1.google.com/complete/search?client=safari&q=%@"
   let name: String = "YouTube"
   let contentTemplate: String = "Find \"%@\" on Youtube"
-  let template: String = "https://www.youtube.com/results?search_query=%@"
   let keyword: String = "youtube"
   let icon: NSImage = #imageLiteral(resourceName: "youtube")
 }
