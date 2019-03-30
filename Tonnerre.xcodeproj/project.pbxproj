@@ -165,6 +165,9 @@
 		14D5185221B4872400C93E7C /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185021B4872400C93E7C /* TextFieldCell.xib */; };
 		14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D5185321B4875B00C93E7C /* GeneralCell.swift */; };
 		14D5185621B4875B00C93E7C /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D5185421B4875B00C93E7C /* GeneralCell.xib */; };
+		14D57CD1224EB6B400D52CF9 /* webServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D57CD0224EB6B400D52CF9 /* webServices.plist */; };
+		14D57CD3224EB97B00D52CF9 /* WebServiceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */; };
+		14D57CD5224EBE9100D52CF9 /* WebServiceListTTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */; };
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
 		14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
@@ -439,6 +442,9 @@
 		14D5185021B4872400C93E7C /* TextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
 		14D5185321B4875B00C93E7C /* GeneralCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCell.swift; sourceTree = "<group>"; };
 		14D5185421B4875B00C93E7C /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
+		14D57CD0224EB6B400D52CF9 /* webServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = webServices.plist; sourceTree = "<group>"; };
+		14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceList.swift; sourceTree = "<group>"; };
+		14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceListTTest.swift; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
 		14DAE5C72208E4E2001009CA /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
 		14DB560821BDCE88006C26C0 /* TintedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImageView.swift; sourceTree = "<group>"; };
@@ -738,6 +744,7 @@
 				1421F284210257D90020480A /* DynamicServiceExec.py */,
 				14AFE6B62118FD99002BBBB2 /* tne_icon.icns */,
 				1404E6BD222DCFF800F27F7C /* browsers.plist */,
+				14D57CD0224EB6B400D52CF9 /* webServices.plist */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -745,6 +752,7 @@
 		1470515820B1BEFB00F6FBE8 /* TonnerreTests */ = {
 			isa = PBXGroup;
 			children = (
+				14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */,
 				144032FE21CDBF0C0026E822 /* JSONTest.swift */,
 				1440330021CDC31B0026E822 /* ServiceIDTrieTest.swift */,
 				1440330221CDCA850026E822 /* TaggedListTest.swift */,
@@ -778,6 +786,7 @@
 		1484148A20C7032E008FD68E /* Web */ = {
 			isa = PBXGroup;
 			children = (
+				14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */,
 				145DA17320DC243D00C1E804 /* TonnerreSession.swift */,
 				14561B8D20C45A650057B4C1 /* WebService.swift */,
 				1484148220C63A1A008FD68E /* MapService.swift */,
@@ -1254,6 +1263,7 @@
 				14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,
+				14D57CD1224EB6B400D52CF9 /* webServices.plist in Resources */,
 				1404E6BE222DCFF900F27F7C /* browsers.plist in Resources */,
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
 				145CF987218BA1C3003B9468 /* LiteTableViewController.storyboard in Resources */,
@@ -1385,6 +1395,7 @@
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
 				14A07426222722C300609A57 /* ProviderMapResource.swift in Sources */,
 				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
+				14D57CD3224EB97B00D52CF9 /* WebServiceList.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,
 				14454D272198B83C008F1A8B /* TonnerreInterpreter.swift in Sources */,
@@ -1454,6 +1465,7 @@
 				14FA02CC21E40E620058E936 /* ProviderMapTest.swift in Sources */,
 				14FA02CA21E40C3A0058E936 /* BuiltInProviderMapTest.swift in Sources */,
 				1440330121CDC31B0026E822 /* ServiceIDTrieTest.swift in Sources */,
+				14D57CD5224EBE9100D52CF9 /* WebServiceListTTest.swift in Sources */,
 				1440330321CDCA850026E822 /* TaggedListTest.swift in Sources */,
 				144032FF21CDBF0C0026E822 /* JSONTest.swift in Sources */,
 			);
@@ -1629,6 +1641,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1655,9 +1668,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1713,7 +1728,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -1767,7 +1782,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1796,6 +1811,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1830,11 +1846,13 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1947,6 +1965,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre.settings;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1972,9 +1991,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ycheng.Tonnerre.settings;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

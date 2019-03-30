@@ -14,9 +14,13 @@ struct WebServiceList {
   private let suggestionList: [String: String]
   private let servicesList: [String: [String: String]]
   
+  private let _RESOURCE_NAME = "webServices"
+  private let _SUGGESTION_KEY = "suggestionTemplate"
+  private let _TEMPLATE_KEY = "template"
+  
   private init() {
     guard
-      let webServiceListURL = Bundle.main.url(forResource: "webServices", withExtension: "plist"),
+      let webServiceListURL = Bundle.main.url(forResource: _RESOURCE_NAME, withExtension: "plist"),
       let data = try? Data(contentsOf: webServiceListURL),
       let listObj = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
     else { (suggestionList, servicesList) = ([:], [:]); return }
@@ -29,9 +33,6 @@ struct WebServiceList {
     case suggestionsTemplate = "Suggestions"
     case serviceTemplate = "Services"
   }
-  
-  private let _SUGGESTION_KEY = "suggestionTemplate"
-  private let _TEMPLATE_KEY = "template"
   
   /// Retrieve attribute value from the list
   subscript(_ service: WebService, attribute: Attribute) -> String {
