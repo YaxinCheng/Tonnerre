@@ -12,7 +12,7 @@
 				<string>tne</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>tne_icon</string>
+			<string>tonnerrePlus</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>com.tonnerre.tne</string>
@@ -44,7 +44,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.4</string>
+	<string>1.1</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>
@@ -73,7 +73,7 @@
 			<key>UTTypeDescription</key>
 			<string>Tonnerre Extension</string>
 			<key>UTTypeIconFile</key>
-			<string>tne_icon</string>
+			<string>tonnerrePlus</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.tonnerre.tne</string>
 			<key>UTTypeTagSpecification</key>
@@ -107,7 +107,7 @@
 			<key>UTTypeDescription</key>
 			<string>Tonnerre Extension</string>
 			<key>UTTypeIconFile</key>
-			<string>tne_icon</string>
+			<string>tonnerrePlus</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.tonnerre.tne</string>
 			<key>UTTypeTagSpecification</key>

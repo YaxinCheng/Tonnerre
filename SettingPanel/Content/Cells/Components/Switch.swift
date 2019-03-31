@@ -35,11 +35,7 @@ final class Switch: NSControl {
   private var handleViewLeadingConstraint: NSLayoutConstraint!
   
   required init?(coder decoder: NSCoder) {
-    if #available(OSX 10.14, *) {
-      highlightColour = .controlAccentColor
-    } else {
-      highlightColour = .blue
-    }
+    highlightColour = .controlAccentColor
     handleView = NSView()
     
     super.init(coder: decoder)

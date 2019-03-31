@@ -18,10 +18,10 @@ final class TonnerreIconView: NSImageView {
     }
   }
   
-  private static let imagesWithTheme: Set<NSImage> = [#imageLiteral(resourceName: "tonnerre_extension"), #imageLiteral(resourceName: "tonnerre.icns"), #imageLiteral(resourceName: "tonnerre"), #imageLiteral(resourceName: "close"), #imageLiteral(resourceName: "eject"), #imageLiteral(resourceName: "settings"), #imageLiteral(resourceName: "clipboard")]
+  private static let imagesTintWithTheme: Set<NSImage> = [#imageLiteral(resourceName: "tonnerre.icns"), #imageLiteral(resourceName: "tonnerre")]
   
   override func draw(_ dirtyRect: NSRect) {
-    if image != nil && type(of: self).imagesWithTheme.contains(image!) {
+    if image != nil && type(of: self).imagesTintWithTheme.contains(image!) {
       image = image?.tintedImage(with: .labelColor)
     }
     super.draw(dirtyRect)

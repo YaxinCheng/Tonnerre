@@ -20,21 +20,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
-    if #available(OSX 10.14, *) {
-      let centre = UNUserNotificationCenter.current()
-      centre.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-        #if DEBUG
-        print("Notification permission granted:", granted)
-        if let errorInfo = error {
-          print("error:", errorInfo)
-        }
-        #endif
+    let centre = UNUserNotificationCenter.current()
+    centre.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+      #if DEBUG
+      print("Notification permission granted:", granted)
+      if let errorInfo = error {
+        print("error:", errorInfo)
       }
-      centre.delegate = self
-    } else {
-      // Fallback on earlier versions
-      NSUserNotificationCenter.default.delegate = self
+      #endif
     }
+    centre.delegate = self
   }
   
   func application(_ application: NSApplication, open urls: [URL]) {
@@ -161,14 +156,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 }
 
-@available(OSX, obsoleted: 10.14)
-extension AppDelegate: NSUserNotificationCenterDelegate {
-  func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
-    return true
-  }
-}
-
-@available(OSX, introduced: 10.14)
 extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
     completionHandler([.badge, .sound, .alert])

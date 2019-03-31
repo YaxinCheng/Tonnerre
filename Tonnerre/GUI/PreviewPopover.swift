@@ -109,13 +109,8 @@ private extension PreviewPopover {
   private func TextView(text: NSAttributedString) -> NSView {
     let targetView: NSView
     let textView: NSTextView
-    if #available(OSX 10.14, *) {
-      targetView = NSTextView.scrollablePlainDocumentContentTextView()
-      textView = (targetView as! NSScrollView).documentView as! NSTextView
-    } else {
-      textView = NSTextView()
-      targetView = textView
-    }
+    targetView = NSTextView.scrollablePlainDocumentContentTextView()
+    textView = (targetView as! NSScrollView).documentView as! NSTextView
     textView.textStorage?.append(text)
     textView.drawsBackground = false
     textView.isEditable = false

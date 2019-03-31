@@ -24,11 +24,7 @@ final class ServiceCell: LiteTableCell {
   }
   
   override var highlightedColour: NSColor {
-    if #available(OSX 10.14, *) {
-      return NSColor.controlAccentColor.withAlphaComponent(0.8)
-    } else {
-      return super.highlightedColour.withAlphaComponent(0.8)
-    }
+    return NSColor.controlAccentColor.withAlphaComponent(0.8)
   }
   
   /// Display a popover next to the cell that presents the preview for this item

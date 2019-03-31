@@ -8,7 +8,7 @@ These instruction will get you a copy of the project up and running on your loca
 
 ### Prerequisites
 
-- from macOS High Sierra (10.13) 
+- from macOS Mojave (10.14) 
 - Git
 - Xcode with the latest Swift version (5)
 - Carthage
@@ -25,7 +25,7 @@ open Tonnerre.xcodeproj
 
 After open in Xcode, you can add a new scheme `Tonnerre` and it will build the `Tonnerre.app`
 
-Or you can download a built version here: [Tonnerre.dmg](https://github.com/YaxinCheng/Tonnerre/releases/download/1.0.6/Tonnerre.dmg)
+Or you can download a built version here: [Tonnerre.dmg](https://github.com/YaxinCheng/Tonnerre/releases/download/1.1.0/Tonnerre.dmg)
 
 ### Built With
 
@@ -105,10 +105,6 @@ Preview is supported of course
 #### Eject your external harddrives (dmg included)
 
 ![eject](https://user-images.githubusercontent.com/13768613/49771646-10bffe00-fcb8-11e8-87ea-a88af5d2258c.png)
-
-#### Calculate the currency changes
-
-![currency](https://user-images.githubusercontent.com/13768613/49771817-df93fd80-fcb8-11e8-995b-c4041a774c1b.png)
 
 #### Some other functions...
 

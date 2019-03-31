@@ -15,21 +15,12 @@ struct LocalNotification {
   var muted: Bool = false
   
   func send() {
-    if #available(OSX 10.14, *) {
-      let notification = UNMutableNotificationContent()
-      notification.title = title
-      notification.body = content
-      notification.sound = muted ? nil : UNNotificationSound.default
-      let request = UNNotificationRequest(identifier: title, content: notification, trigger: nil)
-      let centre = UNUserNotificationCenter.current()
-      centre.add(request, withCompletionHandler: nil)
-    } else {
-      // Fallback on earlier versions
-      let notification = NSUserNotification()
-      notification.title = title
-      notification.informativeText = content
-      if !muted { notification.soundName = NSUserNotificationDefaultSoundName }
-      NSUserNotificationCenter.default.deliver(notification)
-    }
+    let notification = UNMutableNotificationContent()
+    notification.title = title
+    notification.body = content
+    notification.sound = muted ? nil : UNNotificationSound.default
+    let request = UNNotificationRequest(identifier: title, content: notification, trigger: nil)
+    let centre = UNUserNotificationCenter.current()
+    centre.add(request, withCompletionHandler: nil)
   }
 }

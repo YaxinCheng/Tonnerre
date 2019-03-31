@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -76,7 +76,6 @@
 		146AAE7020BE2DEE009AC9C6 /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AAE6F20BE2DEE009AC9C6 /* BaseWindow.swift */; };
 		146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */; };
 		146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AD8C620C9C09300D9E591 /* AppDelegate.swift */; };
-		146AD8CC20C9C09400D9E591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8CB20C9C09400D9E591 /* Assets.xcassets */; };
 		146AD8CF20C9C09400D9E591 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 146AD8CD20C9C09400D9E591 /* MainMenu.xib */; };
 		146AD8D520C9C0B200D9E591 /* CoreIndexing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470518920B1EF7000F6FBE8 /* CoreIndexing.swift */; };
 		146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB30420C1F74E00D10D44 /* FileTypeControl.swift */; };
@@ -144,7 +143,6 @@
 		14AFE6A42112A4F4002BBBB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6A22112A4F4002BBBB2 /* Main.storyboard */; };
 		14AFE6AF2118E1CB002BBBB2 /* TabViewSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */; };
 		14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */; };
-		14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14AFE6B62118FD99002BBBB2 /* tne_icon.icns */; };
 		14AFE6BF211A00FE002BBBB2 /* NSNib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */; };
 		14AFE6C5211A7093002BBBB2 /* VolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFE6C4211A7093002BBBB2 /* VolumeService.swift */; };
 		14C4102C21826CCB00CEA1E9 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4102B21826CCB00CEA1E9 /* MenuViewController.swift */; };
@@ -168,10 +166,10 @@
 		14D57CD1224EB6B400D52CF9 /* webServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D57CD0224EB6B400D52CF9 /* webServices.plist */; };
 		14D57CD3224EB97B00D52CF9 /* WebServiceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */; };
 		14D57CD5224EBE9100D52CF9 /* WebServiceListTTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */; };
+		14D57CD72250351700D52CF9 /* tonnerrePlus.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14D57CD62250351700D52CF9 /* tonnerrePlus.icns */; };
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
 		14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
-		14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB560821BDCE88006C26C0 /* TintedImageView.swift */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -355,7 +353,6 @@
 		146AD8C420C9C09300D9E591 /* TonnerreIndexHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonnerreIndexHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146AD8C620C9C09300D9E591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146AD8C920C9C09300D9E591 /* TonnerreIndexHelper.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TonnerreIndexHelper.xcdatamodel; sourceTree = "<group>"; };
-		146AD8CB20C9C09400D9E591 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		146AD8CE20C9C09400D9E591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		146AD8D020C9C09400D9E591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		146AD8D120C9C09400D9E591 /* TonnerreIndexHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonnerreIndexHelper.entitlements; sourceTree = "<group>"; };
@@ -423,7 +420,6 @@
 		14AFE6A62112A4F4002BBBB2 /* SettingPanel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SettingPanel.entitlements; sourceTree = "<group>"; };
 		14AFE6AE2118E1CB002BBBB2 /* TabViewSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewSegue.swift; sourceTree = "<group>"; };
 		14AFE6B02118E31F002BBBB2 /* TabViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewAnimator.swift; sourceTree = "<group>"; };
-		14AFE6B62118FD99002BBBB2 /* tne_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tne_icon.icns; sourceTree = "<group>"; };
 		14AFE6BE211A00FE002BBBB2 /* NSNib+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNib+Extension.swift"; sourceTree = "<group>"; };
 		14AFE6C4211A7093002BBBB2 /* VolumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeService.swift; sourceTree = "<group>"; };
 		14AFE6E2211E3085002BBBB2 /* TonnerreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonnerreSettings.swift; sourceTree = "<group>"; };
@@ -445,9 +441,9 @@
 		14D57CD0224EB6B400D52CF9 /* webServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = webServices.plist; sourceTree = "<group>"; };
 		14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceList.swift; sourceTree = "<group>"; };
 		14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceListTTest.swift; sourceTree = "<group>"; };
+		14D57CD62250351700D52CF9 /* tonnerrePlus.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tonnerrePlus.icns; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
 		14DAE5C72208E4E2001009CA /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
-		14DB560821BDCE88006C26C0 /* TintedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImageView.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
@@ -652,7 +648,6 @@
 				146AD8DD20C9C12A00D9E591 /* Common.swift */,
 				1452251F20B4A794001E0D52 /* URL+Extension.swift */,
 				1440331321DD6FCD0026E822 /* PathIterator.swift */,
-				146AD8CB20C9C09400D9E591 /* Assets.xcassets */,
 				146AD8CD20C9C09400D9E591 /* MainMenu.xib */,
 				146AD8D020C9C09400D9E591 /* Info.plist */,
 				140F8C6E20B3668C00C69C25 /* exclusionList.plist */,
@@ -742,7 +737,7 @@
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
 				1421F284210257D90020480A /* DynamicServiceExec.py */,
-				14AFE6B62118FD99002BBBB2 /* tne_icon.icns */,
+				14D57CD62250351700D52CF9 /* tonnerrePlus.icns */,
 				1404E6BD222DCFF800F27F7C /* browsers.plist */,
 				14D57CD0224EB6B400D52CF9 /* webServices.plist */,
 			);
@@ -1028,7 +1023,6 @@
 				146C053B21BDB20F0028B076 /* NonScrollView.swift */,
 				146C052C21BC6AAC0028B076 /* MenuOptionId.swift */,
 				14F5702121ACA8B500AE269B /* MenuOption.swift */,
-				14DB560821BDCE88006C26C0 /* TintedImageView.swift */,
 				14F5702221ACA8B500AE269B /* MenuOption.xib */,
 			);
 			path = Menu;
@@ -1212,7 +1206,7 @@
 				};
 			};
 			buildConfigurationList = 1470513B20B1BEF900F6FBE8 /* Build configuration list for PBXProject "Tonnerre" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1246,7 +1240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				146AD8CC20C9C09400D9E591 /* Assets.xcassets in Resources */,
 				146AD8E820C9CC8C00D9E591 /* exclusionList.plist in Resources */,
 				146AD8CF20C9C09400D9E591 /* MainMenu.xib in Resources */,
 				146AD8E920C9CC8F00D9E591 /* alias.plist in Resources */,
@@ -1260,9 +1253,9 @@
 			files = (
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
-				14AFE6B72118FD99002BBBB2 /* tne_icon.icns in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
 				146AAE7120BE362A009AC9C6 /* Assets.xcassets in Resources */,
+				14D57CD72250351700D52CF9 /* tonnerrePlus.icns in Resources */,
 				14D57CD1224EB6B400D52CF9 /* webServices.plist in Resources */,
 				1404E6BE222DCFF900F27F7C /* browsers.plist in Resources */,
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
@@ -1317,7 +1310,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#rm ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg\n# create-dmg --volname Tonnerre --volicon /Users/cheng/Developer/ScriptTools/CreateDMG/installer.icns --background /Users/cheng/Developer/ScriptTools/CreateDMG/background.png --app-drop-link 450 170 --window-size 550 330 --icon Tonnerre 100 170 ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg ${CONFIGURATION_BUILD_DIR}/Tonnerre.app\n";
+			shellScript = "rm ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg\ncreate-dmg --volname Tonnerre --volicon /Users/cheng/Developer/ScriptTools/CreateDMG/installer.icns --background /Users/cheng/Developer/ScriptTools/CreateDMG/background.png --app-drop-link 450 170 --window-size 550 330 --icon Tonnerre 100 170 ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg ${CONFIGURATION_BUILD_DIR}/Tonnerre.app\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1490,7 +1483,6 @@
 				14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */,
 				14F5702621ACAAA800AE269B /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */,
 				146C053821BDAEB50028B076 /* ContentViewDelegate.swift in Sources */,
-				14DB560921BDCE88006C26C0 /* TintedImageView.swift in Sources */,
 				146C052D21BC6AAC0028B076 /* MenuOptionId.swift in Sources */,
 				14D5185521B4875B00C93E7C /* GeneralCell.swift in Sources */,
 				1449E5892133522600500BF4 /* NSImage+Tint.swift in Sources */,
