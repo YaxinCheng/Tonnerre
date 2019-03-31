@@ -62,7 +62,7 @@ final class TaggedList<T: Hashable> {
   }
   
   var last: T? {
-    if endIndex >= self.count { return nil }
+    if endIndex > self.count { return nil }
     return self[endIndex - 1]
   }
   
