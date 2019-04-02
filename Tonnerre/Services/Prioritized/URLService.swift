@@ -13,17 +13,17 @@ struct URLService: BuiltInProvider {
   let argLowerBound: Int = 1
   let icon: NSImage = .safari
   let content: String = "Open typed URL in a browser"
-  private let urlRegex = try! NSRegularExpression(pattern: "^(https?:\\/\\/)?(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&/.]*)*", options: .caseInsensitive)
+  private let urlRegex = try! NSRegularExpression(pattern: "(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&/.]*)*", options: .caseInsensitive)
+  private let schemeRegex = try! NSRegularExpression(pattern: "^[a-z][a-z]+:\\/\\/", options: .caseInsensitive)
   
   func prepare(withInput input: [String]) -> [DisplayItem] {
     guard let query = input.first, input.count == 1 else { return [] }
-    let isURL = query.starts(with: "http://") ||
-      query.starts(with: "https://") ||
-      urlRegex.numberOfMatches(in: query, options: .anchored, range: NSRange(location: 0, length: query.count)) == 1
+    let isURL = query.match(regex: schemeRegex) != nil || query.match(regex: urlRegex) != nil
     guard isURL else { return [] }
     let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
     let url: URL
-    if query.starts(with: "http") { url = URL(string: encodedQuery)! }
+    
+    if query.match(regex: schemeRegex) != nil { url = URL(string: encodedQuery)! }
     else { url = URL(string: "https://\(encodedQuery)")! }
     let browsers = Browser.installed
         .sorted { LaunchOrder.retrieveTime(with: $0.name) > LaunchOrder.retrieveTime(with: $1.name) }
