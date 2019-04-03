@@ -13,7 +13,7 @@ struct URLService: BuiltInProvider {
   let argLowerBound: Int = 1
   let icon: NSImage = .safari
   let content: String = "Open typed URL in a browser"
-  private let urlRegex = try! NSRegularExpression(pattern: "(\\w+\\.)+[a-z]{2,5}(\\/[a-z0-9?\\-=_&/.]*)*", options: .caseInsensitive)
+  private let urlRegex = try! NSRegularExpression(pattern: "(\\w+\\.)+[a-z]{2,5}(:\\d{2,4})?(\\/[a-z0-9?\\-=_&/.]*)*", options: .caseInsensitive)
   private let schemeRegex = try! NSRegularExpression(pattern: "^[a-z][a-z]+:\\/\\/", options: .caseInsensitive)
   
   func prepare(withInput input: [String]) -> [DisplayItem] {

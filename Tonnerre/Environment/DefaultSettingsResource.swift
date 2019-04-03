@@ -19,11 +19,8 @@ struct DefaultSettingResource: EnvResource {
   ]
   
   func export(to env: Environment) {
-    let doneExecuting = UserDefaults.standard.bool(forKey: "settings:finished")
-    guard !doneExecuting else { return }
     for (key, value) in defaultSettings {
       TonnerreSettings.set(value, forKey: key)
     }
-    UserDefaults.standard.set(true, forKey: "settings:finished")
   }
 }

@@ -30,11 +30,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     indexingManager.check()
   }
 
-  func applicationWillTerminate(_ aNotification: Notification) {
-    // Insert code here to tear down your application
-    TonnerreSettings.set(true, forKey: .helperDidExit)
-  }
-
   // MARK: - Core Data stack
 
   lazy var persistentContainer: NSPersistentContainer = {
