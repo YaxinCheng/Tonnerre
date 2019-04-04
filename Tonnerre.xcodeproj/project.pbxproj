@@ -167,6 +167,8 @@
 		14D57CD3224EB97B00D52CF9 /* WebServiceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */; };
 		14D57CD5224EBE9100D52CF9 /* WebServiceListTTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */; };
 		14D57CD72250351700D52CF9 /* tonnerrePlus.icns in Resources */ = {isa = PBXBuildFile; fileRef = 14D57CD62250351700D52CF9 /* tonnerrePlus.icns */; };
+		14D57CDC2255956F00D52CF9 /* builtinKeywords.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D57CDB2255956F00D52CF9 /* builtinKeywords.plist */; };
+		14D57CE022569FFE00D52CF9 /* KeywordResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D57CDF22569FFE00D52CF9 /* KeywordResource.swift */; };
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
 		14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
@@ -442,6 +444,8 @@
 		14D57CD2224EB97B00D52CF9 /* WebServiceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceList.swift; sourceTree = "<group>"; };
 		14D57CD4224EBE9100D52CF9 /* WebServiceListTTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceListTTest.swift; sourceTree = "<group>"; };
 		14D57CD62250351700D52CF9 /* tonnerrePlus.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tonnerrePlus.icns; sourceTree = "<group>"; };
+		14D57CDB2255956F00D52CF9 /* builtinKeywords.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = builtinKeywords.plist; sourceTree = "<group>"; };
+		14D57CDF22569FFE00D52CF9 /* KeywordResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordResource.swift; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
 		14DAE5C72208E4E2001009CA /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
@@ -551,15 +555,6 @@
 				1438057921C8709600DD0685 /* Switch.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		14398FB9211FCB4600F5AFCA /* TranslationRelated */ = {
-			isa = PBXGroup;
-			children = (
-				14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */,
-				14FA57E120CC68CA00E53D63 /* langueCodes.plist */,
-			);
-			name = TranslationRelated;
 			sourceTree = "<group>";
 		};
 		1440330821CEC6220026E822 /* WaterfallLayout */ = {
@@ -732,14 +727,12 @@
 				146C052B21BC68BD0028B076 /* Window */,
 				14DB560A21BDCF99006C26C0 /* Settings */,
 				1470514A20B1BEFB00F6FBE8 /* Assets.xcassets */,
-				14398FB9211FCB4600F5AFCA /* TranslationRelated */,
 				1470514F20B1BEFB00F6FBE8 /* Info.plist */,
 				1470515020B1BEFB00F6FBE8 /* Tonnerre.entitlements */,
 				1470514720B1BEF900F6FBE8 /* Tonnerre.xcdatamodeld */,
 				1421F284210257D90020480A /* DynamicServiceExec.py */,
 				14D57CD62250351700D52CF9 /* tonnerrePlus.icns */,
-				1404E6BD222DCFF800F27F7C /* browsers.plist */,
-				14D57CD0224EB6B400D52CF9 /* webServices.plist */,
+				14D57CD822554F9E00D52CF9 /* configs */,
 			);
 			path = Tonnerre;
 			sourceTree = "<group>";
@@ -826,6 +819,7 @@
 				14A074212226E27300609A57 /* HelperResource.swift */,
 				14A0742322271ED500609A57 /* ClipboardResource.swift */,
 				14A07425222722C300609A57 /* ProviderMapResource.swift */,
+				14D57CDF22569FFE00D52CF9 /* KeywordResource.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -949,6 +943,18 @@
 				1438057B21C8709B00DD0685 /* Components */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		14D57CD822554F9E00D52CF9 /* configs */ = {
+			isa = PBXGroup;
+			children = (
+				14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */,
+				14FA57E120CC68CA00E53D63 /* langueCodes.plist */,
+				1404E6BD222DCFF800F27F7C /* browsers.plist */,
+				14D57CD0224EB6B400D52CF9 /* webServices.plist */,
+				14D57CDB2255956F00D52CF9 /* builtinKeywords.plist */,
+			);
+			path = configs;
 			sourceTree = "<group>";
 		};
 		14DB560A21BDCF99006C26C0 /* Settings */ = {
@@ -1261,6 +1267,7 @@
 				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
 				145CF987218BA1C3003B9468 /* LiteTableViewController.storyboard in Resources */,
 				14F10997218BA276003A5E07 /* TonnerreField.storyboard in Resources */,
+				14D57CDC2255956F00D52CF9 /* builtinKeywords.plist in Resources */,
 				14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1419,6 +1426,7 @@
 				14AEB2E220BF0F3400D10D44 /* DisplayItem.swift in Sources */,
 				14F2302D214206F100B7A0FB /* String+Extension.swift in Sources */,
 				144F80C520B5FF75006A16BC /* Notification+Extension.swift in Sources */,
+				14D57CE022569FFE00D52CF9 /* KeywordResource.swift in Sources */,
 				14454D1B2197C795008F1A8B /* PyExecutor.swift in Sources */,
 				145DA16B20DADA2800C1E804 /* DuckDuckGo.swift in Sources */,
 				1449E586213351BB00500BF4 /* TonnerreSettings.swift in Sources */,

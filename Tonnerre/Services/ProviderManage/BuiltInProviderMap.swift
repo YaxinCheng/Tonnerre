@@ -9,32 +9,7 @@
 import Foundation
 
 struct BuiltInProviderMap {
-  /// provider_id to keyword
-  static let IDtoKeyword: [String: String] = [
-      "Tonnerre.Provider.BuiltIn.URLService"               : ""
-    , "Tonnerre.Provider.BuiltIn.CalculationService"       : ""
-    , "Tonnerre.Provider.BuiltIn.LaunchService"            : ""
-    , "Tonnerre.Provider.BuiltIn.GoogleSearch"             : "google"
-    , "Tonnerre.Provider.BuiltIn.GoogleImageSearch"        : "image"
-    , "Tonnerre.Provider.BuiltIn.YoutubeSearch"            : "youtube"
-    , "Tonnerre.Provider.BuiltIn.AmazonSearch"             : "amazon"
-    , "Tonnerre.Provider.BuiltIn.WikipediaSearch"          : "wiki"
-    , "Tonnerre.Provider.BuiltIn.BingSearch"               : "bing"
-    , "Tonnerre.Provider.BuiltIn.DuckDuckGoSearch"         : "duck"
-    , "Tonnerre.Provider.BuiltIn.DictionarySerivce"        : "define"
-    , "Tonnerre.Provider.BuiltIn.GoogleTranslateService"   : "translate"
-    , "Tonnerre.Provider.BuiltIn.FileNameSearchService"    : "file"
-    , "Tonnerre.Provider.BuiltIn.FileContentSearchService" : "content"
-    , "Tonnerre.Provider.BuiltIn.GoogleMapService"         : "map"
-    , "Tonnerre.Provider.BuiltIn.SafariBMService"          : "safari"
-    , "Tonnerre.Provider.BuiltIn.ChromeBMService"          : "chrome"
-    , "Tonnerre.Provider.BuiltIn.VolumeService"            : "eject"
-    , "Tonnerre.Provider.BuiltIn.ClipboardService"         : "cb"
-    , "Tonnerre.Provider.BuiltIn.SettingService"           : "tonnerre"
-    , "Tonnerre.Provider.BuiltIn.ApplicationService"       : "quit"
-  ]
-  
-  static let IDtoStruct: [String: BuiltInProvider.Type] = [
+  static let IdToType: [String: BuiltInProvider.Type] = [
       "Tonnerre.Provider.BuiltIn.URLService"               : URLService.self
     , "Tonnerre.Provider.BuiltIn.CalculationService"       : CalculationService.self
     , "Tonnerre.Provider.BuiltIn.LaunchService"            : LaunchService.self
@@ -58,16 +33,20 @@ struct BuiltInProviderMap {
     , "Tonnerre.Provider.BuiltIn.ApplicationService"       : ApplicationService.self
   ]
   
+  static func extractID(from provider: BuiltInProvider.Type) -> String {
+    return "Tonnerre.Provider.BuiltIn.\(provider.self)"
+  }
+  
   static func extractKeyword(from provider: BuiltInProvider.Type) -> String {
-    let id = "Tonnerre.Provider.BuiltIn.\(provider.self)"
-    return IDtoKeyword[id, default: ""]
+    let key = extractID(from: provider) + ".keyword"
+    return UserDefaults.shared.string(forKey: key) ?? ""
   }
   
   static func retrieveType(baseOnID id: String) -> BuiltInProvider.Type? {
-    return IDtoStruct[id]
+    return IdToType[id]
   }
   
-  static func extractID(from provider: BuiltInProvider.Type) -> String {
-    return "Tonnerre.Provider.BuiltIn.\(provider.self)"
+  static var associatedKeywordsWithIds: [(String, String)] {
+    return IdToType.map { (extractKeyword(from: $0.value), $0.key) }
   }
 }

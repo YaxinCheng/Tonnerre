@@ -19,7 +19,7 @@ final class Environment {
   let settingObserver: SettingObserver
   
   init() {
-    initialSetupResources = [DefaultSettingResource.self]
+    initialSetupResources = [DefaultSettingResource.self, KeywordResource.self]
     resourceTypes = [CacheResource.self, SupportFoldersResource.self,
                 DefaultSettingResource.self, HelperResource.self,
                 ProviderMapResource.self, ClipboardResource.self]
@@ -36,6 +36,7 @@ final class Environment {
         initialSetupResources.removeFirst().init().export(to: self)
       }
     }
+    self.initialSetupResources = []
   }
 }
 
@@ -44,9 +45,9 @@ extension Environment {
     case initialStartup
     
     func execute(_ action: ()->()) {
-      guard UserDefaults.shared.bool(forKey: rawValue) else { return }
-      UserDefaults.shared.set(true, forKey: rawValue)
+      guard !UserDefaults.shared.bool(forKey: rawValue) else { return }
       action()
+      UserDefaults.shared.set(true, forKey: rawValue)
     }
   }
 }

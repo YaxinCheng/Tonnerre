@@ -16,7 +16,7 @@ final class TonnerreInterpreter {
   }
   
   private let cache = Cache()
-  static var serviceIDTrie = ServiceIDTrie(array: BuiltInProviderMap.IDtoKeyword.map { ($1, $0) })
+  static var serviceIDTrie = ServiceIDTrie(array: BuiltInProviderMap.associatedKeywordsWithIds)
   private let session = TonnerreSession.shared
   
   func interpret(input: String) -> TaggedList<ServicePack> {
