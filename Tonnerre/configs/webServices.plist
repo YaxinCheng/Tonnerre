@@ -70,7 +70,7 @@
 			<key>template</key>
 			<string>https://www.bing.com/search?q=%@</string>
 		</dict>
-		<key>DuckDuckGo</key>
+		<key>DuckDuckGoSearch</key>
 		<dict>
 			<key>suggestionTemplate</key>
 			<string>DuckDuckGo</string>
