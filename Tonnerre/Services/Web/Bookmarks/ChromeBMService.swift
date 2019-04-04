@@ -11,7 +11,7 @@ import Cocoa
 struct ChromeBMService: BookMarkService {
   let name: String = "Chrome BookMarks"
   let content: String = "Quick launch Chrome Bookmarks"
-  let keyword: String = "chrome"
+  let defaultKeyword: String = "chrome"
   let defered: Bool = true
   static let browser: Browser? = .chrome
   

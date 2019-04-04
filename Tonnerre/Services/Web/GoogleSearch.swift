@@ -30,18 +30,18 @@ extension Google {
 struct GoogleSearch: Google {
   let name: String = "Google"
   let contentTemplate: String = "Search \"%@\" on Google"
-  let keyword: String = "google"
+  let defaultKeyword: String = "google"
 }
 
 struct GoogleImageSearch: Google {
   let name: String = "Google Images"
   let contentTemplate: String = "Search \"%@\" on Google Image"
-  let keyword: String = "image"
+  let defaultKeyword: String = "image"
 }
 
 struct YoutubeSearch: Google {
   let name: String = "YouTube"
   let contentTemplate: String = "Find \"%@\" on Youtube"
-  let keyword: String = "youtube"
+  let defaultKeyword: String = "youtube"
   let icon: NSImage = #imageLiteral(resourceName: "youtube")
 }

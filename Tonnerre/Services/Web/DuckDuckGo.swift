@@ -10,7 +10,7 @@ import Cocoa
 
 struct DuckDuckGoSearch: WebService {
   let name: String = "DuckDuckGo"
-  let keyword: String = "duck"
+  let defaultKeyword: String = "duck"
   let contentTemplate: String = "Search \"%@\" on DuckDuckGo"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max

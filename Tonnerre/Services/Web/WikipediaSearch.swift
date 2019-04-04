@@ -12,7 +12,7 @@ struct WikipediaSearch: WebService {
   let icon: NSImage = #imageLiteral(resourceName: "wikipedia")
   let name: String = "Wikipedia"
   let contentTemplate: String = "Search \"%@\" on Wikipedia"
-  let keyword: String = "wiki"
+  let defaultKeyword: String = "wiki"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   

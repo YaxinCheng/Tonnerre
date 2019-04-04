@@ -9,7 +9,7 @@
 import Cocoa
 
 struct SettingService: BuiltInProvider {
-  let keyword: String = "tonnerre"
+  let defaultKeyword: String = "tonnerre"
   let name: String = "Tonnerre Settings"
   let content: String = "Open Tonnerre setting panels"
   let argLowerBound: Int = 0
@@ -17,7 +17,7 @@ struct SettingService: BuiltInProvider {
   let icon: NSImage = #imageLiteral(resourceName: "settings")
   
   func prepare(withInput input: [String]) -> [DisplayItem] {
-    return [DisplayContainer<Int>(name: name, content: content, icon: icon, placeholder: keyword)]
+    return [DisplayContainer<Int>(name: name, content: content, icon: icon, placeholder: defaultKeyword)]
   }
   
   func serve(service: DisplayItem, withCmd: Bool) {

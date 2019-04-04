@@ -11,7 +11,7 @@ import Cocoa
 struct VolumeService: BuiltInProvider {
   let name: String = "Eject Volumes"
   let content: String = "Eject selected volumes"
-  let keyword: String = "eject"
+  let defaultKeyword: String = "eject"
   let icon: NSImage = #imageLiteral(resourceName: "eject")
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0
@@ -68,7 +68,7 @@ struct VolumeService: BuiltInProvider {
     _ = semaphore.wait(timeout: .now() + 0.2)// timeout set to 0.2 seconds
     let noEjectable = DisplayContainer<Error>(name: "Eject Service",
                                              content: "No ejectable volumes",
-                                             icon: icon, placeholder: keyword)
+                                             icon: icon, placeholder: defaultKeyword)
     guard !volumeURLs.isEmpty else { return [noEjectable] }
     let workspace = NSWorkspace.shared
     let externalVolumes = volumeURLs.filter { !(try! $0.resourceValues(forKeys: [.volumeIsInternalKey]).volumeIsInternal ?? false) }

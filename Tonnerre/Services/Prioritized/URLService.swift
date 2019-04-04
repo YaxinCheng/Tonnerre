@@ -9,7 +9,7 @@
 import Cocoa
 
 struct URLService: BuiltInProvider {
-  let keyword: String = ""
+  let defaultKeyword: String = ""
   let argLowerBound: Int = 1
   let icon: NSImage = .safari
   let content: String = "Open typed URL in a browser"

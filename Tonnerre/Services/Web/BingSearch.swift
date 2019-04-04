@@ -12,7 +12,7 @@ import Cocoa
 struct BingSearch: WebService {
   let name: String = "Bing"
   let contentTemplate: String = "Search \"%@\" on Bing"
-  let keyword: String = "bing"
+  let defaultKeyword: String = "bing"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
   let icon: NSImage = #imageLiteral(resourceName: "bing")

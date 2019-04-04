@@ -33,13 +33,15 @@ struct BuiltInProviderMap {
     , "Tonnerre.Provider.BuiltIn.ApplicationService"       : ApplicationService.self
   ]
   
+  private static let _ID_TEMPLATE = "Tonnerre.Provider.BuiltIn.%@"
+  
   static func extractID(from provider: BuiltInProvider.Type) -> String {
-    return "Tonnerre.Provider.BuiltIn.\(provider.self)"
+    return String(format: _ID_TEMPLATE, "\(provider)")
   }
   
   static func extractKeyword(from provider: BuiltInProvider.Type) -> String {
     let key = extractID(from: provider) + ".keyword"
-    return UserDefaults.shared.string(forKey: key) ?? ""
+    return UserDefaults.shared.string(forKey: key) ?? provider.init().defaultKeyword
   }
   
   static func retrieveType(baseOnID id: String) -> BuiltInProvider.Type? {

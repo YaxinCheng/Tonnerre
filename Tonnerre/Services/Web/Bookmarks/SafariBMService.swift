@@ -12,7 +12,7 @@ struct SafariBMService: BookMarkService {
   static let browser: Browser? = .safari
   let name: String = "Safari BookMarks"
   let content: String = "Quick launch Safari Bookmarks"
-  let keyword: String = "safari"
+  let defaultKeyword: String = "safari"
   let defered: Bool = true
   
   func parseFile() throws -> [BookMarkService.BookMark] {

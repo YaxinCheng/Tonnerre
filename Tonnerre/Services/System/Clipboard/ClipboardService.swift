@@ -10,7 +10,7 @@ import Cocoa
 import CoreData
 
 struct ClipboardService: BuiltInProvider {
-  let keyword: String = "cb"
+  let defaultKeyword: String = "cb"
   let argLowerBound: Int = 0
   let argUpperBound: Int = Int.max
   let name: String = "Clipboard Records"

@@ -12,7 +12,7 @@ struct ApplicationService: BuiltInProvider {
   let name: String = "Quit Programs"
   let content: String = "Find and quite running programs"
   let alterContent: String? = "Force quit program"
-  let keyword: String = "quit"
+  let defaultKeyword: String = "quit"
   let icon: NSImage = #imageLiteral(resourceName: "close")
   let argUpperBound: Int = .max
   let argLowerBound: Int = 0

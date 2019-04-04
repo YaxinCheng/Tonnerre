@@ -41,7 +41,7 @@ extension FileSearchService {
 
 struct FileNameSearchService: FileSearchService {
   let name = "Search files by names"
-  let keyword = "file"
+  let defaultKeyword = "file"
   
   var associatedIndex: TonnerreIndex? {
     return IndexFactory.name
@@ -50,7 +50,7 @@ struct FileNameSearchService: FileSearchService {
 
 struct FileContentSearchService: FileSearchService {
   let name = "Search files by content"
-  let keyword = "content"
+  let defaultKeyword = "content"
   
   var associatedIndex: TonnerreIndex? {
     return IndexFactory.content

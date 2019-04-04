@@ -12,7 +12,7 @@ struct AmazonSearch: WebService {
   let icon: NSImage = #imageLiteral(resourceName: "amazon")
   let name: String = "Amazon"
   let contentTemplate: String = "Shop \"%@\" on Amazon"
-  let keyword: String = "amazon"
+  let defaultKeyword: String = "amazon"
   let argLowerBound: Int = 1
   let argUpperBound: Int = .max
 

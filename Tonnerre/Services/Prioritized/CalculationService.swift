@@ -10,7 +10,7 @@ import Cocoa
 import MathParser
 
 struct CalculationService: BuiltInProvider {
-  let keyword: String = ""
+  let defaultKeyword: String = ""
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   let alterContent: String? = "Open calculator with this value in"

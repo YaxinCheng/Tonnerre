@@ -13,7 +13,7 @@ struct DictionarySerivce: BuiltInProvider {
   let icon: NSImage = .dictionary
   let content: String = "Find definition for word in dictionary"
   let name: String = "Define words..."
-  let keyword: String = "define"
+  let defaultKeyword: String = "define"
   let argLowerBound: Int = 1
   let argUpperBound: Int = Int.max
   private let spellChecker: NSSpellChecker
