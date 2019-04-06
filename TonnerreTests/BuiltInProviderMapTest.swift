@@ -16,6 +16,11 @@ class BuiltInProviderMapTest: XCTestCase {
     XCTAssertEqual(keyword, "google")
   }
   
+  func testExtractID() {
+    let id = BuiltInProviderMap.extractID(from: GoogleSearch.self)
+    XCTAssertEqual(id, "Tonnerre.Provider.BuiltIn.GoogleSearch")
+  }
+  
   func testExtractEmptyKeyword() {
     let keyword = BuiltInProviderMap.extractKeyword(from: LaunchService.self)
     XCTAssertTrue(keyword.isEmpty)

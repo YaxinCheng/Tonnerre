@@ -16,8 +16,15 @@ struct LaunchService: BuiltInProvider {
   let alterContent: String? = "Show selected app in Finder"
   
   private static let aliasDict: [String: String] = {
-    let aliasFile = Bundle.main.path(forResource: "alias", ofType: "plist")!
-    return NSDictionary(contentsOfFile: aliasFile) as! [String: String]
+    let content: Result<[String : String], Error> = PropertyListSerialization.read(fileName: "alias")
+    switch content {
+    case .success(let aliasFile): return aliasFile
+    case .failure(let error):
+      #if DEBUG
+      print("alias file reading failed in LaunchService", error)
+      #endif
+      return [:]
+    }
   }()
   
   func prepare(withInput input: [String]) -> [DisplayItem] {

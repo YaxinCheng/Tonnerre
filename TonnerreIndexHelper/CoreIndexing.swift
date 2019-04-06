@@ -20,10 +20,15 @@ final class CoreIndexing {
    A dictionary using file names as keys, and related aliases (if exist) as values
   */
   private lazy var aliasDict: Dictionary<String, String> = {
-    guard let aliasFile = Bundle.main.path(forResource: "alias", ofType: "plist") else {
+    let content: Result<[String:String], Error> = PropertyListSerialization.read(fileName: "alias")
+    switch content {
+    case .success(let aliasFile): return aliasFile
+    case .failure(let error):
+      #if DEBUG
+      print("alias file failed to read", error)
+      #endif
       return [:]
     }
-    return NSDictionary(contentsOfFile: aliasFile) as! [String : String]
   }()
   
   private var indexes = IndexStorage()

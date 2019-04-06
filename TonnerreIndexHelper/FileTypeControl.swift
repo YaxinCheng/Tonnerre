@@ -64,8 +64,14 @@ struct FileTypeControl {
   }
   
   private static func loadRawList() {
-    let exclusionPath = Bundle.main.path(forResource: "exclusionList", ofType: "plist")!
-    self.rawList = NSDictionary(contentsOfFile: exclusionPath) as! [String: [String]]
+    let content: Result<[String: [String]], Error> = PropertyListSerialization.read(fileName: "exclusionList")
+    switch content {
+    case .success(let rawList): self.rawList = rawList
+    case .failure(let error):
+      #if DEBUG
+      print("Load raw list failed", error)
+      #endif
+    }
   }
   
   static func isExcludedURL(url: URL) -> Bool {

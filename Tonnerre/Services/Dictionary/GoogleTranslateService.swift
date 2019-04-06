@@ -20,12 +20,26 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
   let identifier: String = "GoogleTranslateService"
   
   private static let supportedLanguages: Set<String> = {
-    let codeFile = Bundle.main.path(forResource: "langueCodes", ofType: "plist")!
-    return Set<String>(NSArray(contentsOfFile: codeFile) as! [String])
+    let content: Result<[String], Error> = PropertyListSerialization.read(fileName: "langueCodes")
+    switch content {
+    case .success(let codeFile): return Set(codeFile)
+    case .failure(let error):
+      #if DEBUG
+      print("Error reading langueCodes file", error)
+      #endif
+      return []
+    }
   }()
   private static let langueToEmoji: [String: String] = {
-    let emojiFile = Bundle.main.path(forResource: "langueToEmoji", ofType: "plist")!
-    return NSDictionary(contentsOfFile: emojiFile) as! [String: String]
+    let content: Result<[String:String], Error> = PropertyListSerialization.read(fileName: "langueToEmoji")
+    switch content {
+    case .success(let emojiFile): return emojiFile
+    case .failure(let error):
+      #if DEBUG
+      print("Error reading langueToEmoji file", error)
+      #endif
+      return [:]
+    }
   }()
 
   private func generateAuto(query: String) -> [DisplayContainer<URL>] {

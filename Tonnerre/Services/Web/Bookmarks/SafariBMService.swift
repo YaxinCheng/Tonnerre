@@ -17,10 +17,16 @@ struct SafariBMService: BookMarkService {
   
   func parseFile() throws -> [BookMarkService.BookMark] {
     guard let bookmarkFile = type(of: self).browser?.bookMarksFile else { return [] }
-    let bookmarkData = try Data(contentsOf: bookmarkFile)
-    let plistObject = try PropertyListSerialization.propertyList(from: bookmarkData, options: .mutableContainersAndLeaves, format: nil)
-    guard let plist = plistObject as? Dictionary<String, Any> else { return [] }
-    return parse(plist: plist)
+    let content: Result<[String: Any], Error> = PropertyListSerialization.read(bookmarkFile)
+    switch content {
+    case .success(let bookMarks):
+      return parse(plist: bookMarks)
+    case .failure(let error):
+      #if DEBUG
+      print("Error reading plist in SafariBMService", error)
+      #endif
+      return []
+    }
   }
   
   private func parse(plist: Dictionary<String, Any>) -> [BookMarkService.BookMark] {

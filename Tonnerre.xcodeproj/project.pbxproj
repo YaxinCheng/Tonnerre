@@ -172,6 +172,10 @@
 		14DAE54421FE9F1C001009CA /* MultiClickDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */; };
 		14DAE5C82208E4E2001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
 		14DAE5C92208FF21001009CA /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAE5C72208E4E2001009CA /* SettingValue.swift */; };
+		14DE83AA2256C8E700810DD3 /* defaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14DE83A92256C8E700810DD3 /* defaultSettings.plist */; };
+		14DE83AC2256CA1400810DD3 /* Plist+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83AB2256CA1400810DD3 /* Plist+Read.swift */; };
+		14DE83AE2257896B00810DD3 /* PlistExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83AD2257896B00810DD3 /* PlistExtensionTest.swift */; };
+		14DE83B122582A4100810DD3 /* Plist+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83AB2256CA1400810DD3 /* Plist+Read.swift */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -448,6 +452,9 @@
 		14D57CDF22569FFE00D52CF9 /* KeywordResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordResource.swift; sourceTree = "<group>"; };
 		14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClickDetector.swift; sourceTree = "<group>"; };
 		14DAE5C72208E4E2001009CA /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
+		14DE83A92256C8E700810DD3 /* defaultSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaultSettings.plist; sourceTree = "<group>"; };
+		14DE83AB2256CA1400810DD3 /* Plist+Read.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plist+Read.swift"; sourceTree = "<group>"; };
+		14DE83AD2257896B00810DD3 /* PlistExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistExtensionTest.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
@@ -749,6 +756,7 @@
 				14FA02CB21E40E620058E936 /* ProviderMapTest.swift */,
 				14FA02CD21E43CCF0058E936 /* ClipboardMonitorTest.swift */,
 				14A07412222639B200609A57 /* SettingSubscriberTest.swift */,
+				14DE83AD2257896B00810DD3 /* PlistExtensionTest.swift */,
 				1470515B20B1BEFB00F6FBE8 /* Info.plist */,
 			);
 			path = TonnerreTests;
@@ -849,6 +857,7 @@
 				1449E56C212A2AB000500BF4 /* UserDefaults+Extension.swift */,
 				1449E574212B6B1D00500BF4 /* UserDefault+shared.swift */,
 				14F2302C214206F100B7A0FB /* String+Extension.swift */,
+				14DE83AB2256CA1400810DD3 /* Plist+Read.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -953,6 +962,7 @@
 				1404E6BD222DCFF800F27F7C /* browsers.plist */,
 				14D57CD0224EB6B400D52CF9 /* webServices.plist */,
 				14D57CDB2255956F00D52CF9 /* builtinKeywords.plist */,
+				14DE83A92256C8E700810DD3 /* defaultSettings.plist */,
 			);
 			path = configs;
 			sourceTree = "<group>";
@@ -1257,6 +1267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14DE83AA2256C8E700810DD3 /* defaultSettings.plist in Resources */,
 				14AEB2DC20BEFDA900D10D44 /* ServiceCell.xib in Resources */,
 				1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */,
 				146AD8EE20CA12C200D9E591 /* alias.plist in Resources */,
@@ -1347,6 +1358,7 @@
 				1404E6CE2239A8AA00F27F7C /* Notification+Extension.swift in Sources */,
 				146AD8DF20C9C1B600D9E591 /* URL+Extension.swift in Sources */,
 				1440331421DD6FCD0026E822 /* PathIterator.swift in Sources */,
+				14DE83B122582A4100810DD3 /* Plist+Read.swift in Sources */,
 				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,
 				146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */,
 				14CD694D21F7CA8B00FE6205 /* SupportFolders.swift in Sources */,
@@ -1438,6 +1450,7 @@
 				143EF11421E0004A00CC8632 /* IndexFactory.swift in Sources */,
 				14A074192226D65000609A57 /* EnvResource.swift in Sources */,
 				143551F32123A49200D6080E /* SettingService.swift in Sources */,
+				14DE83AC2256CA1400810DD3 /* Plist+Read.swift in Sources */,
 				148DF5D520CB234E00A2E23E /* GoogleTranslateService.swift in Sources */,
 				14257A0B216BD775008BE752 /* LocalNotification.swift in Sources */,
 				14F1099B218BA43C003A5E07 /* TonnerreFieldDelegate.swift in Sources */,
@@ -1462,6 +1475,7 @@
 			files = (
 				14A07413222639B200609A57 /* SettingSubscriberTest.swift in Sources */,
 				14FA02CE21E43CD00058E936 /* ClipboardMonitorTest.swift in Sources */,
+				14DE83AE2257896B00810DD3 /* PlistExtensionTest.swift in Sources */,
 				1440330E21DADD4B0026E822 /* StringExtensionTest.swift in Sources */,
 				14FA02CC21E40E620058E936 /* ProviderMapTest.swift in Sources */,
 				14FA02CA21E40C3A0058E936 /* BuiltInProviderMapTest.swift in Sources */,

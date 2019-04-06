@@ -19,13 +19,17 @@ struct WebServiceList {
   private let _TEMPLATE_KEY = "template"
   
   private init() {
-    guard
-      let webServiceListURL = Bundle.main.url(forResource: _RESOURCE_NAME, withExtension: "plist"),
-      let data = try? Data(contentsOf: webServiceListURL),
-      let listObj = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
-    else { (suggestionList, servicesList) = ([:], [:]); return }
-    suggestionList = listObj[Attribute.suggestionsTemplate.rawValue] as? [String: String] ?? [:]
-    servicesList = listObj[Attribute.serviceTemplate.rawValue] as? [String: [String: String]] ?? [:]
+    let content: Result<[String:Any], Error> = PropertyListSerialization.read(fileName: _RESOURCE_NAME)
+    switch content {
+    case .success(let listObj):
+      suggestionList = listObj[Attribute.suggestionsTemplate.rawValue] as? [String : String] ?? [:]
+      servicesList = listObj[Attribute.serviceTemplate.rawValue] as? [String : [String : String]] ?? [:]
+    case .failure(let error):
+      #if DEBUG
+      print("Error in WebServiceList", error)
+      #endif
+      (suggestionList, servicesList) = ([:], [:])
+    }
   }
   
   /// The attribute from the webServiceList, either suggestion or service

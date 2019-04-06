@@ -12,13 +12,15 @@ import CoreData
 /// Common browsers on mac, with possible URL paths and bookmarks URLs and icons
 struct Browser: Hashable {
   private static let bundleIds: [String] = {
-    guard
-      let bundleFile = Bundle.main.url(forResource: "browsers", withExtension: "plist"),
-      let fileData = try? Data(contentsOf: bundleFile),
-      let plistContent = try? PropertyListSerialization.propertyList(from: fileData, format: nil)
-      else { return [] }
-    let bundleList = (plistContent as? [String : String]) ?? [:]
-    return Array(bundleList.values)
+    let content: Result<[String:String], Error> = PropertyListSerialization.read(fileName: "browsers")
+    switch content {
+    case .success(let browsersList): return Array(browsersList.values)
+    case .failure(let error):
+      #if DEBUG
+      print("Browser file reading failed", error)
+      #endif
+      return []
+    }
   }()
   
   /// Installed identifiable browsers

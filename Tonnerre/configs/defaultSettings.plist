@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>settings.python</key>
+	<string>/usr/bin/python</string>
+	<key>Tonnerre.Providerr.Default</key>
+	<string>Tonnerre.Provider.BuiltIn.GoogleSearch</string>
+	<key>Tonnerre.Provider.BuiltIn.ClipboardService:limit</key>
+	<integer>9</integer>
+	<key>settings:warnBeforeExit</key>
+	<true/>
+	<key>Tonnerre.Providers.Disabled.IDs</key>
+	<array>
+		<string>Tonnerre.Provider.BuiltIn.SafariBMService</string>
+		<string>Tonnerre.Provider.BuiltIn.ChromeBMService</string>
+	</array>
+</dict>
+</plist>

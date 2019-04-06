@@ -12,23 +12,21 @@ struct KeywordResource: EnvResource {
   
   private let idToKeywordList: [String : String]
   private let _KEYWORD_LIST_NAME = "builtinKeywords"
+  private let _KEYWORD_KEY_TEMPLATE = "%@.keyword"
   
   init() {
-    guard
-      let fileURL = Bundle.main.url(forResource: _KEYWORD_LIST_NAME, withExtension: "plist"),
-      let fileData = try? Data(contentsOf: fileURL),
-      let keywordList = try? PropertyListSerialization.propertyList(from: fileData, format: nil) as? [String : String]
-    else {
+    let content: Result<[String: String], Error> = PropertyListSerialization.read(fileName: _KEYWORD_LIST_NAME)
+    switch content {
+    case .success(let keywordList):
+      idToKeywordList = keywordList
+    case .failure(_):
       idToKeywordList = [:]
-      return
     }
-    idToKeywordList = keywordList
   }
   
   func export(to env: Environment) {
-    let keywordKeyTemplate = "%@.keyword"
     for (id, keyword) in idToKeywordList {
-      UserDefaults.shared.set(keyword, forKey: String(format: keywordKeyTemplate, id))
+      UserDefaults.shared.set(keyword, forKey: String(format: _KEYWORD_KEY_TEMPLATE, id))
     }
   }
 }
