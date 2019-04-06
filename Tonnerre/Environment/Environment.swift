@@ -20,8 +20,7 @@ final class Environment {
   
   init() {
     initialSetupResources = [DefaultSettingResource.self, KeywordResource.self]
-    resourceTypes = [CacheResource.self, SupportFoldersResource.self,
-                DefaultSettingResource.self, HelperResource.self,
+    resourceTypes = [CacheResource.self, SupportFoldersResource.self, HelperResource.self,
                 ProviderMapResource.self, ClipboardResource.self]
     settingObserver = SettingObserver()
   }

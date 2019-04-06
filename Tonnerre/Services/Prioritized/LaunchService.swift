@@ -20,9 +20,7 @@ struct LaunchService: BuiltInProvider {
     switch content {
     case .success(let aliasFile): return aliasFile
     case .failure(let error):
-      #if DEBUG
-      print("alias file reading failed in LaunchService", error)
-      #endif
+      Logger.error(file: "\(LaunchService.self)", "Alias reading Error: %{PUBLIC}@", error.localizedDescription)
       return [:]
     }
   }()

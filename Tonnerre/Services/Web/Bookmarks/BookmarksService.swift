@@ -59,9 +59,7 @@ extension BookMarkService {
       do {
         _ = try NSWorkspace.shared.open([innerItem], withApplicationAt: browserURL, options: .default, configuration: [:])
       } catch {
-        #if DEBUG
-        print("Browser open bookmarks:", error)
-        #endif
+        Logger.error(file: "\(Self.self)", "Browser BookMark Error: %{PUBLIC}@", error.localizedDescription)
       }
     } else if service is DisplayContainer<Error> {
       guard

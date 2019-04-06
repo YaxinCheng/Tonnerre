@@ -16,9 +16,7 @@ struct TNEProviderLoader {
       let content = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
       return content.filter { $0.pathExtension == "tne" }.compactMap(extractInfo)
     } catch {
-      #if DEBUG
-      print("TNEProviderLoader", error)
-      #endif
+      Logger.error(file: "\(self.self)", "TNE Provider Loading Failed: %{PUBLIC}@", error.localizedDescription)
       return []
     }
   }

@@ -109,6 +109,8 @@
 		1470514E20B1BEFB00F6FBE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1470514C20B1BEFB00F6FBE8 /* Main.storyboard */; };
 		1470516520B1BEFB00F6FBE8 /* TonnerreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470516420B1BEFB00F6FBE8 /* TonnerreUITests.swift */; };
 		1470517320B1C29A00F6FBE8 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1470517220B1C29A00F6FBE8 /* Commons.swift */; };
+		1473974B225969ED002121EC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83B222582CF800810DD3 /* Logger.swift */; };
+		1473974C22596B20002121EC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83B222582CF800810DD3 /* Logger.swift */; };
 		1484148320C63A1A008FD68E /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148220C63A1A008FD68E /* MapService.swift */; };
 		1484148520C70263008FD68E /* ApplicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148420C70263008FD68E /* ApplicationService.swift */; };
 		1484149020C84589008FD68E /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484148F20C84589008FD68E /* CalculationService.swift */; };
@@ -176,6 +178,7 @@
 		14DE83AC2256CA1400810DD3 /* Plist+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83AB2256CA1400810DD3 /* Plist+Read.swift */; };
 		14DE83AE2257896B00810DD3 /* PlistExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83AD2257896B00810DD3 /* PlistExtensionTest.swift */; };
 		14DE83B122582A4100810DD3 /* Plist+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83AB2256CA1400810DD3 /* Plist+Read.swift */; };
+		14DE83B322582CF800810DD3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE83B222582CF800810DD3 /* Logger.swift */; };
 		14E49CDE21B87A8C0018527A /* SettingFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49CDD21B87A8C0018527A /* SettingFetcher.swift */; };
 		14E70E0521753D3300413C13 /* DynamicServiceExec.py in Scripts copy */ = {isa = PBXBuildFile; fileRef = 1421F284210257D90020480A /* DynamicServiceExec.py */; };
 		14E72EAB2176A01600FA41F8 /* TonnerreSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; };
@@ -455,6 +458,7 @@
 		14DE83A92256C8E700810DD3 /* defaultSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaultSettings.plist; sourceTree = "<group>"; };
 		14DE83AB2256CA1400810DD3 /* Plist+Read.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plist+Read.swift"; sourceTree = "<group>"; };
 		14DE83AD2257896B00810DD3 /* PlistExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistExtensionTest.swift; sourceTree = "<group>"; };
+		14DE83B222582CF800810DD3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		14E49CDD21B87A8C0018527A /* SettingFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFetcher.swift; sourceTree = "<group>"; };
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
@@ -610,6 +614,7 @@
 				14CD694B21F7C85C00FE6205 /* SupportFolders.swift */,
 				14DAE54321FE9F1C001009CA /* MultiClickDetector.swift */,
 				1404E6C3222DE40400F27F7C /* AppFetcher.swift */,
+				14DE83B222582CF800810DD3 /* Logger.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1362,6 +1367,7 @@
 				146AD8C720C9C09300D9E591 /* AppDelegate.swift in Sources */,
 				146AD8D620C9C0B700D9E591 /* FileTypeControl.swift in Sources */,
 				14CD694D21F7CA8B00FE6205 /* SupportFolders.swift in Sources */,
+				1473974B225969ED002121EC /* Logger.swift in Sources */,
 				14FA02C821E3F8CE0058E936 /* IndexStorage.swift in Sources */,
 				1449E576212B6B3300500BF4 /* UserDefault+shared.swift in Sources */,
 				1449E570212A2CD200500BF4 /* UserDefaults+Extension.swift in Sources */,
@@ -1424,6 +1430,7 @@
 				146AAE6E20BE0700009AC9C6 /* TonnerreField.swift in Sources */,
 				14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */,
 				14561B8E20C45A650057B4C1 /* WebService.swift in Sources */,
+				14DE83B322582CF800810DD3 /* Logger.swift in Sources */,
 				14561B9720C4892D0057B4C1 /* WikipediaSearch.swift in Sources */,
 				1449E575212B6B1D00500BF4 /* UserDefault+shared.swift in Sources */,
 				140A62CC20CB078500B759A4 /* DictionaryService.swift in Sources */,
@@ -1518,6 +1525,7 @@
 				14AFE6B12118E31F002BBBB2 /* TabViewAnimator.swift in Sources */,
 				146C052F21BC6BDD0028B076 /* TNEProviderLoader.swift in Sources */,
 				1440330521CEC5EF0026E822 /* WaterfallLayout.swift in Sources */,
+				1473974C22596B20002121EC /* Logger.swift in Sources */,
 				1440330A21CEC7220026E822 /* NSCollectionViewDelegateWaterfallLayout.swift in Sources */,
 				146C054721BDBFFD0028B076 /* TonnerreSettings.swift in Sources */,
 				14CD694E21F7CA8C00FE6205 /* SupportFolders.swift in Sources */,

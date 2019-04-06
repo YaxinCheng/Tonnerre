@@ -24,9 +24,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     switch content {
     case .success(let codeFile): return Set(codeFile)
     case .failure(let error):
-      #if DEBUG
-      print("Error reading langueCodes file", error)
-      #endif
+      Logger.error(file: "\(GoogleTranslateService.self)", "Reading langueCodes Error: %{PUBLIC}@", error.localizedDescription)
       return []
     }
   }()
@@ -35,9 +33,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     switch content {
     case .success(let emojiFile): return emojiFile
     case .failure(let error):
-      #if DEBUG
-      print("Error reading langueToEmoji file", error)
-      #endif
+      Logger.error(file: "\(GoogleTranslateService.self)", "Reading langueToEmoji Error: %{PUBLIC}@", error.localizedDescription)
       return [:]
     }
   }()

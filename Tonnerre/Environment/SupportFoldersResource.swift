@@ -16,9 +16,7 @@ struct SupportFoldersResource: EnvResource {
         guard !folder.exists else { continue }
         try folder.create()
       } catch {
-        #if DEBUG
-        print("Create folder error", error)
-        #endif
+        Logger.error(file: "\(self.self)", "Support Folders Creating Error: %{PUBLIC}@", error.localizedDescription)
       }
     }
   }

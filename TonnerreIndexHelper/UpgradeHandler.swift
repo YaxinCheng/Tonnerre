@@ -32,9 +32,7 @@ final class UpgradeHandler {
       try fileManager.removeItem(at: defaultIndexPath)
       lastSystemVersion = currentSystemVersion
     } catch {
-      #if DEBUG
-      print("error removing default index", error)
-      #endif
+      Logger.error(file: "\(self.self)", "Removing Default Index Error: %{PUBLIC}@", error.localizedDescription)
     }
   }
 }
