@@ -76,4 +76,24 @@ extension String {
       else { return nil }
     return self[Range(firstMatch.range, in: self)!]
   }
+  
+  /// Split camel case names to individual words
+  /// - parameter name: the name needs to be splitted
+  /// - returns: an array of words from the name
+  ///
+  /// E.g.: "camelCase" -> "camel Case"
+  func splitCamelCase() -> [Substring] {
+    var components: [Substring] = []
+    var startIndex = self.startIndex
+    var endIndex = self.index(after: startIndex)
+    while endIndex != self.endIndex {
+      if CharacterSet.uppercaseLetters.contains(unicodeScalars[endIndex]) {
+        components.append(self[startIndex ..< endIndex])
+        startIndex = endIndex
+      }
+      endIndex = self.index(after: endIndex)
+    }
+    components.append(self[startIndex...])
+    return components
+  }
 }

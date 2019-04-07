@@ -73,9 +73,9 @@ final class TonnerreInterpreter {
         .filter { tokens.count >= $0.argLowerBound }
         .filter { tokens.count - ($0.keyword.isEmpty ? 0 : 1) <= $0.argUpperBound }
         .sorted {
-          DisplayOrder.sortingScore(baseString: $0.keyword, query: tokens.first!, timeIdentifier: $0.id)
+          DisplayOrder(baseString: $0.keyword, query: tokens.first!, timeIdentifier: $0.id)
             >
-          DisplayOrder.sortingScore(baseString: $1.keyword, query: tokens.first!, timeIdentifier: $1.id)
+          DisplayOrder(baseString: $1.keyword, query: tokens.first!, timeIdentifier: $1.id)
       }
       cache.previousProvider = providers
     }

@@ -80,4 +80,10 @@ class StringExtensionTest: XCTestCase {
     let difference = base.formDifference(with: "")
     XCTAssertEqual(base, difference)
   }
+  
+  func testCamelCaseSplit() {
+    let origin = "helloWorld"
+    let expected = ["hello", "World"] as [Substring]
+    XCTAssertEqual(origin.splitCamelCase(), expected)
+  }
 }

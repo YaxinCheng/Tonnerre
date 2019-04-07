@@ -34,7 +34,7 @@ struct LaunchService: BuiltInProvider {
       let name: String
       if $0.pathExtension == "prefPane" {
         name = LaunchService.aliasDict[fileName, default:
-          splitCamelCaseNames(name: fileName).joined(separator: " ")]
+          fileName.splitCamelCase().joined(separator: " ")]
       } else { name = fileName }
       return DisplayContainer(name: name, content: $0.path, icon: NSWorkspace.shared.icon(forFile: $0.path), innerItem: $0)
     }.sorted {
@@ -53,25 +53,5 @@ struct LaunchService: BuiltInProvider {
     } else {
       workspace.open(appURL)
     }
-  }
-  
-  /// Split camel case names to individual words
-  /// - parameter name: the name needs to be splitted
-  /// - returns: an array of words from the name
-  ///
-  /// E.g.: "camelCase" -> "camel Case"
-  private func splitCamelCaseNames(name: String) -> [String] {
-    var names: [Substring] = []
-    var startIndex = name.startIndex
-    var endIndex = name.index(after: startIndex)
-    while endIndex != name.endIndex {
-      if CharacterSet.uppercaseLetters.contains(name.unicodeScalars[endIndex]) {
-        names.append(name[startIndex ..< endIndex])
-        startIndex = endIndex
-      }
-      endIndex = name.index(after: endIndex)
-    }
-    names.append(name[startIndex...])
-    return names.map(String.init)
   }
 }

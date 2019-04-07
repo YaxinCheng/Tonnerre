@@ -8,8 +8,7 @@
 
 import Foundation
 
-enum DisplayOrder {
-  
+struct DisplayOrder: Comparable {
   private static func levenshteinScore(source: String, target: String) -> UInt8 {
     let distanceToScore: (Int) -> UInt8 = {
       let longerSize = max(source.count, target.count)
@@ -40,12 +39,16 @@ enum DisplayOrder {
     return UInt8(timeDiffScore)
   }
   
-  static func sortingScore(baseString: String, query: String, timeIdentifier: String) -> UInt8 {
-    let keywordScore = baseString.isEmpty ? 50 : levenshteinScore(source: query.lowercased(),
-                                                                  target: baseString.lowercased())
-    let lastVisiScore = getLastVisitScore(identifier: timeIdentifier)
-    return keywordScore + lastVisiScore
+  let keywordScore: UInt8
+  let lastVisitScore: UInt8
+  
+  init(baseString: String, query: String, timeIdentifier: String) {
+    keywordScore = baseString.isEmpty ? 50 : DisplayOrder.levenshteinScore(source: query.lowercased(),
+                                                              target: baseString.lowercased())
+    lastVisitScore = DisplayOrder.getLastVisitScore(identifier: timeIdentifier)
   }
   
-  
+  static func < (lhs: DisplayOrder, rhs: DisplayOrder) -> Bool {
+    return (lhs.keywordScore + lhs.lastVisitScore) < (rhs.keywordScore + rhs.lastVisitScore)
+  }
 }
