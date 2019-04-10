@@ -51,7 +51,7 @@ extension HistoryProtocol {
       let fetchedData = try context.fetch(fetchRequest)
       return fetchedData.map { $0.query! }
     } catch {
-      Logger.error(file: "\(Self.self)", "Histories Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: Self.self, "Histories Error: %{PUBLIC}@", error.localizedDescription)
       return []
     }
   }

@@ -18,13 +18,14 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
   let content: String = "Tranlsate your language"
   let historyLimit: Int = 8
   let identifier: String = "GoogleTranslateService"
+  private let _AUTOMATIC_ICON = "auto"
   
   private static let supportedLanguages: Set<String> = {
     let content: Result<[String], Error> = PropertyListSerialization.read(fileName: "langueCodes")
     switch content {
     case .success(let codeFile): return Set(codeFile)
     case .failure(let error):
-      Logger.error(file: "\(GoogleTranslateService.self)", "Reading langueCodes Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: GoogleTranslateService.self, "Reading langueCodes Error: %{PUBLIC}@", error.localizedDescription)
       return []
     }
   }()
@@ -33,7 +34,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     switch content {
     case .success(let emojiFile): return emojiFile
     case .failure(let error):
-      Logger.error(file: "\(GoogleTranslateService.self)", "Reading langueToEmoji Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: GoogleTranslateService.self, "Reading langueToEmoji Error: %{PUBLIC}@", error.localizedDescription)
       return [:]
     }
   }()
@@ -42,7 +43,7 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
     guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return [] }
     let contentTemplate = "Translate \"\(query)\" from %@ to %@"
     if let currentLangCode = Locale.current.languageCode {
-      let prefix = "🖥 ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
+      let prefix = "\(type(of: self).langueToEmoji[_AUTOMATIC_ICON]!) ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
       let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
       let translator = DisplayContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "auto", currentLangCode, encodedContent)), placeholder: "from to content")
       return [translator]

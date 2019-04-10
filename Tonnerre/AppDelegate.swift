@@ -22,9 +22,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Insert code here to initialize your application
     let centre = UNUserNotificationCenter.current()
     centre.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-      Logger.info(file: "\(self.self)", "Notification Permission Granted: %{PUBLIC}@", granted ? "YES" : "NO")
+      Logger.info(file: AppDelegate.self, "Notification Permission Granted: %{PUBLIC}@", granted ? "YES" : "NO")
       if let errorInfo = error {
-        Logger.error(file: "\(self.self)", "Notification Permission Error: %{PUBLIC}@", errorInfo.localizedDescription)
+        Logger.error(file: AppDelegate.self, "Notification Permission Error: %{PUBLIC}@", errorInfo.localizedDescription)
       }
     }
     centre.delegate = self

@@ -23,7 +23,7 @@ extension LaunchOrder {
     do {
       try context.save()
     } catch {
-      Logger.error(file: "\(self.self)", "URL Open Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: LaunchOrder.self, "URL Open Error: %{PUBLIC}@", error.localizedDescription)
     }
   }
   

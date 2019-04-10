@@ -56,7 +56,7 @@ struct FileTypeControl {
         }
       }
     } catch {
-      Logger.error(file: "\(self.self)", "URL Resource Error: %{PUBLIC}@, For File: %{PUBLIC}@",
+      Logger.error(file: FileTypeControl.self, "URL Resource Error: %{PUBLIC}@, For File: %{PUBLIC}@",
                    error.localizedDescription, file.path)
     }
     return false
@@ -67,7 +67,7 @@ struct FileTypeControl {
     switch content {
     case .success(let rawList): self.rawList = rawList
     case .failure(let error):
-      Logger.error(file: "\(FileTypeControl.self)", "Failed Loading Raw List: %{PUBLIC}@",
+      Logger.error(file: FileTypeControl.self, "Failed Loading Raw List: %{PUBLIC}@",
                    error.localizedDescription)
     }
   }

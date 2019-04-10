@@ -27,7 +27,7 @@ enum TonnerreHelper {
     do {
       try NSWorkspace.shared.launchApplication(at: path, options: .andHide, configuration: [:])
     } catch {
-      Logger.error(file: "\(TonnerreHelper.self)", "TonnerreHelper Launch Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: TonnerreHelper.self, "TonnerreHelper Launch Error: %{PUBLIC}@", error.localizedDescription)
     }
   }
   

@@ -43,7 +43,7 @@ struct URLService: BuiltInProvider {
     do {
       _ = try NSWorkspace.shared.open([request], withApplicationAt: browserURL, options: .default, configuration: [:])
     } catch {
-      Logger.error(file: "\(self.self)", "URL Open Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: URLService.self, "URL Open Error: %{PUBLIC}@", error.localizedDescription)
     }
   }
 }

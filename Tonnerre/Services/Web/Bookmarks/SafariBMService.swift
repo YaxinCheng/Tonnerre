@@ -22,7 +22,7 @@ struct SafariBMService: BookMarkService {
     case .success(let bookMarks):
       return parse(plist: bookMarks)
     case .failure(let error):
-      Logger.error(file: "\(self.self)", "Reading Plist Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: SafariBMService.self, "Reading Plist Error: %{PUBLIC}@", error.localizedDescription)
       return []
     }
   }

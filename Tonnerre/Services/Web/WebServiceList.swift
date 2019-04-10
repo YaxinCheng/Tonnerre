@@ -25,7 +25,7 @@ struct WebServiceList {
       suggestionList = listObj[Attribute.suggestionsTemplate.rawValue] as? [String : String] ?? [:]
       servicesList = listObj[Attribute.serviceTemplate.rawValue] as? [String : [String : String]] ?? [:]
     case .failure(let error):
-      Logger.error(file: "\(WebServiceList.self)", "Reading %{PUBLIC}@ Error: %{PUBLIC}@", _RESOURCE_NAME, error.localizedDescription)
+      Logger.error(file: WebServiceList.self, "Reading %{PUBLIC}@ Error: %{PUBLIC}@", _RESOURCE_NAME, error.localizedDescription)
       (suggestionList, servicesList) = ([:], [:])
     }
   }

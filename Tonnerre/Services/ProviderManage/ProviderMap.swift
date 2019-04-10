@@ -34,7 +34,7 @@ final class ProviderMap {
           TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
         }
       } catch {
-        Logger.error(file: "\(ProviderMap.self)", "Load Script Error: %{PUBLIC}@", error.localizedDescription)
+        Logger.error(file: ProviderMap.self, "Load Script Error: %{PUBLIC}@", error.localizedDescription)
       }
     }
   }
@@ -78,7 +78,7 @@ final class ProviderMap {
         self.pathWithService[$0.path] = provider
         TonnerreInterpreter.serviceIDTrie.insert(value: provider.id, key: provider.keyword)
       } catch {
-        Logger.error(file: "\(self.self)", "File Register Error: %{PUBLIC}@", error.localizedDescription)
+        Logger.error(file: ProviderMap.self, "File Register Error: %{PUBLIC}@", error.localizedDescription)
       }
     }
     

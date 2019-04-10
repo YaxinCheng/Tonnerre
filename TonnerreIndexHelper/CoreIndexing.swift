@@ -24,7 +24,7 @@ final class CoreIndexing {
     switch content {
     case .success(let aliasFile): return aliasFile
     case .failure(let error):
-      Logger.error(file: "\(self.self)", "Alias File Reading Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: CoreIndexing.self, "Alias File Reading Error: %{PUBLIC}@", error.localizedDescription)
       return [:]
     }
   }()

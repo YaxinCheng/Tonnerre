@@ -88,7 +88,7 @@ struct TNEServiceProvider: ServiceProvider {
       alterContent  = descriptJSON!["alterContent", default: ""]
       placeholder   = descriptJSON!["placeholder", default: keyword]
     } catch {
-      Logger.error(file: "\(TNEServiceProvider.self)", "Init Error: %{PUBLIC}@, script path: %{PUBLIC}@",
+      Logger.error(file: TNEServiceProvider.self, "Init Error: %{PUBLIC}@, script path: %{PUBLIC}@",
                    error.localizedDescription, scriptPath.path)
       return nil
     }
@@ -131,7 +131,7 @@ struct TNEServiceProvider: ServiceProvider {
     } catch TNEExecutor.Error.wrongInputFormatError(information: _) {
       callback([])
     } catch {
-      Logger.error(file: "\(self.self)", "Prepare Error: %{PUBLIC}@, input: %{PUBLIC}@",
+      Logger.error(file: TNEServiceProvider.self, "Prepare Error: %{PUBLIC}@, input: %{PUBLIC}@",
                    error.localizedDescription, input)
       callback([DisplayContainer(name: "Error", content: "\(error)", icon: icon, innerItem: error, placeholder: "")])
     }
@@ -151,7 +151,7 @@ struct TNEServiceProvider: ServiceProvider {
     do {
       _ = try executor.execute(withArguments: .serve(choice: ["name": name, "content": content, "innerItem": inner as Any, "withCmd": withCmd]))
     } catch {
-      Logger.error(file: "\(self.self)", "Serve error: %{PUBLIC}@, service: %{PUBLIC}@, withCmd: %{PUBLIC}@",
+      Logger.error(file: TNEServiceProvider.self, "Serve error: %{PUBLIC}@, service: %{PUBLIC}@, withCmd: %{PUBLIC}@",
                    error.localizedDescription, withCmd, "\(service)")
     }
   }

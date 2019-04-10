@@ -38,7 +38,7 @@ extension LimitedDataProtocol {
     do {
       try context.save()
     } catch {
-      Logger.error(file: "\(Self.self)", "Remove Oldest Save Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: Self.self, "Remove Oldest Save Error: %{PUBLIC}@", error.localizedDescription)
     }
   }
   
@@ -53,7 +53,7 @@ extension LimitedDataProtocol {
       try context.execute(deleteRequest)
       try context.save()
     } catch {
-      Logger.error(file: "\(Self.self)", "Remove All Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: Self.self, "Remove All Error: %{PUBLIC}@", error.localizedDescription)
     }
   }
 }

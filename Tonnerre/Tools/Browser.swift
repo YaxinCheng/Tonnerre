@@ -16,7 +16,7 @@ struct Browser: Hashable {
     switch content {
     case .success(let browsersList): return Array(browsersList.values)
     case .failure(let error):
-      Logger.error(file: "\(Browser.self)", "Browser BundleIds Reading Error: %{PUBLIC}@", error.localizedDescription)
+      Logger.error(file: Browser.self, "Browser BundleIds Reading Error: %{PUBLIC}@", error.localizedDescription)
       return []
     }
   }()
