@@ -4,7 +4,7 @@
 <dict>
 	<key>settings.python</key>
 	<string>/usr/bin/python</string>
-	<key>Tonnerre.Providerr.Default</key>
+	<key>Tonnerre.Provider.Default</key>
 	<string>Tonnerre.Provider.BuiltIn.GoogleSearch</string>
 	<key>Tonnerre.Provider.BuiltIn.ClipboardService:limit</key>
 	<integer>9</integer>

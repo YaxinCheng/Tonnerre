@@ -26,21 +26,21 @@
 			<key>suggestionTemplate</key>
 			<string>GoogleMap</string>
 			<key>template</key>
-			<string>https://maps.google.com/?q=%@</string>
+			<string>https://maps.google.ca/?q=%@</string>
 		</dict>
 		<key>GoogleSearch</key>
 		<dict>
 			<key>suggestionTemplate</key>
 			<string>Google</string>
 			<key>template</key>
-			<string>https://google.com/search?q=%@</string>
+			<string>https://google.ca/search?q=%@</string>
 		</dict>
 		<key>GoogleImageSearch</key>
 		<dict>
 			<key>suggestionTemplate</key>
 			<string>Google</string>
 			<key>template</key>
-			<string>https://google.com/search?q=%@&amp;tbm=isch</string>
+			<string>https://google.ca/search?q=%@&amp;tbm=isch</string>
 		</dict>
 		<key>YoutubeSearch</key>
 		<dict>

@@ -33,15 +33,6 @@ extension WebService {
     return .shared
   }
   
-  /// Returns true if template has a placeholder for different area code
-  ///
-  /// Some web services uses different url for different countries and areas
-  /// . Such as: https://google.ca versus https://google.com
-  private var hasLocaleInTemplate: Bool {
-    let numOfFomatters = template.components(separatedBy: "%@").count - 1
-    return numOfFomatters - argLowerBound == 1
-  }
-  
   var content: String {
     return contentTemplate.filled(arguments: "")
   }
@@ -54,23 +45,11 @@ extension WebService {
     return WebServiceList.shared[self, .suggestionsTemplate]
   }
   
-  private func fillInTemplate(input: [String]) -> URL? {
-    let requestingTemplate: String
-    if hasLocaleInTemplate {
-      let locale: Locale = .current
-      let regionCode = locale.regionCode == "US" ? "com" : locale.regionCode
-      let parameters = [regionCode ?? "com"] + [String](repeating: "%@", count: argLowerBound)
-      requestingTemplate = template.filled(arguments: parameters)
-    } else {
-      requestingTemplate = template
-    }
-    guard requestingTemplate.contains("%@") else { return URL(string: requestingTemplate) }
+  private func encodedURL(input: [String]) -> URL? {
     let urlEncoded = input.compactMap {
       $0.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.symmetricDifference(["&"]))
     }
-    guard urlEncoded.count >= input.count else { return nil }
-    let rawURL = requestingTemplate.filled(arguments: urlEncoded, separator: "+")
-    return URL(string: rawURL)
+    return URL(string: template.filled(arguments: urlEncoded, separator: "+"))
   }
   
   private func present(suggestion: String) -> DisplayItem? {
@@ -83,7 +62,7 @@ extension WebService {
     } else {
       readableContent = suggestion.removingPercentEncoding ?? suggestion
     }
-    guard let url = fillInTemplate(input: [readableContent]) else { return nil }
+    guard let url = encodedURL(input: [readableContent]) else { return nil }
     let content = contentTemplate.filled(arguments: "\(readableContent)")
     return DisplayContainer(name: readableContent, content: content, icon: icon, innerItem: url)
   }
@@ -95,7 +74,7 @@ extension WebService {
   }
   
   func prepare(withInput input: [String]) -> [DisplayItem] {
-    let queryURL = fillInTemplate(input: input)
+    let queryURL = encodedURL(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
     let queryContent = input.joined(separator: " ")
     let content = contentTemplate.filled(arguments: "\(queryContent)")

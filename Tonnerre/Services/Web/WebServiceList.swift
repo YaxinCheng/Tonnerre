@@ -14,18 +14,24 @@ struct WebServiceList {
   private let suggestionList: [String: String]
   private let servicesList: [String: [String: String]]
   
-  private let _RESOURCE_NAME = "webServices"
+  private static let _RESOURCE_NAME = "webServices"
   private let _SUGGESTION_KEY = "suggestionTemplate"
   private let _TEMPLATE_KEY = "template"
   
+  private static var resourceName: String {
+    let localeSuffix = (Locale.current.regionCode ?? "").lowercased()
+    let regionalResourceName = [_RESOURCE_NAME, localeSuffix].joined(separator: "_")
+    return Bundle.main.url(forResource: regionalResourceName, withExtension: "plist") == nil ? _RESOURCE_NAME : regionalResourceName
+  }
+  
   private init() {
-    let content: Result<[String:Any], Error> = PropertyListSerialization.read(fileName: _RESOURCE_NAME)
+    let content: Result<[String:Any], Error> = PropertyListSerialization.read(fileName: WebServiceList.resourceName)
     switch content {
     case .success(let listObj):
       suggestionList = listObj[Attribute.suggestionsTemplate.rawValue] as? [String : String] ?? [:]
       servicesList = listObj[Attribute.serviceTemplate.rawValue] as? [String : [String : String]] ?? [:]
     case .failure(let error):
-      Logger.error(file: WebServiceList.self, "Reading %{PUBLIC}@ Error: %{PUBLIC}@", _RESOURCE_NAME, error.localizedDescription)
+      Logger.error(file: WebServiceList.self, "Reading %{PUBLIC}@ Error: %{PUBLIC}@", WebServiceList.resourceName, error.localizedDescription)
       (suggestionList, servicesList) = ([:], [:])
     }
   }
