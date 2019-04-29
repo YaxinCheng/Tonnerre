@@ -22,10 +22,13 @@ fileprivate struct TranslateSupports {
   
   private static let langueAlias = ["zh": "zh-CN", "tw": "zh-TW", "zh-tw": "zh-TW", "zh-cn": "zh-CN"]
   private let _ARROW_KEY = "➡️"
-  let _AUTO_LANG_CODE = "auto"
-  let _PLACE_HOLDER = "content"
   
-  func generateItem(fromLangue: String, toLangue: String, content: String) -> (name: String, content: String)? {
+  /// Generate formatted name and content for translation service
+  /// - parameter fromLangue: the language to be translated from
+  /// - parameter toLangue: the language to be translated to
+  /// - parameter content: the content needs to be translated
+  /// - returns: Optional (name, content). If fromLangue or toLangue is invalid, then return nil
+  func formatNameAndContent(fromLangue: String, toLangue: String, content: String) -> (name: String, content: String)? {
     let fromLangue = TranslateSupports.langueAlias[fromLangue] ?? fromLangue
     let toLangue = TranslateSupports.langueAlias[toLangue] ?? toLangue
     guard
@@ -51,6 +54,8 @@ extension TranslateService {
   var identifier: String { return "GoogleTranslateService" }
   var contentTemplate: String { return "Translate \"%@\" to %@" }
   var historyLimit: Int { return 8 }
+  var _PLACE_HOLDER: String { return "content" }
+  var _AUTO_LANG_CODE: String { return "auto" }
   
   func parse(suggestionData: Data?) -> [String] {
     return []
@@ -64,13 +69,13 @@ struct GoogleTranslateAutoService: TranslateService {
   func prepare(withInput input: [String]) -> [DisplayItem] {
     guard
       let currentLangue = Locale.current.languageCode,
-      let (name, content) = supports.generateItem(fromLangue: supports._AUTO_LANG_CODE, toLangue: currentLangue, content: input.joined(separator: " "))
+      let (name, content) = supports.formatNameAndContent(fromLangue: _AUTO_LANG_CODE, toLangue: currentLangue, content: input.joined(separator: " "))
     else { return [self] }
     return [DisplayContainer(name: name,
                              content: content,
                              icon: icon,
-                             innerItem: encodedURL(input: [supports._AUTO_LANG_CODE, currentLangue] + input),
-                             placeholder: supports._PLACE_HOLDER)]
+                             innerItem: encodedURL(input: [_AUTO_LANG_CODE, currentLangue] + input),
+                             placeholder: _PLACE_HOLDER)]
   }
   
   func supply(withInput input: [String], callback: @escaping ([DisplayItem]) -> Void) {
@@ -79,11 +84,11 @@ struct GoogleTranslateAutoService: TranslateService {
       .map { $0.components(separatedBy: "/") }
       .compactMap {
       guard
-        let (name, content) = supports.generateItem(fromLangue: $0[0], toLangue: $0[1], content: query)
+        let (name, content) = supports.formatNameAndContent(fromLangue: $0[0], toLangue: $0[1], content: query)
       else { return nil }
       return DisplayContainer(name: name, content: content, icon: icon,
                               innerItem: encodedURL(input: [$0[0], $0[1]] + input),
-                              placeholder: supports._PLACE_HOLDER)
+                              placeholder: _PLACE_HOLDER)
     }
     callback(historyQueries)
   }
@@ -93,21 +98,17 @@ struct GoogleTranslateService: TranslateService {
   let argLowerBound: Int = 3
   private let supports = TranslateSupports()
   
-  func parse(suggestionData: Data?) -> [String] {
-    return []
-  }
-  
   func prepare(withInput input: [String]) -> [DisplayItem] {
     let (fromLangue, toLangue) = (input[0], input[1])
     let query = input[2...].joined(separator: " ")
     guard
-      let (name, content) = supports.generateItem(fromLangue: fromLangue, toLangue: toLangue, content: query)
+      let (name, content) = supports.formatNameAndContent(fromLangue: fromLangue, toLangue: toLangue, content: query)
     else { return [] }
-    if !query.isEmpty && fromLangue != supports._AUTO_LANG_CODE {
+    if !query.isEmpty && fromLangue != _AUTO_LANG_CODE {
       appendHistory(query: "\(fromLangue)/\(toLangue)", unique: true)
     }
     return [DisplayContainer(name: name, content: content, icon: icon,
                              innerItem: encodedURL(input: input),
-                             placeholder: supports._PLACE_HOLDER)]
+                             placeholder: _PLACE_HOLDER)]
   }
 }
