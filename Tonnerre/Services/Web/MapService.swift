@@ -9,7 +9,6 @@
 import Cocoa
 
 struct GoogleMapService: WebService {
-  let template: String = "https://maps.google.%@/?q=%@"
   let argUpperBound: Int = .max
   
   func parse(suggestionData: Data?) -> [String] {
@@ -27,10 +26,7 @@ struct GoogleMapService: WebService {
   let contentTemplate: String = "Search \"%@\" on Google Maps"
   let icon: NSImage = #imageLiteral(resourceName: "googlemap")
   var alterIcon: NSImage? {
-    let workspace = NSWorkspace.shared
-    let icon = workspace.icon(forFile: "/Applications/Maps.app")
-    icon.size = NSSize(width: 64, height: 64)
-    return icon
+    return AppFetcher.fetchIcon(bundleID: "com.apple.maps")
   }
   
   func serve(service: DisplayItem, withCmd: Bool) {

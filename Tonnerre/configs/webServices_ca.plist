@@ -21,6 +21,16 @@
 	</dict>
 	<key>Services</key>
 	<dict>
+		<key>GoogleTranslateService</key>
+		<dict>
+			<key>template</key>
+			<string>https://translate.google.ca/#view=home&amp;op=translate&amp;sl=%@&amp;tl=%@&amp;text=%@</string>
+		</dict>
+		<key>GoogleTranslateAutoService</key>
+		<dict>
+			<key>template</key>
+			<string>https://translate.google.ca/#view=home&amp;op=translate&amp;sl=%@&amp;tl=%@&amp;text=%@</string>
+		</dict>
 		<key>GoogleMapService</key>
 		<dict>
 			<key>suggestionTemplate</key>

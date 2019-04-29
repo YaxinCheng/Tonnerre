@@ -31,6 +31,7 @@ struct BuiltInProviderMap {
     , "Tonnerre.Provider.BuiltIn.ClipboardService"         : ClipboardService.self
     , "Tonnerre.Provider.BuiltIn.SettingService"           : SettingService.self
     , "Tonnerre.Provider.BuiltIn.ApplicationService"       : ApplicationService.self
+    , "Tonnerre.Provider.BuiltIn.GoogleTranslateAutoService": GoogleTranslateAutoService.self
   ]
   
   private static let _ID_TEMPLATE = "Tonnerre.Provider.BuiltIn.%@"

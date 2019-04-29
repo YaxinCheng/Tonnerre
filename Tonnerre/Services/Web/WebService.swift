@@ -45,7 +45,7 @@ extension WebService {
     return WebServiceList.shared[self, .suggestionsTemplate]
   }
   
-  private func encodedURL(input: [String]) -> URL? {
+  func encodedURL(input: [String]) -> URL? {
     let urlEncoded = input.compactMap {
       $0.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.symmetricDifference(["&"]))
     }
@@ -76,10 +76,9 @@ extension WebService {
   func prepare(withInput input: [String]) -> [DisplayItem] {
     let queryURL = encodedURL(input: input)
     guard !(input.first?.isEmpty ?? false), let url = queryURL else { return [self] }
-    let queryContent = input.joined(separator: " ")
-    let content = contentTemplate.filled(arguments: "\(queryContent)")
+    let content = contentTemplate.filled(arguments: input)
     guard argLowerBound > 0 else { return [DisplayContainer(name: name, content: content, icon: icon, innerItem: url)] }
-    let originalSearch = DisplayContainer(name: queryContent, content: content, icon: icon, innerItem: url)
+    let originalSearch = DisplayContainer(name: input.joined(separator: " "), content: content, icon: icon, innerItem: url)
     return [originalSearch]
   }
   

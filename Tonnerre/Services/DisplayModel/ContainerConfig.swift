@@ -9,6 +9,5 @@
 import Foundation
 
 enum ContainerConfig {
-  case string(_ rawValue: String)
   case browser(_ rawValue: Browser)
 }

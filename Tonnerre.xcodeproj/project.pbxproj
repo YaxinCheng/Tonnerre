@@ -207,7 +207,6 @@
 		14FA02CE21E43CD00058E936 /* ClipboardMonitorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FA02CD21E43CCF0058E936 /* ClipboardMonitorTest.swift */; };
 		14FA033321E58EF10058E936 /* MathParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA033221E58EF00058E936 /* MathParser.framework */; };
 		14FA033421E58EF10058E936 /* MathParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA033221E58EF00058E936 /* MathParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FA57E120CC68CA00E53D63 /* langueCodes.plist */; };
 		14FEE27021938529009A4798 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE26F21938529009A4798 /* ServiceProvider.swift */; };
 		14FEE2722193CE62009A4798 /* DisabledManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2712193CE62009A4798 /* DisabledManager.swift */; };
 		14FEE2742193D1A7009A4798 /* BuiltInProviderMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FEE2732193D1A7009A4798 /* BuiltInProviderMap.swift */; };
@@ -485,7 +484,6 @@
 		14FA02CB21E40E620058E936 /* ProviderMapTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMapTest.swift; sourceTree = "<group>"; };
 		14FA02CD21E43CCF0058E936 /* ClipboardMonitorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitorTest.swift; sourceTree = "<group>"; };
 		14FA033221E58EF00058E936 /* MathParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MathParser.framework; path = Carthage/Build/Mac/MathParser.framework; sourceTree = "<group>"; };
-		14FA57E120CC68CA00E53D63 /* langueCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueCodes.plist; sourceTree = "<group>"; };
 		14FEE26F21938529009A4798 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		14FEE2712193CE62009A4798 /* DisabledManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledManager.swift; sourceTree = "<group>"; };
 		14FEE2732193D1A7009A4798 /* BuiltInProviderMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInProviderMap.swift; sourceTree = "<group>"; };
@@ -966,7 +964,6 @@
 			children = (
 				145F61252271136A0075F95F /* webServices_ca.plist */,
 				14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */,
-				14FA57E120CC68CA00E53D63 /* langueCodes.plist */,
 				1404E6BD222DCFF800F27F7C /* browsers.plist */,
 				14D57CD0224EB6B400D52CF9 /* webServices.plist */,
 				14D57CDB2255956F00D52CF9 /* builtinKeywords.plist */,
@@ -1284,7 +1281,6 @@
 				14D57CD72250351700D52CF9 /* tonnerrePlus.icns in Resources */,
 				14D57CD1224EB6B400D52CF9 /* webServices.plist in Resources */,
 				1404E6BE222DCFF900F27F7C /* browsers.plist in Resources */,
-				14FA57E220CC68CA00E53D63 /* langueCodes.plist in Resources */,
 				145CF987218BA1C3003B9468 /* LiteTableViewController.storyboard in Resources */,
 				14F10997218BA276003A5E07 /* TonnerreField.storyboard in Resources */,
 				14D57CDC2255956F00D52CF9 /* builtinKeywords.plist in Resources */,

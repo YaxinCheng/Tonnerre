@@ -8,27 +8,8 @@
 
 import Cocoa
 
-struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {  
-  let defaultKeyword: String = "translate"
-  let argLowerBound: Int = 1
-  let argUpperBound: Int = Int.max
-  let icon: NSImage = #imageLiteral(resourceName: "Google_Translate")
-  let template: String = "https://translate.google.%@/#view=home&op=translate&sl=%@&tl=%@&text=%@"
-  let name: String = "Google Translate"
-  let content: String = "Tranlsate your language"
-  let historyLimit: Int = 8
-  let identifier: String = "GoogleTranslateService"
-  private let _AUTOMATIC_ICON = "auto"
-  
-  private static let supportedLanguages: Set<String> = {
-    let content: Result<[String], Error> = PropertyListSerialization.read(fileName: "langueCodes")
-    switch content {
-    case .success(let codeFile): return Set(codeFile)
-    case .failure(let error):
-      Logger.error(file: GoogleTranslateService.self, "Reading langueCodes Error: %{PUBLIC}@", error.localizedDescription)
-      return []
-    }
-  }()
+/// Supports config GoogleTranslateService
+fileprivate struct TranslateSupports {
   private static let langueToEmoji: [String: String] = {
     let content: Result<[String:String], Error> = PropertyListSerialization.read(fileName: "langueToEmoji")
     switch content {
@@ -38,63 +19,95 @@ struct GoogleTranslateService: BuiltInProvider, HistoryProtocol {
       return [:]
     }
   }()
+  
+  private static let langueAlias = ["zh": "zh-CN", "tw": "zh-TW", "zh-tw": "zh-TW", "zh-cn": "zh-CN"]
+  private let _ARROW_KEY = "➡️"
+  let _AUTO_LANG_CODE = "auto"
+  let _PLACE_HOLDER = "content"
+  
+  func generateItem(fromLangue: String, toLangue: String, content: String) -> (name: String, content: String)? {
+    let fromLangue = TranslateSupports.langueAlias[fromLangue] ?? fromLangue
+    let toLangue = TranslateSupports.langueAlias[toLangue] ?? toLangue
+    guard
+      let fromEmoji = TranslateSupports.langueToEmoji[fromLangue],
+      let toEmoji = TranslateSupports.langueToEmoji[toLangue]
+    else { return nil }
+    let name = "\(fromEmoji) \(_ARROW_KEY) \(toEmoji): \(content)"
+    let content = "Translate \"\(content)\" from \(fetchLangueName(languageCode: fromLangue)) to \(fetchLangueName(languageCode: toLangue))"
+    return (name, content)
+  }
+  
+  private func fetchLangueName(languageCode: String) -> String {
+    return NSLocale(localeIdentifier: languageCode).displayName(forKey: .identifier, value: languageCode) ?? "auto"
+  }
+}
 
-  private func generateAuto(query: String) -> [DisplayContainer<URL>] {
-    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return [] }
-    let contentTemplate = "Translate \"\(query)\" from %@ to %@"
-    if let currentLangCode = Locale.current.languageCode {
-      let prefix = "\(type(of: self).langueToEmoji[_AUTOMATIC_ICON]!) ➡️ \(type(of: self).langueToEmoji[currentLangCode]!): "
-      let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
-      let translator = DisplayContainer(name: prefix + query, content: String(format: contentTemplate, "auto", currentLangCode), icon: icon, innerItem: URL(string: String(format: template, regionCode ?? "com", "auto", currentLangCode, encodedContent)), placeholder: "from to content")
-      return [translator]
-    } else { return [] }
+private protocol TranslateService: WebService, HistoryProtocol {}
+extension TranslateService {
+  var defaultKeyword: String { return "translate" }
+  var argUpperBound: Int { return .max }
+  var icon: NSImage { return #imageLiteral(resourceName: "Google_Translate") }
+  var name: String { return "Google Translate" }
+  var identifier: String { return "GoogleTranslateService" }
+  var contentTemplate: String { return "Translate \"%@\" to %@" }
+  var historyLimit: Int { return 8 }
+  
+  func parse(suggestionData: Data?) -> [String] {
+    return []
+  }
+}
+
+struct GoogleTranslateAutoService: TranslateService {
+  let argLowerBound: Int = 1
+  private let supports = TranslateSupports()
+  
+  func prepare(withInput input: [String]) -> [DisplayItem] {
+    guard
+      let currentLangue = Locale.current.languageCode,
+      let (name, content) = supports.generateItem(fromLangue: supports._AUTO_LANG_CODE, toLangue: currentLangue, content: input.joined(separator: " "))
+    else { return [self] }
+    return [DisplayContainer(name: name,
+                             content: content,
+                             icon: icon,
+                             innerItem: encodedURL(input: [supports._AUTO_LANG_CODE, currentLangue] + input),
+                             placeholder: supports._PLACE_HOLDER)]
+  }
+  
+  func supply(withInput input: [String], callback: @escaping ([DisplayItem]) -> Void) {
+    let query = input.joined(separator: " ")
+    let historyQueries: [DisplayItem] = histories()
+      .map { $0.components(separatedBy: "/") }
+      .compactMap {
+      guard
+        let (name, content) = supports.generateItem(fromLangue: $0[0], toLangue: $0[1], content: query)
+      else { return nil }
+      return DisplayContainer(name: name, content: content, icon: icon,
+                              innerItem: encodedURL(input: [$0[0], $0[1]] + input),
+                              placeholder: supports._PLACE_HOLDER)
+    }
+    callback(historyQueries)
+  }
+}
+
+struct GoogleTranslateService: TranslateService {
+  let argLowerBound: Int = 3
+  private let supports = TranslateSupports()
+  
+  func parse(suggestionData: Data?) -> [String] {
+    return []
   }
   
   func prepare(withInput input: [String]) -> [DisplayItem] {
-    var firstArg = input.first!.lowercased()
-    let example = DisplayContainer<Int>(name: "Example: translate en zh sentence", content: "Translate \"sentence\" from English to Chinese", icon: icon)
-    let rawQuery = input.joined(separator: " ")
-    let autoTranslator = generateAuto(query: rawQuery)
-    let history = histories().map { $0.components(separatedBy: "/") }.compactMap { formContents(query: rawQuery, fromLangue: $0[0], toLangue: $0[1]) }
-    if input.count >= 1 {
-      if firstArg.starts(with: "zh") { firstArg = "zh-CN" }
-      if !type(of: self).supportedLanguages.contains(firstArg) {
-        return autoTranslator + history + [example]
-      }
-    }
-    var secondArg: String = "..."
-    if input.count >= 2 {
-      secondArg = input[1].lowercased()
-      if secondArg == "zh" || secondArg == "zh-tw" { secondArg = "zh-TW" }
-      else if secondArg == "zh-cn" { secondArg = "zh-CN" }
-      if secondArg.count >= 2 && !type(of: self).supportedLanguages.contains(secondArg) { return autoTranslator + history + [example] }
-    }
-    let query = input.count > 2 ? input[2...].joined(separator: " ") : "..."
-    guard let _ = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return autoTranslator + history }
-    let translator = formContents(query: query, fromLangue: firstArg, toLangue: secondArg)!
-    return [translator] + autoTranslator + history
-  }
-  
-  func serve(service: DisplayItem, withCmd: Bool) {
+    let (fromLangue, toLangue) = (input[0], input[1])
+    let query = input[2...].joined(separator: " ")
     guard
-      let item = service as? DisplayContainer<URL>,
-      let request = item.innerItem
-    else { return }
-    if case .string(let requestedLangues)? = item.config,
-      !requestedLangues.starts(with: "auto") {
-      appendHistory(query: requestedLangues, unique: true)
+      let (name, content) = supports.generateItem(fromLangue: fromLangue, toLangue: toLangue, content: query)
+    else { return [] }
+    if !query.isEmpty && fromLangue != supports._AUTO_LANG_CODE {
+      appendHistory(query: "\(fromLangue)/\(toLangue)", unique: true)
     }
-    NSWorkspace.shared.open(request)
-  }
-  
-  private func formContents(query: String, fromLangue: String, toLangue: String) -> DisplayContainer<URL>? {
-    guard let encodedContent = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-    let contentTemplate = "Translate \"\(query)\" from %@ to %@"
-    let regionCode = Locale.current.regionCode == "US" ? "com" : Locale.current.regionCode
-    let prefix = "\(type(of: self).langueToEmoji[fromLangue] ?? "...") ➡️ \(type(of: self).langueToEmoji[toLangue] ?? "..."): "
-    let url = URL(string: String(format: template, regionCode ?? "com", fromLangue, toLangue, encodedContent))
-    let localizedFromLangue = NSLocale(localeIdentifier: fromLangue).displayName(forKey: .identifier, value: fromLangue) ?? "..."
-    let localizedToLangue = NSLocale(localeIdentifier: toLangue).displayName(forKey: .identifier, value: toLangue) ?? "..."
-    return DisplayContainer(name: prefix + query, content: String(format: contentTemplate, localizedFromLangue, localizedToLangue), icon: icon, innerItem: url, config: .string("\(fromLangue)/\(toLangue)"))
+    return [DisplayContainer(name: name, content: content, icon: icon,
+                             innerItem: encodedURL(input: input),
+                             placeholder: supports._PLACE_HOLDER)]
   }
 }

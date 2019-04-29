@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   builtinKeywords.plist
-   Tonnerre
-
-   Created by Yaxin Cheng on 2019-04-03.
-   Copyright (c) 2019 Yaxin Cheng. All rights reserved.
--->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-      <key>Tonnerre.Provider.BuiltIn.GoogleSearch</key>
-      <string>google</string>
-      <key>Tonnerre.Provider.BuiltIn.GoogleImageSearch</key>
-      <string>image</string>
-      <key>Tonnerre.Provider.BuiltIn.YoutubeSearch</key>
-      <string>youtube</string>
-      <key>Tonnerre.Provider.BuiltIn.AmazonSearch</key>
-      <string>amazon</string>
-      <key>Tonnerre.Provider.BuiltIn.WikipediaSearch</key>
-      <string>wiki</string>
-      <key>Tonnerre.Provider.BuiltIn.BingSearch</key>
-      <string>bing</string>
-      <key>Tonnerre.Provider.BuiltIn.DuckDuckGoSearch</key>
-      <string>duck</string>
-      <key>Tonnerre.Provider.BuiltIn.DictionarySerivce</key>
-      <string>define</string>
-      <key>Tonnerre.Provider.BuiltIn.GoogleTranslateService</key>
-      <string>translate</string>
-      <key>Tonnerre.Provider.BuiltIn.FileNameSearchService</key>
-      <string>file</string>
-      <key>Tonnerre.Provider.BuiltIn.FileContentSearchService</key>
-      <string>content</string>
-      <key>Tonnerre.Provider.BuiltIn.GoogleMapService</key>
-      <string>map</string>
-      <key>Tonnerre.Provider.BuiltIn.SafariBMService</key>
-      <string>safari</string>
-      <key>Tonnerre.Provider.BuiltIn.ChromeBMService</key>
-      <string>chrome</string>
-      <key>Tonnerre.Provider.BuiltIn.VolumeService</key>
-      <string>eject</string>
-      <key>Tonnerre.Provider.BuiltIn.ClipboardService</key>
-      <string>cb</string>
-      <key>Tonnerre.Provider.BuiltIn.SettingService</key>
-      <string>tonnerre</string>
-      <key>Tonnerre.Provider.BuiltIn.ApplicationService</key>
-      <string>quit</string>
-    </dict>
+<dict>
+	<key>Tonnerre.Provider.BuiltIn.GoogleSearch</key>
+	<string>google</string>
+	<key>Tonnerre.Provider.BuiltIn.GoogleImageSearch</key>
+	<string>image</string>
+	<key>Tonnerre.Provider.BuiltIn.YoutubeSearch</key>
+	<string>youtube</string>
+	<key>Tonnerre.Provider.BuiltIn.AmazonSearch</key>
+	<string>amazon</string>
+	<key>Tonnerre.Provider.BuiltIn.WikipediaSearch</key>
+	<string>wiki</string>
+	<key>Tonnerre.Provider.BuiltIn.BingSearch</key>
+	<string>bing</string>
+	<key>Tonnerre.Provider.BuiltIn.DuckDuckGoSearch</key>
+	<string>duck</string>
+	<key>Tonnerre.Provider.BuiltIn.DictionarySerivce</key>
+	<string>define</string>
+	<key>Tonnerre.Provider.BuiltIn.GoogleTranslateService</key>
+	<string>translate</string>
+	<key>Tonnerre.Provider.BuiltIn.GoogleTranslateAutoService</key>
+	<string>translate</string>
+	<key>Tonnerre.Provider.BuiltIn.FileNameSearchService</key>
+	<string>file</string>
+	<key>Tonnerre.Provider.BuiltIn.FileContentSearchService</key>
+	<string>content</string>
+	<key>Tonnerre.Provider.BuiltIn.GoogleMapService</key>
+	<string>map</string>
+	<key>Tonnerre.Provider.BuiltIn.SafariBMService</key>
+	<string>safari</string>
+	<key>Tonnerre.Provider.BuiltIn.ChromeBMService</key>
+	<string>chrome</string>
+	<key>Tonnerre.Provider.BuiltIn.VolumeService</key>
+	<string>eject</string>
+	<key>Tonnerre.Provider.BuiltIn.ClipboardService</key>
+	<string>cb</string>
+	<key>Tonnerre.Provider.BuiltIn.SettingService</key>
+	<string>tonnerre</string>
+	<key>Tonnerre.Provider.BuiltIn.ApplicationService</key>
+	<string>quit</string>
+</dict>
 </plist>

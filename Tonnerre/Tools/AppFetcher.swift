@@ -14,11 +14,10 @@ enum AppFetcher {
       .takeRetainedValue() as? [URL])?.first
   }
   
-  static func fetchIcon(bundleID: String, size: NSSize = NSSize(width: 40, height: 40)) -> NSImage? {
+  static func fetchIcon(bundleID: String) -> NSImage? {
     guard let appURL = (LSCopyApplicationURLsForBundleIdentifier(bundleID as CFString, nil)?
       .takeRetainedValue() as? [URL])?.first else { return nil }
     let icon = NSWorkspace.shared.icon(forFile: appURL.path)
-    icon.size = size
     return icon
   }
 }
