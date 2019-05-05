@@ -186,8 +186,6 @@
 		14E72EAC2176A01600FA41F8 /* TonnerreSearch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14E9AD4B20CC8CE100F3EEC8 /* langueToEmoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */; };
 		14EA989A20DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */; };
-		14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */; };
-		14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C220F8F6D100537160 /* HistoryProtocol.swift */; };
 		14F015C720F999E300537160 /* PlaceholderField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015C620F999E200537160 /* PlaceholderField.swift */; };
 		14F015CD20FE794700537160 /* LaunchOrder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015CC20FE794700537160 /* LaunchOrder+Extension.swift */; };
 		14F015CF20FFD25200537160 /* BookmarksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F015CE20FFD25200537160 /* BookmarksService.swift */; };
@@ -464,8 +462,6 @@
 		14E72EAA2176A01500FA41F8 /* TonnerreSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TonnerreSearch.framework; path = Carthage/Build/Mac/TonnerreSearch.framework; sourceTree = "<group>"; };
 		14E9AD4A20CC8CE100F3EEC8 /* langueToEmoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = langueToEmoji.plist; sourceTree = "<group>"; };
 		14EA989920DF4C52001A882D /* NSUserInterfaceItemIdentifier+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserInterfaceItemIdentifier+Extension.swift"; sourceTree = "<group>"; };
-		14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QueryHistory+Extension.swift"; sourceTree = "<group>"; };
-		14F015C220F8F6D100537160 /* HistoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryProtocol.swift; sourceTree = "<group>"; };
 		14F015C620F999E200537160 /* PlaceholderField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderField.swift; sourceTree = "<group>"; };
 		14F015CC20FE794700537160 /* LaunchOrder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchOrder+Extension.swift"; sourceTree = "<group>"; };
 		14F015CE20FFD25200537160 /* BookmarksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksService.swift; sourceTree = "<group>"; };
@@ -853,7 +849,6 @@
 			isa = PBXGroup;
 			children = (
 				1405334520F66F7400C289CF /* CBRecord+Extension.swift */,
-				14F015C020F8EB7F00537160 /* QueryHistory+Extension.swift */,
 				144F80C420B5FF75006A16BC /* Notification+Extension.swift */,
 				14AEB2D020BEECA900D10D44 /* NSImage+Extension.swift */,
 				1449E5872133521A00500BF4 /* NSImage+Tint.swift */,
@@ -891,7 +886,6 @@
 				1449E56A212A0FAC00500BF4 /* LimitedDataProtocol.swift */,
 				14FEE26F21938529009A4798 /* ServiceProvider.swift */,
 				146AAE6520BDD7FF009AC9C6 /* BuiltInProvider.swift */,
-				14F015C220F8F6D100537160 /* HistoryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1381,7 +1375,6 @@
 			files = (
 				14A074202226E1A300609A57 /* DefaultSettingsResource.swift in Sources */,
 				14AEB2D120BEECA900D10D44 /* NSImage+Extension.swift in Sources */,
-				14F015C120F8EB7F00537160 /* QueryHistory+Extension.swift in Sources */,
 				14FEE2782193D93B009A4798 /* DisableManager+Provider.swift in Sources */,
 				145CF985218A5352003B9468 /* JSON.swift in Sources */,
 				14454D252198AB9F008F1A8B /* ServiceIDTrie.swift in Sources */,
@@ -1412,7 +1405,6 @@
 				14AEB2DB20BEFDA900D10D44 /* ServiceCell.swift in Sources */,
 				1449E579212E173F00500BF4 /* Browser.swift in Sources */,
 				14A07426222722C300609A57 /* ProviderMapResource.swift in Sources */,
-				14F015C320F8F6D100537160 /* HistoryProtocol.swift in Sources */,
 				14D57CD3224EB97B00D52CF9 /* WebServiceList.swift in Sources */,
 				148414A520C85AC3008FD68E /* DisplayContainer.swift in Sources */,
 				1484149020C84589008FD68E /* CalculationService.swift in Sources */,

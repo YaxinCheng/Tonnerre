@@ -45,17 +45,15 @@ fileprivate struct TranslateSupports {
   }
 }
 
-private protocol TranslateService: WebService, HistoryProtocol {}
+private protocol TranslateService: WebService {}
 extension TranslateService {
   var defaultKeyword: String { return "translate" }
   var argUpperBound: Int { return .max }
   var icon: NSImage { return #imageLiteral(resourceName: "Google_Translate") }
   var name: String { return "Google Translate" }
-  var identifier: String { return "GoogleTranslateService" }
   var contentTemplate: String { return "Translate \"%@\" to %@" }
-  var historyLimit: Int { return 8 }
-  var _PLACE_HOLDER: String { return "content" }
-  var _AUTO_LANG_CODE: String { return "auto" }
+  fileprivate var _PLACE_HOLDER: String { return "content" }
+  fileprivate var _AUTO_LANG_CODE: String { return "auto" }
   
   func parse(suggestionData: Data?) -> [String] {
     return []
@@ -77,21 +75,6 @@ struct GoogleTranslateAutoService: TranslateService {
                              innerItem: encodedURL(input: [_AUTO_LANG_CODE, currentLangue] + input),
                              placeholder: _PLACE_HOLDER)]
   }
-  
-  func supply(withInput input: [String], callback: @escaping ([DisplayItem]) -> Void) {
-    let query = input.joined(separator: " ")
-    let historyQueries: [DisplayItem] = histories()
-      .map { $0.components(separatedBy: "/") }
-      .compactMap {
-      guard
-        let (name, content) = supports.formatNameAndContent(fromLangue: $0[0], toLangue: $0[1], content: query)
-      else { return nil }
-      return DisplayContainer(name: name, content: content, icon: icon,
-                              innerItem: encodedURL(input: [$0[0], $0[1]] + input),
-                              placeholder: _PLACE_HOLDER)
-    }
-    callback(historyQueries)
-  }
 }
 
 struct GoogleTranslateService: TranslateService {
@@ -104,9 +87,6 @@ struct GoogleTranslateService: TranslateService {
     guard
       let (name, content) = supports.formatNameAndContent(fromLangue: fromLangue, toLangue: toLangue, content: query)
     else { return [] }
-    if !query.isEmpty && fromLangue != _AUTO_LANG_CODE {
-      appendHistory(query: "\(fromLangue)/\(toLangue)", unique: true)
-    }
     return [DisplayContainer(name: name, content: content, icon: icon,
                              innerItem: encodedURL(input: input),
                              placeholder: _PLACE_HOLDER)]
