@@ -23,7 +23,7 @@ class LiteTableViewController: NSViewController {
   private var highlightedIndex = -1
   weak var delegate: LiteTableVCDelegate?
   
-  let CellHeight: CGFloat = 56
+  private let _CellHeight: CGFloat = 56
   private var HeightConstraint: NSLayoutConstraint!
   
   private var cmdQDoubleClick = MultiClickDetector(keyCode: 12, modifiers: .command, numberOfClicks: 2)
@@ -149,12 +149,12 @@ extension LiteTableViewController: LiteTableDelegate, LiteTableDataSource {
   }
   
   func numberOfCells(_ tableView: LiteTableView) -> Int {
-    HeightConstraint.constant = CellHeight * CGFloat(min(9, datasource.count))
+    HeightConstraint.constant = _CellHeight * CGFloat(min(9, datasource.count))
     return datasource.count
   }
   
   func cellHeight(_ tableView: LiteTableView) -> CGFloat {
-    return CellHeight
+    return _CellHeight
   }
   
   func prepareCell(_ tableView: LiteTableView, at index: Int) -> LiteTableCell {

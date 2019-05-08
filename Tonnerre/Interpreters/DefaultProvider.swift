@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A wrapper providing id for DefaultProvider
 enum DefaultProvider {
   static var id: String? {
     set {

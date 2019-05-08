@@ -24,7 +24,7 @@ class WebServiceListTTest: XCTestCase {
     let webServiceList = WebServiceList.shared
     let template = webServiceList[google, .serviceTemplate]
     XCTAssertNotEqual(template, "")
-    XCTAssertEqual(template, "https://google.%@/search?q=%@&tbm=isch")
+    XCTAssertEqual(template, "https://google.ca/search?q=%@&tbm=isch")
   }
   
 }

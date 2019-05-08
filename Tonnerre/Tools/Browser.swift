@@ -11,8 +11,11 @@ import CoreData
 
 /// Common browsers on mac, with possible URL paths and bookmarks URLs and icons
 struct Browser: Hashable {
+  
+  private static let _BROWSER_PLIST_NAME = "browsers"
+  
   private static let bundleIds: [String] = {
-    let content: Result<[String:String], Error> = PropertyListSerialization.read(fileName: "browsers")
+    let content: Result<[String:String], Error> = PropertyListSerialization.read(fileName: _BROWSER_PLIST_NAME)
     switch content {
     case .success(let browsersList): return Array(browsersList.values)
     case .failure(let error):

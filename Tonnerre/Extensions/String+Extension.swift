@@ -81,7 +81,7 @@ extension String {
   /// - parameter name: the name needs to be splitted
   /// - returns: an array of words from the name
   ///
-  /// E.g.: "camelCase" -> "camel Case"
+  /// E.g.: "camelCase" -> ["camel", "Case"]
   func splitCamelCase() -> [Substring] {
     var components: [Substring] = []
     var startIndex = self.startIndex

@@ -14,26 +14,35 @@ struct WebServiceList {
   private let suggestionList: [String: String]
   private let servicesList: [String: [String: String]]
   
-  private static let _RESOURCE_NAME = "webServices"
+  private let _RESOURCE_NAME = "webServices"
   private let _SUGGESTION_KEY = "suggestionTemplate"
   private let _TEMPLATE_KEY = "template"
   
-  private static var resourceName: String {
-    let localeSuffix = (Locale.current.regionCode ?? "").lowercased()
-    let regionalResourceName = [_RESOURCE_NAME, localeSuffix].joined(separator: "_")
-    return Bundle.main.url(forResource: regionalResourceName, withExtension: "plist") == nil ? _RESOURCE_NAME : regionalResourceName
+  private init() {
+    let (baseSuggestion, baseServices) = WebServiceList.readWebList(resourceName: _RESOURCE_NAME)
+    if let regionCode = Locale.current.regionCode?.lowercased() {
+      let (regionalSuggestion, regionalServices) = WebServiceList.readWebList(resourceName: "\(_RESOURCE_NAME)_\(regionCode)")
+      suggestionList = baseSuggestion.merging(regionalSuggestion) { $1 }
+      servicesList = baseServices.merging(regionalServices) { $1 }
+    } else {
+      suggestionList = baseSuggestion
+      servicesList = baseServices
+    }
   }
   
-  private init() {
-    let content: Result<[String:Any], Error> = PropertyListSerialization.read(fileName: WebServiceList.resourceName)
+  private static func readWebList(resourceName: String) -> ([String:String], [String:[String:String]]) {
+    let content: Result<[String:Any], Error> = PropertyListSerialization.read(fileName: resourceName)
+    let suggestionList: [String : String]
+    let servicesList: [String : [String : String]]
     switch content {
     case .success(let listObj):
       suggestionList = listObj[Attribute.suggestionsTemplate.rawValue] as? [String : String] ?? [:]
       servicesList = listObj[Attribute.serviceTemplate.rawValue] as? [String : [String : String]] ?? [:]
     case .failure(let error):
-      Logger.error(file: WebServiceList.self, "Reading %{PUBLIC}@ Error: %{PUBLIC}@", WebServiceList.resourceName, error.localizedDescription)
+      Logger.error(file: WebServiceList.self, "Reading %{PUBLIC}@ Error: %{PUBLIC}@", resourceName, error.localizedDescription)
       (suggestionList, servicesList) = ([:], [:])
     }
+    return (suggestionList, servicesList)
   }
   
   /// The attribute from the webServiceList, either suggestion or service
