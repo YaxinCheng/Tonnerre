@@ -20,6 +20,14 @@ final class TonnerreIconView: NSImageView {
   
   private static let imagesTintWithTheme: Set<NSImage> = [#imageLiteral(resourceName: "tonnerre.icns"), #imageLiteral(resourceName: "tonnerre")]
   
+  private static let _IMAGE_SIZE = NSSize(width: 40, height: 40)
+  
+  override var image: NSImage? {
+    didSet {
+      image?.size = TonnerreIconView._IMAGE_SIZE
+    }
+  }
+  
   override func draw(_ dirtyRect: NSRect) {
     if image != nil && type(of: self).imagesTintWithTheme.contains(image!) {
       image = image?.tintedImage(with: .labelColor)

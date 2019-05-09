@@ -20,13 +20,11 @@ struct DisplayContainer<T>: DisplayItem {
   var config: ContainerConfig? = nil
   let alterContent: String?
   let alterIcon: NSImage?
-  private let _DISPLAY_WIDTH_HEIGHT = 40
   
   init(name: String, content: String, icon: NSImage, alterContent: String? = nil, alterIcon: NSImage? = nil, innerItem: T? = nil, placeholder: String? = nil, config: ContainerConfig? = nil) {
     self.name = name
     self.content = content
     self.icon = icon
-    self.icon.size = NSSize(width: _DISPLAY_WIDTH_HEIGHT, height: _DISPLAY_WIDTH_HEIGHT)
     self.innerItem = innerItem
     self._placeholder = placeholder
     self.config = config
