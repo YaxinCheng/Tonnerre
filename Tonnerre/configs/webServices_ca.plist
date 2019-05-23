@@ -47,28 +47,7 @@
 			<key>suggestionTemplate</key>
 			<string>Amazon</string>
 			<key>template</key>
-			<string>https://www.amazon.com/s/?field-keywords=%@</string>
-		</dict>
-		<key>WikipediaSearch</key>
-		<dict>
-			<key>suggestionTemplate</key>
-			<string>Wikipedia</string>
-			<key>template</key>
-			<string>https://en.m.wikipedia.org/wiki/%@</string>
-		</dict>
-		<key>BingSearch</key>
-		<dict>
-			<key>suggestionTemplate</key>
-			<string>Bing</string>
-			<key>template</key>
-			<string>https://www.bing.com/search?q=%@</string>
-		</dict>
-		<key>DuckDuckGoSearch</key>
-		<dict>
-			<key>suggestionTemplate</key>
-			<string>DuckDuckGo</string>
-			<key>template</key>
-			<string>https://duckduckgo.com/?q=%@</string>
+			<string>https://www.amazon.ca/s/?field-keywords=%@</string>
 		</dict>
 	</dict>
 </dict>

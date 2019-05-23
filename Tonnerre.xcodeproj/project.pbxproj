@@ -1327,7 +1327,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg\ncreate-dmg --volname Tonnerre --volicon /Users/cheng/Developer/ScriptTools/CreateDMG/installer.icns --background /Users/cheng/Developer/ScriptTools/CreateDMG/background.png --app-drop-link 450 170 --window-size 550 330 --icon Tonnerre 100 170 ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg ${CONFIGURATION_BUILD_DIR}/Tonnerre.app\n";
+			shellScript = "#rm ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg\n#create-dmg --volname Tonnerre --volicon /Users/cheng/Developer/ScriptTools/CreateDMG/installer.icns --background /Users/cheng/Developer/ScriptTools/CreateDMG/background.png --app-drop-link 450 170 --window-size 550 330 --icon Tonnerre 100 170 ${CONFIGURATION_BUILD_DIR}/Tonnerre.dmg ${CONFIGURATION_BUILD_DIR}/Tonnerre.app\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
