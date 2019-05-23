@@ -35,13 +35,6 @@
 			<key>template</key>
 			<string>https://google.ca/search?q=%@&amp;tbm=isch</string>
 		</dict>
-		<key>YoutubeSearch</key>
-		<dict>
-			<key>suggestionTemplate</key>
-			<string>YouTube</string>
-			<key>template</key>
-			<string>https://www.youtube.com/results?search_query=%@</string>
-		</dict>
 		<key>AmazonSearch</key>
 		<dict>
 			<key>suggestionTemplate</key>
