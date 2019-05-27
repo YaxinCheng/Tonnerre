@@ -43,6 +43,10 @@ fileprivate struct TranslateSupports {
   private func fetchLangueName(languageCode: String) -> String {
     return NSLocale(localeIdentifier: languageCode).displayName(forKey: .identifier, value: languageCode) ?? "auto"
   }
+  
+  func map(langueCode: String) -> String {
+    return TranslateSupports.langueAlias[langueCode] ?? langueCode
+  }
 }
 
 private protocol TranslateService: WebService {}
@@ -88,7 +92,7 @@ struct GoogleTranslateService: TranslateService {
       let (name, content) = supports.formatNameAndContent(fromLangue: fromLangue, toLangue: toLangue, content: query)
     else { return [] }
     return [DisplayContainer(name: name, content: content, icon: icon,
-                             innerItem: encodedURL(input: input),
+                             innerItem: encodedURL(input: input.map(supports.map(langueCode:))),
                              placeholder: _PLACE_HOLDER)]
   }
 }
